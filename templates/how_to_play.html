@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:760px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-question-circle me-2"></i>How to Play WordMaster</h1>
+  <p class="text-muted mb-4">Master the game in minutes with this complete guide.</p>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold">🎯 The Goal</h4>
+      <p>Guess the secret word in <strong>6 tries or fewer</strong>. Each guess must be a valid English word of the correct length.</p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold mb-3">🎨 Tile Colors Explained</h4>
+      <div class="d-flex align-items-center mb-3">
+        <div class="demo-tile correct-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">C</div>
+        <div><strong>Blue</strong> — The letter is in the correct position.</div>
+      </div>
+      <div class="d-flex align-items-center mb-3">
+        <div class="demo-tile present-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">R</div>
+        <div><strong>Yellow/Amber</strong> — The letter is in the word but in the wrong position.</div>
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="demo-tile absent-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">X</div>
+        <div><strong>Gray</strong> — The letter is not in the word at all.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold mb-3">📋 Step-by-Step</h4>
+      <ol class="ps-3">
+        <li class="mb-2">Click or type letters to form your first guess.</li>
+        <li class="mb-2">Press <kbd>Enter</kbd> to submit your guess.</li>
+        <li class="mb-2">Watch the tiles flip to reveal color feedback.</li>
+        <li class="mb-2">Use the color clues to refine your next guess.</li>
+        <li class="mb-2">Keep guessing until you find the word or run out of tries!</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4 border-primary">
+    <div class="card-body">
+      <h4 class="fw-bold mb-3">💡 Pro Tips</h4>
+      <ul class="ps-3">
+        <li class="mb-2">Start with a word that covers common letters: try <strong>CRANE</strong>, <strong>STARE</strong>, or <strong>AUDIO</strong>.</li>
+        <li class="mb-2">Your second guess should target letters you haven't tried yet.</li>
+        <li class="mb-2">Pay attention to yellow tiles — the letter is there, just in a different spot.</li>
+        <li class="mb-2">Common word endings: <strong>-ING</strong>, <strong>-TION</strong>, <strong>-ED</strong>, <strong>-ER</strong>.</li>
+        <li class="mb-2">Common word starters: <strong>S-</strong>, <strong>ST-</strong>, <strong>TR-</strong>, <strong>CH-</strong>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-5 bg-light">
+    <div class="card-body text-center">
+      <h5 class="fw-bold">Ready to play?</h5>
+      <a href="/" class="btn btn-primary me-2"><i class="bi bi-play-fill me-1"></i>Classic Mode</a>
+      <a href="/daily" class="btn btn-outline-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

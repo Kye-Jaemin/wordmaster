@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-xl py-3">
+  <div class="row justify-content-center g-3">
+
+    <!-- ② ADSENSE_SIDEBAR (왼쪽, 데스크탑) -->
+    <div class="col-lg-2 d-none d-lg-block">
+      <div class="ad-sidebar sticky-top pt-3">
+        <!-- ADSENSE_SIDEBAR -->
+        <!--
+        <ins class="adsbygoogle" style="display:block;width:160px;height:600px"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <div class="ad-placeholder" style="width:160px;height:600px;">
+          <span>Ad</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="col-12 col-lg-6">
+      <!-- Mode Badge -->
+      <div class="text-center mb-2">
+        {% if mode == "daily" %}
+          <span class="badge bg-warning text-dark fs-6"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</span>
+        {% elif mode == "unlimited" %}
+          <span class="badge bg-success fs-6"><i class="bi bi-infinity me-1"></i>Unlimited Mode</span>
+        {% elif mode == "easy" %}
+          <span class="badge bg-info text-dark fs-6"><i class="bi bi-emoji-smile me-1"></i>Easy Mode — 4 Letters</span>
+        {% elif mode == "hard" %}
+          <span class="badge bg-danger fs-6"><i class="bi bi-fire me-1"></i>Hard Mode — 6 Letters</span>
+        {% elif mode.startswith("category_") %}
+          <span class="badge bg-purple fs-6 text-white" style="background:#6f42c1!important">
+            <i class="bi bi-tag me-1"></i>{{ mode.replace("category_","").title() }} Words
+          </span>
+        {% else %}
+          <span class="badge bg-primary fs-6"><i class="bi bi-grid me-1"></i>Classic Mode — 5 Letters</span>
+        {% endif %}
+      </div>
+
+      <!-- Notification Toast -->
+      <div id="toast-area" class="text-center mb-2" style="min-height:36px;"></div>
+
+      <!-- Guess Counter -->
+      <div id="guess-counter" class="text-center mb-2">
+        <span class="badge bg-secondary fs-6">
+          <i class="bi bi-hash me-1"></i>Guess <span id="guess-current">1</span> / {{ max_guesses }}
+        </span>
+      </div>
+
+      <!-- Game Board -->
+      <div id="board" class="game-board mx-auto mb-3" data-length="{{ word_length }}" data-maxguesses="{{ max_guesses }}">
+        <!-- Tiles rendered by JS -->
+      </div>
+
+      <!-- ③ ADSENSE_RESULT — 게임 결과 후 광고 (hidden until game ends) -->
+      <div id="result-ad" class="text-center mt-2 d-none">
+        <!-- ADSENSE_RESULT -->
+        <!--
+        <ins class="adsbygoogle" style="display:block;width:300px;height:250px"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        -->
+        <div class="ad-placeholder mx-auto" style="width:300px;height:150px;">
+          <span>Ad</span>
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div id="result-panel" class="text-center d-none mt-3">
+        <div id="result-emoji" class="fs-4 mb-2"></div>
+        <h5 id="result-message" class="fw-bold"></h5>
+        <p id="result-word" class="text-muted small"></p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
+          <button id="btn-share" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-share me-1"></i>Share Result
+          </button>
+          {% if mode != "daily" %}
+          <button id="btn-play-again" class="btn btn-primary btn-sm">
+            <i class="bi bi-arrow-clockwise me-1"></i>Play Again
+          </button>
+          {% else %}
+          <a href="/unlimited" class="btn btn-success btn-sm">
+            <i class="bi bi-infinity me-1"></i>Play More
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Keyboard -->
+      <div id="keyboard" class="keyboard mt-3 mx-auto">
+        <div class="key-row">
+          {% for k in ["Q","W","E","R","T","Y","U","I","O","P"] %}
+            <button class="key" data-key="{{ k }}">{{ k }}</button>
+          {% endfor %}
+        </div>
+        <div class="key-row">
+          {% for k in ["A","S","D","F","G","H","J","K","L"] %}
+            <button class="key" data-key="{{ k }}">{{ k }}</button>
+          {% endfor %}
+        </div>
+        <div class="key-row">
+          <button class="key key-wide" data-key="ENTER"><i class="bi bi-check-lg"></i> ENTER</button>
+          {% for k in ["Z","X","C","V","B","N","M"] %}
+            <button class="key" data-key="{{ k }}">{{ k }}</button>
+          {% endfor %}
+          <button class="key key-wide" data-key="BACKSPACE"><i class="bi bi-backspace"></i></button>
+        </div>
+      </div>
+
+      <!-- Action Buttons: Hint + Give Up -->
+      <div class="d-flex gap-2 justify-content-center mt-3" id="action-buttons">
+        <button id="btn-hint" class="btn btn-outline-warning btn-sm">
+          <i class="bi bi-lightbulb me-1"></i>Hint
+          <span class="badge bg-warning text-dark ms-1">1</span>
+        </button>
+        <button id="btn-giveup" class="btn btn-outline-danger btn-sm">
+          <i class="bi bi-flag me-1"></i>Give Up
+        </button>
+      </div>
+
+      <!-- Hint Panel -->
+      <div id="hint-panel" class="alert alert-warning d-none mt-2 mx-auto text-start" style="max-width:420px;" role="alert">
+        <div id="hint-content"></div>
+      </div>
+
+      <!-- Mini how-to -->
+      <div class="text-center mt-3">
+        <small class="text-muted">
+          <span class="demo-tile correct-demo">G</span> Correct &nbsp;
+          <span class="demo-tile present-demo">R</span> Wrong position &nbsp;
+          <span class="demo-tile absent-demo">X</span> Not in word
+        </small>
+      </div>
+    </div>
+
+    <!-- Right sidebar ad -->
+    <div class="col-lg-2 d-none d-lg-block">
+      <div class="ad-sidebar sticky-top pt-3">
+        <div class="ad-placeholder" style="width:160px;height:600px;">
+          <span>Ad</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const GAME_MODE    = "{{ mode }}";
+  const WORD_LENGTH  = {{ word_length }};
+  const MAX_GUESSES  = {{ max_guesses }};
+</script>
+<script src="/static/js/game.js"></script>
+{% endblock %}

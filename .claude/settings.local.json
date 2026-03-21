@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(pip install:*)",
+      "Bash(claude remote-control:*)",
+      "Bash(where.exe claude:*)",
+      "Bash(where.exe claude.exe)",
+      "Read(//c/Users/jaemi/AI cowork/wordmaster/$APPDATA/npm/**)",
+      "Read(//c/Users/jaemi/AI cowork/wordmaster/$LOCALAPPDATA/**)",
+      "Read(//c/Users/jaemi/AppData/Local/**)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "Bash(echo $PATH)",
+      "Read(//c/Program Files/GitHub CLI//**)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/GitHub CLI\")"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:760px">
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+      <li class="breadcrumb-item active">{{ post.title }}</li>
+    </ol>
+  </nav>
+
+  <article>
+    <h1 class="fw-bold text-primary mb-1">{{ post.title }}</h1>
+    <p class="text-muted small mb-4"><i class="bi bi-calendar3 me-1"></i>{{ post.date }}</p>
+
+    {% if slug == "wordle-tips" %}
+    <p>Whether you're a casual player or a hardcore word-puzzle enthusiast, these strategies will help you consistently beat WordMaster in fewer guesses.</p>
+
+    <h3 class="fw-bold mt-4">1. Start with High-Frequency Letters</h3>
+    <p>The most common letters in 5-letter English words are: <strong>E, A, R, I, O, T, N, S, L, C</strong>. A great opening word covers as many of these as possible.</p>
+    <p><strong>Best openers:</strong> CRANE, STARE, AUDIO, RAISE, ARISE</p>
+
+    <h3 class="fw-bold mt-4">2. Your Second Guess Should Eliminate New Letters</h3>
+    <p>Don't waste your second guess repeating letters you already know. Choose a word that tests 4–5 completely new letters. If your first was CRANE, try STOMP or DULY.</p>
+
+    <h3 class="fw-bold mt-4">3. Watch for Double Letters</h3>
+    <p>Many words have repeated letters (SLEEP, TEETH, LLAMA). If you're stuck, consider that the same letter might appear twice.</p>
+
+    <h3 class="fw-bold mt-4">4. Use Yellow Tiles Aggressively</h3>
+    <p>A yellow tile tells you the exact letter is in the word — just not in that position. Try it in every other position before giving up on it.</p>
+
+    <h3 class="fw-bold mt-4">5. Common Endings to Try</h3>
+    <p>If you have 3 letters fixed, consider these endings: <strong>-TION, -NESS, -MENT, -IGHT, -OUND, -IGHT</strong>.</p>
+
+    {% elif slug == "best-starting-words" %}
+    <p>The starting word can make or break your game. After analyzing thousands of word games, here are the top starting words ranked by letter coverage.</p>
+
+    <h3 class="fw-bold mt-4">Tier 1: The Best Starters</h3>
+    <ul>
+      <li><strong>CRANE</strong> — Covers C, R, A, N, E (5 high-frequency letters)</li>
+      <li><strong>STARE</strong> — S, T, A, R, E — excellent vowel + consonant balance</li>
+      <li><strong>AUDIO</strong> — Hits 4 of 5 vowels in one shot</li>
+      <li><strong>RAISE</strong> — R, A, I, S, E — covers the most common letters</li>
+    </ul>
+
+    <h3 class="fw-bold mt-4">Tier 2: Strong Alternatives</h3>
+    <ul>
+      <li><strong>ARISE, ATONE, ROAST, STALE, TRACE</strong></li>
+    </ul>
+
+    <h3 class="fw-bold mt-4">Two-Word Opening Strategy</h3>
+    <p>Some players use a fixed two-word opener: <strong>CRANE + STOMP</strong> covers 10 unique letters and gives you a huge head start by guess 3.</p>
+
+    {% elif slug == "word-game-history" %}
+    <p>Word guessing games have a surprisingly rich history — long before the internet brought them to millions of players every morning.</p>
+
+    <h3 class="fw-bold mt-4">The Newspaper Era</h3>
+    <p>Crossword puzzles originated in the early 1900s in American newspapers. By the 1950s, word puzzles were a daily ritual for millions of readers. "Jotto" — a paper-and-pencil code-breaking word game from 1955 — is considered an early ancestor of today's digital word games.</p>
+
+    <h3 class="fw-bold mt-4">The Digital Revolution</h3>
+    <p>The 1980s and 90s saw word games migrate to personal computers and early gaming consoles. Scrabble, Boggle, and similar games found new audiences through digital adaptations.</p>
+
+    <h3 class="fw-bold mt-4">The Viral Era (2021–Present)</h3>
+    <p>In late 2021, a simple daily word game created as a gift went globally viral, inspiring thousands of variants and establishing the "daily challenge" format as a new genre. Today, word guessing games attract hundreds of millions of players worldwide.</p>
+
+    <h3 class="fw-bold mt-4">Why Are They So Addictive?</h3>
+    <p>Psychologists point to several factors: the satisfaction of pattern recognition, the social element of shared daily challenges, and the healthy sense of competition that comes from comparing results without revealing the answer.</p>
+    {% endif %}
+  </article>
+
+  <hr class="my-5"/>
+  <div class="d-flex gap-2">
+    <a href="/blog" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-1"></i>All Posts</a>
+    <a href="/" class="btn btn-primary"><i class="bi bi-play-fill me-1"></i>Play Now</a>
+  </div>
+</div>
+{% endblock %}

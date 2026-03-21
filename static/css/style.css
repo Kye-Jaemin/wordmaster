@@ -1,0 +1,129 @@
+/* ─── WordMaster — Global ─────────────────────────────────── */
+:root {
+  --color-correct:  #1565C0;  /* Blue  — correct position */
+  --color-present:  #F9A825;  /* Amber — present, wrong position */
+  --color-absent:   #757575;  /* Gray  — not in word */
+  --color-empty:    #ffffff;
+  --color-border:   #9e9e9e;
+  --color-primary:  #2E75B6;
+  --tile-size-5:    60px;
+  --tile-size-4:    70px;
+  --tile-size-6:    52px;
+  --tile-gap:       6px;
+}
+
+body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
+
+/* ─── Ad Placeholders ─────────────────────────────────────── */
+.ad-header { background: #f0f0f0; border-bottom: 1px solid #ddd; min-height: 62px; }
+.ad-placeholder {
+  background: #e9ecef;
+  display: flex; align-items: center; justify-content: center;
+  color: #aaa; font-size: 12px; border: 1px dashed #ccc;
+  border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;
+}
+.ad-sidebar { display: flex; justify-content: center; }
+
+/* ─── Game Board ──────────────────────────────────────────── */
+.game-board {
+  display: grid;
+  gap: var(--tile-gap);
+  max-width: 380px;
+}
+.game-board[data-length="4"] { grid-template-columns: repeat(4, var(--tile-size-4)); }
+.game-board[data-length="5"] { grid-template-columns: repeat(5, var(--tile-size-5)); }
+.game-board[data-length="6"] { grid-template-columns: repeat(6, var(--tile-size-6)); }
+
+/* ─── Tiles ───────────────────────────────────────────────── */
+.tile {
+  aspect-ratio: 1;
+  border: 2px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 800; text-transform: uppercase;
+  color: #212121; background: var(--color-empty);
+  border-radius: 4px;
+  transition: border-color 0.1s, transform 0.1s;
+  user-select: none;
+}
+.game-board[data-length="4"]  .tile { font-size: 30px; }
+.game-board[data-length="6"]  .tile { font-size: 22px; }
+
+.tile.filled { border-color: #555; transform: scale(1.05); }
+.tile.revealed { color: #fff; border-color: transparent; }
+
+.tile.correct  { background: var(--color-correct); }
+.tile.present  { background: var(--color-present); }
+.tile.absent   { background: var(--color-absent); }
+
+/* Flip animation */
+@keyframes flip-in  { 0%{transform:rotateX(0)}  50%{transform:rotateX(-90deg)} }
+@keyframes flip-out { 50%{transform:rotateX(-90deg)} 100%{transform:rotateX(0)} }
+.tile.flip {
+  animation: flip-in 0.25s ease forwards, flip-out 0.25s ease 0.25s forwards;
+}
+
+/* Shake on invalid */
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)}
+}
+.row-shake { animation: shake 0.4s ease; }
+
+/* Bounce on win */
+@keyframes bounce {
+  0%,100%{transform:translateY(0)} 40%{transform:translateY(-20px)} 60%{transform:translateY(-10px)}
+}
+.tile.bounce { animation: bounce 0.6s ease forwards; }
+
+/* ─── Keyboard ────────────────────────────────────────────── */
+.keyboard { max-width: 480px; }
+.key-row  { display: flex; justify-content: center; gap: 5px; margin-bottom: 6px; }
+
+.key {
+  height: 56px; min-width: 36px; padding: 0 8px;
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  border: none; border-radius: 4px; cursor: pointer;
+  background: #d4d4d4; color: #212121;
+  transition: background 0.2s, transform 0.1s;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.key:active { transform: scale(0.92); }
+.key-wide { min-width: 64px; font-size: 12px; }
+
+.key.correct { background: var(--color-correct); color: #fff; }
+.key.present { background: var(--color-present); color: #fff; }
+.key.absent  { background: var(--color-absent);  color: #fff; }
+
+/* ─── Toast ───────────────────────────────────────────────── */
+.toast-msg {
+  display: inline-block; padding: 8px 20px;
+  background: #212121; color: #fff;
+  border-radius: 24px; font-size: 14px; font-weight: 600;
+  animation: fadeInOut 2s ease forwards;
+}
+@keyframes fadeInOut {
+  0%{opacity:0;transform:translateY(-8px)}
+  15%,80%{opacity:1;transform:translateY(0)}
+  100%{opacity:0}
+}
+
+/* ─── Demo tiles (legend) ─────────────────────────────────── */
+.demo-tile {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; font-size: 12px; font-weight: 800;
+  color: #fff; border-radius: 3px; vertical-align: middle;
+}
+.correct-demo { background: var(--color-correct); }
+.present-demo { background: var(--color-present); }
+.absent-demo  { background: var(--color-absent); }
+
+/* ─── Blog ────────────────────────────────────────────────── */
+.blog-card { transition: transform 0.2s, box-shadow 0.2s; }
+.blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+
+/* ─── Responsive tweaks ───────────────────────────────────── */
+@media (max-width: 480px) {
+  :root { --tile-size-5: 52px; --tile-size-4: 62px; --tile-size-6: 42px; }
+  .tile { font-size: 22px; }
+  .key  { height: 48px; min-width: 30px; font-size: 11px; }
+  .key-wide { min-width: 52px; }
+}

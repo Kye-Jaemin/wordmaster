@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:720px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-trophy me-2"></i>Leaderboard & Stats</h1>
+  <p class="text-muted mb-4">How does your score compare?</p>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm border-0 bg-primary text-white">
+        <div class="card-body py-3">
+          <div class="fs-2 fw-bold" id="stat-played">—</div>
+          <div class="small">Played</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm border-0 bg-success text-white">
+        <div class="card-body py-3">
+          <div class="fs-2 fw-bold" id="stat-winpct">—</div>
+          <div class="small">Win %</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm border-0 bg-warning text-dark">
+        <div class="card-body py-3">
+          <div class="fs-2 fw-bold" id="stat-streak">—</div>
+          <div class="small">Streak</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card text-center shadow-sm border-0 bg-info text-dark">
+        <div class="card-body py-3">
+          <div class="fs-2 fw-bold" id="stat-best">—</div>
+          <div class="small">Best Streak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3">Guess Distribution</h5>
+      <div id="guess-dist"></div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-5 bg-light text-center">
+    <div class="card-body">
+      <p class="text-muted mb-3">Stats are stored locally in your browser.</p>
+      <a href="/" class="btn btn-primary me-2"><i class="bi bi-play-fill me-1"></i>Play Now</a>
+      <a href="/daily" class="btn btn-outline-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{1:0,2:0,3:0,4:0,5:0,6:0}}');
+  document.getElementById("stat-played").textContent  = stats.played;
+  document.getElementById("stat-winpct").textContent  = stats.played ? Math.round(stats.won/stats.played*100)+"%" : "—";
+  document.getElementById("stat-streak").textContent  = stats.streak;
+  document.getElementById("stat-best").textContent    = stats.best;
+
+  const dist = document.getElementById("guess-dist");
+  const max  = Math.max(...Object.values(stats.dist), 1);
+  [1,2,3,4,5,6].forEach(n => {
+    const v   = stats.dist[n] || 0;
+    const pct = Math.round(v/max*100);
+    dist.innerHTML += `<div class="d-flex align-items-center mb-2">
+      <div class="me-2 fw-bold" style="width:16px">${n}</div>
+      <div class="flex-grow-1 bg-light rounded overflow-hidden" style="height:28px">
+        <div class="bg-primary h-100 d-flex align-items-center px-2 text-white fw-bold"
+             style="width:${Math.max(pct,5)}%;min-width:32px;transition:width .4s">${v}</div>
+      </div>
+    </div>`;
+  });
+</script>
+{% endblock %}
