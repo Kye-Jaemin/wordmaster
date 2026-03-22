@@ -123,6 +123,7 @@ async function submitGuess() {
 
     if (data.won) {
       gameOver = true;
+      saveStats(true);
       const msgs = ["Genius!","Magnificent!","Impressive!","Splendid!","Great!","Phew!"];
       setTimeout(() => {
         bounceRow(currentRow);
@@ -136,6 +137,7 @@ async function submitGuess() {
       updateGuessCounter();
       if (currentRow >= MAX_GUESSES) {
         gameOver = true;
+        saveStats(false);
         setTimeout(() => { showResult(false); hideActionButtons(); }, 400);
       }
     }
@@ -266,11 +268,37 @@ function updateGuessCounter() {
   if (el) el.textContent = currentRow + 1;
 }
 
+// ─── Stats ────────────────────────────────────────────────────
+function saveStats(won) {
+  const defaults = { played: 0, won: 0, streak: 0, best: 0, dist: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 } };
+  const stats = JSON.parse(localStorage.getItem("wm_stats") || JSON.stringify(defaults));
+
+  if (GAME_MODE === "daily") {
+    const today = new Date().toISOString().slice(0, 10);
+    if (stats.lastDaily === today) return;
+    stats.lastDaily = today;
+  }
+
+  stats.played++;
+  if (won) {
+    stats.won++;
+    stats.streak++;
+    if (stats.streak > stats.best) stats.best = stats.streak;
+    const guessNum = currentRow + 1;
+    stats.dist[guessNum] = (stats.dist[guessNum] || 0) + 1;
+  } else {
+    stats.streak = 0;
+  }
+
+  localStorage.setItem("wm_stats", JSON.stringify(stats));
+}
+
 // ─── Give Up ──────────────────────────────────────────────────
 async function handleGiveUp() {
   if (gameOver) return;
   if (!confirm("Give up? The answer will be revealed.")) return;
   gameOver = true;
+  saveStats(false);
   hideActionButtons();
   setTimeout(() => showResult(false), 200);
 }
