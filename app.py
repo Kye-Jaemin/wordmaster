@@ -256,6 +256,10 @@ def robots():
     txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster-game.com/sitemap.xml\n"
     return Response(txt, mimetype="text/plain")
 
+@app.route("/ads.txt")
+def ads_txt():
+        txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
+        return Response(txt, mimetype="text/plain")
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", title="Page Not Found — WordMaster"), 404
