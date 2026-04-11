@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, Response
-from datetime import date
+from datetime import date, datetime, timedelta
 import json, random, xml.etree.ElementTree as ET, urllib.request, urllib.error
 
 app = Flask(__name__)
@@ -98,6 +98,12 @@ def about():
         title="About WordMaster — Free Word Game",
         meta_desc="WordMaster is a free, browser-based word guessing game. No download needed. Play daily or unlimited!")
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html",
+        title="Contact Us — WordMaster",
+        meta_desc="Get in touch with the WordMaster team. Report bugs, suggest features, or ask anything about the game.")
+
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html",
@@ -109,6 +115,58 @@ def terms():
     return render_template("terms.html",
         title="Terms of Service — WordMaster",
         meta_desc="WordMaster terms of service and usage conditions.")
+
+def get_word_for_date(target_date):
+    """Return the daily word for a given date object."""
+    seed = target_date.year * 10000 + target_date.month * 100 + target_date.day
+    random.seed(seed)
+    return random.choice(WORDS["daily"]).upper()
+
+@app.route("/archive")
+def archive_index():
+    """Show the last 30 days of daily words."""
+    today = date.today()
+    entries = []
+    for i in range(30):
+        d = today - timedelta(days=i)
+        word = get_word_for_date(d)
+        entries.append({
+            "date": d.strftime("%Y-%m-%d"),
+            "date_display": d.strftime("%B %d, %Y"),
+            "word": word,
+            "is_today": (d == today),
+        })
+    return render_template("archive.html",
+        title="Daily Word Archive — WordMaster",
+        meta_desc="Browse past WordMaster daily words. See every daily challenge from the last 30 days.",
+        entries=entries,
+        today=today.strftime("%Y-%m-%d"))
+
+@app.route("/archive/<date_str>")
+def archive_day(date_str):
+    """Show the daily word for a specific date."""
+    try:
+        target = datetime.strptime(date_str, "%Y-%m-%d").date()
+    except ValueError:
+        return render_template("404.html", title="Page Not Found — WordMaster"), 404
+
+    today = date.today()
+    if target > today:
+        return render_template("404.html", title="Page Not Found — WordMaster"), 404
+
+    word = get_word_for_date(target)
+    prev_date = (target - timedelta(days=1)).strftime("%Y-%m-%d")
+    next_date = (target + timedelta(days=1)).strftime("%Y-%m-%d") if target < today else None
+
+    return render_template("archive_day.html",
+        title=f"Daily Word {target.strftime('%B %d, %Y')} — WordMaster",
+        meta_desc=f"The WordMaster daily word for {target.strftime('%B %d, %Y')}.",
+        word=word,
+        target_date=target.strftime("%Y-%m-%d"),
+        date_display=target.strftime("%B %d, %Y"),
+        prev_date=prev_date,
+        next_date=next_date,
+        is_today=(target == today))
 
 @app.route("/leaderboard")
 def leaderboard():
@@ -240,8 +298,8 @@ def sitemap():
     urls = [
         "/", "/daily", "/unlimited", "/easy", "/hard",
         "/category/animals", "/category/food",
-        "/leaderboard", "/how-to-play", "/about",
-        "/privacy", "/terms", "/blog",
+        "/leaderboard", "/how-to-play", "/about", "/contact",
+        "/privacy", "/terms", "/blog", "/archive",
         "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -258,8 +316,9 @@ def robots():
 
 @app.route("/ads.txt")
 def ads_txt():
-        txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
-        return Response(txt, mimetype="text/plain")
+    txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
+    return Response(txt, mimetype="text/plain")
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", title="Page Not Found — WordMaster"), 404

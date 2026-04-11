@@ -207,6 +207,43 @@ function showResult(won, message = "") {
 
   if (shareBtn) shareBtn.onclick = shareResult;
   if (againBtn) againBtn.onclick = resetGame;
+
+  // Fetch & display word definition
+  fetchDefinition(secretWord);
+}
+
+// ─── Word Definition (on game end) ────────────────────────────
+async function fetchDefinition(word) {
+  const card     = document.getElementById("definition-card");
+  const loading  = document.getElementById("definition-loading");
+  const defWord  = document.getElementById("def-word");
+  const defPos   = document.getElementById("def-pos");
+  const defText  = document.getElementById("def-text");
+  const defEx    = document.getElementById("def-example");
+
+  if (!card || !loading) return;
+
+  loading.classList.remove("d-none");
+  card.classList.add("d-none");
+
+  try {
+    const res  = await fetch(`/api/hint?word=${word.toLowerCase()}`);
+    const data = await res.json();
+
+    loading.classList.add("d-none");
+
+    if (data.definition && !data.definition.startsWith("Starts with")) {
+      defWord.textContent  = data.word || word.toUpperCase();
+      defPos.textContent   = data.partOfSpeech || "";
+      defPos.classList.toggle("d-none", !data.partOfSpeech);
+      defText.textContent  = data.definition;
+      defEx.textContent    = data.example ? `"${data.example}"` : "";
+      defEx.classList.toggle("d-none", !data.example);
+      card.classList.remove("d-none");
+    }
+  } catch (e) {
+    loading.classList.add("d-none");
+  }
 }
 
 function shareResult() {
@@ -241,6 +278,10 @@ async function resetGame() {
   hintUsed      = false;
   resultPanel.classList.add("d-none");
   resultAd.classList.add("d-none");
+  const defCard = document.getElementById("definition-card");
+  if (defCard) defCard.classList.add("d-none");
+  const defLoading = document.getElementById("definition-loading");
+  if (defLoading) defLoading.classList.add("d-none");
   keyboard.querySelectorAll(".key").forEach(btn => {
     btn.className = btn.classList.contains("key-wide") ? "key key-wide" : "key";
     delete btn.dataset.state;

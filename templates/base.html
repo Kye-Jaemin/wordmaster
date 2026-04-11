@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ title }}</title>
   <meta name="description" content="{{ meta_desc }}"/>
+  <meta name="google-adsense-account" content="ca-pub-3911396624649383"/>
 
   <!-- Open Graph -->
   <meta property="og:title" content="{{ title }}"/>
@@ -57,7 +58,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="/daily"><i class="bi bi-calendar-day me-1"></i>Daily</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/daily" data-bs-toggle="dropdown"><i class="bi bi-calendar-day me-1"></i>Daily</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/daily"><i class="bi bi-play-fill me-1"></i>Today's Challenge</a></li>
+              <li><a class="dropdown-item" href="/archive"><i class="bi bi-clock-history me-1"></i>Archive</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link" href="/unlimited"><i class="bi bi-infinity me-1"></i>Unlimited</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Modes</a>
@@ -72,6 +79,7 @@
           </li>
           <li class="nav-item"><a class="nav-link" href="/leaderboard"><i class="bi bi-trophy me-1"></i>Stats</a></li>
           <li class="nav-item"><a class="nav-link" href="/how-to-play"><i class="bi bi-question-circle me-1"></i>How to Play</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact"><i class="bi bi-envelope me-1"></i>Contact</a></li>
         </ul>
       </div>
     </div>
@@ -94,6 +102,7 @@
           <h6 class="fw-bold">Game Modes</h6>
           <ul class="list-unstyled small">
             <li><a href="/daily" class="text-muted text-decoration-none">Daily Challenge</a></li>
+            <li><a href="/archive" class="text-muted text-decoration-none">Daily Archive</a></li>
             <li><a href="/unlimited" class="text-muted text-decoration-none">Unlimited Play</a></li>
             <li><a href="/easy" class="text-muted text-decoration-none">Easy (4 Letters)</a></li>
             <li><a href="/hard" class="text-muted text-decoration-none">Hard (6 Letters)</a></li>
@@ -105,6 +114,7 @@
             <li><a href="/how-to-play" class="text-muted text-decoration-none">How to Play</a></li>
             <li><a href="/blog" class="text-muted text-decoration-none">Blog</a></li>
             <li><a href="/about" class="text-muted text-decoration-none">About</a></li>
+            <li><a href="/contact" class="text-muted text-decoration-none">Contact</a></li>
             <li><a href="/privacy" class="text-muted text-decoration-none">Privacy Policy</a></li>
             <li><a href="/terms" class="text-muted text-decoration-none">Terms of Service</a></li>
           </ul>

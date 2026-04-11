@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:600px">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+      <li class="breadcrumb-item"><a href="/archive" class="text-decoration-none">Archive</a></li>
+      <li class="breadcrumb-item active">{{ date_display }}</li>
+    </ol>
+  </nav>
+
+  <div class="text-center mb-4">
+    {% if is_today %}
+      <span class="badge bg-warning text-dark fs-6 mb-2"><i class="bi bi-calendar-day me-1"></i>Today's Word</span>
+    {% else %}
+      <span class="badge bg-secondary fs-6 mb-2"><i class="bi bi-calendar3 me-1"></i>Past Daily Word</span>
+    {% endif %}
+    <h1 class="fw-bold text-primary">{{ date_display }}</h1>
+  </div>
+
+  <!-- Word reveal card -->
+  <div class="card shadow text-center mb-4">
+    <div class="card-body py-4">
+      {% if is_today %}
+        <p class="text-muted mb-3">Play today's challenge to find out the word!</p>
+        <a href="/daily" class="btn btn-primary btn-lg">
+          <i class="bi bi-play-fill me-1"></i>Play Today's Challenge
+        </a>
+      {% else %}
+        <p class="text-muted small mb-2">The word was:</p>
+        <!-- Letter tiles display -->
+        <div class="d-flex justify-content-center gap-2 mb-3" id="word-tiles">
+          {% for letter in word %}
+          <div class="archive-tile revealed correct">{{ letter }}</div>
+          {% endfor %}
+        </div>
+        <p class="text-muted small">{{ date_display }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Definition card (loaded by JS) -->
+  {% if not is_today %}
+  <div class="card shadow-sm mb-4" id="def-card">
+    <div class="card-header fw-semibold">
+      <i class="bi bi-book me-1 text-primary"></i>Definition
+    </div>
+    <div class="card-body" id="def-body">
+      <div class="text-center text-muted py-2">
+        <span class="spinner-border spinner-border-sm me-1"></span>Loading definition…
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Navigation between days -->
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    {% if prev_date %}
+    <a href="/archive/{{ prev_date }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-chevron-left me-1"></i>Previous Day
+    </a>
+    {% else %}
+    <div></div>
+    {% endif %}
+
+    <a href="/archive" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-calendar3 me-1"></i>All Archives
+    </a>
+
+    {% if next_date %}
+    <a href="/archive/{{ next_date }}" class="btn btn-outline-secondary btn-sm">
+      Next Day<i class="bi bi-chevron-right ms-1"></i>
+    </a>
+    {% else %}
+    <div></div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.archive-tile {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  background: #6aaa64;
+  border: 2px solid #538d4e;
+}
+</style>
+{% if not is_today %}
+<script>
+(async () => {
+  const word = {{ word | tojson }};
+  const defBody = document.getElementById("def-body");
+  if (!defBody) return;
+  try {
+    const res  = await fetch(`/api/hint?word=${word.toLowerCase()}`);
+    const data = await res.json();
+    if (data.definition && !data.definition.startsWith("Starts with")) {
+      let html = `<p class="mb-1"><strong class="text-primary">${data.word}</strong>`;
+      if (data.partOfSpeech) html += ` <span class="badge bg-secondary">${data.partOfSpeech}</span>`;
+      html += `</p><p class="mb-1">${data.definition}</p>`;
+      if (data.example) html += `<p class="text-muted fst-italic small mb-0">"${data.example}"</p>`;
+      defBody.innerHTML = html;
+    } else {
+      defBody.innerHTML = `<p class="text-muted small mb-0">No definition available for this word.</p>`;
+    }
+  } catch (e) {
+    defBody.innerHTML = `<p class="text-muted small mb-0">Could not load definition.</p>`;
+  }
+})();
+</script>
+{% endif %}
+{% endblock %}

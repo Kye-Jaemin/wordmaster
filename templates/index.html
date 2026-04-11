@@ -73,6 +73,23 @@
         <div id="result-emoji" class="fs-4 mb-2"></div>
         <h5 id="result-message" class="fw-bold"></h5>
         <p id="result-word" class="text-muted small"></p>
+
+        <!-- Word Definition Card -->
+        <div id="definition-card" class="card border-primary mx-auto d-none text-start mt-2 mb-2" style="max-width:420px;">
+          <div class="card-body py-2 px-3">
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span id="def-word" class="fw-bold text-primary fs-6"></span>
+              <span id="def-pos" class="badge bg-secondary small"></span>
+            </div>
+            <p id="def-text" class="mb-1 small"></p>
+            <p id="def-example" class="text-muted fst-italic small mb-0"></p>
+          </div>
+        </div>
+        <!-- Definition loading spinner -->
+        <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
+          <span class="spinner-border spinner-border-sm me-1" role="status"></span>Loading definition…
+        </div>
+
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
           <button id="btn-share" class="btn btn-outline-primary btn-sm">
             <i class="bi bi-share me-1"></i>Share Result

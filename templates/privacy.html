@@ -2,42 +2,125 @@
 {% block content %}
 <div class="container py-5" style="max-width:720px">
   <h1 class="fw-bold text-primary mb-1"><i class="bi bi-shield-check me-2"></i>Privacy Policy</h1>
-  <p class="text-muted mb-4">Last updated: March 15, 2026</p>
+  <p class="text-muted mb-1">Last updated: April 11, 2026</p>
+  <p class="text-muted small mb-4">This policy describes how <strong>WordMaster</strong> ("we", "us", "our") handles information when you use <a href="https://wordmaster.store" class="text-decoration-none">wordmaster.store</a>.</p>
+
+  <!-- TL;DR summary box -->
+  <div class="alert alert-info mb-4" role="alert">
+    <strong><i class="bi bi-lightning-charge me-1"></i>TL;DR</strong> — We don't sell your data. We don't require an account. Game stats live only on your device.
+    Ads are served by Google AdSense. Analytics are anonymous.
+  </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <h5 class="fw-bold">1. Information We Collect</h5>
-      <p>WordMaster does not require account registration. We do not collect personal identifying information such as your name, email, or address.</p>
-      <p>We use <strong>Google Analytics 4</strong> to collect anonymized usage data (pages visited, session duration, device type) to help improve the game. This data does not identify you personally.</p>
+      <h6 class="text-muted mt-3">1a. Information you provide</h6>
+      <p>WordMaster does <strong>not</strong> require you to create an account. We do not collect personal information such as your name, email address, or postal address through normal gameplay.</p>
+      <p>If you choose to contact us via email or the contact form, we will receive your name and email address solely to respond to your inquiry. We do not add these to any mailing list.</p>
+      <h6 class="text-muted mt-3">1b. Automatically collected information</h6>
+      <p>We use <strong>Google Analytics 4 (GA4)</strong> to collect anonymized usage data, including pages visited, session duration, device type, and general geographic region (country/city level). This data is aggregated and does not identify you personally. IP addresses are anonymized by Google.</p>
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">2. Cookies & Local Storage</h5>
-      <p>We use browser <strong>localStorage</strong> to store your game statistics (games played, win streak) locally on your device. This data never leaves your browser and is not sent to our servers.</p>
-      <p>Third-party advertising (Google AdSense) may use cookies to serve relevant ads. You can opt out via <a href="https://adssettings.google.com" target="_blank">Google Ad Settings</a>.</p>
+      <h5 class="fw-bold">2. Cookies &amp; Local Storage</h5>
+      <h6 class="text-muted mt-3">2a. Local Storage (first-party)</h6>
+      <p>We use your browser's <strong>localStorage</strong> to store your game statistics (games played, win streak, guess distribution) entirely on your own device. This data is <em>never transmitted to our servers</em>. You can clear it at any time via your browser settings.</p>
+      <h6 class="text-muted mt-3">2b. Third-party cookies</h6>
+      <p>Google AdSense and Google Analytics may place cookies on your browser to serve relevant advertisements and to measure site traffic. These cookies are subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-decoration-none">Google's Privacy Policy</a>. You can opt out via:</p>
+      <ul class="mb-0 small">
+        <li><a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a> — opt out of personalised ads</li>
+        <li><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a></li>
+      </ul>
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <h5 class="fw-bold">3. Advertising</h5>
-      <p>This site uses Google AdSense to display advertisements. Google may use cookies to show personalized ads based on your browsing history. WordMaster does not control which ads are displayed.</p>
+      <p>This site uses <strong>Google AdSense</strong> to display advertisements. Google may use cookies and similar technologies to show personalised ads based on your browsing history across websites. WordMaster earns a small advertising fee to keep the site free — we do not control which specific ads are displayed.</p>
+      <p class="mb-0">To learn more, visit Google's <a href="https://support.google.com/adsense/answer/1348695" target="_blank" rel="noopener" class="text-decoration-none">How AdSense Works</a> page.</p>
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">4. Third-Party Links</h5>
-      <p>Our blog and pages may contain links to external websites. We are not responsible for the privacy practices of those sites.</p>
+      <h5 class="fw-bold">4. Third-Party Services</h5>
+      <table class="table table-sm table-bordered small mt-2 mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Service</th>
+            <th>Purpose</th>
+            <th>Data shared</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google AdSense</td>
+            <td>Advertising</td>
+            <td>Cookie / interest data (by Google)</td>
+          </tr>
+          <tr>
+            <td>Google Analytics 4</td>
+            <td>Anonymous traffic analysis</td>
+            <td>Anonymised IP, device, behavior</td>
+          </tr>
+          <tr>
+            <td>Free Dictionary API</td>
+            <td>In-game word definitions &amp; hints</td>
+            <td>The word you are playing (no personal data)</td>
+          </tr>
+          <tr>
+            <td>Bootstrap CDN / jsDelivr</td>
+            <td>UI styling &amp; scripts</td>
+            <td>Your IP (standard HTTP request)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">5. Data Retention</h5>
+      <p>We do not store personal data on our servers in connection with gameplay. Google Analytics data is retained for 14 months by default. Any email you send us is kept only as long as needed to resolve your query.</p>
+      <p class="mb-0">Your game stats stored in <em>localStorage</em> remain on your device until you clear your browser data.</p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">6. Children's Privacy</h5>
+      <p class="mb-0">WordMaster is a general-audience word game and does not knowingly collect personal information from children under 13. If you believe we have inadvertently received information from a child, please contact us immediately so we can delete it.</p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">7. Your Rights (EEA / UK / California)</h5>
+      <p>Depending on your jurisdiction you may have rights to access, correct, or delete personal data we hold. Because we hold minimal personal data, most requests can be resolved by clearing your browser's localStorage. For any other data (e.g. email correspondence), contact us and we will respond within 30 days.</p>
+      <p class="mb-0">California residents: WordMaster does not sell personal information within the meaning of the CCPA.</p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">8. Changes to This Policy</h5>
+      <p class="mb-0">We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page will reflect any changes. Continued use of WordMaster after changes constitutes acceptance of the revised policy.</p>
     </div>
   </div>
 
   <div class="card shadow-sm mb-5">
     <div class="card-body">
-      <h5 class="fw-bold">5. Contact</h5>
-      <p>If you have questions about this privacy policy, please contact us at: <strong>privacy@wordmaster-game.com</strong></p>
+      <h5 class="fw-bold">9. Contact</h5>
+      <p>Questions about this Privacy Policy? Please reach out:</p>
+      <p class="mb-0">
+        <i class="bi bi-envelope me-1 text-primary"></i>
+        <a href="mailto:privacy@wordmaster.store" class="text-decoration-none">privacy@wordmaster.store</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/contact" class="text-decoration-none">Contact Form</a>
+      </p>
     </div>
   </div>
 </div>
