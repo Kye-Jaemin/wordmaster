@@ -32,6 +32,41 @@
 </head>
 <body>
 
+  <!-- ★ P2-C: Cold Start Loading Overlay ★ -->
+  <div id="page-loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <i class="bi bi-grid-3x3-gap-fill"></i>
+      </div>
+      <div class="loader-title">WordMaster</div>
+      <div class="loader-spinner">
+        <div class="spinner-border text-primary" role="status" style="width:2rem;height:2rem;">
+          <span class="visually-hidden">Loading…</span>
+        </div>
+      </div>
+      <div class="loader-msg">Loading your game…</div>
+      <div id="loader-slow-msg" class="loader-slow-msg d-none">
+        ⏳ First load may take ~10 seconds on free hosting. Thanks for your patience!
+      </div>
+    </div>
+  </div>
+  <script>
+    // Show "slow loading" message after 5 seconds
+    var _loaderSlowTimer = setTimeout(function() {
+      var m = document.getElementById("loader-slow-msg");
+      if (m) m.classList.remove("d-none");
+    }, 5000);
+    // Remove loader when page is interactive
+    document.addEventListener("DOMContentLoaded", function() {
+      clearTimeout(_loaderSlowTimer);
+      var loader = document.getElementById("page-loader");
+      if (loader) {
+        loader.classList.add("loader-hidden");
+        setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 350);
+      }
+    });
+  </script>
+
   <!-- ① ADSENSE_HEADER — 헤더 배너 728×90 -->
   <div class="ad-header d-flex justify-content-center align-items-center py-1">
     <!-- ADSENSE_HEADER -->

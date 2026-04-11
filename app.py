@@ -1,8 +1,31 @@
 from flask import Flask, render_template, request, jsonify, Response
 from datetime import date, datetime, timedelta
 import json, random, xml.etree.ElementTree as ET, urllib.request, urllib.error
+import sqlite3, os
 
 app = Flask(__name__)
+
+# ─── SQLite Vote DB ───────────────────────────────────────────
+DB_PATH = os.path.join(os.path.dirname(__file__), "votes.db")
+
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS word_votes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        game_date TEXT NOT NULL,
+        word TEXT NOT NULL,
+        vote TEXT NOT NULL,
+        ip_hash TEXT,
+        created_at TEXT NOT NULL
+    )''')
+    conn.commit()
+    conn.close()
+
+try:
+    init_db()
+except Exception:
+    pass  # DB init failure should not crash the app
 
 with open("words.json", encoding="utf-8") as f:
     WORDS = json.load(f)
@@ -44,10 +67,15 @@ def check_guess(guess, answer):
 
 @app.route("/")
 def index():
+    today = date.today()
+    launch = date(2026, 3, 15)
+    puzzle_number = (today - launch).days + 1
     return render_template("index.html",
         title="WordMaster — Free Online Word Guessing Game",
         meta_desc="Play WordMaster, the free daily word guessing game! Guess the 5-letter word in 6 tries. New challenge every day.",
-        mode="standard", word_length=5, max_guesses=6)
+        mode="standard", word_length=5, max_guesses=6,
+        puzzle_number=puzzle_number,
+        today_display=today.strftime("%B %d, %Y"))
 
 @app.route("/daily")
 def daily():
@@ -300,6 +328,80 @@ def api_hint():
         "definition": f"Starts with '{word[0].upper()}' and ends with '{word[-1].upper()}'",
         "example": "",
     })
+
+
+# ─── Vote API ─────────────────────────────────────────────────
+
+@app.route("/api/vote", methods=["POST"])
+def api_vote():
+    data = request.get_json(silent=True) or {}
+    word = data.get("word", "").upper().strip()
+    vote = data.get("vote", "").lower().strip()
+    game_date = data.get("date", date.today().isoformat())
+
+    if not word or vote not in ("easy", "hard"):
+        return jsonify({"error": "Invalid parameters"}), 400
+
+    # Simple IP hash for dedup (not strict — just cosmetic)
+    import hashlib
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr or "")
+    ip_hash = hashlib.md5((ip + game_date + word).encode()).hexdigest()[:12]
+
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+
+        # Prevent duplicate votes from same IP+date
+        c.execute("SELECT id FROM word_votes WHERE ip_hash=? AND game_date=? AND word=?",
+                  (ip_hash, game_date, word))
+        if c.fetchone():
+            # Return existing counts without adding duplicate
+            c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? AND word=? GROUP BY vote",
+                      (game_date, word))
+            totals = dict(c.fetchall())
+            conn.close()
+            return jsonify({
+                "easy": totals.get("easy", 0),
+                "hard": totals.get("hard", 0),
+                "total": sum(totals.values()),
+                "duplicate": True
+            })
+
+        c.execute("INSERT INTO word_votes (game_date, word, vote, ip_hash, created_at) VALUES (?,?,?,?,?)",
+                  (game_date, word, vote, ip_hash, datetime.now().isoformat()))
+        conn.commit()
+
+        c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? AND word=? GROUP BY vote",
+                  (game_date, word))
+        totals = dict(c.fetchall())
+        conn.close()
+        return jsonify({
+            "easy": totals.get("easy", 0),
+            "hard": totals.get("hard", 0),
+            "total": sum(totals.values()),
+            "duplicate": False
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/votes/<date_str>")
+def api_votes_get(date_str):
+    """Get community vote totals for a specific date."""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? GROUP BY vote",
+                  (date_str,))
+        totals = dict(c.fetchall())
+        conn.close()
+        return jsonify({
+            "easy": totals.get("easy", 0),
+            "hard": totals.get("hard", 0),
+            "total": sum(totals.values())
+        })
+    except Exception:
+        return jsonify({"easy": 0, "hard": 0, "total": 0})
 
 
 # ─── Sitemap & SEO ────────────────────────────────────────────

@@ -21,6 +21,26 @@
 
     <!-- Game Area -->
     <div class="col-12 col-lg-6">
+      <!-- ★ P2-A: Standard mode — Today's Challenge teaser ★ -->
+      {% if mode == "standard" %}
+      <div class="card border-0 shadow-sm mb-3 mx-auto" style="max-width:460px;background:linear-gradient(135deg,#e3f2fd 0%,#fff9c4 100%);">
+        <div class="card-body py-2 px-3">
+          <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-warning text-dark"><i class="bi bi-calendar-day me-1"></i>Daily #{{ puzzle_number }}</span>
+                <small class="text-muted">{{ today_display }}</small>
+              </div>
+              <div class="small fw-semibold text-dark">🎯 Today's Daily Challenge is live!</div>
+            </div>
+            <a href="/daily" class="btn btn-warning btn-sm flex-shrink-0">
+              <i class="bi bi-play-fill me-1"></i>Play Daily
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
       <!-- Daily Info Banner (only for daily mode) -->
       {% if mode == "daily" %}
       <div class="text-center mb-2">
@@ -109,6 +129,22 @@
         <!-- Definition loading spinner -->
         <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
           <span class="spinner-border spinner-border-sm me-1" role="status"></span>Loading definition…
+        </div>
+
+        <!-- ★ P2-B: Community Difficulty Vote ★ -->
+        <div id="difficulty-vote" class="card border-0 bg-light mx-auto d-none mt-2 mb-1" style="max-width:420px;">
+          <div class="card-body py-2 px-3 text-center">
+            <p class="small text-muted mb-2"><i class="bi bi-bar-chart-fill me-1"></i>How was this word for you?</p>
+            <div class="d-flex gap-2 justify-content-center" id="vote-buttons">
+              <button onclick="submitVote('easy')" class="btn btn-sm btn-outline-success">
+                <i class="bi bi-emoji-smile me-1"></i>Easy
+              </button>
+              <button onclick="submitVote('hard')" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-fire me-1"></i>Hard
+              </button>
+            </div>
+            <div id="vote-result" class="d-none mt-2 small"></div>
+          </div>
         </div>
 
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">

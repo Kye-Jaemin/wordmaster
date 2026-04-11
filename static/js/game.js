@@ -210,6 +210,14 @@ function showResult(won, message = "") {
 
   // Fetch & display word definition
   fetchDefinition(secretWord);
+
+  // Show community difficulty vote
+  showVoteUI();
+  // Load existing vote counts (daily mode shows community stats immediately)
+  if (GAME_MODE === "daily") {
+    const today = new Date().toISOString().slice(0, 10);
+    loadVoteResults(today, secretWord);
+  }
 }
 
 // ─── Word Definition (on game end) ────────────────────────────
@@ -244,6 +252,100 @@ async function fetchDefinition(word) {
   } catch (e) {
     loading.classList.add("d-none");
   }
+}
+
+// ─── Community Vote ───────────────────────────────────────────
+function showVoteUI() {
+  const voteCard = document.getElementById("difficulty-vote");
+  if (!voteCard) return;
+  // Reset to show vote buttons
+  const voteButtons = document.getElementById("vote-buttons");
+  const voteResult  = document.getElementById("vote-result");
+  if (voteButtons) voteButtons.classList.remove("d-none");
+  if (voteResult)  voteResult.classList.add("d-none");
+  voteCard.classList.remove("d-none");
+}
+
+async function submitVote(vote) {
+  const today = new Date().toISOString().slice(0, 10);
+  const voteButtons = document.getElementById("vote-buttons");
+  const voteResult  = document.getElementById("vote-result");
+
+  if (voteButtons) voteButtons.classList.add("d-none");
+  if (voteResult) {
+    voteResult.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Submitting…';
+    voteResult.classList.remove("d-none");
+  }
+
+  try {
+    const res = await fetch("/api/vote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: secretWord, vote, date: today })
+    });
+    const data = await res.json();
+    renderVoteResult(data, vote);
+  } catch (e) {
+    if (voteResult) {
+      voteResult.textContent = "Thanks for your vote!";
+      voteResult.classList.remove("d-none");
+    }
+  }
+}
+
+async function loadVoteResults(dateStr, word) {
+  try {
+    const res = await fetch(`/api/votes/${dateStr}`);
+    const data = await res.json();
+    if (data.total >= 3) {
+      // Only show community result if enough votes
+      renderVoteResult(data, null);
+    }
+  } catch (e) { /* silent */ }
+}
+
+function renderVoteResult(data, userVote) {
+  const voteButtons = document.getElementById("vote-buttons");
+  const voteResult  = document.getElementById("vote-result");
+  if (!voteResult) return;
+
+  const easy = data.easy || 0;
+  const hard = data.hard || 0;
+  const total = easy + hard;
+
+  if (total === 0) {
+    voteResult.innerHTML = userVote
+      ? `<span class="text-success">✓ Thanks! You voted <strong>${userVote}</strong>. Be the first!</span>`
+      : "";
+    voteResult.classList.toggle("d-none", !userVote);
+    return;
+  }
+
+  const easyPct = Math.round((easy / total) * 100);
+  const hardPct = 100 - easyPct;
+
+  const voteLabel = userVote ? `<div class="text-success small mb-1">✓ Thanks for voting!</div>` : "";
+
+  voteResult.innerHTML = `
+    ${voteLabel}
+    <div class="mb-1 fw-semibold small">Community Results (${total} vote${total !== 1 ? "s" : ""})</div>
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <span class="text-success" style="width:4rem;text-align:right">😊 Easy</span>
+      <div class="flex-grow-1 rounded overflow-hidden bg-secondary bg-opacity-25" style="height:12px">
+        <div class="bg-success h-100 rounded" style="width:${easyPct}%;transition:width .6s"></div>
+      </div>
+      <span class="text-success fw-bold" style="width:3rem">${easyPct}%</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="text-danger" style="width:4rem;text-align:right">🔥 Hard</span>
+      <div class="flex-grow-1 rounded overflow-hidden bg-secondary bg-opacity-25" style="height:12px">
+        <div class="bg-danger h-100 rounded" style="width:${hardPct}%;transition:width .6s"></div>
+      </div>
+      <span class="text-danger fw-bold" style="width:3rem">${hardPct}%</span>
+    </div>`;
+
+  if (voteButtons) voteButtons.classList.add("d-none");
+  voteResult.classList.remove("d-none");
 }
 
 function buildShareText(won) {
@@ -337,6 +439,8 @@ async function resetGame() {
   if (defCard) defCard.classList.add("d-none");
   const defLoading = document.getElementById("definition-loading");
   if (defLoading) defLoading.classList.add("d-none");
+  const voteCard = document.getElementById("difficulty-vote");
+  if (voteCard) voteCard.classList.add("d-none");
   keyboard.querySelectorAll(".key").forEach(btn => {
     btn.className = btn.classList.contains("key-wide") ? "key key-wide" : "key";
     delete btn.dataset.state;
