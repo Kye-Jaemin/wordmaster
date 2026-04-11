@@ -14,15 +14,12 @@
 
 body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
 
-/* ─── Ad Placeholders ─────────────────────────────────────── */
-.ad-header { background: #f0f0f0; border-bottom: 1px solid #ddd; min-height: 62px; }
-.ad-placeholder {
-  background: #e9ecef;
-  display: flex; align-items: center; justify-content: center;
-  color: #aaa; font-size: 12px; border: 1px dashed #ccc;
-  border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;
-}
-.ad-sidebar { display: flex; justify-content: center; }
+/* ─── Ad Placeholders (hidden during AdSense review) ──────── */
+/* NOTE: Re-enable after AdSense approval */
+.ad-header    { display: none !important; }
+.ad-placeholder { display: none !important; }
+.ad-sidebar   { display: none !important; }
+#result-ad    { display: none !important; }
 
 /* ─── Game Board ──────────────────────────────────────────── */
 .game-board {

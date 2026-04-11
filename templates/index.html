@@ -21,6 +21,27 @@
 
     <!-- Game Area -->
     <div class="col-12 col-lg-6">
+      <!-- Daily Info Banner (only for daily mode) -->
+      {% if mode == "daily" %}
+      <div class="text-center mb-2">
+        <div class="d-inline-flex align-items-center gap-3 px-3 py-2 rounded-3 border border-warning bg-warning bg-opacity-10">
+          <div>
+            <div class="fw-bold text-warning" style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase">Daily Challenge</div>
+            <div class="fw-bold fs-6">{{ today_display if today_display else "" }}</div>
+          </div>
+          {% if puzzle_number %}
+          <div class="border-start border-warning ps-3">
+            <div class="text-muted" style="font-size:0.75rem">Puzzle</div>
+            <div class="fw-bold fs-5 text-warning">#{{ puzzle_number }}</div>
+          </div>
+          {% endif %}
+          <div class="border-start border-warning ps-3">
+            <a href="/archive" class="text-muted text-decoration-none small"><i class="bi bi-clock-history me-1"></i>Past words</a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
       <!-- Mode Badge -->
       <div class="text-center mb-2">
         {% if mode == "daily" %}

@@ -51,10 +51,16 @@ def index():
 
 @app.route("/daily")
 def daily():
+    today = date.today()
+    # Puzzle number = days since launch date (2026-03-15)
+    launch = date(2026, 3, 15)
+    puzzle_number = (today - launch).days + 1
     return render_template("index.html",
         title="Daily Word Challenge — WordMaster",
         meta_desc="One word per day. Can you guess today's WordMaster daily challenge in 6 tries?",
-        mode="daily", word_length=5, max_guesses=6)
+        mode="daily", word_length=5, max_guesses=6,
+        puzzle_number=puzzle_number,
+        today_display=today.strftime("%B %d, %Y"))
 
 @app.route("/unlimited")
 def unlimited():
@@ -91,6 +97,12 @@ def how_to_play():
     return render_template("how_to_play.html",
         title="How to Play WordMaster — Rules & Guide",
         meta_desc="Learn how to play WordMaster. Complete rules, tips, and strategies for the word guessing game.")
+
+@app.route("/faq")
+def faq():
+    return render_template("faq.html",
+        title="FAQ — WordMaster",
+        meta_desc="Frequently asked questions about WordMaster. Get answers about gameplay, words, stats, privacy and more.")
 
 @app.route("/about")
 def about():
@@ -298,7 +310,7 @@ def sitemap():
     urls = [
         "/", "/daily", "/unlimited", "/easy", "/hard",
         "/category/animals", "/category/food",
-        "/leaderboard", "/how-to-play", "/about", "/contact",
+        "/leaderboard", "/how-to-play", "/faq", "/about", "/contact",
         "/privacy", "/terms", "/blog", "/archive",
         "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history"
     ]
