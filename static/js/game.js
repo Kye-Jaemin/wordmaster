@@ -246,28 +246,83 @@ async function fetchDefinition(word) {
   }
 }
 
-function shareResult() {
-  const statusMap = { correct: "🟦", present: "🟨", absent: "⬜" };
-  let text = `WordMaster ${currentRow + 1}/${MAX_GUESSES}\n\n`;
+function buildShareText(won) {
+  // Score line: X/6 for win, X/6 for loss
+  const guessCount = won ? (currentRow + 1) : "X";
+  const today = new Date().toISOString().slice(0, 10);
 
-  for (let r = 0; r <= Math.min(currentRow, MAX_GUESSES - 1); r++) {
+  // Mode header
+  let header = "WordMaster";
+  if (GAME_MODE === "daily") {
+    // Compute puzzle number (days since launch 2026-03-15)
+    const launch = new Date("2026-03-15T00:00:00");
+    const diff = Math.floor((new Date(today) - launch) / 86400000) + 1;
+    header = `WordMaster Daily #${diff}`;
+  } else if (GAME_MODE === "easy") {
+    header = "WordMaster Easy";
+  } else if (GAME_MODE === "hard") {
+    header = "WordMaster Hard";
+  } else if (GAME_MODE.startsWith("category_")) {
+    const cat = GAME_MODE.replace("category_", "");
+    header = `WordMaster ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+  }
+
+  let text = `${header}  ${guessCount}/${MAX_GUESSES}\n`;
+  text += `📅 ${today}\n\n`;
+
+  const maxRow = won ? currentRow : MAX_GUESSES - 1;
+  for (let r = 0; r <= maxRow; r++) {
     const row = tiles[r];
-    const revealed = row.some(t => t.classList.contains("revealed"));
-    if (!revealed) break;
+    if (!row.some(t => t.classList.contains("revealed"))) break;
     text += row.map(t => {
       if (t.classList.contains("correct"))  return "🟦";
       if (t.classList.contains("present"))  return "🟨";
       if (t.classList.contains("absent"))   return "⬜";
-      return "⬜";
+      return "⬛";
     }).join("") + "\n";
   }
-  text += "\nhttps://wordmaster-game.com";
 
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard!"));
-  } else {
+  text += "\n🔗 wordmaster.store";
+  return text;
+}
+
+async function shareResult() {
+  const won  = gameOver && tiles[currentRow] &&
+               tiles[Math.min(currentRow, MAX_GUESSES-1)]
+                 .every(t => t.classList.contains("correct"));
+  const text = buildShareText(won);
+
+  // Try Web Share API first (mobile-friendly)
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "WordMaster", text });
+      return;
+    } catch (e) {
+      // User cancelled or share failed — fall through to clipboard
+    }
+  }
+
+  // Clipboard fallback
+  try {
+    await navigator.clipboard.writeText(text);
+    showShareFeedback("✅ Copied to clipboard!");
+  } catch (e) {
     prompt("Copy your result:", text);
   }
+}
+
+function showShareFeedback(msg) {
+  const btn = document.getElementById("btn-share");
+  if (!btn) { showToast(msg); return; }
+  const original = btn.innerHTML;
+  btn.innerHTML = `<i class="bi bi-check-lg me-1"></i>${msg}`;
+  btn.classList.add("btn-success");
+  btn.classList.remove("btn-outline-primary");
+  setTimeout(() => {
+    btn.innerHTML = original;
+    btn.classList.remove("btn-success");
+    btn.classList.add("btn-outline-primary");
+  }, 2500);
 }
 
 async function resetGame() {

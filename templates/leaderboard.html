@@ -1,79 +1,254 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5" style="max-width:720px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-trophy me-2"></i>Leaderboard & Stats</h1>
-  <p class="text-muted mb-4">How does your score compare?</p>
+<div class="container py-4" style="max-width:760px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-bar-chart-fill me-2"></i>My Statistics</h1>
+  <p class="text-muted mb-4">Your personal WordMaster performance — stored locally in your browser.</p>
 
+  <!-- ── Top summary cards ── -->
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-primary text-white">
+      <div class="card text-center shadow-sm border-0 bg-primary text-white h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-played">—</div>
-          <div class="small">Played</div>
+          <div class="small">Games Played</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-success text-white">
+      <div class="card text-center shadow-sm border-0 bg-success text-white h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-winpct">—</div>
-          <div class="small">Win %</div>
+          <div class="small">Win Rate</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-warning text-dark">
+      <div class="card text-center shadow-sm border-0 bg-warning text-dark h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-streak">—</div>
-          <div class="small">Streak</div>
+          <div class="small">🔥 Current Streak</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-info text-dark">
+      <div class="card text-center shadow-sm border-0 bg-info text-dark h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-best">—</div>
-          <div class="small">Best Streak</div>
+          <div class="small">⭐ Best Streak</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="fw-bold mb-3">Guess Distribution</h5>
-      <div id="guess-dist"></div>
+  <!-- ── Secondary stats row ── -->
+  <div class="row g-3 mb-4">
+    <div class="col-4">
+      <div class="card text-center shadow-sm border-0 h-100">
+        <div class="card-body py-3">
+          <div class="fs-3 fw-bold text-primary" id="stat-avgguess">—</div>
+          <div class="small text-muted">Avg. Guesses</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card text-center shadow-sm border-0 h-100">
+        <div class="card-body py-3">
+          <div class="fs-3 fw-bold text-success" id="stat-total-won">—</div>
+          <div class="small text-muted">Total Wins</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card text-center shadow-sm border-0 h-100">
+        <div class="card-body py-3">
+          <div class="fs-3 fw-bold text-danger" id="stat-total-lost">—</div>
+          <div class="small text-muted">Total Losses</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-5 bg-light text-center">
+  <!-- ── Guess Distribution ── -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold">
+      <i class="bi bi-bar-chart me-1"></i>Guess Distribution
+    </div>
+    <div class="card-body pb-2">
+      <div id="guess-dist"></div>
+      <p id="dist-empty" class="text-muted small text-center d-none mt-2 mb-0">
+        Play some games to see your distribution!
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Achievement Badges ── -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold">
+      <i class="bi bi-trophy me-1"></i>Achievements
+    </div>
     <div class="card-body">
-      <p class="text-muted mb-3">Stats are stored locally in your browser.</p>
-      <a href="/" class="btn btn-primary me-2"><i class="bi bi-play-fill me-1"></i>Play Now</a>
-      <a href="/daily" class="btn btn-outline-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+      <div class="row g-2" id="achievements"></div>
+      <p id="ach-empty" class="text-muted small text-center d-none mb-0">
+        Keep playing to unlock achievements!
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Daily Challenge Countdown ── -->
+  <div class="card shadow-sm mb-4 border-warning">
+    <div class="card-body d-flex align-items-center justify-content-between flex-wrap gap-2">
+      <div>
+        <div class="fw-bold"><i class="bi bi-calendar-day me-1 text-warning"></i>Next Daily Challenge</div>
+        <div class="text-muted small" id="last-daily-info"></div>
+      </div>
+      <div class="text-end">
+        <div class="fw-bold fs-5 text-warning font-monospace" id="daily-countdown">—</div>
+        <a href="/daily" class="btn btn-warning btn-sm mt-1 text-dark fw-semibold">
+          <i class="bi bi-play-fill me-1"></i>Play Today
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Actions ── -->
+  <div class="card shadow-sm mb-5 bg-light border-0">
+    <div class="card-body text-center py-3 d-flex flex-wrap justify-content-center gap-2">
+      <a href="/" class="btn btn-primary"><i class="bi bi-play-fill me-1"></i>Play Now</a>
+      <a href="/daily" class="btn btn-outline-warning text-dark"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+      <a href="/archive" class="btn btn-outline-secondary"><i class="bi bi-clock-history me-1"></i>Archive</a>
+      <button class="btn btn-outline-danger btn-sm" onclick="resetStats()">
+        <i class="bi bi-trash me-1"></i>Reset Stats
+      </button>
     </div>
   </div>
 </div>
+{% endblock %}
 
+{% block scripts %}
 <script>
-  const stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{1:0,2:0,3:0,4:0,5:0,6:0}}');
-  document.getElementById("stat-played").textContent  = stats.played;
-  document.getElementById("stat-winpct").textContent  = stats.played ? Math.round(stats.won/stats.played*100)+"%" : "—";
-  document.getElementById("stat-streak").textContent  = stats.streak;
-  document.getElementById("stat-best").textContent    = stats.best;
+// ── Load & display stats ──────────────────────────────────────
+const DEFAULT = { played:0, won:0, streak:0, best:0,
+                  dist:{1:0,2:0,3:0,4:0,5:0,6:0}, lastDaily:null };
+const stats = Object.assign({}, DEFAULT,
+              JSON.parse(localStorage.getItem("wm_stats") || "{}"));
+if (!stats.dist) stats.dist = {1:0,2:0,3:0,4:0,5:0,6:0};
 
-  const dist = document.getElementById("guess-dist");
-  const max  = Math.max(...Object.values(stats.dist), 1);
-  [1,2,3,4,5,6].forEach(n => {
-    const v   = stats.dist[n] || 0;
-    const pct = Math.round(v/max*100);
-    dist.innerHTML += `<div class="d-flex align-items-center mb-2">
-      <div class="me-2 fw-bold" style="width:16px">${n}</div>
-      <div class="flex-grow-1 bg-light rounded overflow-hidden" style="height:28px">
-        <div class="bg-primary h-100 d-flex align-items-center px-2 text-white fw-bold"
-             style="width:${Math.max(pct,5)}%;min-width:32px;transition:width .4s">${v}</div>
-      </div>
-    </div>`;
+const $   = id => document.getElementById(id);
+const pct = (n, d) => d ? Math.round(n / d * 100) : 0;
+
+$("stat-played").textContent   = stats.played;
+$("stat-winpct").textContent   = stats.played ? pct(stats.won, stats.played) + "%" : "—";
+$("stat-streak").textContent   = stats.streak  || 0;
+$("stat-best").textContent     = stats.best    || 0;
+$("stat-total-won").textContent  = stats.won   || 0;
+$("stat-total-lost").textContent = Math.max((stats.played||0) - (stats.won||0), 0);
+
+// Average guesses from won games
+const totalGuesses = [1,2,3,4,5,6].reduce((s,n) => s + n * (stats.dist[n]||0), 0);
+$("stat-avgguess").textContent = stats.won ? (totalGuesses / stats.won).toFixed(1) : "—";
+
+// ── Guess Distribution ───────────────────────────────────────
+const distEl   = $("guess-dist");
+const distVals = [1,2,3,4,5,6].map(n => stats.dist[n] || 0);
+const distMax  = Math.max(...distVals, 1);
+const hasData  = distVals.some(v => v > 0);
+
+if (!hasData) {
+  $("dist-empty").classList.remove("d-none");
+} else {
+  const bestRow = distVals.indexOf(Math.max(...distVals)) + 1;
+  [1,2,3,4,5,6].forEach((n, i) => {
+    const v   = distVals[i];
+    const bar = Math.max(Math.round(v / distMax * 100), 4);
+    const highlight = n === bestRow && v > 0;
+    distEl.innerHTML += `
+      <div class="d-flex align-items-center mb-2 gap-2">
+        <div class="fw-bold text-center" style="width:18px">${n}</div>
+        <div class="flex-grow-1 rounded overflow-hidden" style="background:#e9ecef;height:30px">
+          <div class="${highlight ? 'bg-warning' : 'bg-primary'} h-100 d-flex align-items-center px-2 text-white fw-bold"
+               style="width:${bar}%;transition:width .5s ease;min-width:36px">${v}</div>
+        </div>
+        <div class="text-muted small" style="width:44px;text-align:right">
+          ${stats.played ? pct(v, stats.played) + '%' : ''}
+        </div>
+      </div>`;
   });
+}
+
+// ── Achievements ─────────────────────────────────────────────
+const BADGES = [
+  { icon:"🎉", label:"First Win",      desc:"Win your first game",            unlock: stats.won >= 1 },
+  { icon:"🔟", label:"10 Games",       desc:"Play 10 games",                  unlock: stats.played >= 10 },
+  { icon:"🏅", label:"50 Games",       desc:"Play 50 games",                  unlock: stats.played >= 50 },
+  { icon:"💯", label:"100 Games",      desc:"Play 100 games",                 unlock: stats.played >= 100 },
+  { icon:"🔥", label:"3-Day Streak",   desc:"Daily win 3 days in a row",      unlock: stats.best >= 3 },
+  { icon:"⚡", label:"7-Day Streak",   desc:"Daily win 7 days in a row",      unlock: stats.best >= 7 },
+  { icon:"🌟", label:"30-Day Streak",  desc:"Incredible 30-day streak",       unlock: stats.best >= 30 },
+  { icon:"🧠", label:"Genius",         desc:"Solve in 1 guess",               unlock: (stats.dist[1]||0) >= 1 },
+  { icon:"🚀", label:"Speed Runner",   desc:"Solve in 2 guesses (3 times)",   unlock: (stats.dist[2]||0) >= 3 },
+  { icon:"🎯", label:"Sharp Shooter",  desc:"Win rate ≥ 80% (10+ games)",     unlock: stats.played >= 10 && pct(stats.won, stats.played) >= 80 },
+  { icon:"💎", label:"Perfect",        desc:"100% win rate (10+ games)",      unlock: stats.played >= 10 && stats.won === stats.played },
+];
+
+const achEl   = $("achievements");
+const earned  = BADGES.filter(b => b.unlock);
+const locked  = BADGES.filter(b => !b.unlock);
+
+if (earned.length === 0) {
+  $("ach-empty").classList.remove("d-none");
+} else {
+  earned.forEach(b => {
+    achEl.innerHTML += `
+      <div class="col-6 col-md-4">
+        <div class="card border-success bg-success bg-opacity-10 text-center p-2 h-100">
+          <div class="fs-2">${b.icon}</div>
+          <div class="fw-bold small">${b.label}</div>
+          <div class="text-muted" style="font-size:.72rem">${b.desc}</div>
+        </div>
+      </div>`;
+  });
+  locked.slice(0, Math.min(4, 12 - earned.length)).forEach(b => {
+    achEl.innerHTML += `
+      <div class="col-6 col-md-4">
+        <div class="card border-0 bg-light text-center p-2 h-100" style="opacity:.4">
+          <div class="fs-2">🔒</div>
+          <div class="fw-bold small text-muted">${b.label}</div>
+          <div class="text-muted" style="font-size:.72rem">${b.desc}</div>
+        </div>
+      </div>`;
+  });
+}
+
+// ── Next Daily Countdown ─────────────────────────────────────
+function updateCountdown() {
+  const now      = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const diff     = midnight - now;
+  const h = String(Math.floor(diff / 3600000)).padStart(2, "0");
+  const m = String(Math.floor((diff % 3600000) / 60000)).padStart(2, "0");
+  const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, "0");
+  $("daily-countdown").textContent = `${h}:${m}:${s}`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+if (stats.lastDaily) {
+  const today   = new Date().toISOString().slice(0, 10);
+  const played  = stats.lastDaily === today;
+  const d       = new Date(stats.lastDaily + "T12:00:00");
+  const fmt     = d.toLocaleDateString("en-US", { month:"short", day:"numeric" });
+  $("last-daily-info").textContent = played
+    ? "✅ Already completed today's Daily!"
+    : `Last daily played: ${fmt}`;
+} else {
+  $("last-daily-info").textContent = "You haven't tried Daily mode yet!";
+}
+
+// ── Reset ────────────────────────────────────────────────────
+function resetStats() {
+  if (!confirm("Reset ALL your stats permanently? This cannot be undone.")) return;
+  localStorage.removeItem("wm_stats");
+  location.reload();
+}
 </script>
 {% endblock %}

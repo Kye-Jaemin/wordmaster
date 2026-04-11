@@ -306,24 +306,63 @@ def api_hint():
 
 @app.route("/sitemap.xml")
 def sitemap():
-    base = "https://wordmaster-game.com"
-    urls = [
-        "/", "/daily", "/unlimited", "/easy", "/hard",
-        "/category/animals", "/category/food",
-        "/leaderboard", "/how-to-play", "/faq", "/about", "/contact",
-        "/privacy", "/terms", "/blog", "/archive",
-        "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history"
+    base  = "https://wordmaster.store"
+    today = date.today()
+    today_str = today.isoformat()
+
+    # Static pages with priority/changefreq hints
+    static_pages = [
+        ("/",                    "1.0",  "daily",   today_str),
+        ("/daily",               "1.0",  "daily",   today_str),
+        ("/unlimited",           "0.9",  "weekly",  today_str),
+        ("/easy",                "0.8",  "weekly",  today_str),
+        ("/hard",                "0.8",  "weekly",  today_str),
+        ("/category/animals",   "0.7",  "weekly",  today_str),
+        ("/category/food",      "0.7",  "weekly",  today_str),
+        ("/archive",             "0.9",  "daily",   today_str),
+        ("/how-to-play",         "0.8",  "monthly", today_str),
+        ("/faq",                 "0.8",  "monthly", today_str),
+        ("/leaderboard",         "0.6",  "weekly",  today_str),
+        ("/about",               "0.6",  "monthly", today_str),
+        ("/contact",             "0.6",  "monthly", today_str),
+        ("/privacy",             "0.4",  "monthly", today_str),
+        ("/terms",               "0.4",  "monthly", today_str),
+        ("/blog",                "0.7",  "weekly",  today_str),
+        ("/blog/wordle-tips",    "0.6",  "monthly", "2026-03-01"),
+        ("/blog/best-starting-words", "0.6", "monthly", "2026-02-20"),
+        ("/blog/word-game-history",   "0.6", "monthly", "2026-02-10"),
     ]
-    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u in urls:
-        xml_lines.append(f"  <url><loc>{base}{u}</loc></url>")
-    xml_lines.append("</urlset>")
+
+    xml_lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    ]
+
+    for path, priority, changefreq, lastmod in static_pages:
+        xml_lines.append(
+            f'  <url><loc>{base}{path}</loc>'
+            f'<lastmod>{lastmod}</lastmod>'
+            f'<changefreq>{changefreq}</changefreq>'
+            f'<priority>{priority}</priority></url>'
+        )
+
+    # Dynamic archive pages — past 60 days
+    for i in range(60):
+        d = today - timedelta(days=i)
+        d_str = d.isoformat()
+        xml_lines.append(
+            f'  <url><loc>{base}/archive/{d_str}</loc>'
+            f'<lastmod>{d_str}</lastmod>'
+            f'<changefreq>never</changefreq>'
+            f'<priority>0.5</priority></url>'
+        )
+
+    xml_lines.append('</urlset>')
     return Response("\n".join(xml_lines), mimetype="application/xml")
 
 @app.route("/robots.txt")
 def robots():
-    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster-game.com/sitemap.xml\n"
+    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster.store/sitemap.xml\n"
     return Response(txt, mimetype="text/plain")
 
 @app.route("/ads.txt")
