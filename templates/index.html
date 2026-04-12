@@ -21,47 +21,6 @@
 
     <!-- Game Area -->
     <div class="col-12 col-lg-6">
-      <!-- ★ P2-A: Standard mode — Today's Challenge teaser ★ -->
-      {% if mode == "standard" %}
-      <div class="card border-0 shadow-sm mb-3 mx-auto" style="max-width:460px;background:linear-gradient(135deg,#e3f2fd 0%,#fff9c4 100%);">
-        <div class="card-body py-2 px-3">
-          <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
-            <div>
-              <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-warning text-dark"><i class="bi bi-calendar-day me-1"></i>Daily #{{ puzzle_number }}</span>
-                <small class="text-muted">{{ today_display }}</small>
-              </div>
-              <div class="small fw-semibold text-dark">🎯 Today's Daily Challenge is live!</div>
-            </div>
-            <a href="/daily" class="btn btn-warning btn-sm flex-shrink-0">
-              <i class="bi bi-play-fill me-1"></i>Play Daily
-            </a>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      <!-- Daily Info Banner (only for daily mode) -->
-      {% if mode == "daily" %}
-      <div class="text-center mb-2">
-        <div class="d-inline-flex align-items-center gap-3 px-3 py-2 rounded-3 border border-warning bg-warning bg-opacity-10">
-          <div>
-            <div class="fw-bold text-warning" style="font-size:0.8rem;letter-spacing:1px;text-transform:uppercase">Daily Challenge</div>
-            <div class="fw-bold fs-6">{{ today_display if today_display else "" }}</div>
-          </div>
-          {% if puzzle_number %}
-          <div class="border-start border-warning ps-3">
-            <div class="text-muted" style="font-size:0.75rem">Puzzle</div>
-            <div class="fw-bold fs-5 text-warning">#{{ puzzle_number }}</div>
-          </div>
-          {% endif %}
-          <div class="border-start border-warning ps-3">
-            <a href="/archive" class="text-muted text-decoration-none small"><i class="bi bi-clock-history me-1"></i>Past words</a>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
       <!-- Mode Badge -->
       <div class="text-center mb-2">
         {% if mode == "daily" %}
@@ -114,42 +73,9 @@
         <div id="result-emoji" class="fs-4 mb-2"></div>
         <h5 id="result-message" class="fw-bold"></h5>
         <p id="result-word" class="text-muted small"></p>
-
-        <!-- Word Definition Card -->
-        <div id="definition-card" class="card border-primary mx-auto d-none text-start mt-2 mb-2" style="max-width:420px;">
-          <div class="card-body py-2 px-3">
-            <div class="d-flex align-items-center gap-2 mb-1">
-              <span id="def-word" class="fw-bold text-primary fs-6"></span>
-              <span id="def-pos" class="badge bg-secondary small"></span>
-            </div>
-            <p id="def-text" class="mb-1 small"></p>
-            <p id="def-example" class="text-muted fst-italic small mb-0"></p>
-          </div>
-        </div>
-        <!-- Definition loading spinner -->
-        <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
-          <span class="spinner-border spinner-border-sm me-1" role="status"></span>Loading definition…
-        </div>
-
-        <!-- ★ P2-B: Community Difficulty Vote ★ -->
-        <div id="difficulty-vote" class="card border-0 bg-light mx-auto d-none mt-2 mb-1" style="max-width:420px;">
-          <div class="card-body py-2 px-3 text-center">
-            <p class="small text-muted mb-2"><i class="bi bi-bar-chart-fill me-1"></i>How was this word for you?</p>
-            <div class="d-flex gap-2 justify-content-center" id="vote-buttons">
-              <button onclick="submitVote('easy')" class="btn btn-sm btn-outline-success">
-                <i class="bi bi-emoji-smile me-1"></i>Easy
-              </button>
-              <button onclick="submitVote('hard')" class="btn btn-sm btn-outline-danger">
-                <i class="bi bi-fire me-1"></i>Hard
-              </button>
-            </div>
-            <div id="vote-result" class="d-none mt-2 small"></div>
-          </div>
-        </div>
-
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
           <button id="btn-share" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-share me-1"></i>Share
+            <i class="bi bi-share me-1"></i>Share Result
           </button>
           {% if mode != "daily" %}
           <button id="btn-play-again" class="btn btn-primary btn-sm">

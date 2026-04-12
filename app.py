@@ -1,31 +1,8 @@
 from flask import Flask, render_template, request, jsonify, Response
-from datetime import date, datetime, timedelta
+from datetime import date
 import json, random, xml.etree.ElementTree as ET, urllib.request, urllib.error
-import sqlite3, os
 
 app = Flask(__name__)
-
-# ─── SQLite Vote DB ───────────────────────────────────────────
-DB_PATH = os.path.join(os.path.dirname(__file__), "votes.db")
-
-def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS word_votes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        game_date TEXT NOT NULL,
-        word TEXT NOT NULL,
-        vote TEXT NOT NULL,
-        ip_hash TEXT,
-        created_at TEXT NOT NULL
-    )''')
-    conn.commit()
-    conn.close()
-
-try:
-    init_db()
-except Exception:
-    pass  # DB init failure should not crash the app
 
 with open("words.json", encoding="utf-8") as f:
     WORDS = json.load(f)
@@ -67,28 +44,17 @@ def check_guess(guess, answer):
 
 @app.route("/")
 def index():
-    today = date.today()
-    launch = date(2026, 3, 15)
-    puzzle_number = (today - launch).days + 1
     return render_template("index.html",
         title="WordMaster — Free Online Word Guessing Game",
         meta_desc="Play WordMaster, the free daily word guessing game! Guess the 5-letter word in 6 tries. New challenge every day.",
-        mode="standard", word_length=5, max_guesses=6,
-        puzzle_number=puzzle_number,
-        today_display=today.strftime("%B %d, %Y"))
+        mode="standard", word_length=5, max_guesses=6)
 
 @app.route("/daily")
 def daily():
-    today = date.today()
-    # Puzzle number = days since launch date (2026-03-15)
-    launch = date(2026, 3, 15)
-    puzzle_number = (today - launch).days + 1
     return render_template("index.html",
         title="Daily Word Challenge — WordMaster",
         meta_desc="One word per day. Can you guess today's WordMaster daily challenge in 6 tries?",
-        mode="daily", word_length=5, max_guesses=6,
-        puzzle_number=puzzle_number,
-        today_display=today.strftime("%B %d, %Y"))
+        mode="daily", word_length=5, max_guesses=6)
 
 @app.route("/unlimited")
 def unlimited():
@@ -126,23 +92,11 @@ def how_to_play():
         title="How to Play WordMaster — Rules & Guide",
         meta_desc="Learn how to play WordMaster. Complete rules, tips, and strategies for the word guessing game.")
 
-@app.route("/faq")
-def faq():
-    return render_template("faq.html",
-        title="FAQ — WordMaster",
-        meta_desc="Frequently asked questions about WordMaster. Get answers about gameplay, words, stats, privacy and more.")
-
 @app.route("/about")
 def about():
     return render_template("about.html",
         title="About WordMaster — Free Word Game",
         meta_desc="WordMaster is a free, browser-based word guessing game. No download needed. Play daily or unlimited!")
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html",
-        title="Contact Us — WordMaster",
-        meta_desc="Get in touch with the WordMaster team. Report bugs, suggest features, or ask anything about the game.")
 
 @app.route("/privacy")
 def privacy():
@@ -155,58 +109,6 @@ def terms():
     return render_template("terms.html",
         title="Terms of Service — WordMaster",
         meta_desc="WordMaster terms of service and usage conditions.")
-
-def get_word_for_date(target_date):
-    """Return the daily word for a given date object."""
-    seed = target_date.year * 10000 + target_date.month * 100 + target_date.day
-    random.seed(seed)
-    return random.choice(WORDS["daily"]).upper()
-
-@app.route("/archive")
-def archive_index():
-    """Show the last 30 days of daily words."""
-    today = date.today()
-    entries = []
-    for i in range(30):
-        d = today - timedelta(days=i)
-        word = get_word_for_date(d)
-        entries.append({
-            "date": d.strftime("%Y-%m-%d"),
-            "date_display": d.strftime("%B %d, %Y"),
-            "word": word,
-            "is_today": (d == today),
-        })
-    return render_template("archive.html",
-        title="Daily Word Archive — WordMaster",
-        meta_desc="Browse past WordMaster daily words. See every daily challenge from the last 30 days.",
-        entries=entries,
-        today=today.strftime("%Y-%m-%d"))
-
-@app.route("/archive/<date_str>")
-def archive_day(date_str):
-    """Show the daily word for a specific date."""
-    try:
-        target = datetime.strptime(date_str, "%Y-%m-%d").date()
-    except ValueError:
-        return render_template("404.html", title="Page Not Found — WordMaster"), 404
-
-    today = date.today()
-    if target > today:
-        return render_template("404.html", title="Page Not Found — WordMaster"), 404
-
-    word = get_word_for_date(target)
-    prev_date = (target - timedelta(days=1)).strftime("%Y-%m-%d")
-    next_date = (target + timedelta(days=1)).strftime("%Y-%m-%d") if target < today else None
-
-    return render_template("archive_day.html",
-        title=f"Daily Word {target.strftime('%B %d, %Y')} — WordMaster",
-        meta_desc=f"The WordMaster daily word for {target.strftime('%B %d, %Y')}.",
-        word=word,
-        target_date=target.strftime("%Y-%m-%d"),
-        date_display=target.strftime("%B %d, %Y"),
-        prev_date=prev_date,
-        next_date=next_date,
-        is_today=(target == today))
 
 @app.route("/leaderboard")
 def leaderboard():
@@ -330,146 +232,28 @@ def api_hint():
     })
 
 
-# ─── Vote API ─────────────────────────────────────────────────
-
-@app.route("/api/vote", methods=["POST"])
-def api_vote():
-    data = request.get_json(silent=True) or {}
-    word = data.get("word", "").upper().strip()
-    vote = data.get("vote", "").lower().strip()
-    game_date = data.get("date", date.today().isoformat())
-
-    if not word or vote not in ("easy", "hard"):
-        return jsonify({"error": "Invalid parameters"}), 400
-
-    # Simple IP hash for dedup (not strict — just cosmetic)
-    import hashlib
-    ip = request.headers.get("X-Forwarded-For", request.remote_addr or "")
-    ip_hash = hashlib.md5((ip + game_date + word).encode()).hexdigest()[:12]
-
-    try:
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
-
-        # Prevent duplicate votes from same IP+date
-        c.execute("SELECT id FROM word_votes WHERE ip_hash=? AND game_date=? AND word=?",
-                  (ip_hash, game_date, word))
-        if c.fetchone():
-            # Return existing counts without adding duplicate
-            c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? AND word=? GROUP BY vote",
-                      (game_date, word))
-            totals = dict(c.fetchall())
-            conn.close()
-            return jsonify({
-                "easy": totals.get("easy", 0),
-                "hard": totals.get("hard", 0),
-                "total": sum(totals.values()),
-                "duplicate": True
-            })
-
-        c.execute("INSERT INTO word_votes (game_date, word, vote, ip_hash, created_at) VALUES (?,?,?,?,?)",
-                  (game_date, word, vote, ip_hash, datetime.now().isoformat()))
-        conn.commit()
-
-        c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? AND word=? GROUP BY vote",
-                  (game_date, word))
-        totals = dict(c.fetchall())
-        conn.close()
-        return jsonify({
-            "easy": totals.get("easy", 0),
-            "hard": totals.get("hard", 0),
-            "total": sum(totals.values()),
-            "duplicate": False
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-@app.route("/api/votes/<date_str>")
-def api_votes_get(date_str):
-    """Get community vote totals for a specific date."""
-    try:
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
-        c.execute("SELECT vote, COUNT(*) FROM word_votes WHERE game_date=? GROUP BY vote",
-                  (date_str,))
-        totals = dict(c.fetchall())
-        conn.close()
-        return jsonify({
-            "easy": totals.get("easy", 0),
-            "hard": totals.get("hard", 0),
-            "total": sum(totals.values())
-        })
-    except Exception:
-        return jsonify({"easy": 0, "hard": 0, "total": 0})
-
-
 # ─── Sitemap & SEO ────────────────────────────────────────────
 
 @app.route("/sitemap.xml")
 def sitemap():
-    base  = "https://wordmaster.store"
-    today = date.today()
-    today_str = today.isoformat()
-
-    # Static pages with priority/changefreq hints
-    static_pages = [
-        ("/",                    "1.0",  "daily",   today_str),
-        ("/daily",               "1.0",  "daily",   today_str),
-        ("/unlimited",           "0.9",  "weekly",  today_str),
-        ("/easy",                "0.8",  "weekly",  today_str),
-        ("/hard",                "0.8",  "weekly",  today_str),
-        ("/category/animals",   "0.7",  "weekly",  today_str),
-        ("/category/food",      "0.7",  "weekly",  today_str),
-        ("/archive",             "0.9",  "daily",   today_str),
-        ("/how-to-play",         "0.8",  "monthly", today_str),
-        ("/faq",                 "0.8",  "monthly", today_str),
-        ("/leaderboard",         "0.6",  "weekly",  today_str),
-        ("/about",               "0.6",  "monthly", today_str),
-        ("/contact",             "0.6",  "monthly", today_str),
-        ("/privacy",             "0.4",  "monthly", today_str),
-        ("/terms",               "0.4",  "monthly", today_str),
-        ("/blog",                "0.7",  "weekly",  today_str),
-        ("/blog/wordle-tips",    "0.6",  "monthly", "2026-03-01"),
-        ("/blog/best-starting-words", "0.6", "monthly", "2026-02-20"),
-        ("/blog/word-game-history",   "0.6", "monthly", "2026-02-10"),
+    base = "https://wordmaster-game.com"
+    urls = [
+        "/", "/daily", "/unlimited", "/easy", "/hard",
+        "/category/animals", "/category/food",
+        "/leaderboard", "/how-to-play", "/about",
+        "/privacy", "/terms", "/blog",
+        "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history"
     ]
-
-    xml_lines = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-    ]
-
-    for path, priority, changefreq, lastmod in static_pages:
-        xml_lines.append(
-            f'  <url><loc>{base}{path}</loc>'
-            f'<lastmod>{lastmod}</lastmod>'
-            f'<changefreq>{changefreq}</changefreq>'
-            f'<priority>{priority}</priority></url>'
-        )
-
-    # Dynamic archive pages — past 60 days
-    for i in range(60):
-        d = today - timedelta(days=i)
-        d_str = d.isoformat()
-        xml_lines.append(
-            f'  <url><loc>{base}/archive/{d_str}</loc>'
-            f'<lastmod>{d_str}</lastmod>'
-            f'<changefreq>never</changefreq>'
-            f'<priority>0.5</priority></url>'
-        )
-
-    xml_lines.append('</urlset>')
+    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for u in urls:
+        xml_lines.append(f"  <url><loc>{base}{u}</loc></url>")
+    xml_lines.append("</urlset>")
     return Response("\n".join(xml_lines), mimetype="application/xml")
 
 @app.route("/robots.txt")
 def robots():
-    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster.store/sitemap.xml\n"
-    return Response(txt, mimetype="text/plain")
-
-@app.route("/ads.txt")
-def ads_txt():
-    txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
+    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster-game.com/sitemap.xml\n"
     return Response(txt, mimetype="text/plain")
 
 @app.errorhandler(404)

@@ -14,12 +14,15 @@
 
 body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
 
-/* ─── Ad Placeholders (hidden during AdSense review) ──────── */
-/* NOTE: Re-enable after AdSense approval */
-.ad-header    { display: none !important; }
-.ad-placeholder { display: none !important; }
-.ad-sidebar   { display: none !important; }
-#result-ad    { display: none !important; }
+/* ─── Ad Placeholders ─────────────────────────────────────── */
+.ad-header { background: #f0f0f0; border-bottom: 1px solid #ddd; min-height: 62px; }
+.ad-placeholder {
+  background: #e9ecef;
+  display: flex; align-items: center; justify-content: center;
+  color: #aaa; font-size: 12px; border: 1px dashed #ccc;
+  border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;
+}
+.ad-sidebar { display: flex; justify-content: center; }
 
 /* ─── Game Board ──────────────────────────────────────────── */
 .game-board {
@@ -116,32 +119,6 @@ body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
 /* ─── Blog ────────────────────────────────────────────────── */
 .blog-card { transition: transform 0.2s, box-shadow 0.2s; }
 .blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
-
-/* ─── P2-C: Cold Start Loading Overlay ───────────────────── */
-#page-loader {
-  position: fixed; inset: 0;
-  background: #f8f9fa;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 0.35s ease;
-}
-#page-loader.loader-hidden { opacity: 0; pointer-events: none; }
-.loader-inner { text-align: center; }
-.loader-logo { font-size: 3.5rem; color: var(--color-primary); }
-.loader-title { font-size: 1.6rem; font-weight: 800; color: var(--color-primary); margin: 4px 0 16px; letter-spacing: 1px; }
-.loader-spinner { margin-bottom: 12px; }
-.loader-msg { font-size: 0.9rem; color: #666; }
-.loader-slow-msg {
-  margin-top: 12px; font-size: 0.8rem; color: #888;
-  max-width: 280px; line-height: 1.4;
-}
-
-/* ─── P2-B: Difficulty Vote Bar ───────────────────────────── */
-#difficulty-vote .progress-bar-easy,
-#difficulty-vote .progress-bar-hard {
-  transition: width 0.6s ease;
-}
 
 /* ─── Responsive tweaks ───────────────────────────────────── */
 @media (max-width: 480px) {

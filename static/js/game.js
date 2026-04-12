@@ -207,224 +207,30 @@ function showResult(won, message = "") {
 
   if (shareBtn) shareBtn.onclick = shareResult;
   if (againBtn) againBtn.onclick = resetGame;
-
-  // Fetch & display word definition
-  fetchDefinition(secretWord);
-
-  // Show community difficulty vote
-  showVoteUI();
-  // Load existing vote counts (daily mode shows community stats immediately)
-  if (GAME_MODE === "daily") {
-    const today = new Date().toISOString().slice(0, 10);
-    loadVoteResults(today, secretWord);
-  }
 }
 
-// ─── Word Definition (on game end) ────────────────────────────
-async function fetchDefinition(word) {
-  const card     = document.getElementById("definition-card");
-  const loading  = document.getElementById("definition-loading");
-  const defWord  = document.getElementById("def-word");
-  const defPos   = document.getElementById("def-pos");
-  const defText  = document.getElementById("def-text");
-  const defEx    = document.getElementById("def-example");
+function shareResult() {
+  const statusMap = { correct: "🟦", present: "🟨", absent: "⬜" };
+  let text = `WordMaster ${currentRow + 1}/${MAX_GUESSES}\n\n`;
 
-  if (!card || !loading) return;
-
-  loading.classList.remove("d-none");
-  card.classList.add("d-none");
-
-  try {
-    const res  = await fetch(`/api/hint?word=${word.toLowerCase()}`);
-    const data = await res.json();
-
-    loading.classList.add("d-none");
-
-    if (data.definition && !data.definition.startsWith("Starts with")) {
-      defWord.textContent  = data.word || word.toUpperCase();
-      defPos.textContent   = data.partOfSpeech || "";
-      defPos.classList.toggle("d-none", !data.partOfSpeech);
-      defText.textContent  = data.definition;
-      defEx.textContent    = data.example ? `"${data.example}"` : "";
-      defEx.classList.toggle("d-none", !data.example);
-      card.classList.remove("d-none");
-    }
-  } catch (e) {
-    loading.classList.add("d-none");
-  }
-}
-
-// ─── Community Vote ───────────────────────────────────────────
-function showVoteUI() {
-  const voteCard = document.getElementById("difficulty-vote");
-  if (!voteCard) return;
-  // Reset to show vote buttons
-  const voteButtons = document.getElementById("vote-buttons");
-  const voteResult  = document.getElementById("vote-result");
-  if (voteButtons) voteButtons.classList.remove("d-none");
-  if (voteResult)  voteResult.classList.add("d-none");
-  voteCard.classList.remove("d-none");
-}
-
-async function submitVote(vote) {
-  const today = new Date().toISOString().slice(0, 10);
-  const voteButtons = document.getElementById("vote-buttons");
-  const voteResult  = document.getElementById("vote-result");
-
-  if (voteButtons) voteButtons.classList.add("d-none");
-  if (voteResult) {
-    voteResult.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Submitting…';
-    voteResult.classList.remove("d-none");
-  }
-
-  try {
-    const res = await fetch("/api/vote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word: secretWord, vote, date: today })
-    });
-    const data = await res.json();
-    renderVoteResult(data, vote);
-  } catch (e) {
-    if (voteResult) {
-      voteResult.textContent = "Thanks for your vote!";
-      voteResult.classList.remove("d-none");
-    }
-  }
-}
-
-async function loadVoteResults(dateStr, word) {
-  try {
-    const res = await fetch(`/api/votes/${dateStr}`);
-    const data = await res.json();
-    if (data.total >= 3) {
-      // Only show community result if enough votes
-      renderVoteResult(data, null);
-    }
-  } catch (e) { /* silent */ }
-}
-
-function renderVoteResult(data, userVote) {
-  const voteButtons = document.getElementById("vote-buttons");
-  const voteResult  = document.getElementById("vote-result");
-  if (!voteResult) return;
-
-  const easy = data.easy || 0;
-  const hard = data.hard || 0;
-  const total = easy + hard;
-
-  if (total === 0) {
-    voteResult.innerHTML = userVote
-      ? `<span class="text-success">✓ Thanks! You voted <strong>${userVote}</strong>. Be the first!</span>`
-      : "";
-    voteResult.classList.toggle("d-none", !userVote);
-    return;
-  }
-
-  const easyPct = Math.round((easy / total) * 100);
-  const hardPct = 100 - easyPct;
-
-  const voteLabel = userVote ? `<div class="text-success small mb-1">✓ Thanks for voting!</div>` : "";
-
-  voteResult.innerHTML = `
-    ${voteLabel}
-    <div class="mb-1 fw-semibold small">Community Results (${total} vote${total !== 1 ? "s" : ""})</div>
-    <div class="d-flex align-items-center gap-2 mb-1">
-      <span class="text-success" style="width:4rem;text-align:right">😊 Easy</span>
-      <div class="flex-grow-1 rounded overflow-hidden bg-secondary bg-opacity-25" style="height:12px">
-        <div class="bg-success h-100 rounded" style="width:${easyPct}%;transition:width .6s"></div>
-      </div>
-      <span class="text-success fw-bold" style="width:3rem">${easyPct}%</span>
-    </div>
-    <div class="d-flex align-items-center gap-2">
-      <span class="text-danger" style="width:4rem;text-align:right">🔥 Hard</span>
-      <div class="flex-grow-1 rounded overflow-hidden bg-secondary bg-opacity-25" style="height:12px">
-        <div class="bg-danger h-100 rounded" style="width:${hardPct}%;transition:width .6s"></div>
-      </div>
-      <span class="text-danger fw-bold" style="width:3rem">${hardPct}%</span>
-    </div>`;
-
-  if (voteButtons) voteButtons.classList.add("d-none");
-  voteResult.classList.remove("d-none");
-}
-
-function buildShareText(won) {
-  // Score line: X/6 for win, X/6 for loss
-  const guessCount = won ? (currentRow + 1) : "X";
-  const today = new Date().toISOString().slice(0, 10);
-
-  // Mode header
-  let header = "WordMaster";
-  if (GAME_MODE === "daily") {
-    // Compute puzzle number (days since launch 2026-03-15)
-    const launch = new Date("2026-03-15T00:00:00");
-    const diff = Math.floor((new Date(today) - launch) / 86400000) + 1;
-    header = `WordMaster Daily #${diff}`;
-  } else if (GAME_MODE === "easy") {
-    header = "WordMaster Easy";
-  } else if (GAME_MODE === "hard") {
-    header = "WordMaster Hard";
-  } else if (GAME_MODE.startsWith("category_")) {
-    const cat = GAME_MODE.replace("category_", "");
-    header = `WordMaster ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
-  }
-
-  let text = `${header}  ${guessCount}/${MAX_GUESSES}\n`;
-  text += `📅 ${today}\n\n`;
-
-  const maxRow = won ? currentRow : MAX_GUESSES - 1;
-  for (let r = 0; r <= maxRow; r++) {
+  for (let r = 0; r <= Math.min(currentRow, MAX_GUESSES - 1); r++) {
     const row = tiles[r];
-    if (!row.some(t => t.classList.contains("revealed"))) break;
+    const revealed = row.some(t => t.classList.contains("revealed"));
+    if (!revealed) break;
     text += row.map(t => {
       if (t.classList.contains("correct"))  return "🟦";
       if (t.classList.contains("present"))  return "🟨";
       if (t.classList.contains("absent"))   return "⬜";
-      return "⬛";
+      return "⬜";
     }).join("") + "\n";
   }
+  text += "\nhttps://wordmaster-game.com";
 
-  text += "\n🔗 wordmaster.store";
-  return text;
-}
-
-async function shareResult() {
-  const won  = gameOver && tiles[currentRow] &&
-               tiles[Math.min(currentRow, MAX_GUESSES-1)]
-                 .every(t => t.classList.contains("correct"));
-  const text = buildShareText(won);
-
-  // Try Web Share API first (mobile-friendly)
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: "WordMaster", text });
-      return;
-    } catch (e) {
-      // User cancelled or share failed — fall through to clipboard
-    }
-  }
-
-  // Clipboard fallback
-  try {
-    await navigator.clipboard.writeText(text);
-    showShareFeedback("✅ Copied to clipboard!");
-  } catch (e) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard!"));
+  } else {
     prompt("Copy your result:", text);
   }
-}
-
-function showShareFeedback(msg) {
-  const btn = document.getElementById("btn-share");
-  if (!btn) { showToast(msg); return; }
-  const original = btn.innerHTML;
-  btn.innerHTML = `<i class="bi bi-check-lg me-1"></i>${msg}`;
-  btn.classList.add("btn-success");
-  btn.classList.remove("btn-outline-primary");
-  setTimeout(() => {
-    btn.innerHTML = original;
-    btn.classList.remove("btn-success");
-    btn.classList.add("btn-outline-primary");
-  }, 2500);
 }
 
 async function resetGame() {
@@ -435,12 +241,6 @@ async function resetGame() {
   hintUsed      = false;
   resultPanel.classList.add("d-none");
   resultAd.classList.add("d-none");
-  const defCard = document.getElementById("definition-card");
-  if (defCard) defCard.classList.add("d-none");
-  const defLoading = document.getElementById("definition-loading");
-  if (defLoading) defLoading.classList.add("d-none");
-  const voteCard = document.getElementById("difficulty-vote");
-  if (voteCard) voteCard.classList.add("d-none");
   keyboard.querySelectorAll(".key").forEach(btn => {
     btn.className = btn.classList.contains("key-wide") ? "key key-wide" : "key";
     delete btn.dataset.state;
