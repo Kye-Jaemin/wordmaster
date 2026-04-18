@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, jsonify, Response
-from datetime import date
+from flask import Flask, render_template, request, jsonify, Response, redirect
+from datetime import date, timedelta
 import json, random, re, xml.etree.ElementTree as ET, urllib.request, urllib.error
 
 # ── News Cache (refreshed once per day) ───────────────────────
@@ -68,6 +68,12 @@ with open("words.json", encoding="utf-8") as f:
 def get_daily_word():
     today = date.today()
     seed = today.year * 10000 + today.month * 100 + today.day
+    random.seed(seed)
+    return random.choice(WORDS["daily"]).upper()
+
+def get_word_for_date(d):
+    """Get the daily word for any specific date."""
+    seed = d.year * 10000 + d.month * 100 + d.day
     random.seed(seed)
     return random.choice(WORDS["daily"]).upper()
 
@@ -186,6 +192,47 @@ def word_of_day():
         word=word,
         word_data=word_data,
         today=today.strftime("%B %d, %Y"))
+
+@app.route("/archive")
+def archive():
+    today = date.today()
+    entries = []
+    for i in range(30):
+        d = today - timedelta(days=i)
+        entries.append({
+            "date":         d.strftime("%Y-%m-%d"),
+            "date_display": d.strftime("%B %d, %Y"),
+            "word":         get_word_for_date(d),
+            "is_today":     i == 0,
+        })
+    return render_template("archive.html",
+        title="Daily Word Archive — WordMaster",
+        meta_desc="Browse the past 30 days of WordMaster daily challenges. Hover to reveal past words.",
+        entries=entries)
+
+@app.route("/archive/<date_str>")
+def archive_day(date_str):
+    try:
+        d = date.fromisoformat(date_str)
+    except ValueError:
+        return redirect("/archive")
+    today  = date.today()
+    if d > today:
+        return redirect("/archive")
+    word      = get_word_for_date(d)
+    is_today  = d == today
+    prev_d    = d - timedelta(days=1)
+    next_d    = d + timedelta(days=1)
+    prev_date = prev_d.strftime("%Y-%m-%d") if (today - prev_d).days <= 29 else None
+    next_date = next_d.strftime("%Y-%m-%d") if next_d <= today else None
+    return render_template("archive_day.html",
+        title=f"WordMaster Archive: {d.strftime('%B %d, %Y')}",
+        meta_desc=f"See the WordMaster daily word for {d.strftime('%B %d, %Y')} and its definition.",
+        word=word,
+        date_display=d.strftime("%B %d, %Y"),
+        is_today=is_today,
+        prev_date=prev_date,
+        next_date=next_date)
 
 @app.route("/blog")
 def blog():
