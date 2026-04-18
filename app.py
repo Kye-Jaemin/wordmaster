@@ -454,7 +454,9 @@ def sitemap():
         "/category/animals", "/category/food",
         "/leaderboard", "/how-to-play", "/about",
         "/privacy", "/terms", "/blog",
-        "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history"
+        "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history",
+        "/blog/top-100-sat-words", "/blog/ielts-essential-words",
+        "/word-of-day", "/news-challenge", "/archive"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
                  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
