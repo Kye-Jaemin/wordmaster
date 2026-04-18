@@ -236,7 +236,7 @@ def api_hint():
 
 @app.route("/sitemap.xml")
 def sitemap():
-    base = "https://wordmaster-game.com"
+    base = "https://wordmaster.store"
     urls = [
         "/", "/daily", "/unlimited", "/easy", "/hard",
         "/category/animals", "/category/food",
@@ -253,7 +253,7 @@ def sitemap():
 
 @app.route("/robots.txt")
 def robots():
-    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster-game.com/sitemap.xml\n"
+    txt = "User-agent: *\nAllow: /\nSitemap: https://wordmaster.store/sitemap.xml\n"
     return Response(txt, mimetype="text/plain")
 
 @app.errorhandler(404)
