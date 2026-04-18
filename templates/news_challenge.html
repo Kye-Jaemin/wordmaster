@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width:960px">
+
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <span class="badge bg-danger fs-6 mb-2">
+      <i class="bi bi-newspaper me-1"></i>Today's Headlines
+    </span>
+    <h1 class="fw-bold text-primary">News Word Challenge</h1>
+    <p class="text-muted mb-0">Read today's top stories. Then guess the 5-letter word hidden in the headlines.</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT: News Articles -->
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-danger text-white py-2 px-3">
+          <i class="bi bi-broadcast me-1"></i><strong>BBC World News</strong>
+          <span class="float-end small opacity-75" id="news-date"></span>
+        </div>
+        <div class="card-body p-0" id="news-articles-container">
+          <!-- Loading spinner -->
+          <div class="text-center py-5 text-muted" id="news-loading">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            Loading today's news…
+          </div>
+        </div>
+        <div class="card-footer bg-light text-muted small py-2 px-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Today's game word is hidden somewhere in these headlines.
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Word Game -->
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white py-2 px-3 d-flex align-items-center justify-content-between">
+          <span><i class="bi bi-controller me-1"></i><strong>Guess the Word</strong></span>
+          <span class="small opacity-75">6 tries</span>
+        </div>
+        <div class="card-body px-2 py-3">
+
+          <!-- Toast -->
+          <div id="toast-area" class="text-center mb-1" aria-live="polite"></div>
+
+          <!-- Guess counter -->
+          <div class="text-center text-muted small mb-2">
+            Guess <span id="guess-current">1</span> of {{ max_guesses }}
+          </div>
+
+          <!-- Board -->
+          <div id="board" class="board mx-auto"
+               style="display:grid;grid-template-columns:repeat({{ word_length }},1fr);gap:5px;width:min(300px,90%);margin-bottom:12px;">
+          </div>
+
+          <!-- Result Panel -->
+          <div id="result-panel" class="text-center d-none mt-2">
+            <div id="result-emoji" class="fs-4 mb-1"></div>
+            <h6 id="result-message" class="fw-bold mb-1"></h6>
+            <p id="result-word" class="text-muted small mb-2"></p>
+
+            <!-- News source highlight -->
+            <div id="news-source-reveal" class="alert alert-info py-2 px-3 small text-start d-none mx-auto" style="max-width:420px">
+              <i class="bi bi-newspaper me-1"></i><strong>Found in today's news:</strong>
+              <p id="news-source-headline" class="mb-0 fst-italic mt-1"></p>
+            </div>
+
+            <!-- Word learning card -->
+            <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-2 mb-2" style="max-width:420px;">
+              <div class="card-header bg-primary text-white py-2 px-3">
+                <span class="fw-bold"><i class="bi bi-book me-1"></i>Word Breakdown</span>
+              </div>
+              <div class="card-body py-2 px-3">
+                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                  <span id="learn-word" class="fw-bold text-primary fs-5"></span>
+                  <span id="learn-phonetic" class="text-muted small"></span>
+                </div>
+                <div id="learn-meanings"></div>
+                <div id="learn-synant" class="d-none mt-2">
+                  <div id="learn-synonyms-wrap" class="d-none mb-1">
+                    <span class="badge bg-success me-1">Synonyms</span>
+                    <span id="learn-synonyms" class="small text-muted"></span>
+                  </div>
+                  <div id="learn-antonyms-wrap" class="d-none">
+                    <span class="badge bg-danger me-1">Antonyms</span>
+                    <span id="learn-antonyms" class="small text-muted"></span>
+                  </div>
+                </div>
+                <div id="learn-etymology" class="d-none mt-2 pt-2 border-top">
+                  <small class="text-muted"><i class="bi bi-clock-history me-1 text-warning"></i><strong>Origin:</strong> <span id="learn-origin"></span></small>
+                </div>
+              </div>
+            </div>
+            <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
+              <span class="spinner-border spinner-border-sm me-1"></span>Loading definition…
+            </div>
+
+            <div class="d-flex gap-2 justify-content-center flex-wrap mt-2">
+              <button id="btn-share" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-share me-1"></i>Share
+              </button>
+              <button id="btn-play-again" class="btn btn-primary btn-sm">
+                <i class="bi bi-arrow-clockwise me-1"></i>New Game
+              </button>
+              <a href="/daily" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-calendar-day me-1"></i>Daily Challenge
+              </a>
+            </div>
+          </div>
+
+          <!-- Keyboard -->
+          <div id="keyboard" class="keyboard mt-2 mx-auto">
+            <div class="key-row">
+              {% for k in ["Q","W","E","R","T","Y","U","I","O","P"] %}
+                <button class="key" data-key="{{ k }}">{{ k }}</button>
+              {% endfor %}
+            </div>
+            <div class="key-row">
+              {% for k in ["A","S","D","F","G","H","J","K","L"] %}
+                <button class="key" data-key="{{ k }}">{{ k }}</button>
+              {% endfor %}
+            </div>
+            <div class="key-row">
+              <button class="key key-wide" data-key="ENTER"><i class="bi bi-check-lg"></i> ENTER</button>
+              {% for k in ["Z","X","C","V","B","N","M"] %}
+                <button class="key" data-key="{{ k }}">{{ k }}</button>
+              {% endfor %}
+              <button class="key key-wide" data-key="BACKSPACE"><i class="bi bi-backspace"></i></button>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex gap-2 justify-content-center mt-2" id="action-buttons">
+            <button id="btn-hint" class="btn btn-outline-warning btn-sm">
+              <i class="bi bi-lightbulb me-1"></i>Hint
+              <span class="badge bg-warning text-dark ms-1">1</span>
+            </button>
+            <button id="btn-giveup" class="btn btn-outline-danger btn-sm">
+              <i class="bi bi-flag me-1"></i>Give Up
+            </button>
+          </div>
+          <!-- Hint Panel -->
+          <div id="hint-panel" class="alert alert-warning d-none mt-2 mx-auto text-start" style="max-width:380px;" role="alert">
+            <div id="hint-content"></div>
+          </div>
+
+          <!-- Legend -->
+          <div class="text-center mt-2">
+            <small class="text-muted">
+              <span class="demo-tile correct-demo">G</span> Correct &nbsp;
+              <span class="demo-tile present-demo">R</span> Wrong position &nbsp;
+              <span class="demo-tile absent-demo">X</span> Not in word
+            </small>
+          </div>
+
+        </div><!-- /.card-body -->
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const GAME_MODE   = "{{ mode }}";
+  const WORD_LENGTH = {{ word_length }};
+  const MAX_GUESSES = {{ max_guesses }};
+
+  // ── Load news articles ─────────────────────────────────────
+  let newsWordSource = "";
+
+  async function loadNewsArticles() {
+    try {
+      const res  = await fetch("/api/news-articles");
+      const data = await res.json();
+      newsWordSource = data.wordSource || "";
+
+      const container = document.getElementById("news-articles-container");
+      const loading   = document.getElementById("news-loading");
+      if (loading) loading.remove();
+
+      // Date badge
+      const dateEl = document.getElementById("news-date");
+      if (dateEl) dateEl.textContent = new Date().toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" });
+
+      if (!data.articles || data.articles.length === 0) {
+        container.innerHTML = '<p class="text-muted p-3 small">Could not load news today. Try refreshing.</p>';
+        return;
+      }
+
+      data.articles.forEach((art, i) => {
+        const item = document.createElement("a");
+        item.href   = art.link;
+        item.target = "_blank";
+        item.rel    = "noopener noreferrer";
+        item.className = "d-block text-decoration-none border-bottom px-3 py-2 news-item";
+        item.style.transition = "background 0.15s";
+        item.innerHTML = `
+          <div class="d-flex gap-2 align-items-start">
+            <span class="badge bg-danger mt-1 flex-shrink-0">${i + 1}</span>
+            <div>
+              <p class="fw-semibold mb-0 small text-dark">${art.title}</p>
+              ${art.description ? `<p class="text-muted mb-0" style="font-size:0.78rem">${art.description}</p>` : ""}
+              <span class="text-muted" style="font-size:0.72rem"><i class="bi bi-link-45deg"></i>${art.source}</span>
+            </div>
+          </div>`;
+        item.addEventListener("mouseenter", () => item.style.background = "#fff5f5");
+        item.addEventListener("mouseleave", () => item.style.background = "");
+        container.appendChild(item);
+      });
+    } catch (e) {
+      const container = document.getElementById("news-articles-container");
+      if (container) container.innerHTML = '<p class="text-muted p-3 small">News unavailable.</p>';
+    }
+  }
+
+  // ── Reveal news source headline in result panel ────────────
+  function revealNewsSource() {
+    if (!newsWordSource) return;
+    const box = document.getElementById("news-source-reveal");
+    const hl  = document.getElementById("news-source-headline");
+    if (box && hl) {
+      hl.textContent = `"${newsWordSource}"`;
+      box.classList.remove("d-none");
+    }
+  }
+
+  // Load news on page init
+  loadNewsArticles();
+</script>
+<script src="/static/js/game.js"></script>
+<script>
+  // Hook into showResult to reveal news source
+  const _origShowResult = showResult;
+  // Override by wrapping the post-result logic
+  document.addEventListener("gameOver", function(e) {
+    revealNewsSource();
+  });
+</script>
+{% endblock %}

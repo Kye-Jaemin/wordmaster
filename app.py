@@ -1,6 +1,64 @@
 from flask import Flask, render_template, request, jsonify, Response
 from datetime import date
-import json, random, xml.etree.ElementTree as ET, urllib.request, urllib.error
+import json, random, re, xml.etree.ElementTree as ET, urllib.request, urllib.error
+
+# ── News Cache (refreshed once per day) ───────────────────────
+_news_cache = {"date": None, "articles": [], "word": None}
+
+def fetch_news_articles():
+    """Fetch BBC World News RSS and return list of article dicts (cached daily)."""
+    global _news_cache
+    today_str = str(date.today())
+    if _news_cache["date"] == today_str and _news_cache["articles"]:
+        return _news_cache["articles"]
+    try:
+        url = "https://feeds.bbci.co.uk/news/world/rss.xml"
+        req = urllib.request.Request(url, headers={"User-Agent": "WordMaster/1.0"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            xml_data = resp.read()
+        root = ET.fromstring(xml_data)
+        articles = []
+        for item in root.findall(".//item")[:6]:
+            title = item.findtext("title", "").strip()
+            desc  = item.findtext("description", "").strip()
+            link  = item.findtext("link", "").strip()
+            pub   = item.findtext("pubDate", "").strip()
+            desc  = re.sub(r"<[^>]+>", "", desc)[:180]
+            if title and link:
+                articles.append({"title": title, "description": desc,
+                                  "link": link, "source": "BBC News", "pubDate": pub})
+        _news_cache = {"date": today_str, "articles": articles, "word": None}
+        return articles
+    except Exception:
+        return []
+
+def pick_news_word(articles):
+    """Pick a valid 5-letter game word from today's news headlines (cached daily)."""
+    global _news_cache
+    today_str = str(date.today())
+    if _news_cache["date"] == today_str and _news_cache.get("word"):
+        return _news_cache["word"], _news_cache.get("word_source", "")
+    # Build combined valid word set from all word lists
+    all_valid = set()
+    for lst in WORDS.values():
+        if isinstance(lst, list):
+            all_valid.update(w.upper() for w in lst)
+    # Extract 5-letter alpha words from headlines + descriptions
+    candidates = []
+    for art in articles:
+        for w in re.findall(r"\b[a-zA-Z]{5}\b", art["title"] + " " + art["description"]):
+            wu = w.upper()
+            if wu in all_valid:
+                candidates.append((wu, art["title"]))
+    if candidates:
+        seed = date.today().year * 10000 + date.today().month * 100 + date.today().day + 999
+        random.seed(seed)
+        word, source = random.choice(candidates)
+    else:
+        word, source = get_daily_word(), ""
+    _news_cache["word"] = word
+    _news_cache["word_source"] = source
+    return word, source
 
 app = Flask(__name__)
 
@@ -249,6 +307,9 @@ def api_word():
 
     if mode == "daily":
         word = get_daily_word()
+    elif mode == "news":
+        articles = fetch_news_articles()
+        word, _ = pick_news_word(articles)
     elif mode.startswith("category_"):
         cat = mode.split("_", 1)[1]
         pool = WORDS.get(cat, WORDS["5"])
@@ -281,6 +342,19 @@ def api_guess():
     result = check_guess(guess, answer)
     won = all(r["status"] == "correct" for r in result)
     return jsonify({"result": result, "valid": True, "won": won})
+
+@app.route("/news-challenge")
+def news_challenge():
+    return render_template("news_challenge.html",
+        title="News Word Challenge — WordMaster",
+        meta_desc="Guess today's 5-letter word drawn from BBC News headlines. Learn vocabulary in context!",
+        mode="news", word_length=5, max_guesses=6)
+
+@app.route("/api/news-articles")
+def api_news_articles():
+    articles = fetch_news_articles()
+    _, word_source = pick_news_word(articles)
+    return jsonify({"articles": articles, "wordSource": word_source})
 
 @app.route("/api/vote", methods=["POST"])
 def api_vote():

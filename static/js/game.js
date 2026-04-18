@@ -213,6 +213,9 @@ function showResult(won, message = "") {
 
   // Show community difficulty vote
   showVoteUI();
+
+  // If news-challenge page: reveal the headline this word came from
+  if (typeof revealNewsSource === "function") revealNewsSource();
 }
 
 // ─── Word Learning Card (on game end) ─────────────────────────
