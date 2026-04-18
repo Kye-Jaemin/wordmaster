@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:760px">
+
+  <!-- Header -->
+  <div class="text-center mb-4">
+    <span class="badge bg-warning text-dark fs-6 mb-2">
+      <i class="bi bi-calendar3 me-1"></i>{{ today }}
+    </span>
+    <h1 class="fw-bold text-primary display-5">Word of the Day</h1>
+    <p class="text-muted">Expand your vocabulary — one word at a time.</p>
+  </div>
+
+  <!-- Main Word Card -->
+  <div class="card border-primary shadow-sm mb-4">
+    <div class="card-body p-4">
+      <div class="d-flex align-items-center gap-3 flex-wrap mb-3">
+        <h2 class="fw-bold text-primary mb-0 display-6">{{ word }}</h2>
+        {% if word_data and word_data.phonetic %}
+        <span class="text-muted fs-5">{{ word_data.phonetic }}</span>
+        {% endif %}
+      </div>
+
+      {% if word_data and word_data.meanings %}
+        {% for meaning in word_data.meanings %}
+        <div class="mb-3">
+          <span class="badge bg-secondary mb-2">{{ meaning.partOfSpeech }}</span>
+          {% for d in meaning.definitions %}
+          <p class="mb-1"><i class="bi bi-dot text-primary"></i> {{ d.definition }}</p>
+          {% if d.example %}
+          <p class="text-muted fst-italic small ms-3 mb-2">"{{ d.example }}"</p>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endfor %}
+      {% else %}
+      <p class="text-muted">Definition not available. Try playing the game to guess this word!</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Synonyms & Antonyms Row -->
+  {% if word_data and (word_data.synonyms or word_data.antonyms) %}
+  <div class="row g-3 mb-4">
+    {% if word_data.synonyms %}
+    <div class="col-md-6">
+      <div class="card h-100 border-success">
+        <div class="card-body">
+          <h6 class="fw-bold text-success mb-2"><i class="bi bi-arrows-collapse me-1"></i>Synonyms</h6>
+          <div class="d-flex flex-wrap gap-2">
+            {% for s in word_data.synonyms %}
+            <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success">{{ s }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% if word_data.antonyms %}
+    <div class="col-md-6">
+      <div class="card h-100 border-danger">
+        <div class="card-body">
+          <h6 class="fw-bold text-danger mb-2"><i class="bi bi-arrows-expand me-1"></i>Antonyms</h6>
+          <div class="d-flex flex-wrap gap-2">
+            {% for a in word_data.antonyms %}
+            <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger">{{ a }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Etymology -->
+  {% if word_data and word_data.origin %}
+  <div class="card border-0 bg-light mb-4">
+    <div class="card-body">
+      <h6 class="fw-bold mb-1"><i class="bi bi-clock-history me-1 text-warning"></i>Etymology (Origin)</h6>
+      <p class="mb-0 small text-muted">{{ word_data.origin }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- CTA: Play the game -->
+  <div class="card border-primary bg-primary bg-opacity-10 mb-4">
+    <div class="card-body text-center py-3">
+      <p class="mb-2 fw-bold">Can you guess today's word in 6 tries?</p>
+      <a href="/daily" class="btn btn-primary">
+        <i class="bi bi-play-fill me-1"></i>Play Today's Daily Challenge
+      </a>
+    </div>
+  </div>
+
+  <!-- Archive Link -->
+  <div class="text-center text-muted small">
+    <i class="bi bi-calendar3 me-1"></i>
+    Browse past words in the <a href="/archive" class="text-decoration-none">Daily Archive</a>
+    &nbsp;·&nbsp;
+    <a href="/blog" class="text-decoration-none">Read the Blog</a>
+  </div>
+
+</div>
+{% endblock %}

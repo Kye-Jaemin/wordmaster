@@ -207,6 +207,120 @@ function showResult(won, message = "") {
 
   if (shareBtn) shareBtn.onclick = shareResult;
   if (againBtn) againBtn.onclick = resetGame;
+
+  // Fetch & display rich word learning card
+  fetchDefinition(secretWord);
+
+  // Show community difficulty vote
+  showVoteUI();
+}
+
+// ─── Word Learning Card (on game end) ─────────────────────────
+async function fetchDefinition(word) {
+  const card     = document.getElementById("word-learning-card");
+  const loading  = document.getElementById("definition-loading");
+  if (!card) return;
+  if (loading) loading.classList.remove("d-none");
+
+  try {
+    const res  = await fetch(`/api/word-info?word=${word.toLowerCase()}`);
+    const data = await res.json();
+    if (loading) loading.classList.add("d-none");
+
+    if (!data || !data.meanings || data.meanings.length === 0) return;
+
+    // Word + phonetic
+    const learnWord = document.getElementById("learn-word");
+    const learnPho  = document.getElementById("learn-phonetic");
+    if (learnWord) learnWord.textContent = data.word || word.toUpperCase();
+    if (learnPho)  learnPho.textContent  = data.phonetic || "";
+
+    // Meanings
+    const meaningsEl = document.getElementById("learn-meanings");
+    if (meaningsEl) {
+      meaningsEl.innerHTML = "";
+      data.meanings.slice(0, 2).forEach(m => {
+        const posEl = document.createElement("span");
+        posEl.className = "badge bg-secondary me-1 mb-1";
+        posEl.textContent = m.partOfSpeech;
+        meaningsEl.appendChild(posEl);
+        (m.definitions || []).slice(0, 2).forEach(d => {
+          const defP = document.createElement("p");
+          defP.className = "mb-1 small";
+          defP.innerHTML = `<i class="bi bi-dot text-primary"></i>${d.definition}`;
+          meaningsEl.appendChild(defP);
+          if (d.example) {
+            const exP = document.createElement("p");
+            exP.className = "text-muted fst-italic small ms-3 mb-1";
+            exP.textContent = `"${d.example}"`;
+            meaningsEl.appendChild(exP);
+          }
+        });
+      });
+    }
+
+    // Synonyms & Antonyms
+    const synWrap = document.getElementById("learn-synonyms-wrap");
+    const antWrap = document.getElementById("learn-antonyms-wrap");
+    const synEl   = document.getElementById("learn-synonyms");
+    const antEl   = document.getElementById("learn-antonyms");
+    const synant  = document.getElementById("learn-synant");
+    if (synEl && data.synonyms && data.synonyms.length) {
+      synEl.textContent = data.synonyms.join(", ");
+      if (synWrap) synWrap.classList.remove("d-none");
+      if (synant)  synant.classList.remove("d-none");
+    }
+    if (antEl && data.antonyms && data.antonyms.length) {
+      antEl.textContent = data.antonyms.join(", ");
+      if (antWrap) antWrap.classList.remove("d-none");
+      if (synant)  synant.classList.remove("d-none");
+    }
+
+    // Etymology
+    if (data.origin) {
+      const etym   = document.getElementById("learn-etymology");
+      const origin = document.getElementById("learn-origin");
+      if (origin) origin.textContent = data.origin;
+      if (etym)   etym.classList.remove("d-none");
+    }
+
+    card.classList.remove("d-none");
+  } catch (e) {
+    if (loading) loading.classList.add("d-none");
+  }
+}
+
+// ─── Community Vote ───────────────────────────────────────────
+function showVoteUI() {
+  const voteCard = document.getElementById("difficulty-vote");
+  if (!voteCard) return;
+  const voteButtons = document.getElementById("vote-buttons");
+  const voteResult  = document.getElementById("vote-result");
+  if (voteButtons) voteButtons.classList.remove("d-none");
+  if (voteResult)  voteResult.classList.add("d-none");
+  voteCard.classList.remove("d-none");
+}
+
+async function submitVote(vote) {
+  const today = new Date().toISOString().slice(0, 10);
+  const voteButtons = document.getElementById("vote-buttons");
+  const voteResult  = document.getElementById("vote-result");
+  if (voteButtons) voteButtons.classList.add("d-none");
+  if (voteResult) {
+    voteResult.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Submitting…';
+    voteResult.classList.remove("d-none");
+  }
+  try {
+    await fetch("/api/vote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word: secretWord, vote, date: today })
+    });
+  } catch (e) { /* silent */ }
+  if (voteResult) {
+    voteResult.textContent = vote === "easy" ? "😊 Glad it felt easy!" : "🔥 Nice work pushing through!";
+    voteResult.classList.remove("d-none");
+  }
 }
 
 function shareResult() {
@@ -253,6 +367,11 @@ async function resetGame() {
   }
   const hintPanel = document.getElementById("hint-panel");
   if (hintPanel) hintPanel.classList.add("d-none");
+  // Hide word learning card and vote on reset
+  const wlCard = document.getElementById("word-learning-card");
+  if (wlCard) wlCard.classList.add("d-none");
+  const voteCard = document.getElementById("difficulty-vote");
+  if (voteCard) voteCard.classList.add("d-none");
   // Show action buttons
   const actionBtns = document.getElementById("action-buttons");
   if (actionBtns) actionBtns.classList.remove("d-none");

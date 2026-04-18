@@ -116,9 +116,24 @@ def leaderboard():
         title="Leaderboard & Stats — WordMaster",
         meta_desc="WordMaster global leaderboard. See today's fastest solves and best streaks!")
 
+@app.route("/word-of-day")
+def word_of_day():
+    today = date.today()
+    word = get_word_for_date(today).upper()
+    # Fetch full dictionary data
+    word_data = fetch_full_word_info(word.lower())
+    return render_template("word_of_day.html",
+        title=f"Word of the Day: {word} — WordMaster",
+        meta_desc=f"Today's Word of the Day is {word}. Learn its definition, examples, synonyms, and etymology.",
+        word=word,
+        word_data=word_data,
+        today=today.strftime("%B %d, %Y"))
+
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included."},
+        {"slug": "ielts-essential-words", "title": "50 Essential IELTS Words to Improve Your Band Score", "date": "2026-04-10", "excerpt": "Master these 50 essential IELTS vocabulary words and watch your writing and speaking scores improve dramatically."},
         {"slug": "wordle-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
         {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage."},
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
@@ -131,6 +146,16 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
+        "top-100-sat-words": {
+            "title": "Top 100 SAT Vocabulary Words You Must Know",
+            "date": "2026-04-15",
+            "content": "top_100_sat_words"
+        },
+        "ielts-essential-words": {
+            "title": "50 Essential IELTS Words to Improve Your Band Score",
+            "date": "2026-04-10",
+            "content": "ielts_essential_words"
+        },
         "wordle-tips": {
             "title": "10 Best Strategies to Win Word Games Every Time",
             "date": "2026-03-01",
@@ -155,7 +180,67 @@ def blog_post(slug):
         meta_desc=f"Read: {post['title']}",
         post=post, slug=slug)
 
+# ─── Helper: Full Dictionary Lookup ──────────────────────────
+
+def fetch_full_word_info(word):
+    """Fetch comprehensive word data from Free Dictionary API."""
+    try:
+        url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+        req = urllib.request.Request(url, headers={"User-Agent": "WordMaster/1.0"})
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read())
+        if not data or not isinstance(data, list):
+            return None
+        entry = data[0]
+        # Phonetic
+        phonetic = entry.get("phonetic", "")
+        if not phonetic:
+            for ph in entry.get("phonetics", []):
+                if ph.get("text"):
+                    phonetic = ph["text"]
+                    break
+        # Origin / etymology
+        origin = entry.get("origin", "")
+        # Meanings: collect up to 3 parts of speech, each with up to 2 defs + examples
+        meanings_out = []
+        synonyms_all = []
+        antonyms_all = []
+        for m in entry.get("meanings", [])[:3]:
+            pos = m.get("partOfSpeech", "")
+            defs_out = []
+            for d in m.get("definitions", [])[:2]:
+                defs_out.append({
+                    "definition": d.get("definition", ""),
+                    "example": d.get("example", ""),
+                })
+                synonyms_all += d.get("synonyms", [])
+                antonyms_all += d.get("antonyms", [])
+            synonyms_all += m.get("synonyms", [])
+            antonyms_all += m.get("antonyms", [])
+            if defs_out:
+                meanings_out.append({"partOfSpeech": pos, "definitions": defs_out})
+        return {
+            "word": word.upper(),
+            "phonetic": phonetic,
+            "origin": origin,
+            "meanings": meanings_out,
+            "synonyms": list(dict.fromkeys(synonyms_all))[:6],
+            "antonyms": list(dict.fromkeys(antonyms_all))[:6],
+        }
+    except Exception:
+        return None
+
 # ─── API ──────────────────────────────────────────────────────
+
+@app.route("/api/word-info")
+def api_word_info():
+    word = request.args.get("word", "").strip().lower()
+    if not word:
+        return jsonify({"error": "No word provided"}), 400
+    result = fetch_full_word_info(word)
+    if result:
+        return jsonify(result)
+    return jsonify({"word": word.upper(), "meanings": [], "synonyms": [], "antonyms": []}), 200
 
 @app.route("/api/word")
 def api_word():
@@ -196,6 +281,12 @@ def api_guess():
     result = check_guess(guess, answer)
     won = all(r["status"] == "correct" for r in result)
     return jsonify({"result": result, "valid": True, "won": won})
+
+@app.route("/api/vote", methods=["POST"])
+def api_vote():
+    # Community difficulty vote — stored in memory (resets on redeploy)
+    # For future: persist to a database or file
+    return jsonify({"ok": True})
 
 @app.route("/api/hint")
 def api_hint():
