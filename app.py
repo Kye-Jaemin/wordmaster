@@ -119,7 +119,7 @@ def leaderboard():
 @app.route("/word-of-day")
 def word_of_day():
     today = date.today()
-    word = get_word_for_date(today).upper()
+    word = get_daily_word()
     # Fetch full dictionary data
     word_data = fetch_full_word_info(word.lower())
     return render_template("word_of_day.html",
