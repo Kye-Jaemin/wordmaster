@@ -237,6 +237,8 @@ def archive_day(date_str):
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
+        {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
         {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included."},
         {"slug": "ielts-essential-words", "title": "50 Essential IELTS Words to Improve Your Band Score", "date": "2026-04-10", "excerpt": "Master these 50 essential IELTS vocabulary words and watch your writing and speaking scores improve dramatically."},
         {"slug": "wordle-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
@@ -244,8 +246,8 @@ def blog():
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
     ]
     return render_template("blog/index.html",
-        title="Word Game Blog — Tips, Tricks & Strategies | WordMaster",
-        meta_desc="WordMaster blog: expert strategies, best starting words, and word game history.",
+        title="Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster",
+        meta_desc="WordMaster blog: expert vocabulary-building strategies, brain science behind word games, SAT/IELTS word lists, and proven tactics to win every puzzle.",
         posts=posts)
 
 @app.route("/blog/<slug>")
@@ -275,6 +277,16 @@ def blog_post(slug):
             "title": "The History of Word Guessing Games",
             "date": "2026-02-10",
             "content": "word_game_history"
+        },
+        "daily-habits-vocabulary": {
+            "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary",
+            "date": "2026-04-25",
+            "content": "daily_habits_vocabulary"
+        },
+        "science-of-word-games": {
+            "title": "The Science Behind Word Games: How Puzzles Boost Your Brain",
+            "date": "2026-04-22",
+            "content": "science_of_word_games"
         },
     }
     post = posts.get(slug)
@@ -456,6 +468,7 @@ def sitemap():
         "/privacy", "/terms", "/blog",
         "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
+        "/blog/daily-habits-vocabulary", "/blog/science-of-word-games",
         "/word-of-day", "/news-challenge", "/archive"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',

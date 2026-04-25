@@ -1,35 +1,150 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5" style="max-width:720px">
+<div class="container py-5" style="max-width:760px">
   <h1 class="fw-bold text-primary mb-1"><i class="bi bi-info-circle me-2"></i>About WordMaster</h1>
-  <p class="text-muted mb-4">The free, browser-based word guessing game.</p>
+  <p class="text-muted mb-4">A free, brain-training word puzzle platform — built for curious minds of all ages.</p>
 
+  <!-- What is WordMaster -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <h4 class="fw-bold">What is WordMaster?</h4>
-      <p>WordMaster is a free, browser-based word guessing game. No account, no download, no subscription required — just pure word-puzzle fun accessible from any device.</p>
-      <p>Guess the hidden word in 6 tries. After each guess, the colored tiles will reveal how close you are. Sharpen your vocabulary and challenge your friends!</p>
+      <p>WordMaster is a free, browser-based vocabulary and word-guessing platform. No account required. No download. No subscription. Just open your browser and play — from any device, anywhere in the world.</p>
+      <p>Guess the hidden word in 6 tries. After each guess, color-coded tiles reveal how close you are: <span class="badge bg-success">green</span> for the right letter in the right spot, <span class="badge bg-warning text-dark">yellow</span> for the right letter in the wrong spot, and <span class="badge bg-secondary">grey</span> for letters not in the word. It takes seconds to learn and a lifetime to master.</p>
+      <p>WordMaster is used by students, language learners, competitive puzzle enthusiasts, and anyone who wants to keep their mind sharp. Whether you're preparing for the SAT, studying for IELTS, or simply looking for a smarter alternative to your morning scroll — WordMaster has a mode for you.</p>
     </div>
   </div>
 
+  <!-- Why we built it -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h4 class="fw-bold mb-3">Game Modes</h4>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Daily Challenge</strong> — One new word every day. Compare your score with others!</li>
-        <li class="list-group-item"><strong>Unlimited Mode</strong> — No limit. Play as many rounds as you want.</li>
-        <li class="list-group-item"><strong>Easy (4 letters)</strong> — Perfect for beginners or younger players.</li>
-        <li class="list-group-item"><strong>Hard (6 letters)</strong> — For word masters seeking an extra challenge.</li>
-        <li class="list-group-item"><strong>Category Modes</strong> — Animals, food, and more themed word sets.</li>
-      </ul>
+      <h4 class="fw-bold">Why We Built WordMaster</h4>
+      <p>We built WordMaster because we believe that vocabulary is one of the most underrated cognitive tools available to every person — and that the best way to build it is through play, not passive study.</p>
+      <p>Research consistently shows that active retrieval (like guessing a word in a puzzle) produces far stronger memory traces than passive review. Word games also activate multiple cognitive systems at once: pattern recognition, working memory, executive function, and lexical retrieval. Playing daily is genuinely good for your brain.</p>
+      <p>We wanted a word game that went beyond the basic daily challenge — one with multiple difficulty levels, real-world vocabulary from the news, a curated Word of the Day with rich definitions, and an educational blog. That's WordMaster.</p>
     </div>
   </div>
 
+  <!-- Features at a glance -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold mb-3"><i class="bi bi-stars me-2 text-warning"></i>What You Can Do on WordMaster</h4>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">📅</span>
+            <div>
+              <strong>Daily Challenge</strong>
+              <p class="small text-muted mb-0">A new 5-letter word every day, shared by all players. Compare your solve in as few guesses as possible.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">♾️</span>
+            <div>
+              <strong>Unlimited Mode</strong>
+              <p class="small text-muted mb-0">No limits. Play as many rounds as you want, any time, with a fresh random word each game.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">😊</span>
+            <div>
+              <strong>Easy Mode (4 letters)</strong>
+              <p class="small text-muted mb-0">Perfect for beginners, younger players, or anyone who wants a quick warm-up.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">🔥</span>
+            <div>
+              <strong>Hard Mode (6 letters)</strong>
+              <p class="small text-muted mb-0">An extra challenge for experienced players. Longer words mean more combinations to consider.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">📰</span>
+            <div>
+              <strong>News Word Challenge</strong>
+              <p class="small text-muted mb-0">Read today's BBC headlines, then guess the 5-letter word hidden within them. Real-world vocabulary, updated daily.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">✨</span>
+            <div>
+              <strong>Word of the Day</strong>
+              <p class="small text-muted mb-0">Complete the daily challenge to unlock today's word with its full definition, etymology, synonyms, and usage examples.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">📚</span>
+            <div>
+              <strong>Category Modes</strong>
+              <p class="small text-muted mb-0">Animals, food, and more themed word sets for focused vocabulary practice.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex gap-2">
+            <span class="fs-4">🗓️</span>
+            <div>
+              <strong>Daily Archive</strong>
+              <p class="small text-muted mb-0">Browse and replay the past 30 days of daily challenges. See each word's definition and how it was used.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog / Learning resources -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold"><i class="bi bi-book me-2 text-primary"></i>Learning Resources</h4>
+      <p>WordMaster isn't just a game — it's a vocabulary learning platform. Our blog covers the science behind word games, proven strategies for winning puzzles, high-frequency SAT and IELTS vocabulary lists, and practical daily habits for building word power. <a href="/blog">Browse the blog →</a></p>
+    </div>
+  </div>
+
+  <!-- Stats / Trust signals -->
+  <div class="card bg-primary text-white shadow-sm mb-4">
+    <div class="card-body">
+      <h4 class="fw-bold mb-3">WordMaster by the Numbers</h4>
+      <div class="row text-center g-3">
+        <div class="col-4">
+          <div class="display-6 fw-bold">6+</div>
+          <div class="small opacity-75">Game Modes</div>
+        </div>
+        <div class="col-4">
+          <div class="display-6 fw-bold">10,000+</div>
+          <div class="small opacity-75">Words in Library</div>
+        </div>
+        <div class="col-4">
+          <div class="display-6 fw-bold">Daily</div>
+          <div class="small opacity-75">New Content</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal -->
   <div class="card shadow-sm mb-5">
     <div class="card-body">
       <h4 class="fw-bold">Legal Note</h4>
-      <p class="text-muted small">WordMaster is an independent project. It is not affiliated with, endorsed by, or connected to the New York Times or the original Wordle game. The word-guessing game format is a classic puzzle type with no single owner.</p>
+      <p class="text-muted small mb-0">WordMaster is an independent project. It is not affiliated with, endorsed by, or connected to the New York Times or the original Wordle game. The word-guessing game format is a classic puzzle type with no single owner. WordMaster is free to use and always will be.</p>
     </div>
+  </div>
+
+  <div class="text-center">
+    <a href="/" class="btn btn-primary btn-lg me-2"><i class="bi bi-play-fill me-1"></i>Play Now</a>
+    <a href="/blog" class="btn btn-outline-primary btn-lg"><i class="bi bi-book me-1"></i>Read the Blog</a>
   </div>
 </div>
 {% endblock %}
