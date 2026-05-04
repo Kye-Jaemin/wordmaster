@@ -30,6 +30,23 @@
 
   <link rel="stylesheet" href="/static/css/style.css"/>
   <link rel="icon" href="/static/img/favicon.png" type="image/png"/>
+  <link rel="canonical" href="https://wordmaster.store{{ request.path }}"/>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "WordMaster",
+    "url": "https://wordmaster.store",
+    "description": "Free online word guessing game. Guess the hidden 5-letter word in 6 tries. Daily challenge, unlimited mode, news word puzzle, and vocabulary learning tools.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://wordmaster.store/blog?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <style>
     .footer-link:hover { color: #fff !important; }
   </style>

@@ -109,15 +109,15 @@ def check_guess(guess, answer):
 @app.route("/")
 def index():
     return render_template("index.html",
-        title="WordMaster — Free Online Word Guessing Game",
-        meta_desc="Play WordMaster, the free daily word guessing game! Guess the 5-letter word in 6 tries. New challenge every day.",
+        title="WordMaster — Free Word Guessing Game | Daily & Unlimited",
+        meta_desc="Play WordMaster free online word guessing game. Guess the hidden 5-letter word in 6 tries. Daily challenge, unlimited mode, news word puzzle and more. No signup needed.",
         mode="standard", word_length=5, max_guesses=6)
 
 @app.route("/daily")
 def daily():
     return render_template("index.html",
-        title="Daily Word Challenge — WordMaster",
-        meta_desc="One word per day. Can you guess today's WordMaster daily challenge in 6 tries?",
+        title="Daily Word Challenge — WordMaster | Free Word Puzzle",
+        meta_desc="Play today's WordMaster daily word challenge. One new 5-letter word every day, shared by all players. Guess in 6 tries and track your streak. Free, no account needed.",
         mode="daily", word_length=5, max_guesses=6)
 
 @app.route("/unlimited")
@@ -206,8 +206,8 @@ def archive():
             "is_today":     i == 0,
         })
     return render_template("archive.html",
-        title="Daily Word Archive — WordMaster",
-        meta_desc="Browse the past 30 days of WordMaster daily challenges. Hover to reveal past words.",
+        title="Daily Word Archive — WordMaster | Replay Past Puzzles",
+        meta_desc="Browse and replay the past 30 days of WordMaster daily word challenges. Click any date to see the word, its definition, etymology, and synonyms. Free vocabulary practice.",
         entries=entries)
 
 @app.route("/archive/<date_str>")
@@ -239,10 +239,18 @@ def blog():
     posts = [
         {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
         {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
+        {"slug": "common-5-letter-words", "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)", "date": "2026-05-03", "excerpt": "These 50 high-frequency 5-letter words appear constantly in word games and everyday English. Master them to gain a serious advantage."},
+        {"slug": "word-roots-prefixes-suffixes", "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet", "date": "2026-04-30", "excerpt": "Learn 30 Latin and Greek roots that unlock thousands of English words. One root can teach you 20 new words at once."},
+        {"slug": "vocabulary-habit-building", "title": "How to Build a Vocabulary Habit That Actually Sticks", "date": "2026-04-27", "excerpt": "Most vocabulary-building attempts fail within a week. Here is the habit-building science that makes the difference."},
         {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included."},
         {"slug": "ielts-essential-words", "title": "50 Essential IELTS Words to Improve Your Band Score", "date": "2026-04-10", "excerpt": "Master these 50 essential IELTS vocabulary words and watch your writing and speaking scores improve dramatically."},
+        {"slug": "reading-comprehension-word-games", "title": "How Word Games Improve Reading Comprehension", "date": "2026-04-03", "excerpt": "The link between word game performance and reading ability is stronger than most people realize. Here is what research shows."},
+        {"slug": "greek-latin-roots-english", "title": "Greek and Latin Roots Every English Learner Should Know", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. These 25 classical roots appear in thousands of modern words across every subject."},
+        {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster."},
         {"slug": "wordle-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
         {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage."},
+        {"slug": "business-english-vocabulary", "title": "40 Essential Business English Words You Need at Work", "date": "2026-02-15", "excerpt": "From boardroom to email, these 40 business vocabulary words will make you sound more confident and professional."},
+        {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children."},
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
     ]
     return render_template("blog/index.html",
@@ -287,6 +295,46 @@ def blog_post(slug):
             "title": "The Science Behind Word Games: How Puzzles Boost Your Brain",
             "date": "2026-04-22",
             "content": "science_of_word_games"
+        },
+        "common-5-letter-words": {
+            "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)",
+            "date": "2026-05-03",
+            "content": "common_5_letter_words"
+        },
+        "word-roots-prefixes-suffixes": {
+            "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet",
+            "date": "2026-04-30",
+            "content": "word_roots_prefixes_suffixes"
+        },
+        "vocabulary-habit-building": {
+            "title": "How to Build a Vocabulary Habit That Actually Sticks",
+            "date": "2026-04-27",
+            "content": "vocabulary_habit_building"
+        },
+        "reading-comprehension-word-games": {
+            "title": "How Word Games Improve Reading Comprehension",
+            "date": "2026-04-03",
+            "content": "reading_comprehension_word_games"
+        },
+        "greek-latin-roots-english": {
+            "title": "Greek and Latin Roots Every English Learner Should Know",
+            "date": "2026-03-28",
+            "content": "greek_latin_roots_english"
+        },
+        "pattern-recognition-word-games": {
+            "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles",
+            "date": "2026-03-20",
+            "content": "pattern_recognition_word_games"
+        },
+        "business-english-vocabulary": {
+            "title": "40 Essential Business English Words You Need at Work",
+            "date": "2026-02-15",
+            "content": "business_english_vocabulary"
+        },
+        "word-games-children-reading": {
+            "title": "How Word Games Help Children Learn to Read",
+            "date": "2026-02-12",
+            "content": "word_games_children_reading"
         },
     }
     post = posts.get(slug)
@@ -405,8 +453,8 @@ def api_guess():
 @app.route("/news-challenge")
 def news_challenge():
     return render_template("news_challenge.html",
-        title="News Word Challenge — WordMaster",
-        meta_desc="Guess today's 5-letter word drawn from BBC News headlines. Learn vocabulary in context!",
+        title="News Word Challenge — WordMaster | Vocabulary from BBC Headlines",
+        meta_desc="Read today's BBC World News headlines, then guess the hidden 5-letter word. Learn real-world vocabulary in context. Updated daily. Free word game with news.",
         mode="news", word_length=5, max_guesses=6)
 
 @app.route("/api/news-articles")
@@ -469,6 +517,10 @@ def sitemap():
         "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
         "/blog/daily-habits-vocabulary", "/blog/science-of-word-games",
+        "/blog/common-5-letter-words", "/blog/word-roots-prefixes-suffixes",
+        "/blog/vocabulary-habit-building", "/blog/reading-comprehension-word-games",
+        "/blog/greek-latin-roots-english", "/blog/pattern-recognition-word-games",
+        "/blog/business-english-vocabulary", "/blog/word-games-children-reading",
         "/word-of-day", "/news-challenge", "/archive"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
