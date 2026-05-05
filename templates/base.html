@@ -68,11 +68,7 @@
         {% if lang == 'ko' %}게임 로딩 중…{% else %}Loading your game…{% endif %}
       </div>
       <div id="loader-slow-msg" class="loader-slow-msg d-none">
-        {% if lang == 'ko' %}
-          ⏳ 무료 서버는 첫 로딩이 약 10초 걸릴 수 있어요. 잠시만 기다려 주세요!
-        {% else %}
-          ⏳ First load may take ~10 seconds on free hosting. Thanks for your patience!
-        {% endif %}
+        <!-- Cold-start message removed — UptimeRobot keeps server warm -->
       </div>
     </div>
   </div>
@@ -91,9 +87,16 @@
     });
   </script>
 
-  <!-- Header Ad -->
+  <!-- Header Ad — Responsive leaderboard -->
   <div class="ad-header d-flex justify-content-center align-items-center py-1">
-    <!-- ADSENSE_HEADER -->
+    <!-- TODO: Replace data-ad-slot value with your real slot ID from AdSense dashboard → Ads > Ad units > Display ads -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3911396624649383"
+         data-ad-slot="1234567890"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
   <!-- Navbar -->
