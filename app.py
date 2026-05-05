@@ -162,6 +162,18 @@ def about():
         title="About WordMaster — Free Word Game",
         meta_desc="WordMaster is a free, browser-based word guessing game. No download needed. Play daily or unlimited!")
 
+@app.route("/contact")
+def contact():
+    return render_template("contact.html",
+        title="Contact WordMaster — Get in Touch",
+        meta_desc="Contact the WordMaster team. Report bugs, suggest words, or ask questions about the free word guessing game.")
+
+@app.route("/faq")
+def faq():
+    return render_template("faq.html",
+        title="FAQ — WordMaster | Frequently Asked Questions",
+        meta_desc="Answers to the most common questions about WordMaster. How the game works, word lists, scores, streaks, and more.")
+
 @app.route("/privacy")
 def privacy():
     return render_template("privacy.html",
@@ -513,7 +525,7 @@ def sitemap():
         "/", "/daily", "/unlimited", "/easy", "/hard",
         "/category/animals", "/category/food",
         "/leaderboard", "/how-to-play", "/about",
-        "/privacy", "/terms", "/blog",
+        "/contact", "/faq", "/privacy", "/terms", "/blog",
         "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
         "/blog/daily-habits-vocabulary", "/blog/science-of-word-games",

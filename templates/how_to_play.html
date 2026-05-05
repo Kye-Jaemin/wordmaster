@@ -2,65 +2,177 @@
 {% block content %}
 <div class="container py-5" style="max-width:760px">
   <h1 class="fw-bold text-primary mb-1"><i class="bi bi-question-circle me-2"></i>How to Play WordMaster</h1>
-  <p class="text-muted mb-4">Master the game in minutes with this complete guide.</p>
+  <p class="text-muted mb-4">A complete guide — rules, tile colors, strategies, and all game modes explained.</p>
 
+  <!-- Goal -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h4 class="fw-bold">🎯 The Goal</h4>
-      <p>Guess the secret word in <strong>6 tries or fewer</strong>. Each guess must be a valid English word of the correct length.</p>
+      <h2 class="fw-bold h4">🎯 The Goal</h2>
+      <p class="mb-0">Guess the secret word in <strong>6 tries or fewer</strong>. Each guess must be a valid English word of the correct length. The game tells you after every guess how close you are using colored tiles.</p>
     </div>
   </div>
 
+  <!-- Tile Colors -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h4 class="fw-bold mb-3">🎨 Tile Colors Explained</h4>
+      <h2 class="fw-bold h4 mb-3">🎨 Tile Colors Explained</h2>
       <div class="d-flex align-items-center mb-3">
-        <div class="demo-tile correct-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">C</div>
-        <div><strong>Blue</strong> — The letter is in the correct position.</div>
+        <div class="demo-tile correct-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">C</div>
+        <div><strong class="text-success">Green</strong> — The letter is correct and in the right position.</div>
       </div>
       <div class="d-flex align-items-center mb-3">
-        <div class="demo-tile present-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">R</div>
-        <div><strong>Yellow/Amber</strong> — The letter is in the word but in the wrong position.</div>
+        <div class="demo-tile present-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">R</div>
+        <div><strong class="text-warning">Yellow</strong> — The letter is in the word but in the wrong position. Move it elsewhere.</div>
       </div>
       <div class="d-flex align-items-center">
-        <div class="demo-tile absent-demo me-3" style="width:48px;height:48px;font-size:22px;border-radius:6px;">X</div>
-        <div><strong>Gray</strong> — The letter is not in the word at all.</div>
+        <div class="demo-tile absent-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">X</div>
+        <div><strong class="text-secondary">Grey</strong> — The letter is not in the word at all. Eliminate it from future guesses.</div>
       </div>
     </div>
   </div>
 
+  <!-- Step by step -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h4 class="fw-bold mb-3">📋 Step-by-Step</h4>
-      <ol class="ps-3">
-        <li class="mb-2">Click or type letters to form your first guess.</li>
-        <li class="mb-2">Press <kbd>Enter</kbd> to submit your guess.</li>
-        <li class="mb-2">Watch the tiles flip to reveal color feedback.</li>
-        <li class="mb-2">Use the color clues to refine your next guess.</li>
-        <li class="mb-2">Keep guessing until you find the word or run out of tries!</li>
+      <h2 class="fw-bold h4 mb-3">📋 Step-by-Step</h2>
+      <ol class="ps-3 mb-0">
+        <li class="mb-2">Type letters using your keyboard or tap the on-screen keyboard.</li>
+        <li class="mb-2">Press <kbd>Enter</kbd> to submit your guess. It must be a real word.</li>
+        <li class="mb-2">Watch the tiles flip and read the color feedback.</li>
+        <li class="mb-2">Use what you learned to form a smarter next guess.</li>
+        <li class="mb-2">Keep guessing until you find the word or exhaust all 6 tries.</li>
+        <li class="mb-2">After the game ends, a full word profile appears — definition, origin, synonyms, and more.</li>
       </ol>
     </div>
   </div>
 
+  <!-- Example round -->
+  <div class="card shadow-sm mb-4 border-info">
+    <div class="card-body">
+      <h2 class="fw-bold h4 mb-3">🔍 Example Round</h2>
+      <p class="text-muted small mb-2">Suppose the secret word is <strong>PLANT</strong>.</p>
+      <div class="mb-2">
+        <span class="fw-bold small text-muted d-block mb-1">Guess 1: CRANE</span>
+        <div class="d-flex gap-1">
+          <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">C</span>
+          <span class="demo-tile present-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">R</span>
+          <span class="demo-tile present-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">A</span>
+          <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">N</span>
+          <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">E</span>
+        </div>
+        <p class="small text-muted mt-1 mb-0">R and A are in the word, but in the wrong spots. C, N, E are not in the word.</p>
+      </div>
+      <div class="mb-2">
+        <span class="fw-bold small text-muted d-block mb-1">Guess 2: TRAIL</span>
+        <div class="d-flex gap-1">
+          <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">T</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">R</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">A</span>
+          <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">I</span>
+          <span class="demo-tile present-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">L</span>
+        </div>
+        <p class="small text-muted mt-1 mb-0">R and A are confirmed in positions 2 and 3. L is in the word but not at the end.</p>
+      </div>
+      <div>
+        <span class="fw-bold small text-muted d-block mb-1">Guess 3: PLANT ✅</span>
+        <div class="d-flex gap-1">
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">P</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">L</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">A</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">N</span>
+          <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">T</span>
+        </div>
+        <p class="small text-muted mt-1 mb-0">Solved in 3 guesses! All green.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategy -->
   <div class="card shadow-sm mb-4 border-primary">
     <div class="card-body">
-      <h4 class="fw-bold mb-3">💡 Pro Tips</h4>
-      <ul class="ps-3">
-        <li class="mb-2">Start with a word that covers common letters: try <strong>CRANE</strong>, <strong>STARE</strong>, or <strong>AUDIO</strong>.</li>
-        <li class="mb-2">Your second guess should target letters you haven't tried yet.</li>
-        <li class="mb-2">Pay attention to yellow tiles — the letter is there, just in a different spot.</li>
-        <li class="mb-2">Common word endings: <strong>-ING</strong>, <strong>-TION</strong>, <strong>-ED</strong>, <strong>-ER</strong>.</li>
-        <li class="mb-2">Common word starters: <strong>S-</strong>, <strong>ST-</strong>, <strong>TR-</strong>, <strong>CH-</strong>.</li>
+      <h2 class="fw-bold h4 mb-3">💡 Winning Strategy</h2>
+      <h5 class="fw-semibold mt-2">Start with a high-coverage opener</h5>
+      <p class="text-muted">Your first word should cover as many common letters as possible. The best starters:</p>
+      <ul class="text-muted ps-3 mb-3">
+        <li class="mb-1"><strong>CRANE</strong> — covers C, R, A, N, E (5 of the 10 most common letters)</li>
+        <li class="mb-1"><strong>AUDIO</strong> — covers 4 of the 5 vowels in one guess</li>
+        <li class="mb-1"><strong>STARE</strong> — covers S, T, A, R, E — all extremely frequent</li>
+      </ul>
+      <h5 class="fw-semibold">Use your second guess to cover new letters</h5>
+      <p class="text-muted">Never repeat a letter in your second guess that was already grey. Use the second guess to test 5 completely new letters you haven't tried yet. This maximizes information before your third guess.</p>
+      <h5 class="fw-semibold">Read yellow tiles carefully</h5>
+      <p class="text-muted">A yellow tile means the letter is definitely in the answer — just not in that position. Try it in every other slot before assuming its position. Common mistake: guessing yellow tiles in the same position again.</p>
+      <h5 class="fw-semibold">Think about word patterns</h5>
+      <p class="text-muted mb-0">Common endings that narrow your search: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. Common starts: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. If you have confirmed letters that fit a pattern, try building around the pattern rather than guessing randomly.</p>
+    </div>
+  </div>
+
+  <!-- Hint & Give Up -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h2 class="fw-bold h4 mb-3">🔦 Hint and Give Up</h2>
+      <p class="text-muted mb-2">Each game includes two special buttons below the keyboard:</p>
+      <ul class="text-muted ps-3 mb-0">
+        <li class="mb-2"><strong>Hint</strong> — Reveals one correct letter in the right position. You only get one hint per game, so use it wisely. Best used on your 4th or 5th guess when you have narrowed things down but are stuck between a few possibilities.</li>
+        <li class="mb-0"><strong>Give Up</strong> — Reveals the answer immediately and ends the game. The word profile still opens so you can learn the definition, etymology, and synonyms even if you didn't solve it.</li>
       </ul>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-5 bg-light">
-    <div class="card-body text-center">
-      <h5 class="fw-bold">Ready to play?</h5>
-      <a href="/" class="btn btn-primary me-2"><i class="bi bi-play-fill me-1"></i>Classic Mode</a>
-      <a href="/daily" class="btn btn-outline-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+  <!-- All modes -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h2 class="fw-bold h4 mb-3">🎮 All Game Modes</h2>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">📅 <a href="/daily" class="text-decoration-none">Daily Challenge</a></p>
+            <p class="small text-muted mb-0">One shared 5-letter word per day. Resets at midnight. Track your streak.</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">♾️ <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a></p>
+            <p class="small text-muted mb-0">No daily limit. Fresh random word each round. Play as many times as you want.</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">😊 <a href="/easy" class="text-decoration-none">Easy (4 Letters)</a></p>
+            <p class="small text-muted mb-0">Shorter words, fewer combinations. Great for beginners and younger players.</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">🔥 <a href="/hard" class="text-decoration-none">Hard (6 Letters)</a></p>
+            <p class="small text-muted mb-0">Longer words, exponentially more combinations. For experienced players only.</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">📰 <a href="/news-challenge" class="text-decoration-none">News Word Challenge</a></p>
+            <p class="small text-muted mb-0">Guess the word hidden in today's BBC headlines. Context clues from real news.</p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-light rounded h-100">
+            <p class="fw-bold mb-1">🐾 <a href="/category/animals" class="text-decoration-none">Category Modes</a></p>
+            <p class="small text-muted mb-0">Themed word sets — Animals, Food, and more. Focused vocabulary practice.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- CTA -->
+  <div class="card shadow-sm mb-5 bg-primary text-white">
+    <div class="card-body text-center py-4">
+      <h3 class="fw-bold mb-2">Ready to play?</h3>
+      <p class="mb-3 opacity-75">Start with the daily challenge or jump into unlimited practice.</p>
+      <a href="/daily" class="btn btn-light text-primary fw-bold me-2"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+      <a href="/unlimited" class="btn btn-outline-light"><i class="bi bi-infinity me-1"></i>Unlimited Mode</a>
+    </div>
+  </div>
+
 </div>
 {% endblock %}
