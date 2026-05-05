@@ -21,19 +21,19 @@
       <!-- Mode Badge -->
       <div class="text-center mb-2">
         {% if mode == "daily" %}
-          <span class="badge bg-warning text-dark fs-6"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</span>
+          <span class="badge bg-warning text-dark fs-6"><i class="bi bi-calendar-day me-1"></i>{% if lang == 'ko' %}데일리 챌린지{% else %}Daily Challenge{% endif %}</span>
         {% elif mode == "unlimited" %}
-          <span class="badge bg-success fs-6"><i class="bi bi-infinity me-1"></i>Unlimited Mode</span>
+          <span class="badge bg-success fs-6"><i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한 모드{% else %}Unlimited Mode{% endif %}</span>
         {% elif mode == "easy" %}
-          <span class="badge bg-info text-dark fs-6"><i class="bi bi-emoji-smile me-1"></i>Easy Mode — 4 Letters</span>
+          <span class="badge bg-info text-dark fs-6"><i class="bi bi-emoji-smile me-1"></i>{% if lang == 'ko' %}쉬움 — 4글자{% else %}Easy Mode — 4 Letters{% endif %}</span>
         {% elif mode == "hard" %}
-          <span class="badge bg-danger fs-6"><i class="bi bi-fire me-1"></i>Hard Mode — 6 Letters</span>
+          <span class="badge bg-danger fs-6"><i class="bi bi-fire me-1"></i>{% if lang == 'ko' %}어려움 — 6글자{% else %}Hard Mode — 6 Letters{% endif %}</span>
         {% elif mode.startswith("category_") %}
           <span class="badge bg-purple fs-6 text-white" style="background:#6f42c1!important">
-            <i class="bi bi-tag me-1"></i>{{ mode.replace("category_","").title() }} Words
+            <i class="bi bi-tag me-1"></i>{{ mode.replace("category_","").title() }} {% if lang == 'ko' %}단어{% else %}Words{% endif %}
           </span>
         {% else %}
-          <span class="badge bg-primary fs-6"><i class="bi bi-grid me-1"></i>Classic Mode — 5 Letters</span>
+          <span class="badge bg-primary fs-6"><i class="bi bi-grid me-1"></i>{% if lang == 'ko' %}클래식 — 5글자{% else %}Classic Mode — 5 Letters{% endif %}</span>
         {% endif %}
       </div>
 
@@ -43,7 +43,11 @@
       <!-- Guess Counter -->
       <div id="guess-counter" class="text-center mb-2">
         <span class="badge bg-secondary fs-6">
-          <i class="bi bi-hash me-1"></i>Guess <span id="guess-current">1</span> / {{ max_guesses }}
+          {% if lang == 'ko' %}
+            <i class="bi bi-hash me-1"></i><span id="guess-current">1</span> / {{ max_guesses }} 번째 시도
+          {% else %}
+            <i class="bi bi-hash me-1"></i>Guess <span id="guess-current">1</span> / {{ max_guesses }}
+          {% endif %}
         </span>
       </div>
 
@@ -71,9 +75,9 @@
         <!-- Word Learning Card (shown after game ends) -->
         <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-3 mb-2" style="max-width:460px;">
           <div class="card-header bg-primary text-white py-2 px-3 d-flex align-items-center justify-content-between">
-            <span class="fw-bold"><i class="bi bi-book me-1"></i>Word of the Game</span>
+            <span class="fw-bold"><i class="bi bi-book me-1"></i>{% if lang == 'ko' %}이번 게임의 단어{% else %}Word of the Game{% endif %}</span>
             <a id="wotd-link" href="/word-of-day" class="text-white text-decoration-none small">
-              <i class="bi bi-arrow-right-circle me-1"></i>Full page
+              <i class="bi bi-arrow-right-circle me-1"></i>{% if lang == 'ko' %}상세보기{% else %}Full page{% endif %}
             </a>
           </div>
           <div class="card-body py-2 px-3">
@@ -84,34 +88,34 @@
             <div id="learn-meanings"></div>
             <div id="learn-synant" class="d-none mt-2">
               <div id="learn-synonyms-wrap" class="d-none mb-1">
-                <span class="badge bg-success me-1">Synonyms</span>
+                <span class="badge bg-success me-1">{% if lang == 'ko' %}유의어{% else %}Synonyms{% endif %}</span>
                 <span id="learn-synonyms" class="small text-muted"></span>
               </div>
               <div id="learn-antonyms-wrap" class="d-none">
-                <span class="badge bg-danger me-1">Antonyms</span>
+                <span class="badge bg-danger me-1">{% if lang == 'ko' %}반의어{% else %}Antonyms{% endif %}</span>
                 <span id="learn-antonyms" class="small text-muted"></span>
               </div>
             </div>
             <div id="learn-etymology" class="d-none mt-2 pt-2 border-top">
-              <small class="text-muted"><i class="bi bi-clock-history me-1 text-warning"></i><strong>Origin:</strong> <span id="learn-origin"></span></small>
+              <small class="text-muted"><i class="bi bi-clock-history me-1 text-warning"></i><strong>{% if lang == 'ko' %}어원:{% else %}Origin:{% endif %}</strong> <span id="learn-origin"></span></small>
             </div>
           </div>
         </div>
         <!-- Definition loading spinner -->
         <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
-          <span class="spinner-border spinner-border-sm me-1" role="status"></span>Loading definition…
+          <span class="spinner-border spinner-border-sm me-1" role="status"></span>{% if lang == 'ko' %}뜻 불러오는 중…{% else %}Loading definition…{% endif %}
         </div>
 
         <!-- Community Difficulty Vote -->
         <div id="difficulty-vote" class="card border-0 bg-light mx-auto d-none mt-2 mb-1" style="max-width:460px;">
           <div class="card-body py-2 px-3 text-center">
-            <p class="small text-muted mb-2"><i class="bi bi-bar-chart-fill me-1"></i>How was this word for you?</p>
+            <p class="small text-muted mb-2"><i class="bi bi-bar-chart-fill me-1"></i>{% if lang == 'ko' %}이 단어는 어땠나요?{% else %}How was this word for you?{% endif %}</p>
             <div class="d-flex gap-2 justify-content-center" id="vote-buttons">
               <button onclick="submitVote('easy')" class="btn btn-sm btn-outline-success">
-                <i class="bi bi-emoji-smile me-1"></i>Easy
+                <i class="bi bi-emoji-smile me-1"></i>{% if lang == 'ko' %}쉬움{% else %}Easy{% endif %}
               </button>
               <button onclick="submitVote('hard')" class="btn btn-sm btn-outline-danger">
-                <i class="bi bi-fire me-1"></i>Hard
+                <i class="bi bi-fire me-1"></i>{% if lang == 'ko' %}어려움{% else %}Hard{% endif %}
               </button>
             </div>
             <div id="vote-result" class="d-none mt-2 small"></div>
@@ -120,15 +124,15 @@
 
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
           <button id="btn-share" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-share me-1"></i>Share Result
+            <i class="bi bi-share me-1"></i>{% if lang == 'ko' %}결과 공유{% else %}Share Result{% endif %}
           </button>
           {% if mode != "daily" %}
           <button id="btn-play-again" class="btn btn-primary btn-sm">
-            <i class="bi bi-arrow-clockwise me-1"></i>Play Again
+            <i class="bi bi-arrow-clockwise me-1"></i>{% if lang == 'ko' %}다시 하기{% else %}Play Again{% endif %}
           </button>
           {% else %}
           <a href="/unlimited" class="btn btn-success btn-sm">
-            <i class="bi bi-infinity me-1"></i>Play More
+            <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}더 플레이하기{% else %}Play More{% endif %}
           </a>
           {% endif %}
         </div>
@@ -158,11 +162,11 @@
       <!-- Action Buttons: Hint + Give Up -->
       <div class="d-flex gap-2 justify-content-center mt-3" id="action-buttons">
         <button id="btn-hint" class="btn btn-outline-warning btn-sm">
-          <i class="bi bi-lightbulb me-1"></i>Hint
+          <i class="bi bi-lightbulb me-1"></i>{% if lang == 'ko' %}힌트{% else %}Hint{% endif %}
           <span class="badge bg-warning text-dark ms-1">1</span>
         </button>
         <button id="btn-giveup" class="btn btn-outline-danger btn-sm">
-          <i class="bi bi-flag me-1"></i>Give Up
+          <i class="bi bi-flag me-1"></i>{% if lang == 'ko' %}포기하기{% else %}Give Up{% endif %}
         </button>
       </div>
 
@@ -174,9 +178,15 @@
       <!-- Mini how-to -->
       <div class="text-center mt-3">
         <small class="text-muted">
-          <span class="demo-tile correct-demo">G</span> Correct &nbsp;
-          <span class="demo-tile present-demo">R</span> Wrong position &nbsp;
-          <span class="demo-tile absent-demo">X</span> Not in word
+          {% if lang == 'ko' %}
+            <span class="demo-tile correct-demo">G</span> 정확한 위치 &nbsp;
+            <span class="demo-tile present-demo">R</span> 위치 오류 &nbsp;
+            <span class="demo-tile absent-demo">X</span> 없는 글자
+          {% else %}
+            <span class="demo-tile correct-demo">G</span> Correct &nbsp;
+            <span class="demo-tile present-demo">R</span> Wrong position &nbsp;
+            <span class="demo-tile absent-demo">X</span> Not in word
+          {% endif %}
         </small>
       </div>
     </div>
@@ -427,6 +437,7 @@
   const GAME_MODE    = "{{ mode }}";
   const WORD_LENGTH  = {{ word_length }};
   const MAX_GUESSES  = {{ max_guesses }};
+  const WM_LANG      = "{{ lang }}";
 </script>
 <script src="/static/js/game.js"></script>
 {% endblock %}

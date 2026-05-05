@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5" style="max-width:760px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-patch-question me-2"></i>Frequently Asked Questions</h1>
-  <p class="text-muted mb-4">Everything you need to know about WordMaster.</p>
+  <h1 class="fw-bold text-primary mb-1">
+    <i class="bi bi-patch-question me-2"></i>
+    {% if lang == 'ko' %}자주 묻는 질문 (FAQ){% else %}Frequently Asked Questions{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}WordMaster에 대해 알아야 할 모든 것.{% else %}Everything you need to know about WordMaster.{% endif %}
+  </p>
 
   <!-- Category tabs -->
   <ul class="nav nav-pills mb-4 flex-wrap gap-1" id="faq-tabs" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-gameplay" type="button">🎮 Gameplay</button>
+      <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-gameplay" type="button">
+        🎮 {% if lang == 'ko' %}게임플레이{% else %}Gameplay{% endif %}
+      </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-words" type="button">📖 Words</button>
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-words" type="button">
+        📖 {% if lang == 'ko' %}단어{% else %}Words{% endif %}
+      </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-technical" type="button">⚙️ Technical</button>
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-technical" type="button">
+        ⚙️ {% if lang == 'ko' %}기술적 사항{% else %}Technical{% endif %}
+      </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-privacy" type="button">🔒 Privacy</button>
+      <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-privacy" type="button">
+        🔒 {% if lang == 'ko' %}개인정보{% else %}Privacy{% endif %}
+      </button>
     </li>
   </ul>
 
@@ -29,16 +42,24 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#g1">
-              How do I play WordMaster?
+              {% if lang == 'ko' %}WordMaster는 어떻게 플레이하나요?{% else %}How do I play WordMaster?{% endif %}
             </button>
           </h2>
           <div id="g1" class="accordion-collapse collapse show" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              Type or click letters to form a word, then press <kbd>Enter</kbd> to submit. After each guess, the tiles change color:
-              <strong class="text-success">Green</strong> = correct position,
-              <strong class="text-warning">Yellow</strong> = wrong position,
-              <strong class="text-secondary">Grey</strong> = not in the word.
-              You have 6 attempts to find the answer. See our <a href="/how-to-play">full guide</a> for more detail.
+              {% if lang == 'ko' %}
+                글자를 입력하거나 클릭해 단어를 만들고 <kbd>Enter</kbd>를 눌러 제출하세요. 각 추측 후 타일 색이 바뀝니다:
+                <strong class="text-success">초록색</strong> = 올바른 위치,
+                <strong class="text-warning">노란색</strong> = 잘못된 위치,
+                <strong class="text-secondary">회색</strong> = 단어에 없음.
+                6번 안에 정답을 찾아야 합니다. 자세한 내용은 <a href="/how-to-play">전체 가이드</a>를 참조하세요.
+              {% else %}
+                Type or click letters to form a word, then press <kbd>Enter</kbd> to submit. After each guess, the tiles change color:
+                <strong class="text-success">Green</strong> = correct position,
+                <strong class="text-warning">Yellow</strong> = wrong position,
+                <strong class="text-secondary">Grey</strong> = not in the word.
+                You have 6 attempts to find the answer. See our <a href="/how-to-play">full guide</a> for more detail.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -46,12 +67,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g2">
-              How many guesses do I get?
+              {% if lang == 'ko' %}추측 기회가 몇 번인가요?{% else %}How many guesses do I get?{% endif %}
             </button>
           </h2>
           <div id="g2" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              All modes give you <strong>6 guesses</strong>. This is the classic word-game standard — enough to be solvable with good strategy, but challenging enough to stay exciting.
+              {% if lang == 'ko' %}
+                모든 모드에서 <strong>6번의 추측</strong>이 주어집니다. 이것은 클래식 단어 게임의 표준입니다 — 좋은 전략으로 풀 수 있을 만큼은 충분하면서도 흥미를 유지할 만큼 도전적입니다.
+              {% else %}
+                All modes give you <strong>6 guesses</strong>. This is the classic word-game standard — enough to be solvable with good strategy, but challenging enough to stay exciting.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -59,13 +84,18 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g3">
-              What is Daily mode vs Unlimited mode?
+              {% if lang == 'ko' %}데일리 모드와 무제한 모드의 차이는 무엇인가요?{% else %}What is Daily mode vs Unlimited mode?{% endif %}
             </button>
           </h2>
           <div id="g3" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              <strong>Daily mode</strong> gives everyone worldwide the same one word per day. It resets at midnight. You can only play once per day, so your score is comparable to other players.<br><br>
-              <strong>Unlimited mode</strong> gives you a fresh random word after every game with no restrictions. Perfect for practice or when one game isn't enough!
+              {% if lang == 'ko' %}
+                <strong>데일리 모드</strong>는 전 세계 모든 사람이 하루에 같은 한 단어를 받습니다. 자정에 초기화됩니다. 하루에 한 번만 플레이할 수 있어 다른 플레이어와 점수를 비교할 수 있습니다.<br><br>
+                <strong>무제한 모드</strong>는 제한 없이 매 게임 후 새로운 랜덤 단어를 제공합니다. 연습하거나 한 게임으로 부족할 때 완벽합니다!
+              {% else %}
+                <strong>Daily mode</strong> gives everyone worldwide the same one word per day. It resets at midnight. You can only play once per day, so your score is comparable to other players.<br><br>
+                <strong>Unlimited mode</strong> gives you a fresh random word after every game with no restrictions. Perfect for practice or when one game isn't enough!
+              {% endif %}
             </div>
           </div>
         </div>
@@ -73,12 +103,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g4">
-              What does the Hint button do?
+              {% if lang == 'ko' %}힌트 버튼은 무엇을 하나요?{% else %}What does the Hint button do?{% endif %}
             </button>
           </h2>
           <div id="g4" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              The <strong>Hint</strong> button reveals the definition and part of speech of the hidden word. You get <strong>one hint per game</strong>. Using a hint doesn't prevent you from winning — it just gives you a vocabulary clue to help narrow things down.
+              {% if lang == 'ko' %}
+                <strong>힌트</strong> 버튼은 숨겨진 단어의 정의와 품사를 공개합니다. 게임당 <strong>힌트 한 번</strong>만 사용할 수 있습니다. 힌트를 사용해도 승리를 방해하지 않습니다 — 범위를 좁히는 데 도움이 되는 어휘 단서를 제공할 뿐입니다.
+              {% else %}
+                The <strong>Hint</strong> button reveals the definition and part of speech of the hidden word. You get <strong>one hint per game</strong>. Using a hint doesn't prevent you from winning — it just gives you a vocabulary clue to help narrow things down.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -86,12 +120,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g5">
-              Where can I see my statistics and win streak?
+              {% if lang == 'ko' %}통계와 연속 기록은 어디서 볼 수 있나요?{% else %}Where can I see my statistics and win streak?{% endif %}
             </button>
           </h2>
           <div id="g5" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              Your stats (games played, win rate, current streak, best streak, and guess distribution) are stored locally in your browser. Visit the <a href="/leaderboard">Stats page</a> to view them. Stats are saved per device — they won't carry over if you switch browsers or clear your browser data.
+              {% if lang == 'ko' %}
+                통계(플레이 횟수, 승률, 현재 연속 기록, 최고 연속 기록, 추측 분포)는 브라우저에 로컬로 저장됩니다. <a href="/leaderboard">통계 페이지</a>를 방문해 확인하세요. 통계는 기기별로 저장됩니다 — 브라우저를 바꾸거나 브라우저 데이터를 지우면 이전되지 않습니다.
+              {% else %}
+                Your stats (games played, win rate, current streak, best streak, and guess distribution) are stored locally in your browser. Visit the <a href="/leaderboard">Stats page</a> to view them. Stats are saved per device — they won't carry over if you switch browsers or clear your browser data.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -99,13 +137,18 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g6">
-              What are Easy and Hard modes?
+              {% if lang == 'ko' %}쉬움 모드와 어려움 모드는 무엇인가요?{% else %}What are Easy and Hard modes?{% endif %}
             </button>
           </h2>
           <div id="g6" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              <strong>Easy mode</strong> uses <strong>4-letter words</strong> — shorter and simpler, great for beginners or younger players.<br><br>
-              <strong>Hard mode</strong> uses <strong>6-letter words</strong> — longer and less common, for experienced vocabulary enthusiasts who want a real challenge.
+              {% if lang == 'ko' %}
+                <strong>쉬움 모드</strong>는 <strong>4글자 단어</strong>를 사용합니다 — 짧고 간단해 초보자나 어린 플레이어에게 좋습니다.<br><br>
+                <strong>어려움 모드</strong>는 <strong>6글자 단어</strong>를 사용합니다 — 더 길고 흔하지 않아, 진정한 도전을 원하는 경험 많은 어휘 애호가에게 적합합니다.
+              {% else %}
+                <strong>Easy mode</strong> uses <strong>4-letter words</strong> — shorter and simpler, great for beginners or younger players.<br><br>
+                <strong>Hard mode</strong> uses <strong>6-letter words</strong> — longer and less common, for experienced vocabulary enthusiasts who want a real challenge.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -113,12 +156,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#g7">
-              Where can I see past Daily words?
+              {% if lang == 'ko' %}과거 데일리 단어들을 볼 수 있나요?{% else %}Where can I see past Daily words?{% endif %}
             </button>
           </h2>
           <div id="g7" class="accordion-collapse collapse" data-bs-parent="#faq-gameplay">
             <div class="accordion-body">
-              The <a href="/archive"><strong>Daily Archive</strong></a> page lists the past 30 days of daily words, along with each word's definition. Great for learning, or if you missed a day!
+              {% if lang == 'ko' %}
+                <a href="/archive"><strong>데일리 보관함</strong></a> 페이지에서 지난 30일간의 데일리 단어와 각 단어의 정의를 볼 수 있습니다. 학습하거나 놓친 날 확인하기에 좋습니다!
+              {% else %}
+                The <a href="/archive"><strong>Daily Archive</strong></a> page lists the past 30 days of daily words, along with each word's definition. Great for learning, or if you missed a day!
+              {% endif %}
             </div>
           </div>
         </div>
@@ -133,19 +180,30 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#w1">
-              Why isn't my word being accepted?
+              {% if lang == 'ko' %}제 단어가 왜 인정되지 않나요?{% else %}Why isn't my word being accepted?{% endif %}
             </button>
           </h2>
           <div id="w1" class="accordion-collapse collapse show" data-bs-parent="#faq-words">
             <div class="accordion-body">
-              WordMaster uses a curated list of common English words. The following types of words are <strong>not</strong> in our dictionary:
-              <ul class="mt-2 mb-0">
-                <li>Proper nouns (names, places, brands)</li>
-                <li>Abbreviations or acronyms</li>
-                <li>Very rare, archaic, or highly technical words</li>
-                <li>Hyphenated words</li>
-              </ul>
-              If you believe a common word is missing, please <a href="/contact">let us know</a>!
+              {% if lang == 'ko' %}
+                WordMaster는 일반 영어 단어의 목록을 사용합니다. 다음 유형의 단어는 사전에 <strong>포함되지 않습니다</strong>:
+                <ul class="mt-2 mb-0">
+                  <li>고유 명사 (이름, 장소, 브랜드)</li>
+                  <li>약어 또는 두문자어</li>
+                  <li>매우 드물거나 고어적이거나 고도로 기술적인 단어</li>
+                  <li>하이픈으로 연결된 단어</li>
+                </ul>
+                일반적인 단어가 빠져 있다면 <a href="/contact">알려주세요</a>!
+              {% else %}
+                WordMaster uses a curated list of common English words. The following types of words are <strong>not</strong> in our dictionary:
+                <ul class="mt-2 mb-0">
+                  <li>Proper nouns (names, places, brands)</li>
+                  <li>Abbreviations or acronyms</li>
+                  <li>Very rare, archaic, or highly technical words</li>
+                  <li>Hyphenated words</li>
+                </ul>
+                If you believe a common word is missing, please <a href="/contact">let us know</a>!
+              {% endif %}
             </div>
           </div>
         </div>
@@ -153,12 +211,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#w2">
-              Are proper nouns (names, places) ever answers?
+              {% if lang == 'ko' %}고유 명사(이름, 장소)가 정답이 될 수 있나요?{% else %}Are proper nouns (names, places) ever answers?{% endif %}
             </button>
           </h2>
           <div id="w2" class="accordion-collapse collapse" data-bs-parent="#faq-words">
             <div class="accordion-body">
-              No. The answer will always be a common English word — no person names, place names, or brand names. This keeps the game fair for all players regardless of background knowledge.
+              {% if lang == 'ko' %}
+                아니요. 정답은 항상 일반 영어 단어입니다 — 사람 이름, 지명, 브랜드명은 없습니다. 이로써 배경 지식에 관계없이 모든 플레이어에게 공정한 게임이 됩니다.
+              {% else %}
+                No. The answer will always be a common English word — no person names, place names, or brand names. This keeps the game fair for all players regardless of background knowledge.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -166,12 +228,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#w3">
-              Can the same word appear twice?
+              {% if lang == 'ko' %}같은 단어가 두 번 나올 수 있나요?{% else %}Can the same word appear twice?{% endif %}
             </button>
           </h2>
           <div id="w3" class="accordion-collapse collapse" data-bs-parent="#faq-words">
             <div class="accordion-body">
-              In <strong>Daily mode</strong>, words are selected using a date-based algorithm — the same word won't repeat for a very long time. In <strong>Unlimited mode</strong>, words are chosen randomly, so theoretically a repeat is possible, though unlikely in the short term.
+              {% if lang == 'ko' %}
+                <strong>데일리 모드</strong>에서 단어는 날짜 기반 알고리즘으로 선택됩니다 — 같은 단어가 오랫동안 반복되지 않습니다. <strong>무제한 모드</strong>에서 단어는 무작위로 선택되므로 이론적으로 반복이 가능하지만, 단기적으로는 거의 일어나지 않습니다.
+              {% else %}
+                In <strong>Daily mode</strong>, words are selected using a date-based algorithm — the same word won't repeat for a very long time. In <strong>Unlimited mode</strong>, words are chosen randomly, so theoretically a repeat is possible, though unlikely in the short term.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -179,12 +245,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#w4">
-              Can a word contain repeated letters?
+              {% if lang == 'ko' %}단어에 중복 글자가 있을 수 있나요?{% else %}Can a word contain repeated letters?{% endif %}
             </button>
           </h2>
           <div id="w4" class="accordion-collapse collapse" data-bs-parent="#faq-words">
             <div class="accordion-body">
-              Yes! Words like <strong>LEVEL</strong>, <strong>BELLE</strong>, or <strong>ABBEY</strong> can appear. When a letter appears twice in the answer but only once in your guess, only one tile will be colored. Pay attention to how many times you guess each repeated letter.
+              {% if lang == 'ko' %}
+                네! <strong>LEVEL</strong>, <strong>BELLE</strong>, <strong>ABBEY</strong> 같은 단어가 나올 수 있습니다. 정답에 글자가 두 번 나오지만 추측에 한 번만 있는 경우 하나의 타일만 색이 변합니다. 중복 글자를 몇 번 추측했는지 주의 깊게 확인하세요.
+              {% else %}
+                Yes! Words like <strong>LEVEL</strong>, <strong>BELLE</strong>, or <strong>ABBEY</strong> can appear. When a letter appears twice in the answer but only once in your guess, only one tile will be colored. Pay attention to how many times you guess each repeated letter.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -192,12 +262,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#w5">
-              How is the daily word chosen?
+              {% if lang == 'ko' %}데일리 단어는 어떻게 선택되나요?{% else %}How is the daily word chosen?{% endif %}
             </button>
           </h2>
           <div id="w5" class="accordion-collapse collapse" data-bs-parent="#faq-words">
             <div class="accordion-body">
-              Each day's word is determined by a deterministic algorithm seeded with the current date. This ensures that every player in the world gets the exact same word on the same day, making Daily results comparable.
+              {% if lang == 'ko' %}
+                매일의 단어는 현재 날짜를 시드로 한 결정론적 알고리즘에 의해 결정됩니다. 이는 전 세계 모든 플레이어가 같은 날 정확히 같은 단어를 받아 데일리 결과를 비교할 수 있도록 합니다.
+              {% else %}
+                Each day's word is determined by a deterministic algorithm seeded with the current date. This ensures that every player in the world gets the exact same word on the same day, making Daily results comparable.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -212,12 +286,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#t1">
-              Is WordMaster free to play?
+              {% if lang == 'ko' %}WordMaster는 무료인가요?{% else %}Is WordMaster free to play?{% endif %}
             </button>
           </h2>
           <div id="t1" class="accordion-collapse collapse show" data-bs-parent="#faq-technical">
             <div class="accordion-body">
-              Yes, 100% free — forever. No account required, no premium tier, no pay-to-win. The site is supported by non-intrusive advertising.
+              {% if lang == 'ko' %}
+                네, 100% 영원히 무료입니다. 계정이 필요 없고, 프리미엄 티어도, 유료 혜택도 없습니다. 사이트는 비침입적 광고로 운영됩니다.
+              {% else %}
+                Yes, 100% free — forever. No account required, no premium tier, no pay-to-win. The site is supported by non-intrusive advertising.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -225,12 +303,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t2">
-              Do I need to create an account?
+              {% if lang == 'ko' %}계정을 만들어야 하나요?{% else %}Do I need to create an account?{% endif %}
             </button>
           </h2>
           <div id="t2" class="accordion-collapse collapse" data-bs-parent="#faq-technical">
             <div class="accordion-body">
-              No account needed. Your game stats and streaks are stored in your browser's localStorage — completely private and local to your device. Nothing is sent to our servers.
+              {% if lang == 'ko' %}
+                계정이 필요 없습니다. 게임 통계와 연속 기록은 브라우저의 localStorage에 저장됩니다 — 완전히 비공개이며 기기에만 저장됩니다. 서버로 아무것도 전송되지 않습니다.
+              {% else %}
+                No account needed. Your game stats and streaks are stored in your browser's localStorage — completely private and local to your device. Nothing is sent to our servers.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -238,12 +320,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t3">
-              Does WordMaster work on mobile?
+              {% if lang == 'ko' %}모바일에서 작동하나요?{% else %}Does WordMaster work on mobile?{% endif %}
             </button>
           </h2>
           <div id="t3" class="accordion-collapse collapse" data-bs-parent="#faq-technical">
             <div class="accordion-body">
-              Yes! WordMaster is fully responsive and works on smartphones and tablets. On mobile, tap the on-screen keyboard to type letters. The game board automatically adjusts to your screen size.
+              {% if lang == 'ko' %}
+                네! WordMaster는 완전히 반응형이며 스마트폰과 태블릿에서 작동합니다. 모바일에서는 화면 키보드를 탭하여 글자를 입력하세요. 게임 보드가 자동으로 화면 크기에 맞게 조정됩니다.
+              {% else %}
+                Yes! WordMaster is fully responsive and works on smartphones and tablets. On mobile, tap the on-screen keyboard to type letters. The game board automatically adjusts to your screen size.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -251,19 +337,30 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t4">
-              My stats disappeared — what happened?
+              {% if lang == 'ko' %}통계가 사라졌습니다 — 왜 그런가요?{% else %}My stats disappeared — what happened?{% endif %}
             </button>
           </h2>
           <div id="t4" class="accordion-collapse collapse" data-bs-parent="#faq-technical">
             <div class="accordion-body">
-              Stats are stored in your browser's <strong>localStorage</strong>. They can be lost if you:
-              <ul class="mt-2 mb-0">
-                <li>Clear your browser's site data or cache</li>
-                <li>Use a private/incognito window</li>
-                <li>Switch to a different browser or device</li>
-                <li>Reinstall your browser</li>
-              </ul>
-              Unfortunately, we cannot recover lost stats since we never store them on our servers.
+              {% if lang == 'ko' %}
+                통계는 브라우저의 <strong>localStorage</strong>에 저장됩니다. 다음 경우 잃을 수 있습니다:
+                <ul class="mt-2 mb-0">
+                  <li>브라우저의 사이트 데이터 또는 캐시 지우기</li>
+                  <li>비공개/시크릿 창 사용</li>
+                  <li>다른 브라우저 또는 기기로 전환</li>
+                  <li>브라우저 재설치</li>
+                </ul>
+                안타깝게도 서버에 저장하지 않기 때문에 잃어버린 통계를 복구할 수 없습니다.
+              {% else %}
+                Stats are stored in your browser's <strong>localStorage</strong>. They can be lost if you:
+                <ul class="mt-2 mb-0">
+                  <li>Clear your browser's site data or cache</li>
+                  <li>Use a private/incognito window</li>
+                  <li>Switch to a different browser or device</li>
+                  <li>Reinstall your browser</li>
+                </ul>
+                Unfortunately, we cannot recover lost stats since we never store them on our servers.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -278,12 +375,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#p1">
-              Does WordMaster collect my personal data?
+              {% if lang == 'ko' %}WordMaster는 제 개인 정보를 수집하나요?{% else %}Does WordMaster collect my personal data?{% endif %}
             </button>
           </h2>
           <div id="p1" class="accordion-collapse collapse show" data-bs-parent="#faq-privacy">
             <div class="accordion-body">
-              We do not collect personal information during gameplay. We use Google Analytics 4 to measure <em>anonymous</em> traffic (pages visited, session duration, device type). Your game stats are stored only on your own device and never sent to us. See our full <a href="/privacy">Privacy Policy</a>.
+              {% if lang == 'ko' %}
+                게임 플레이 중 개인 정보를 수집하지 않습니다. Google Analytics 4를 사용하여 <em>익명의</em> 트래픽(방문한 페이지, 세션 시간, 기기 유형)을 측정합니다. 게임 통계는 본인의 기기에만 저장되며 서버로 전송되지 않습니다. 전체 <a href="/privacy">개인정보처리방침</a>을 참조하세요.
+              {% else %}
+                We do not collect personal information during gameplay. We use Google Analytics 4 to measure <em>anonymous</em> traffic (pages visited, session duration, device type). Your game stats are stored only on your own device and never sent to us. See our full <a href="/privacy">Privacy Policy</a>.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -291,12 +392,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#p2">
-              Why are there ads on the site?
+              {% if lang == 'ko' %}사이트에 광고가 있는 이유는 무엇인가요?{% else %}Why are there ads on the site?{% endif %}
             </button>
           </h2>
           <div id="p2" class="accordion-collapse collapse" data-bs-parent="#faq-privacy">
             <div class="accordion-body">
-              Advertising allows us to keep WordMaster free for everyone. We use Google AdSense which may show personalized ads based on your browsing history. You can opt out of personalized ads via <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a>.
+              {% if lang == 'ko' %}
+                광고를 통해 WordMaster를 모두에게 무료로 유지할 수 있습니다. Google AdSense를 사용하여 브라우저 기록에 기반한 맞춤형 광고를 표시할 수 있습니다. <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>에서 맞춤형 광고를 거부할 수 있습니다.
+              {% else %}
+                Advertising allows us to keep WordMaster free for everyone. We use Google AdSense which may show personalized ads based on your browsing history. You can opt out of personalized ads via <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a>.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -304,12 +409,16 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#p3">
-              Is WordMaster affiliated with the New York Times Wordle?
+              {% if lang == 'ko' %}WordMaster는 뉴욕타임즈 Wordle과 관련이 있나요?{% else %}Is WordMaster affiliated with the New York Times Wordle?{% endif %}
             </button>
           </h2>
           <div id="p3" class="accordion-collapse collapse" data-bs-parent="#faq-privacy">
             <div class="accordion-body">
-              No. WordMaster is an <strong>independent project</strong> and is not affiliated with, endorsed by, or connected to The New York Times or the original Wordle game. The word-guessing game format is a classic puzzle type with no single owner.
+              {% if lang == 'ko' %}
+                아니요. WordMaster는 <strong>독립 프로젝트</strong>이며 뉴욕타임즈나 원래 Wordle 게임과 관련이 없고, 승인되거나 연결된 것이 아닙니다. 단어 추측 게임 형식은 단일 소유자가 없는 클래식 퍼즐 유형입니다.
+              {% else %}
+                No. WordMaster is an <strong>independent project</strong> and is not affiliated with, endorsed by, or connected to The New York Times or the original Wordle game. The word-guessing game format is a classic puzzle type with no single owner.
+              {% endif %}
             </div>
           </div>
         </div>
@@ -322,9 +431,11 @@
   <!-- Still have a question? -->
   <div class="card bg-light border-0 mt-4 text-center py-4">
     <div class="card-body">
-      <h6 class="fw-bold mb-1">Still have a question?</h6>
-      <p class="text-muted small mb-3">We're happy to help!</p>
-      <a href="/contact" class="btn btn-primary btn-sm"><i class="bi bi-envelope me-1"></i>Contact Us</a>
+      <h6 class="fw-bold mb-1">{% if lang == 'ko' %}다른 질문이 있으신가요?{% else %}Still have a question?{% endif %}</h6>
+      <p class="text-muted small mb-3">{% if lang == 'ko' %}도움을 드릴게요!{% else %}We're happy to help!{% endif %}</p>
+      <a href="/contact" class="btn btn-primary btn-sm">
+        <i class="bi bi-envelope me-1"></i>{% if lang == 'ko' %}문의하기{% else %}Contact Us{% endif %}
+      </a>
     </div>
   </div>
 

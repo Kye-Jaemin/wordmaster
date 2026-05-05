@@ -1,32 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5" style="max-width:760px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-question-circle me-2"></i>How to Play WordMaster</h1>
-  <p class="text-muted mb-4">A complete guide — rules, tile colors, strategies, and all game modes explained.</p>
+  <h1 class="fw-bold text-primary mb-1">
+    <i class="bi bi-question-circle me-2"></i>
+    {% if lang == 'ko' %}WordMaster 게임 방법{% else %}How to Play WordMaster{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}완전 가이드 — 규칙, 타일 색상, 전략, 모든 게임 모드 설명.{% else %}A complete guide — rules, tile colors, strategies, and all game modes explained.{% endif %}
+  </p>
 
   <!-- Goal -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4">🎯 The Goal</h2>
-      <p class="mb-0">Guess the secret word in <strong>6 tries or fewer</strong>. Each guess must be a valid English word of the correct length. The game tells you after every guess how close you are using colored tiles.</p>
+      <h2 class="fw-bold h4">🎯 {% if lang == 'ko' %}목표{% else %}The Goal{% endif %}</h2>
+      <p class="mb-0">
+        {% if lang == 'ko' %}
+          <strong>6번 이내</strong>에 숨겨진 단어를 맞추세요. 각 추측은 올바른 길이의 유효한 영어 단어여야 합니다. 게임은 매 추측 후 색깔 타일로 얼마나 가까운지 알려줍니다.
+        {% else %}
+          Guess the secret word in <strong>6 tries or fewer</strong>. Each guess must be a valid English word of the correct length. The game tells you after every guess how close you are using colored tiles.
+        {% endif %}
+      </p>
     </div>
   </div>
 
   <!-- Tile Colors -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">🎨 Tile Colors Explained</h2>
+      <h2 class="fw-bold h4 mb-3">🎨 {% if lang == 'ko' %}타일 색상 설명{% else %}Tile Colors Explained{% endif %}</h2>
       <div class="d-flex align-items-center mb-3">
         <div class="demo-tile correct-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">C</div>
-        <div><strong class="text-success">Green</strong> — The letter is correct and in the right position.</div>
+        <div>
+          {% if lang == 'ko' %}
+            <strong class="text-success">초록색</strong> — 글자가 올바른 위치에 있습니다.
+          {% else %}
+            <strong class="text-success">Green</strong> — The letter is correct and in the right position.
+          {% endif %}
+        </div>
       </div>
       <div class="d-flex align-items-center mb-3">
         <div class="demo-tile present-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">R</div>
-        <div><strong class="text-warning">Yellow</strong> — The letter is in the word but in the wrong position. Move it elsewhere.</div>
+        <div>
+          {% if lang == 'ko' %}
+            <strong class="text-warning">노란색</strong> — 글자는 단어에 있지만 위치가 틀렸습니다. 다른 위치에 배치하세요.
+          {% else %}
+            <strong class="text-warning">Yellow</strong> — The letter is in the word but in the wrong position. Move it elsewhere.
+          {% endif %}
+        </div>
       </div>
       <div class="d-flex align-items-center">
         <div class="demo-tile absent-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">X</div>
-        <div><strong class="text-secondary">Grey</strong> — The letter is not in the word at all. Eliminate it from future guesses.</div>
+        <div>
+          {% if lang == 'ko' %}
+            <strong class="text-secondary">회색</strong> — 단어에 전혀 없는 글자입니다. 이후 추측에서 제외하세요.
+          {% else %}
+            <strong class="text-secondary">Grey</strong> — The letter is not in the word at all. Eliminate it from future guesses.
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -34,14 +63,23 @@
   <!-- Step by step -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">📋 Step-by-Step</h2>
+      <h2 class="fw-bold h4 mb-3">📋 {% if lang == 'ko' %}단계별 방법{% else %}Step-by-Step{% endif %}</h2>
       <ol class="ps-3 mb-0">
-        <li class="mb-2">Type letters using your keyboard or tap the on-screen keyboard.</li>
-        <li class="mb-2">Press <kbd>Enter</kbd> to submit your guess. It must be a real word.</li>
-        <li class="mb-2">Watch the tiles flip and read the color feedback.</li>
-        <li class="mb-2">Use what you learned to form a smarter next guess.</li>
-        <li class="mb-2">Keep guessing until you find the word or exhaust all 6 tries.</li>
-        <li class="mb-2">After the game ends, a full word profile appears — definition, origin, synonyms, and more.</li>
+        {% if lang == 'ko' %}
+          <li class="mb-2">키보드 또는 화면 키보드를 탭하여 글자를 입력하세요.</li>
+          <li class="mb-2"><kbd>Enter</kbd>를 눌러 추측을 제출하세요. 실제 단어여야 합니다.</li>
+          <li class="mb-2">타일이 뒤집히고 색상 피드백을 확인하세요.</li>
+          <li class="mb-2">알게 된 정보로 더 스마트한 다음 추측을 만드세요.</li>
+          <li class="mb-2">단어를 찾거나 6번 모두 사용할 때까지 계속 추측하세요.</li>
+          <li class="mb-2">게임이 끝나면 단어 프로필(정의, 어원, 유의어 등)이 표시됩니다.</li>
+        {% else %}
+          <li class="mb-2">Type letters using your keyboard or tap the on-screen keyboard.</li>
+          <li class="mb-2">Press <kbd>Enter</kbd> to submit your guess. It must be a real word.</li>
+          <li class="mb-2">Watch the tiles flip and read the color feedback.</li>
+          <li class="mb-2">Use what you learned to form a smarter next guess.</li>
+          <li class="mb-2">Keep guessing until you find the word or exhaust all 6 tries.</li>
+          <li class="mb-2">After the game ends, a full word profile appears — definition, origin, synonyms, and more.</li>
+        {% endif %}
       </ol>
     </div>
   </div>
@@ -49,10 +87,12 @@
   <!-- Example round -->
   <div class="card shadow-sm mb-4 border-info">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">🔍 Example Round</h2>
-      <p class="text-muted small mb-2">Suppose the secret word is <strong>PLANT</strong>.</p>
+      <h2 class="fw-bold h4 mb-3">🔍 {% if lang == 'ko' %}예시 라운드{% else %}Example Round{% endif %}</h2>
+      <p class="text-muted small mb-2">
+        {% if lang == 'ko' %}정답이 <strong>PLANT</strong>라고 가정해봅시다.{% else %}Suppose the secret word is <strong>PLANT</strong>.{% endif %}
+      </p>
       <div class="mb-2">
-        <span class="fw-bold small text-muted d-block mb-1">Guess 1: CRANE</span>
+        <span class="fw-bold small text-muted d-block mb-1">{% if lang == 'ko' %}1번째 추측: CRANE{% else %}Guess 1: CRANE{% endif %}</span>
         <div class="d-flex gap-1">
           <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">C</span>
           <span class="demo-tile present-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">R</span>
@@ -60,10 +100,12 @@
           <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">N</span>
           <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">E</span>
         </div>
-        <p class="small text-muted mt-1 mb-0">R and A are in the word, but in the wrong spots. C, N, E are not in the word.</p>
+        <p class="small text-muted mt-1 mb-0">
+          {% if lang == 'ko' %}R과 A는 단어에 있지만 위치가 틀렸습니다. C, N, E는 단어에 없습니다.{% else %}R and A are in the word, but in the wrong spots. C, N, E are not in the word.{% endif %}
+        </p>
       </div>
       <div class="mb-2">
-        <span class="fw-bold small text-muted d-block mb-1">Guess 2: TRAIL</span>
+        <span class="fw-bold small text-muted d-block mb-1">{% if lang == 'ko' %}2번째 추측: TRAIL{% else %}Guess 2: TRAIL{% endif %}</span>
         <div class="d-flex gap-1">
           <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">T</span>
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">R</span>
@@ -71,10 +113,12 @@
           <span class="demo-tile absent-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">I</span>
           <span class="demo-tile present-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">L</span>
         </div>
-        <p class="small text-muted mt-1 mb-0">R and A are confirmed in positions 2 and 3. L is in the word but not at the end.</p>
+        <p class="small text-muted mt-1 mb-0">
+          {% if lang == 'ko' %}R과 A가 2, 3번째 위치에 확정됩니다. L은 단어에 있지만 끝에 없습니다.{% else %}R and A are confirmed in positions 2 and 3. L is in the word but not at the end.{% endif %}
+        </p>
       </div>
       <div>
-        <span class="fw-bold small text-muted d-block mb-1">Guess 3: PLANT ✅</span>
+        <span class="fw-bold small text-muted d-block mb-1">{% if lang == 'ko' %}3번째 추측: PLANT ✅{% else %}Guess 3: PLANT ✅{% endif %}</span>
         <div class="d-flex gap-1">
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">P</span>
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">L</span>
@@ -82,7 +126,9 @@
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">N</span>
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">T</span>
         </div>
-        <p class="small text-muted mt-1 mb-0">Solved in 3 guesses! All green.</p>
+        <p class="small text-muted mt-1 mb-0">
+          {% if lang == 'ko' %}3번 만에 해결! 모두 초록색.{% else %}Solved in 3 guesses! All green.{% endif %}
+        </p>
       </div>
     </div>
   </div>
@@ -90,74 +136,111 @@
   <!-- Strategy -->
   <div class="card shadow-sm mb-4 border-primary">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">💡 Winning Strategy</h2>
-      <h5 class="fw-semibold mt-2">Start with a high-coverage opener</h5>
-      <p class="text-muted">Your first word should cover as many common letters as possible. The best starters:</p>
-      <ul class="text-muted ps-3 mb-3">
-        <li class="mb-1"><strong>CRANE</strong> — covers C, R, A, N, E (5 of the 10 most common letters)</li>
-        <li class="mb-1"><strong>AUDIO</strong> — covers 4 of the 5 vowels in one guess</li>
-        <li class="mb-1"><strong>STARE</strong> — covers S, T, A, R, E — all extremely frequent</li>
-      </ul>
-      <h5 class="fw-semibold">Use your second guess to cover new letters</h5>
-      <p class="text-muted">Never repeat a letter in your second guess that was already grey. Use the second guess to test 5 completely new letters you haven't tried yet. This maximizes information before your third guess.</p>
-      <h5 class="fw-semibold">Read yellow tiles carefully</h5>
-      <p class="text-muted">A yellow tile means the letter is definitely in the answer — just not in that position. Try it in every other slot before assuming its position. Common mistake: guessing yellow tiles in the same position again.</p>
-      <h5 class="fw-semibold">Think about word patterns</h5>
-      <p class="text-muted mb-0">Common endings that narrow your search: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. Common starts: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. If you have confirmed letters that fit a pattern, try building around the pattern rather than guessing randomly.</p>
+      <h2 class="fw-bold h4 mb-3">💡 {% if lang == 'ko' %}승리 전략{% else %}Winning Strategy{% endif %}</h2>
+
+      {% if lang == 'ko' %}
+        <h5 class="fw-semibold mt-2">높은 커버리지 첫 단어로 시작하기</h5>
+        <p class="text-muted">첫 번째 단어는 가능한 한 많은 일반 글자를 포함해야 합니다. 최적의 시작 단어:</p>
+        <ul class="text-muted ps-3 mb-3">
+          <li class="mb-1"><strong>CRANE</strong> — C, R, A, N, E 커버 (10개 가장 많이 쓰이는 글자 중 5개)</li>
+          <li class="mb-1"><strong>AUDIO</strong> — 한 번에 5개 모음 중 4개 커버</li>
+          <li class="mb-1"><strong>STARE</strong> — S, T, A, R, E 커버 — 모두 매우 자주 나오는 글자</li>
+        </ul>
+        <h5 class="fw-semibold">두 번째 추측에서 새로운 글자 커버하기</h5>
+        <p class="text-muted">두 번째 추측에서는 이미 회색인 글자를 절대 반복하지 마세요. 아직 시도하지 않은 5개의 완전히 새로운 글자를 테스트하세요. 이렇게 하면 세 번째 추측 전에 최대한 많은 정보를 얻을 수 있습니다.</p>
+        <h5 class="fw-semibold">노란색 타일 주의 깊게 읽기</h5>
+        <p class="text-muted">노란색 타일은 해당 글자가 정답에 있다는 의미입니다 — 단지 그 위치가 아닐 뿐입니다. 위치를 가정하기 전에 다른 모든 슬롯에서 시도해보세요. 흔한 실수: 노란색 타일을 같은 위치에 다시 추측하는 것.</p>
+        <h5 class="fw-semibold">단어 패턴 생각하기</h5>
+        <p class="text-muted mb-0">검색 범위를 좁히는 일반적인 어미: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. 일반적인 어두: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. 패턴에 맞는 확정 글자가 있다면, 무작위로 추측하기보다 패턴을 중심으로 구성해보세요.</p>
+      {% else %}
+        <h5 class="fw-semibold mt-2">Start with a high-coverage opener</h5>
+        <p class="text-muted">Your first word should cover as many common letters as possible. The best starters:</p>
+        <ul class="text-muted ps-3 mb-3">
+          <li class="mb-1"><strong>CRANE</strong> — covers C, R, A, N, E (5 of the 10 most common letters)</li>
+          <li class="mb-1"><strong>AUDIO</strong> — covers 4 of the 5 vowels in one guess</li>
+          <li class="mb-1"><strong>STARE</strong> — covers S, T, A, R, E — all extremely frequent</li>
+        </ul>
+        <h5 class="fw-semibold">Use your second guess to cover new letters</h5>
+        <p class="text-muted">Never repeat a letter in your second guess that was already grey. Use the second guess to test 5 completely new letters you haven't tried yet. This maximizes information before your third guess.</p>
+        <h5 class="fw-semibold">Read yellow tiles carefully</h5>
+        <p class="text-muted">A yellow tile means the letter is definitely in the answer — just not in that position. Try it in every other slot before assuming its position. Common mistake: guessing yellow tiles in the same position again.</p>
+        <h5 class="fw-semibold">Think about word patterns</h5>
+        <p class="text-muted mb-0">Common endings that narrow your search: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. Common starts: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. If you have confirmed letters that fit a pattern, try building around the pattern rather than guessing randomly.</p>
+      {% endif %}
     </div>
   </div>
 
   <!-- Hint & Give Up -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">🔦 Hint and Give Up</h2>
-      <p class="text-muted mb-2">Each game includes two special buttons below the keyboard:</p>
-      <ul class="text-muted ps-3 mb-0">
-        <li class="mb-2"><strong>Hint</strong> — Reveals one correct letter in the right position. You only get one hint per game, so use it wisely. Best used on your 4th or 5th guess when you have narrowed things down but are stuck between a few possibilities.</li>
-        <li class="mb-0"><strong>Give Up</strong> — Reveals the answer immediately and ends the game. The word profile still opens so you can learn the definition, etymology, and synonyms even if you didn't solve it.</li>
-      </ul>
+      <h2 class="fw-bold h4 mb-3">🔦 {% if lang == 'ko' %}힌트 및 포기하기{% else %}Hint and Give Up{% endif %}</h2>
+      {% if lang == 'ko' %}
+        <p class="text-muted mb-2">각 게임에는 키보드 아래에 두 가지 특수 버튼이 있습니다:</p>
+        <ul class="text-muted ps-3 mb-0">
+          <li class="mb-2"><strong>힌트</strong> — 숨겨진 단어의 정의와 품사를 공개합니다. 게임당 <strong>힌트 1번</strong>만 사용할 수 있으니 현명하게 사용하세요. 몇 가지 가능성 사이에서 막혔을 때 4번째나 5번째 추측에서 사용하는 것이 가장 좋습니다.</li>
+          <li class="mb-0"><strong>포기하기</strong> — 즉시 정답을 공개하고 게임을 종료합니다. 단어 프로필은 여전히 열리므로, 풀지 못했더라도 정의, 어원, 유의어를 배울 수 있습니다.</li>
+        </ul>
+      {% else %}
+        <p class="text-muted mb-2">Each game includes two special buttons below the keyboard:</p>
+        <ul class="text-muted ps-3 mb-0">
+          <li class="mb-2"><strong>Hint</strong> — Reveals one correct letter in the right position. You only get one hint per game, so use it wisely. Best used on your 4th or 5th guess when you have narrowed things down but are stuck between a few possibilities.</li>
+          <li class="mb-0"><strong>Give Up</strong> — Reveals the answer immediately and ends the game. The word profile still opens so you can learn the definition, etymology, and synonyms even if you didn't solve it.</li>
+        </ul>
+      {% endif %}
     </div>
   </div>
 
   <!-- All modes -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">🎮 All Game Modes</h2>
+      <h2 class="fw-bold h4 mb-3">🎮 {% if lang == 'ko' %}모든 게임 모드{% else %}All Game Modes{% endif %}</h2>
       <div class="row g-3">
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">📅 <a href="/daily" class="text-decoration-none">Daily Challenge</a></p>
-            <p class="small text-muted mb-0">One shared 5-letter word per day. Resets at midnight. Track your streak.</p>
+            <p class="fw-bold mb-1">📅 <a href="/daily" class="text-decoration-none">{% if lang == 'ko' %}데일리 챌린지{% else %}Daily Challenge{% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}하루에 하나의 5글자 단어. 자정에 초기화됩니다. 연속 기록을 추적하세요.{% else %}One shared 5-letter word per day. Resets at midnight. Track your streak.{% endif %}
+            </p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">♾️ <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a></p>
-            <p class="small text-muted mb-0">No daily limit. Fresh random word each round. Play as many times as you want.</p>
+            <p class="fw-bold mb-1">♾️ <a href="/unlimited" class="text-decoration-none">{% if lang == 'ko' %}무제한 모드{% else %}Unlimited Mode{% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}일일 제한 없음. 매 라운드 새로운 랜덤 단어. 원하는 만큼 플레이하세요.{% else %}No daily limit. Fresh random word each round. Play as many times as you want.{% endif %}
+            </p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">😊 <a href="/easy" class="text-decoration-none">Easy (4 Letters)</a></p>
-            <p class="small text-muted mb-0">Shorter words, fewer combinations. Great for beginners and younger players.</p>
+            <p class="fw-bold mb-1">😊 <a href="/easy" class="text-decoration-none">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}짧은 단어, 더 적은 조합. 초보자와 어린 플레이어에게 적합.{% else %}Shorter words, fewer combinations. Great for beginners and younger players.{% endif %}
+            </p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">🔥 <a href="/hard" class="text-decoration-none">Hard (6 Letters)</a></p>
-            <p class="small text-muted mb-0">Longer words, exponentially more combinations. For experienced players only.</p>
+            <p class="fw-bold mb-1">🔥 <a href="/hard" class="text-decoration-none">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}더 긴 단어, 훨씬 많은 조합. 숙련된 플레이어에게만 추천.{% else %}Longer words, exponentially more combinations. For experienced players only.{% endif %}
+            </p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">📰 <a href="/news-challenge" class="text-decoration-none">News Word Challenge</a></p>
-            <p class="small text-muted mb-0">Guess the word hidden in today's BBC headlines. Context clues from real news.</p>
+            <p class="fw-bold mb-1">📰 <a href="/news-challenge" class="text-decoration-none">{% if lang == 'ko' %}뉴스 챌린지{% else %}News Word Challenge{% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}오늘의 BBC 헤드라인에 숨겨진 단어를 맞추세요. 실제 뉴스의 문맥 힌트.{% else %}Guess the word hidden in today's BBC headlines. Context clues from real news.{% endif %}
+            </p>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
-            <p class="fw-bold mb-1">🐾 <a href="/category/animals" class="text-decoration-none">Category Modes</a></p>
-            <p class="small text-muted mb-0">Themed word sets — Animals, Food, and more. Focused vocabulary practice.</p>
+            <p class="fw-bold mb-1">🐾 <a href="/category/animals" class="text-decoration-none">{% if lang == 'ko' %}카테고리 모드{% else %}Category Modes{% endif %}</a></p>
+            <p class="small text-muted mb-0">
+              {% if lang == 'ko' %}주제별 단어 세트 — 동물, 음식 등. 집중적인 어휘 연습.{% else %}Themed word sets — Animals, Food, and more. Focused vocabulary practice.{% endif %}
+            </p>
           </div>
         </div>
       </div>
@@ -167,10 +250,16 @@
   <!-- CTA -->
   <div class="card shadow-sm mb-5 bg-primary text-white">
     <div class="card-body text-center py-4">
-      <h3 class="fw-bold mb-2">Ready to play?</h3>
-      <p class="mb-3 opacity-75">Start with the daily challenge or jump into unlimited practice.</p>
-      <a href="/daily" class="btn btn-light text-primary fw-bold me-2"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
-      <a href="/unlimited" class="btn btn-outline-light"><i class="bi bi-infinity me-1"></i>Unlimited Mode</a>
+      <h3 class="fw-bold mb-2">{% if lang == 'ko' %}시작할 준비가 됐나요?{% else %}Ready to play?{% endif %}</h3>
+      <p class="mb-3 opacity-75">
+        {% if lang == 'ko' %}데일리 챌린지로 시작하거나 무제한 연습을 바로 시작하세요.{% else %}Start with the daily challenge or jump into unlimited practice.{% endif %}
+      </p>
+      <a href="/daily" class="btn btn-light text-primary fw-bold me-2">
+        <i class="bi bi-calendar-day me-1"></i>{% if lang == 'ko' %}데일리 챌린지{% else %}Daily Challenge{% endif %}
+      </a>
+      <a href="/unlimited" class="btn btn-outline-light">
+        <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한 모드{% else %}Unlimited Mode{% endif %}
+      </a>
     </div>
   </div>
 

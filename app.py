@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response, redirect
+from flask import Flask, render_template, request, jsonify, Response, redirect, session
 from datetime import date, timedelta
 import json, random, re, xml.etree.ElementTree as ET, urllib.request, urllib.error
 
@@ -61,9 +61,24 @@ def pick_news_word(articles):
     return word, source
 
 app = Flask(__name__)
+app.secret_key = "wordmaster-lang-2024-xK9#mQ"
 
 with open("words.json", encoding="utf-8") as f:
     WORDS = json.load(f)
+
+# ─── Language Support ──────────────────────────────────────────
+
+@app.context_processor
+def inject_lang():
+    """Inject current language into every template automatically."""
+    return dict(lang=session.get("lang", "en"))
+
+@app.route("/set-lang/<lang>")
+def set_lang(lang):
+    """Set the display language and redirect back."""
+    if lang in ("en", "ko"):
+        session["lang"] = lang
+    return redirect(request.referrer or "/")
 
 def get_daily_word():
     today = date.today()

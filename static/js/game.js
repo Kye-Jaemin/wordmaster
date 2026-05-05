@@ -1,6 +1,41 @@
 /* ─── WordMaster — Game Logic ─────────────────────────────── */
 "use strict";
 
+// ─── i18n ─────────────────────────────────────────────────────
+const _KO = {
+  failedLoad:    "단어를 불러오지 못했습니다. 새로고침 해주세요.",
+  needLetters:   (n) => `${n}글자를 입력하세요!`,
+  notValid:      "유효하지 않은 단어입니다!",
+  networkError:  "네트워크 오류. 다시 시도하세요.",
+  copied:        "클립보드에 복사됨!",
+  hintFail:      "힌트를 불러올 수 없습니다.",
+  hintUsed:      "힌트 사용됨",
+  giveUpConfirm: "포기하시겠습니까? 정답이 공개됩니다.",
+  betterLuck:    "다음엔 꼭 성공하세요!",
+  theWordWas:    (w) => `정답: ${w}`,
+  winMsgs:       ["천재!","대단해요!","훌륭해요!","멋져요!","잘했어요!","간신히!"],
+  voteEasy:      "😊 쉽게 느껴지셨군요!",
+  voteHard:      "🔥 잘 버텨내셨어요!",
+  submitting:    "제출 중…",
+};
+const _EN = {
+  failedLoad:    "Failed to load word. Please refresh.",
+  needLetters:   (n) => `Need ${n} letters!`,
+  notValid:      "Not a valid word!",
+  networkError:  "Network error. Try again.",
+  copied:        "Copied to clipboard!",
+  hintFail:      "Could not load hint.",
+  hintUsed:      "Hint Used",
+  giveUpConfirm: "Give up? The answer will be revealed.",
+  betterLuck:    "Better luck next time!",
+  theWordWas:    (w) => `The word was: ${w}`,
+  winMsgs:       ["Genius!","Magnificent!","Impressive!","Splendid!","Great!","Phew!"],
+  voteEasy:      "😊 Glad it felt easy!",
+  voteHard:      "🔥 Nice work pushing through!",
+  submitting:    "Submitting…",
+};
+const T = (typeof WM_LANG !== "undefined" && WM_LANG === "ko") ? _KO : _EN;
+
 // ─── State ────────────────────────────────────────────────────
 let secretWord  = "";
 let currentRow  = 0;
@@ -47,7 +82,7 @@ async function fetchWord() {
     const data = await res.json();
     secretWord = data.word;
   } catch (e) {
-    showToast("Failed to load word. Please refresh.");
+    showToast(T.failedLoad);
   }
 }
 
@@ -97,7 +132,7 @@ function deleteLetter() {
 // ─── Submit ───────────────────────────────────────────────────
 async function submitGuess() {
   if (currentGuess.length < WORD_LENGTH) {
-    showToast(`Need ${WORD_LENGTH} letters!`);
+    showToast(T.needLetters(WORD_LENGTH));
     shakeRow(currentRow);
     return;
   }
@@ -113,7 +148,7 @@ async function submitGuess() {
     const data = await res.json();
 
     if (!data.valid) {
-      showToast("Not a valid word!");
+      showToast(T.notValid);
       shakeRow(currentRow);
       return;
     }
@@ -124,7 +159,7 @@ async function submitGuess() {
     if (data.won) {
       gameOver = true;
       saveStats(true);
-      const msgs = ["Genius!","Magnificent!","Impressive!","Splendid!","Great!","Phew!"];
+      const msgs = T.winMsgs;
       setTimeout(() => {
         bounceRow(currentRow);
         showResult(true, msgs[currentRow] || "Got it!");
@@ -142,7 +177,7 @@ async function submitGuess() {
       }
     }
   } catch (e) {
-    showToast("Network error. Try again.");
+    showToast(T.networkError);
   }
 }
 
@@ -202,8 +237,8 @@ function showResult(won, message = "") {
   const againBtn  = document.getElementById("btn-play-again");
 
   emojis.textContent  = won ? "🎉" : "😔";
-  msgEl.textContent   = won ? message : "Better luck next time!";
-  wordEl.textContent  = `The word was: ${secretWord}`;
+  msgEl.textContent   = won ? message : T.betterLuck;
+  wordEl.textContent  = T.theWordWas(secretWord);
 
   if (shareBtn) shareBtn.onclick = shareResult;
   if (againBtn) againBtn.onclick = resetGame;
@@ -310,7 +345,7 @@ async function submitVote(vote) {
   const voteResult  = document.getElementById("vote-result");
   if (voteButtons) voteButtons.classList.add("d-none");
   if (voteResult) {
-    voteResult.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Submitting…';
+    voteResult.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span>${T.submitting}`;
     voteResult.classList.remove("d-none");
   }
   try {
@@ -321,7 +356,7 @@ async function submitVote(vote) {
     });
   } catch (e) { /* silent */ }
   if (voteResult) {
-    voteResult.textContent = vote === "easy" ? "😊 Glad it felt easy!" : "🔥 Nice work pushing through!";
+    voteResult.textContent = vote === "easy" ? T.voteEasy : T.voteHard;
     voteResult.classList.remove("d-none");
   }
 }
@@ -344,7 +379,7 @@ function shareResult() {
   text += "\nhttps://wordmaster-game.com";
 
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard!"));
+    navigator.clipboard.writeText(text).then(() => showToast(T.copied));
   } else {
     prompt("Copy your result:", text);
   }
@@ -366,7 +401,7 @@ async function resetGame() {
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) {
     hintBtn.disabled = false;
-    hintBtn.innerHTML = '<i class="bi bi-lightbulb me-1"></i>Hint <span class="badge bg-warning text-dark ms-1">1</span>';
+    hintBtn.innerHTML = `<i class="bi bi-lightbulb me-1"></i>${T === _KO ? "힌트" : "Hint"} <span class="badge bg-warning text-dark ms-1">1</span>`;
   }
   const hintPanel = document.getElementById("hint-panel");
   if (hintPanel) hintPanel.classList.add("d-none");
@@ -418,7 +453,7 @@ function saveStats(won) {
 // ─── Give Up ──────────────────────────────────────────────────
 async function handleGiveUp() {
   if (gameOver) return;
-  if (!confirm("Give up? The answer will be revealed.")) return;
+  if (!confirm(T.giveUpConfirm)) return;
   gameOver = true;
   saveStats(false);
   hideActionButtons();
@@ -432,7 +467,7 @@ async function handleHint() {
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) {
     hintBtn.disabled = true;
-    hintBtn.innerHTML = '<i class="bi bi-lightbulb-off me-1"></i>Hint Used';
+    hintBtn.innerHTML = `<i class="bi bi-lightbulb-off me-1"></i>${T.hintUsed}`;
   }
   try {
     const res  = await fetch(`/api/hint?word=${secretWord.toLowerCase()}`);
@@ -448,7 +483,7 @@ async function handleHint() {
       panel.classList.remove("d-none");
     }
   } catch (e) {
-    showToast("Could not load hint.");
+    showToast(T.hintFail);
   }
 }
 

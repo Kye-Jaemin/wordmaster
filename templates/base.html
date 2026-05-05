@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ 'ko' if lang == 'ko' else 'en' }}">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,7 +26,6 @@
 
   <!-- Google Analytics 4 -->
   <!-- GA4_CODE -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
 
   <link rel="stylesheet" href="/static/css/style.css"/>
   <link rel="icon" href="/static/img/favicon.png" type="image/png"/>
@@ -49,35 +48,39 @@
   </script>
   <style>
     .footer-link:hover { color: #fff !important; }
+    .lang-btn { font-size: 0.82rem; padding: 2px 8px; border-radius: 20px; }
+    .lang-btn.active { background: rgba(255,255,255,0.25); }
   </style>
 </head>
 <body>
 
-  <!-- ★ P2-C: Cold Start Loading Overlay ★ -->
+  <!-- Cold Start Loading Overlay -->
   <div id="page-loader">
     <div class="loader-inner">
-      <div class="loader-logo">
-        <i class="bi bi-grid-3x3-gap-fill"></i>
-      </div>
+      <div class="loader-logo"><i class="bi bi-grid-3x3-gap-fill"></i></div>
       <div class="loader-title">WordMaster</div>
       <div class="loader-spinner">
         <div class="spinner-border text-primary" role="status" style="width:2rem;height:2rem;">
           <span class="visually-hidden">Loading…</span>
         </div>
       </div>
-      <div class="loader-msg">Loading your game…</div>
+      <div class="loader-msg">
+        {% if lang == 'ko' %}게임 로딩 중…{% else %}Loading your game…{% endif %}
+      </div>
       <div id="loader-slow-msg" class="loader-slow-msg d-none">
-        ⏳ First load may take ~10 seconds on free hosting. Thanks for your patience!
+        {% if lang == 'ko' %}
+          ⏳ 무료 서버는 첫 로딩이 약 10초 걸릴 수 있어요. 잠시만 기다려 주세요!
+        {% else %}
+          ⏳ First load may take ~10 seconds on free hosting. Thanks for your patience!
+        {% endif %}
       </div>
     </div>
   </div>
   <script>
-    // Show "slow loading" message after 5 seconds
     var _loaderSlowTimer = setTimeout(function() {
       var m = document.getElementById("loader-slow-msg");
       if (m) m.classList.remove("d-none");
     }, 5000);
-    // Remove loader when page is interactive
     document.addEventListener("DOMContentLoaded", function() {
       clearTimeout(_loaderSlowTimer);
       var loader = document.getElementById("page-loader");
@@ -88,16 +91,9 @@
     });
   </script>
 
-  <!-- ① ADSENSE_HEADER — 헤더 배너 728×90 -->
+  <!-- Header Ad -->
   <div class="ad-header d-flex justify-content-center align-items-center py-1">
     <!-- ADSENSE_HEADER -->
-    <!--
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:728px;height:90px"
-         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-         data-ad-slot="XXXXXXXXXX"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    -->
   </div>
 
   <!-- Navbar -->
@@ -110,32 +106,103 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/daily" data-bs-toggle="dropdown"><i class="bi bi-calendar-day me-1"></i>Daily</a>
+            <a class="nav-link dropdown-toggle" href="/daily" data-bs-toggle="dropdown">
+              <i class="bi bi-calendar-day me-1"></i>
+              {% if lang == 'ko' %}데일리{% else %}Daily{% endif %}
+            </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/daily"><i class="bi bi-play-fill me-1"></i>Today's Challenge</a></li>
-              <li><a class="dropdown-item" href="/archive"><i class="bi bi-clock-history me-1"></i>Archive</a></li>
+              <li><a class="dropdown-item" href="/daily">
+                <i class="bi bi-play-fill me-1"></i>
+                {% if lang == 'ko' %}오늘의 챌린지{% else %}Today's Challenge{% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/archive">
+                <i class="bi bi-clock-history me-1"></i>
+                {% if lang == 'ko' %}보관함{% else %}Archive{% endif %}
+              </a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/unlimited"><i class="bi bi-infinity me-1"></i>Unlimited</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/unlimited">
+              <i class="bi bi-infinity me-1"></i>
+              {% if lang == 'ko' %}무제한{% else %}Unlimited{% endif %}
+            </a>
+          </li>
+
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Modes</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              {% if lang == 'ko' %}모드{% else %}Modes{% endif %}
+            </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/easy">Easy (4 Letters)</a></li>
-              <li><a class="dropdown-item" href="/">Normal (5 Letters)</a></li>
-              <li><a class="dropdown-item" href="/hard">Hard (6 Letters)</a></li>
+              <li><a class="dropdown-item" href="/easy">
+                {% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/">
+                {% if lang == 'ko' %}기본 (5글자){% else %}Normal (5 Letters){% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/hard">
+                {% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}
+              </a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/category/animals">🐾 Animals</a></li>
-              <li><a class="dropdown-item" href="/category/food">🍕 Food</a></li>
+              <li><a class="dropdown-item" href="/category/animals">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a></li>
+              <li><a class="dropdown-item" href="/category/food">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="/word-of-day"><i class="bi bi-stars me-1"></i>Word of the Day</a></li>
-          <li class="nav-item"><a class="nav-link" href="/news-challenge"><i class="bi bi-newspaper me-1"></i>News Challenge</a></li>
-          <li class="nav-item"><a class="nav-link" href="/leaderboard"><i class="bi bi-trophy me-1"></i>Stats</a></li>
-          <li class="nav-item"><a class="nav-link" href="/how-to-play"><i class="bi bi-question-circle me-1"></i>How to Play</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blog"><i class="bi bi-journal-text me-1"></i>Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact"><i class="bi bi-envelope me-1"></i>Contact</a></li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/word-of-day">
+              <i class="bi bi-stars me-1"></i>
+              {% if lang == 'ko' %}오늘의 단어{% else %}Word of Day{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/news-challenge">
+              <i class="bi bi-newspaper me-1"></i>
+              {% if lang == 'ko' %}뉴스 챌린지{% else %}News{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/leaderboard">
+              <i class="bi bi-trophy me-1"></i>
+              {% if lang == 'ko' %}통계{% else %}Stats{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/how-to-play">
+              <i class="bi bi-question-circle me-1"></i>
+              {% if lang == 'ko' %}게임 방법{% else %}How to Play{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/blog">
+              <i class="bi bi-journal-text me-1"></i>Blog
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">
+              <i class="bi bi-envelope me-1"></i>
+              {% if lang == 'ko' %}문의{% else %}Contact{% endif %}
+            </a>
+          </li>
+
+          <!-- Language Toggle -->
+          <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+            <div class="d-flex gap-1">
+              <a href="/set-lang/ko" class="btn btn-sm btn-outline-light lang-btn {% if lang == 'ko' %}active{% endif %}"
+                 title="한국어로 변경">🇰🇷 한국어</a>
+              <a href="/set-lang/en" class="btn btn-sm btn-outline-light lang-btn {% if lang == 'en' or not lang %}active{% endif %}"
+                 title="Switch to English">🇺🇸 EN</a>
+            </div>
+          </li>
+
         </ul>
       </div>
     </div>
@@ -152,34 +219,63 @@
       <div class="row">
         <div class="col-md-4 mb-3">
           <h6 class="fw-bold text-primary">WordMaster</h6>
-          <p class="small text-muted">Free daily word guessing game. Challenge your vocabulary every day!</p>
+          {% if lang == 'ko' %}
+            <p class="small text-muted">매일 새로운 단어로 어휘력을 키우는 무료 영어 단어 게임입니다!</p>
+          {% else %}
+            <p class="small text-muted">Free daily word guessing game. Challenge your vocabulary every day!</p>
+          {% endif %}
         </div>
         <div class="col-md-4 mb-3">
-          <h6 class="fw-bold">Game Modes</h6>
+          <h6 class="fw-bold">{% if lang == 'ko' %}게임 모드{% else %}Game Modes{% endif %}</h6>
           <ul class="list-unstyled small">
-            <li><a href="/daily" class="text-white-50 text-decoration-none footer-link">Daily Challenge</a></li>
-            <li><a href="/archive" class="text-white-50 text-decoration-none footer-link">Daily Archive</a></li>
-            <li><a href="/unlimited" class="text-white-50 text-decoration-none footer-link">Unlimited Play</a></li>
-            <li><a href="/easy" class="text-white-50 text-decoration-none footer-link">Easy (4 Letters)</a></li>
-            <li><a href="/hard" class="text-white-50 text-decoration-none footer-link">Hard (6 Letters)</a></li>
+            <li><a href="/daily" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}데일리 챌린지{% else %}Daily Challenge{% endif %}
+            </a></li>
+            <li><a href="/archive" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}데일리 보관함{% else %}Daily Archive{% endif %}
+            </a></li>
+            <li><a href="/unlimited" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}무제한 플레이{% else %}Unlimited Play{% endif %}
+            </a></li>
+            <li><a href="/easy" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}
+            </a></li>
+            <li><a href="/hard" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}
+            </a></li>
           </ul>
         </div>
         <div class="col-md-4 mb-3">
-          <h6 class="fw-bold">Info</h6>
+          <h6 class="fw-bold">{% if lang == 'ko' %}정보{% else %}Info{% endif %}</h6>
           <ul class="list-unstyled small">
-            <li><a href="/how-to-play" class="text-white-50 text-decoration-none footer-link">How to Play</a></li>
+            <li><a href="/how-to-play" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}게임 방법{% else %}How to Play{% endif %}
+            </a></li>
             <li><a href="/faq" class="text-white-50 text-decoration-none footer-link">FAQ</a></li>
             <li><a href="/blog" class="text-white-50 text-decoration-none footer-link">Blog</a></li>
-            <li><a href="/about" class="text-white-50 text-decoration-none footer-link">About</a></li>
-            <li><a href="/contact" class="text-white-50 text-decoration-none footer-link">Contact</a></li>
-            <li><a href="/privacy" class="text-white-50 text-decoration-none footer-link">Privacy Policy</a></li>
-            <li><a href="/terms" class="text-white-50 text-decoration-none footer-link">Terms of Service</a></li>
+            <li><a href="/about" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}소개{% else %}About{% endif %}
+            </a></li>
+            <li><a href="/contact" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}문의하기{% else %}Contact{% endif %}
+            </a></li>
+            <li><a href="/privacy" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}개인정보처리방침{% else %}Privacy Policy{% endif %}
+            </a></li>
+            <li><a href="/terms" class="text-white-50 text-decoration-none footer-link">
+              {% if lang == 'ko' %}이용약관{% else %}Terms of Service{% endif %}
+            </a></li>
           </ul>
         </div>
       </div>
       <hr class="border-secondary"/>
       <p class="small text-center text-muted mb-0">
-        &copy; 2026 WordMaster. All rights reserved. WordMaster is an independent project, not affiliated with the New York Times.
+        &copy; 2026 WordMaster.
+        {% if lang == 'ko' %}
+          WordMaster는 뉴욕타임즈와 관련 없는 독립 프로젝트입니다.
+        {% else %}
+          All rights reserved. WordMaster is an independent project, not affiliated with the New York Times.
+        {% endif %}
       </p>
     </div>
   </footer>
