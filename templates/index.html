@@ -189,80 +189,231 @@
 
   </div>
 
-  <!-- Rich content section for SEO & AdSense -->
+  <!-- Rich content section for SEO & AdSense — unique per mode -->
   <div class="row justify-content-center mt-5 px-3">
     <div class="col-12 col-lg-8">
 
-      <!-- How to Play -->
+      {% if mode == "standard" %}
+      <!-- ══ HOME / STANDARD ══ -->
       <div class="mb-5">
-        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-question-circle me-2"></i>How to Play WordMaster</h2>
-        <p class="text-muted">WordMaster is a free, browser-based word guessing game inspired by classic word puzzles. Your goal is simple: guess the hidden 5-letter word within 6 attempts. After each guess, the tiles change color to tell you how close you are.</p>
-        <ul class="text-muted ps-3">
-          <li class="mb-2">A <strong class="text-success">green tile</strong> means the letter is correct and in the right position.</li>
-          <li class="mb-2">A <strong class="text-warning">yellow tile</strong> means the letter is in the word but in the wrong position.</li>
-          <li class="mb-2">A <strong class="text-secondary">grey tile</strong> means the letter is not in the word at all.</li>
-        </ul>
-        <p class="text-muted">Every guess must be a real, valid English word. Use the on-screen keyboard or your physical keyboard to type your guesses. You can use the <strong>Hint</strong> button if you are truly stuck — it reveals one letter to get you back on track.</p>
-        <p class="text-muted">The best strategy is to start with a word that covers common letters. Words like <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong> give you the widest coverage of frequently used letters in the English language. From there, eliminate possibilities with each guess and zero in on the answer.</p>
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-grid-3x3-gap me-2"></i>What Is WordMaster?</h2>
+        <p class="text-muted">WordMaster is a free, browser-based word puzzle platform where you guess a hidden English word using color-coded tile feedback. Every guess teaches you something — green tiles confirm correct letters, yellow tiles reveal misplaced letters, and grey tiles eliminate possibilities. No account, no download, no subscription required.</p>
+        <p class="text-muted">Unlike a single daily game, WordMaster offers six distinct modes: a shared Daily Challenge, unlimited free play, an Easy mode for beginners, a Hard mode for advanced players, a News Word Challenge based on real BBC headlines, and themed Category modes for focused vocabulary building. Every mode uses the same core mechanic but serves a different learning goal.</p>
+        <p class="text-muted">WordMaster is built for vocabulary learners, SAT and IELTS test-takers, ESL students, and anyone who enjoys keeping their mind sharp with daily word puzzles. The best way to start is with a high-coverage word like <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong> — these letters appear frequently in English and give you the most information in your first guess.</p>
       </div>
-
-      <!-- Game Modes -->
       <div class="mb-5">
-        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-grid me-2"></i>All WordMaster Game Modes</h2>
-        <p class="text-muted">WordMaster goes far beyond a single daily puzzle. Whether you want a quick warm-up, an educational challenge, or unlimited practice, there is a mode designed for you.</p>
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-grid me-2"></i>Explore All Game Modes</h2>
+        <p class="text-muted">Each mode in WordMaster has a different pace, difficulty, and learning focus. Here is a quick guide to help you choose where to start.</p>
         <div class="row g-3">
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">📅 Daily Challenge</h5>
-              <p class="small text-muted mb-0">One new word every day, shared by all players worldwide. Compare your solve with friends and track your winning streak over time. The daily word resets at midnight.</p>
+              <h5 class="fw-bold mb-1">📅 <a href="/daily" class="text-decoration-none">Daily Challenge</a></h5>
+              <p class="small text-muted mb-0">One new word every day, shared by all players worldwide. Build a streak, compare your solve count with friends, and come back tomorrow for a fresh word.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">♾️ Unlimited Mode</h5>
-              <p class="small text-muted mb-0">No limits — play as many rounds as you like with a fresh random word each time. Perfect for practice sessions, language learners building fluency, or anyone who finishes the daily puzzle and wants more.</p>
+              <h5 class="fw-bold mb-1">♾️ <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a></h5>
+              <p class="small text-muted mb-0">Play as many rounds as you want with no daily limit. Ideal for extra practice, warm-up sessions, or anyone who finishes the daily puzzle and wants more.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">😊 Easy Mode (4 Letters)</h5>
-              <p class="small text-muted mb-0">A gentler challenge with 4-letter words. Great for younger players, beginners, or anyone who wants to build confidence before tackling the standard 5-letter game.</p>
+              <h5 class="fw-bold mb-1">😊 <a href="/easy" class="text-decoration-none">Easy Mode (4 Letters)</a></h5>
+              <p class="small text-muted mb-0">A shorter puzzle with 4-letter words — perfect for younger players, beginners, or anyone building confidence before the standard game.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">🔥 Hard Mode (6 Letters)</h5>
-              <p class="small text-muted mb-0">Step up the difficulty with 6-letter words. Longer words mean exponentially more possible combinations — designed for experienced players who want a serious mental workout.</p>
+              <h5 class="fw-bold mb-1">🔥 <a href="/hard" class="text-decoration-none">Hard Mode (6 Letters)</a></h5>
+              <p class="small text-muted mb-0">Six-letter words with exponentially more possible combinations. Designed for experienced players who want a genuine mental workout.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">📰 News Word Challenge</h5>
-              <p class="small text-muted mb-0">Read today's BBC World News headlines, then guess the 5-letter word hidden within them. Real news, real vocabulary — you learn words in their actual context, which dramatically improves retention.</p>
+              <h5 class="fw-bold mb-1">📰 <a href="/news-challenge" class="text-decoration-none">News Word Challenge</a></h5>
+              <p class="small text-muted mb-0">Guess today's hidden word using real BBC World News headlines as clues. Learn vocabulary in the context of current events — the most effective retention method.</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="p-3 border rounded bg-light h-100">
-              <h5 class="fw-bold mb-1">🐾 Category Modes</h5>
-              <p class="small text-muted mb-0">Focused vocabulary practice with themed word sets — Animals, Food, and more. Category modes are ideal for students, ESL learners, and anyone preparing for specific vocabulary exams.</p>
+              <h5 class="fw-bold mb-1">🐾 <a href="/category/animals" class="text-decoration-none">Category Modes</a></h5>
+              <p class="small text-muted mb-0">Focused vocabulary practice with themed word sets — Animals, Food, and more. Great for ESL learners, students, and anyone preparing for vocabulary exams.</p>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Why WordMaster -->
       <div class="mb-4">
-        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-brain me-2"></i>Why Play Word Games Every Day?</h2>
-        <p class="text-muted">Daily word puzzles are one of the most effective ways to keep your brain sharp. Research in cognitive science shows that word games activate multiple brain systems simultaneously — pattern recognition, working memory, executive function, and lexical retrieval. Playing regularly strengthens the neural pathways that support language and reasoning.</p>
-        <p class="text-muted">Unlike passive vocabulary study (reading a word list), guessing games force <em>active retrieval</em> — you have to produce an answer, not just recognize one. Active retrieval creates far stronger memory traces and leads to genuine, lasting vocabulary growth. This is why WordMaster is used by SAT and IELTS test-takers alongside recreational players.</p>
-        <p class="text-muted">WordMaster is completely free to use, requires no account, and works on any device. Open it in your browser, play your game, and come back tomorrow. No installation, no subscription, no catches.</p>
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-brain me-2"></i>Why Word Games Work</h2>
+        <p class="text-muted">Cognitive science research consistently shows that active word retrieval — being forced to produce an answer rather than simply recognizing one — creates significantly stronger memory traces than passive study. When you guess a word in WordMaster, you are not just being quizzed. You are training your brain to access vocabulary faster and more reliably. This is the same principle behind flashcard spaced repetition, but more engaging.</p>
+        <p class="text-muted">Regular players report noticeable improvements in reading speed, spelling accuracy, and vocabulary range within weeks of daily play. For standardized test preparation (SAT, GRE, IELTS, TOEFL), WordMaster's curated word library covers a large proportion of high-frequency vocabulary items that appear on these exams.</p>
         <div class="d-flex flex-wrap gap-2 mt-3">
-          <a href="/news-challenge" class="btn btn-sm btn-outline-danger"><i class="bi bi-newspaper me-1"></i>News Challenge</a>
+          <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>Today's Daily Challenge</a>
           <a href="/word-of-day" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-stars me-1"></i>Word of the Day</a>
-          <a href="/archive" class="btn btn-sm btn-outline-secondary"><i class="bi bi-calendar3 me-1"></i>Archive</a>
           <a href="/blog" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Vocabulary Blog</a>
         </div>
       </div>
+
+      {% elif mode == "daily" %}
+      <!-- ══ DAILY CHALLENGE ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-day me-2"></i>How the Daily Challenge Works</h2>
+        <p class="text-muted">Every day at midnight, WordMaster resets to a new hidden word — the same word for every player in the world. You have six attempts to guess it using color-coded tile feedback. A green tile means the correct letter in the correct position. A yellow tile means the letter is in the word but in the wrong spot. A grey tile eliminates that letter entirely.</p>
+        <p class="text-muted">The daily word is chosen from a curated library of high-value English vocabulary — words that appear frequently in literature, journalism, academic writing, and standardized tests. Each word is selected to be challenging but fair: you should be able to solve it through logical deduction, not just luck.</p>
+        <p class="text-muted">After you finish, visit the <a href="/word-of-day" class="text-decoration-none">Word of the Day</a> page to unlock the full word profile: definition, pronunciation, etymology, synonyms, and antonyms. This learning step is what transforms a solved puzzle into genuine vocabulary growth.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>Building and Keeping Your Streak</h2>
+        <p class="text-muted">The daily streak counter is one of the most powerful motivational tools in WordMaster. Streak-building works because it harnesses the psychological principle of loss aversion — once you have a 7-day streak, the discomfort of breaking it is a stronger motivator than the satisfaction of extending it. This is a feature, not a flaw. Use it to anchor a daily habit.</p>
+        <p class="text-muted">The most reliable strategy for maintaining a long streak is to play at the same time every day. Morning players tend to have higher streak retention because the daily puzzle becomes part of an existing routine — coffee, news, WordMaster. If you miss a day, do not start over mentally. Simply resume and build again. Even a broken streak shows you played consistently enough to build it in the first place.</p>
+        <p class="text-muted">To maximize your daily challenge performance, start with a high-coverage opener like <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong>. These words collectively cover 13 of the most common letters in English, giving you the most information before your second guess. From there, use process of elimination rather than intuition.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-share me-2"></i>Share Your Result and Compare Scores</h2>
+        <p class="text-muted">After completing the daily challenge, use the Share button to copy your result grid — a spoiler-free pattern of coloured squares that shows how efficiently you solved the puzzle without revealing the answer. This format is designed for social sharing: friends can see your solve pattern and compare it to their own without having the word spoiled.</p>
+        <p class="text-muted">The leaderboard tracks your overall statistics: games played, win percentage, current streak, and best streak. These numbers give you a long-term view of your progress and a benchmark to improve against. For more practice between daily challenges, try <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a> or the <a href="/news-challenge" class="text-decoration-none">News Word Challenge</a>.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/archive" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history me-1"></i>Past Daily Words</a>
+          <a href="/word-of-day" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-stars me-1"></i>Unlock Today's Word</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Play More</a>
+        </div>
+      </div>
+
+      {% elif mode == "unlimited" %}
+      <!-- ══ UNLIMITED MODE ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-infinity me-2"></i>Play as Many Rounds as You Want</h2>
+        <p class="text-muted">Unlimited Mode removes every restriction. There is no daily limit, no waiting until midnight, and no penalty for starting over. Each round gives you a fresh randomly selected 5-letter word and six attempts to solve it. When you finish, hit Play Again immediately for another round. You can play 2 rounds or 20 — the choice is yours.</p>
+        <p class="text-muted">The word pool for Unlimited Mode is drawn from the same curated vocabulary library used across all WordMaster modes. Words are weighted toward high-frequency English vocabulary — terms that appear regularly in news, literature, and standardized tests — so every round is a genuine learning opportunity, not just a random string of letters.</p>
+        <p class="text-muted">Unlimited Mode is completely free, requires no account, and works on any device. Your session statistics are tracked locally so you can see how your performance changes across multiple rounds in a single sitting.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-graph-up me-2"></i>How Unlimited Practice Builds Real Fluency</h2>
+        <p class="text-muted">Language fluency is fundamentally a matter of automaticity — the ability to retrieve words quickly and accurately without conscious effort. Fluency is built through repetition, but the kind of repetition matters enormously. Passively rereading vocabulary lists produces recognition, not recall. Active retrieval practice — being forced to produce an answer — builds the kind of automatic access that fluency requires.</p>
+        <p class="text-muted">Each round of Unlimited Mode is a retrieval practice session. You are not being asked to recognize words you have seen before; you are working out which word fits a pattern of constraints. This process exercises the same cognitive mechanisms used in real reading and writing: pattern matching, phonological awareness, and semantic association. Multiple rounds in a session create the repeated retrieval cycles that strengthen these pathways most efficiently.</p>
+        <p class="text-muted">Research on deliberate practice shows that short, frequent sessions produce better skill gains than long, infrequent ones. Three or four rounds of Unlimited Mode per day — a 10 to 15 minute commitment — delivers measurably better vocabulary growth than a single long session once a week.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-lightbulb me-2"></i>Strategy Tips for Unlimited Mode</h2>
+        <p class="text-muted">Because you can play round after round, Unlimited Mode is the best place to experiment with different opening strategies and measure their effectiveness across many games. Start with a consistent opener for 10 rounds, then switch to a different opener for 10 more, and compare your average solve speed. This kind of deliberate experimentation is how the best puzzle players develop their technique.</p>
+        <p class="text-muted">High-coverage openers recommended for Unlimited Mode include <strong>CRANE</strong> (covers C, R, A, N, E), <strong>STOIC</strong> (covers S, T, O, I, C), and <strong>LYMPH</strong> (covers less common but structurally useful letters). Rotating openers keeps the challenge fresh and helps you build pattern recognition across a wider range of word structures.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/daily" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-calendar-day me-1"></i>Today's Daily Challenge</a>
+          <a href="/hard" class="btn btn-sm btn-outline-danger"><i class="bi bi-fire me-1"></i>Try Hard Mode</a>
+          <a href="/blog" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Strategy Blog</a>
+        </div>
+      </div>
+
+      {% elif mode == "easy" %}
+      <!-- ══ EASY MODE (4 LETTERS) ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-emoji-smile me-2"></i>Easy Mode — Guess the 4-Letter Word</h2>
+        <p class="text-muted">Easy Mode uses 4-letter words instead of the standard 5 letters. You still have six attempts, and the same color-coded tile system applies: green for correct position, yellow for wrong position, grey to eliminate. With one fewer letter, there are significantly fewer possible combinations — making this the ideal starting point for players new to word puzzles.</p>
+        <p class="text-muted">4-letter words in English are often among the most common and most versatile in the language. Words like <em>CALM</em>, <em>BOLD</em>, <em>RISK</em>, <em>VAST</em>, and <em>GRIM</em> are short but semantically rich. Practicing with them builds a strong foundation for vocabulary across all difficulty levels. Many players who start on Easy Mode find that regular play significantly improves their performance on the standard 5-letter game within a few weeks.</p>
+        <p class="text-muted">Easy Mode is suitable for players of all ages. It is particularly popular with younger learners (ages 8 and up), English language learners at beginner to intermediate levels, and adults returning to word puzzles after a break. There is no time pressure, no account required, and no penalty for using the Hint button when you need it.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-book me-2"></i>How Word Puzzles Help Children Build Vocabulary</h2>
+        <p class="text-muted">Research in childhood literacy consistently shows that word games accelerate vocabulary development in children aged 6 to 14. The key mechanism is active engagement: children who guess words, make mistakes, and figure out the correct answer through feedback learn those words more durably than children who are simply shown the answer. This is why word puzzles have been used as educational tools in English classrooms for decades.</p>
+        <p class="text-muted">Easy Mode's 4-letter format is calibrated to match the vocabulary range of early readers. The words are real, common, and meaningful — not nonsense strings or overly obscure terms. Playing Easy Mode alongside a child is a particularly effective learning activity because it creates opportunities for natural conversation about word meanings, spelling patterns, and letter sounds.</p>
+        <p class="text-muted">For adult learners of English as a second language, 4-letter words are also an excellent practice target. Many core English words — verbs, adjectives, and nouns that appear in everyday communication — are 4 letters long. Mastering them in Easy Mode builds the confidence and pattern recognition needed to tackle longer, more complex vocabulary.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-arrow-up-circle me-2"></i>Ready for the Next Level?</h2>
+        <p class="text-muted">Once you can consistently solve Easy Mode puzzles in 3 or fewer guesses, it is time to move up. The standard 5-letter game at <a href="/" class="text-decoration-none">WordMaster Classic</a> or <a href="/daily" class="text-decoration-none">Daily Challenge</a> uses the same mechanics but with a wider set of possible words and more complex patterns. The skills you build in Easy Mode — systematic elimination, letter frequency awareness, pattern recognition — transfer directly.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>Try the Daily Challenge</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Unlimited Practice</a>
+          <a href="/blog/word-games-children-reading" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Word Games &amp; Reading</a>
+        </div>
+      </div>
+
+      {% elif mode == "hard" %}
+      <!-- ══ HARD MODE (6 LETTERS) ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>Hard Mode — Guess the 6-Letter Word</h2>
+        <p class="text-muted">Hard Mode uses 6-letter words, giving you six attempts to find the answer. At first glance, one extra letter might not seem like much. In practice, the jump from 5 letters to 6 letters is dramatic. The number of valid English words in the 6-letter space is significantly larger, common openers cover a smaller proportion of the possible solutions, and the feedback from each guess eliminates fewer candidates. This is a genuinely difficult puzzle format.</p>
+        <p class="text-muted">6-letter words in English tend to be more specific and semantically richer than shorter words. They include many of the vocabulary items that appear on graduate-level standardized tests (GRE, GMAT, LSAT), academic English proficiency exams (IELTS band 7+, TOEFL 100+), and advanced literature. Regular play in Hard Mode is one of the most efficient ways to expand your upper-register vocabulary.</p>
+        <p class="text-muted">Hard Mode is recommended for players who can solve the standard 5-letter game in 3 or fewer guesses on a consistent basis, for competitive word puzzle enthusiasts, and for anyone preparing for vocabulary-heavy academic or professional English.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-diagram-3 me-2"></i>Advanced Strategies for 6-Letter Words</h2>
+        <p class="text-muted">The standard opening strategy for 5-letter games — a single high-coverage word like CRANE — is insufficient for 6-letter puzzles. With 6 positions to fill, you need to plan your first two guesses as a pair rather than relying on one opener to do all the work. Two complementary 6-letter openers that together cover 10 or more unique common letters give you a much stronger foundation for your third guess.</p>
+        <p class="text-muted">Strong paired openers for Hard Mode include <strong>STRAIN</strong> + <strong>COUPLE</strong> (covers S, T, R, A, I, N, C, O, U, L, E — 11 of the most common English letters) or <strong>FORCED</strong> + <strong>PLINTH</strong> (covers F, O, R, C, E, D, P, L, I, N, T, H). After two guesses, you should have enough confirmed and eliminated letters to make informed deductions for your remaining four attempts.</p>
+        <p class="text-muted">Pay particular attention to common 6-letter suffixes: <em>-TION</em>, <em>-NESS</em>, <em>-MENT</em>, <em>-ICAL</em>, <em>-ABLE</em>. If your second guess confirms two or three of these letters in the right positions, you can often work backward to identify the root. This morphological awareness — recognizing word parts — is a skill that pays dividends far beyond word puzzles, improving reading comprehension and vocabulary acquisition across all domains.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-trophy me-2"></i>Who Plays Hard Mode — and Why</h2>
+        <p class="text-muted">Hard Mode attracts a particular kind of player: those who find the standard puzzle too easy after a few weeks of regular play, those who are specifically studying for vocabulary-heavy exams, and competitive puzzle enthusiasts who track their solve speed and guess count across hundreds of rounds. If you fall into any of these groups, Hard Mode will give you a challenge that grows with your skill rather than becoming predictable.</p>
+        <p class="text-muted">If you find Hard Mode too difficult at first, consider alternating between it and <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a> (5 letters). Using Unlimited Mode as a warm-up before attempting the 6-letter puzzle is a common strategy among experienced players. The increased difficulty is not a wall — it is a gradient that rewards persistence.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Warm Up — Unlimited</a>
+          <a href="/daily" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+          <a href="/blog/pattern-recognition-word-games" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Pattern Recognition Guide</a>
+        </div>
+      </div>
+
+      {% elif mode == "category_animals" %}
+      <!-- ══ CATEGORY: ANIMALS ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-tag me-2"></i>Animals Word Mode — Focused Vocabulary Practice</h2>
+        <p class="text-muted">The Animals category mode uses only animal-related words: species names, creature types, and zoological terms that appear in nature writing, science education, and everyday English. Every word you guess in this mode is part of a thematically connected vocabulary set — which means each session builds on itself in a way that random word selection cannot replicate.</p>
+        <p class="text-muted">Themed vocabulary learning is significantly more effective than random word exposure. When words share a semantic field (in this case, the animal kingdom), they reinforce each other through association. Learning the word <em>BISON</em> alongside <em>MOOSE</em>, <em>OTTER</em>, and <em>CRANE</em> creates a network of connected memories rather than isolated entries. This networked structure is much easier for the brain to retrieve and build upon.</p>
+        <p class="text-muted">The Animals word set includes common species (<em>EAGLE</em>, <em>SHARK</em>, <em>COBRA</em>), habitat terms (<em>MARSH</em>, <em>GRAZE</em>), and behavioral vocabulary that appears in nature documentaries, wildlife journalism, and primary school science curricula. It is well-suited to ESL learners building topical vocabulary, primary and secondary students, and anyone preparing for English exams that include nature and environment topics.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-mortarboard me-2"></i>Why Thematic Word Learning Works for ESL Students</h2>
+        <p class="text-muted">Research in second-language acquisition consistently shows that learners who study vocabulary in thematic clusters outperform those who study random word lists. The reason is cognitive: when new words are grouped by topic, learners can use the meaning of known words in the cluster as anchors for unknown ones. Knowing that <em>HERON</em>, <em>EGRET</em>, and <em>CRANE</em> are all wading birds makes each word easier to remember because the category itself serves as a retrieval cue.</p>
+        <p class="text-muted">For English language learners at intermediate and upper-intermediate levels (CEFR B1–B2, IELTS 5.0–6.5), animal vocabulary is a high-value target. Animals appear in reading passages, listening tasks, and writing prompts across all major English proficiency exams. Building fluency with animal terminology in the engaging format of a word puzzle is more efficient than memorizing lists — and considerably more enjoyable.</p>
+        <p class="text-muted">Teachers and parents can use Animals Mode as a classroom or homework activity. The game format is low-pressure, self-paced, and immediately rewarding: students know whether their guess is right or wrong within seconds, which provides the rapid feedback loop that accelerates vocabulary acquisition.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-arrow-right-circle me-2"></i>More Ways to Learn</h2>
+        <p class="text-muted">After practicing with Animals vocabulary, expand your thematic learning with the <a href="/category/food" class="text-decoration-none">Food category</a> for culinary and nutrition vocabulary, or challenge yourself with the full vocabulary range in <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a>. The <a href="/blog" class="text-decoration-none">Vocabulary Blog</a> has in-depth guides on using word games for ESL learning and exam preparation.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/category/food" class="btn btn-sm btn-outline-success"><i class="bi bi-tag me-1"></i>🍕 Food Category</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-primary"><i class="bi bi-infinity me-1"></i>Unlimited Mode</a>
+          <a href="/blog" class="btn btn-sm btn-outline-secondary"><i class="bi bi-book me-1"></i>Vocabulary Blog</a>
+        </div>
+      </div>
+
+      {% elif mode == "category_food" %}
+      <!-- ══ CATEGORY: FOOD ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-tag me-2"></i>Food Word Mode — Culinary Vocabulary Practice</h2>
+        <p class="text-muted">The Food category mode focuses exclusively on food-related vocabulary: ingredient names, cooking terms, culinary techniques, and meal types that appear in recipes, restaurant menus, food journalism, and everyday English conversation. Every word you guess is connected to the world of food and cooking, giving each session a clear thematic focus that reinforces vocabulary through association.</p>
+        <p class="text-muted">Food vocabulary is one of the most practical and frequently used topic areas in English. Whether you are reading a recipe, ordering at a restaurant, following a cooking show, or writing about nutrition, culinary English is constantly in use. Mastering terms like <em>BROTH</em>, <em>GLAZE</em>, <em>SPICE</em>, <em>CREAM</em>, and <em>BRAISE</em> is immediately applicable in real-world contexts — making Food Mode both educationally valuable and genuinely useful.</p>
+        <p class="text-muted">The word set covers a broad range of culinary vocabulary: basic ingredients, cooking methods (sauté, broil, poach), texture and flavor descriptors, and food-related nouns that appear in English-language media. It is suitable for intermediate English learners, hospitality and culinary students, and anyone who wants to build confidence with food-related English.</p>
+      </div>
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-chat-quote me-2"></i>Food English: Why It Matters for Language Learners</h2>
+        <p class="text-muted">For English language learners, food vocabulary sits at the intersection of two critical skill areas: practical everyday communication and cultural competence. English speakers discuss food constantly — in social settings, professional environments, media, and travel. A learner who commands food vocabulary can participate more naturally in English conversations, understand a wider range of texts, and navigate English-language environments with greater confidence.</p>
+        <p class="text-muted">Food vocabulary also provides an excellent entry point into the structural patterns of English adjectives. Many food descriptors — <em>crisp</em>, <em>tangy</em>, <em>savory</em>, <em>tender</em>, <em>zesty</em> — transfer directly to other descriptive contexts. A learner who knows these words for food can apply the same adjective vocabulary to describe textures, flavors, and qualities in completely different topics, multiplying the value of each word learned.</p>
+        <p class="text-muted">For culinary school students, food service professionals, and anyone working in the hospitality industry, English culinary terminology is a professional necessity. Food Mode provides a low-pressure way to practice and reinforce this specialist vocabulary through repeated engagement with real English words in a puzzle format.</p>
+      </div>
+      <div class="mb-4">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-arrow-right-circle me-2"></i>Expand Your Vocabulary Further</h2>
+        <p class="text-muted">After mastering the Food word set, explore <a href="/category/animals" class="text-decoration-none">Animals Mode</a> for nature and wildlife vocabulary, or step up to <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a> for a broader range of English vocabulary across all topics. The <a href="/blog" class="text-decoration-none">Vocabulary Blog</a> includes guides on business English, Greek and Latin word roots, and strategies for building a lasting vocabulary habit.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/category/animals" class="btn btn-sm btn-outline-success"><i class="bi bi-tag me-1"></i>🐾 Animals Category</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-primary"><i class="bi bi-infinity me-1"></i>Unlimited Mode</a>
+          <a href="/blog" class="btn btn-sm btn-outline-secondary"><i class="bi bi-book me-1"></i>Vocabulary Blog</a>
+        </div>
+      </div>
+
+      {% else %}
+      <!-- ══ FALLBACK (unknown category) ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-controller me-2"></i>About This Word Mode</h2>
+        <p class="text-muted">You are playing a themed category mode in WordMaster. Each category mode uses a focused set of vocabulary words connected by a common theme, giving you targeted practice in a specific area of English vocabulary.</p>
+        <p class="text-muted">Use the same tile-feedback strategy as the standard game: start with a high-coverage word to eliminate common letters, then use the colored tile results to narrow down the remaining possibilities. The color-coding works identically across all modes — green for correct position, yellow for wrong position, grey to eliminate.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Unlimited Mode</a>
+          <a href="/blog" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Vocabulary Blog</a>
+        </div>
+      </div>
+      {% endif %}
 
     </div>
   </div>
