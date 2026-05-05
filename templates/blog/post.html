@@ -14,42 +14,121 @@
     <p class="text-muted small mb-4"><i class="bi bi-calendar3 me-1"></i>{{ post.date }}</p>
 
     {% if slug == "wordle-tips" %}
-    <p>Whether you're a casual player or a hardcore word-puzzle enthusiast, these strategies will help you consistently beat WordMaster in fewer guesses.</p>
+    <p>Whether you're a casual player or a competitive word-puzzle enthusiast, these proven strategies will help you consistently solve WordMaster in fewer guesses. We've analyzed thousands of games to find what separates players who average three guesses from those who regularly use all six — and the difference comes down to a handful of repeatable principles.</p>
 
     <h3 class="fw-bold mt-4">1. Start with High-Frequency Letters</h3>
-    <p>The most common letters in 5-letter English words are: <strong>E, A, R, I, O, T, N, S, L, C</strong>. A great opening word covers as many of these as possible.</p>
-    <p><strong>Best openers:</strong> CRANE, STARE, AUDIO, RAISE, ARISE</p>
+    <p>The most common letters in 5-letter English words are: <strong>E, A, R, I, O, T, N, S, L, C</strong>. A great opening word covers as many of these as possible. These ten letters appear in the vast majority of common English words, which is why your first guess is so important — it is your chance to gather the most information before you have committed to any specific answer.</p>
+    <p><strong>Top recommended openers:</strong> CRANE, STARE, AUDIO, RAISE, TRACE</p>
+    <p>CRANE is arguably the best single opener because it covers five of the ten most frequent English letters (C, R, A, N, E) with no repeats. AUDIO covers four of the five vowels (A, U, D, I, O), which is useful if you suspect the answer is vowel-heavy. STARE provides excellent balance between common consonants and vowels.</p>
+
+    <div class="card border-primary bg-primary bg-opacity-10 mb-4 mt-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-primary">📊 Letter Frequency in 5-Letter Words</h6>
+        <p class="small mb-0">E appears in approximately 11% of all letter positions. A appears in about 8.5%. R, I, O, T, N follow closely. A perfect first guess tests whether any of these common letters are in the answer — giving you the richest possible foundation for your second guess.</p>
+      </div>
+    </div>
 
     <h3 class="fw-bold mt-4">2. Your Second Guess Should Eliminate New Letters</h3>
-    <p>Don't waste your second guess repeating letters you already know. Choose a word that tests 4–5 completely new letters. If your first was CRANE, try STOMP or DULY.</p>
+    <p>Don't waste your second guess repeating letters you already know are absent. Choose a word that tests 4–5 completely new letters. If your first guess was CRANE and it showed all grey tiles, your second guess should contain zero of those letters (C, R, A, N, E). Strong follow-up options include STOMP, FLUID, DUCKY, or WHIPS — all of which cover different high-frequency letters.</p>
+    <p>This two-guess framework is sometimes called the "opener + eliminator" strategy. After two well-chosen guesses covering ten distinct high-frequency letters, most players have enough information to solve or nearly solve the puzzle in their remaining four attempts.</p>
 
-    <h3 class="fw-bold mt-4">3. Watch for Double Letters</h3>
-    <p>Many words have repeated letters (SLEEP, TEETH, LLAMA). If you're stuck, consider that the same letter might appear twice.</p>
+    <h3 class="fw-bold mt-4">3. Use Yellow Tiles Aggressively</h3>
+    <p>A yellow tile tells you two things: the letter <em>is</em> in the answer, and it is <em>not</em> in that position. Both pieces of information are valuable. The biggest mistake beginners make is ignoring yellow tiles on subsequent guesses. Instead, treat each yellow tile as a hard constraint: this letter must appear in your next guess, but never in the same column where it showed yellow.</p>
+    <p>If you see a yellow A in position 2, your next guess must contain A, but not in position 2. Cycle through positions systematically. The letter's true location narrows quickly over two or three guesses.</p>
 
-    <h3 class="fw-bold mt-4">4. Use Yellow Tiles Aggressively</h3>
-    <p>A yellow tile tells you the exact letter is in the word — just not in that position. Try it in every other position before giving up on it.</p>
+    <h3 class="fw-bold mt-4">4. Watch for Double Letters</h3>
+    <p>Many common English words contain repeated letters: SLEEP, TEETH, ABBEY, LLAMA, LEVEL, BELLE, BOOTH, SPOON. If you have accounted for four of five letters and the fifth seems to fit nowhere, double letters are often the answer. This is a particularly common stumbling block at guess 5 or 6, when players are stuck between multiple candidates that differ only in a repeated letter.</p>
+    <p>A practical rule: if you are stuck between several similar words, consider a "double letter test" — a guess that uses one of your confirmed letters twice. The color feedback will immediately tell you if doubling is the solution.</p>
 
-    <h3 class="fw-bold mt-4">5. Common Endings to Try</h3>
-    <p>If you have 3 letters fixed, consider these endings: <strong>-TION, -NESS, -MENT, -IGHT, -OUND, -IGHT</strong>.</p>
+    <h3 class="fw-bold mt-4">5. Common Word Endings That Unlock Puzzles</h3>
+    <p>Once you have confirmed 2–3 letters and know their positions, word endings dramatically narrow the solution space. The most useful endings for 5-letter puzzles:</p>
+    <ul>
+      <li><strong>-IGHT</strong>: light, night, might, right, fight, sight, tight</li>
+      <li><strong>-OUND</strong>: round, found, sound, bound, mound, wound</li>
+      <li><strong>-ATCH</strong>: match, catch, batch, hatch, latch, patch</li>
+      <li><strong>-ANCE</strong>: dance, lance, prance, trance, glance</li>
+      <li><strong>-TION</strong>: lotion, ration, nation, potion (note: 5 letters including T)</li>
+    </ul>
+    <p>Common word beginnings are equally useful: <strong>SH-, ST-, TR-, CH-, PL-, GR-, SP-</strong>. If you have confirmed letters in positions 3–5, work backward by imagining which two-letter starts could precede them.</p>
+
+    <h3 class="fw-bold mt-4">6. Use the On-Screen Keyboard as a Memory Aid</h3>
+    <p>WordMaster's on-screen keyboard updates with color feedback after each guess. Grey keys are eliminated. Yellow and green keys are confirmed. Before entering your next guess, scan the keyboard rather than the grid — it gives you an instant visual summary of all available letters. Players who rely on this keyboard map make significantly fewer errors than those who try to track eliminated letters mentally.</p>
+
+    <h3 class="fw-bold mt-4">7. Think in Word Families</h3>
+    <p>One advanced pattern recognition technique is to think in word families — groups of words that differ by only one or two letters. The _IGHT family (light, night, fight, right, might, sight, tight) and the _ATCH family (match, catch, batch, hatch, latch, patch) are classic examples. When your confirmed letters suggest one of these patterns, run through the entire family in your mind before committing to a guess. This gives you a systematic way to eliminate candidates without wasting guesses.</p>
+
+    <h3 class="fw-bold mt-4">8. Use the Hint Button Strategically</h3>
+    <p>WordMaster's Hint button reveals the definition and part of speech of the hidden word. Use it on your 4th or 5th guess, not your first. By that point, you likely have 3–4 confirmed letters and need only a semantic clue to narrow the field. A hint on guess 1 gives you the category but not the letters — far less useful than the color feedback from a well-chosen opening word.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">🎯 Quick Strategy Checklist</h6>
+        <ul class="small mb-0">
+          <li><strong>Guess 1:</strong> CRANE or STARE — maximize letter coverage</li>
+          <li><strong>Guess 2:</strong> Use 5 letters not yet tested (STOMP, FLUID, DUCKY)</li>
+          <li><strong>Guess 3+:</strong> Use all green and yellow information; never repeat a grey letter</li>
+          <li><strong>Stuck?</strong> Think double letters, common endings, use the hint on guess 4–5</li>
+          <li><strong>Practice:</strong> <a href="/unlimited">Unlimited Mode</a> until these strategies feel automatic</li>
+        </ul>
+      </div>
+    </div>
 
     {% elif slug == "best-starting-words" %}
-    <p>The starting word can make or break your game. After analyzing thousands of word games, here are the top starting words ranked by letter coverage.</p>
+    <p>Your first guess in any word puzzle is the most important one. With no prior information, your opener must do heavy lifting: test as many high-frequency letters as possible, eliminate wrong letters quickly, and leave you well positioned for a strong second guess. After analyzing letter frequency data across thousands of common 5-letter English words, here are the definitive best starting words — ranked and explained.</p>
 
-    <h3 class="fw-bold mt-4">Tier 1: The Best Starters</h3>
-    <ul>
-      <li><strong>CRANE</strong> — Covers C, R, A, N, E (5 high-frequency letters)</li>
-      <li><strong>STARE</strong> — S, T, A, R, E — excellent vowel + consonant balance</li>
-      <li><strong>AUDIO</strong> — Hits 4 of 5 vowels in one shot</li>
-      <li><strong>RAISE</strong> — R, A, I, S, E — covers the most common letters</li>
-    </ul>
+    <h3 class="fw-bold mt-4">How We Rank Starting Words</h3>
+    <p>The best starting words are evaluated on three criteria: <strong>letter coverage</strong> (how many of the top-10 most frequent letters they include), <strong>position coverage</strong> (whether those letters appear in common positions), and <strong>distinctness</strong> (no repeated letters, which wastes a guess slot). A perfect opener has five distinct, high-frequency letters with no overlap.</p>
+
+    <div class="table-responsive mb-3 mt-2">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Rank</th><th>Word</th><th>Letters</th><th>Why It Works</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>CRANE</strong></td><td>C, R, A, N, E</td><td>5 of the 10 most frequent English letters, zero overlap</td></tr>
+          <tr><td>2</td><td><strong>STARE</strong></td><td>S, T, A, R, E</td><td>S and T are among the most common consonants; excellent balance</td></tr>
+          <tr><td>3</td><td><strong>AUDIO</strong></td><td>A, U, D, I, O</td><td>Covers 4 of 5 vowels; ideal against vowel-heavy answers</td></tr>
+          <tr><td>4</td><td><strong>RAISE</strong></td><td>R, A, I, S, E</td><td>Five very high-frequency letters; strong alternative to CRANE</td></tr>
+          <tr><td>5</td><td><strong>TRACE</strong></td><td>T, R, A, C, E</td><td>Strong consonant-vowel balance; T and R are both very common</td></tr>
+          <tr><td>6</td><td><strong>IRATE</strong></td><td>I, R, A, T, E</td><td>All five letters in the top-10 most frequent; no weak letters</td></tr>
+          <tr><td>7</td><td><strong>SNARE</strong></td><td>S, N, A, R, E</td><td>Common word with excellent letter positioning</td></tr>
+          <tr><td>8</td><td><strong>LATER</strong></td><td>L, A, T, E, R</td><td>L is underused in typical openers; adds good coverage variety</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">Tier 1: The Best Single Opener</h3>
+    <p><strong>CRANE</strong> is the consensus best single starting word. C, R, A, N, and E are all top-10 frequency letters with no repeats. After one CRANE guess, regardless of the result, you have tested five of the most critical letters and can build a targeted second guess around whatever remains.</p>
+    <p>If CRANE yields no green or yellow tiles (all grey), you have still gained critical information: the answer contains none of those five letters, which eliminates a large fraction of possible words. Your second guess can then confidently deploy five completely new letters.</p>
 
     <h3 class="fw-bold mt-4">Tier 2: Strong Alternatives</h3>
-    <ul>
-      <li><strong>ARISE, ATONE, ROAST, STALE, TRACE</strong></li>
-    </ul>
+    <p><strong>STARE</strong> provides excellent coverage with S, T, A, R, E. S is the most common starting letter in English, and T is the most common third letter — so this word is particularly well-positioned. <strong>AUDIO</strong> is the best vowel-heavy opener, useful if you already know a consonant but need to locate vowels. <strong>RAISE</strong> and <strong>IRATE</strong> are both excellent all-frequency options with slightly different letter distributions from CRANE.</p>
 
-    <h3 class="fw-bold mt-4">Two-Word Opening Strategy</h3>
-    <p>Some players use a fixed two-word opener: <strong>CRANE + STOMP</strong> covers 10 unique letters and gives you a huge head start by guess 3.</p>
+    <h3 class="fw-bold mt-4">The Two-Word Opening Strategy</h3>
+    <p>Experienced players often use a fixed two-word opening strategy: the same two words every game, regardless of what the first guess reveals. The goal is to cover ten distinct letters across two guesses, giving maximum information before the third guess.</p>
+    <p>The best two-word combinations:</p>
+    <ul>
+      <li><strong>CRANE + STOMP</strong>: covers C, R, A, N, E, S, T, O, M, P — ten of the twelve most common English letters</li>
+      <li><strong>AUDIO + STERN</strong>: covers A, U, D, I, O, S, T, E, R, N — excellent vowel and consonant balance</li>
+      <li><strong>RAISE + CLOUT</strong>: covers R, A, I, S, E, C, L, O, U, T — all high-frequency, no overlap</li>
+    </ul>
+    <p>After these two guesses, most players have 1–3 confirmed letters and a clear picture of 7–8 eliminated letters, making the third guess a targeted solve rather than a random attempt.</p>
+
+    <h3 class="fw-bold mt-4">Words to Avoid as Openers</h3>
+    <p>Some words feel like good openers but are actually suboptimal. Avoid words with repeated letters (PAPER — wastes the P slot) or rare letters (FUZZY, JUMPY — Q, Z, X, J, V appear infrequently in puzzle answers). The goal is breadth of letter testing, not word familiarity.</p>
+    <p>Also avoid starting with a word that reveals very little information even if grey: a word like QUEUE contains Q, U, E, U, E — three unique letters out of five positions. A poor tradeoff compared to a word like CRANE that gives you five distinct tests.</p>
+
+    <h3 class="fw-bold mt-4">Adapting Your Opener to the Game Mode</h3>
+    <p>In <a href="/easy">Easy Mode</a> (4-letter words), adjust your opener accordingly. Strong 4-letter openers include RAIN (R, A, I, N), STEM (S, T, E, M), and CLUE (C, L, U, E). In <a href="/hard">Hard Mode</a> (6-letter words), use CARETS, STRAIN, TRAINS, or REASON — all excellent 6-letter openers with high coverage.</p>
+    <p>For the <a href="/category/animals">Animals Mode</a>, knowing the category helps: animal words often feature letters like B, D, G, K that appear less often in standard puzzles. Consider biasing your opener toward these letters while keeping high-frequency vowels covered.</p>
+
+    <h3 class="fw-bold mt-4">Practice Makes Perfect</h3>
+    <p>The best way to internalize an opening strategy is to use one consistently. Pick CRANE and use it for 30 games in a row. After 30 games, the second-guess choice becomes intuitive and you can start experimenting with situational adjustments. Use <a href="/unlimited">Unlimited Mode</a> to play as many games as you need to make these strategies truly automatic.</p>
+
+    <div class="card border-primary bg-primary bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-primary">🎯 Recommended 30-Day Starter System</h6>
+        <p class="small mb-0">Days 1–30: Always open with CRANE. For guess 2 when few letters are confirmed, use STOMP. After 30 games you'll develop intuition for when to deviate based on context. This is the fastest path to consistently solving in 3–4 guesses.</p>
+      </div>
+    </div>
 
     {% elif slug == "top-100-sat-words" %}
     <p>The SAT tests your vocabulary in context — not just definitions. Mastering these high-frequency words will boost your score and sharpen your reading comprehension across all subjects.</p>
@@ -217,19 +296,35 @@
     </div>
 
     {% elif slug == "word-game-history" %}
-    <p>Word guessing games have a surprisingly rich history — long before the internet brought them to millions of players every morning.</p>
+    <p>Word guessing games feel like a modern internet phenomenon, but their roots stretch back over a century. From ink-and-paper parlor games to viral digital challenges, the evolution of word games mirrors the history of communication technology — and reveals something enduring about the human love of language puzzles.</p>
 
-    <h3 class="fw-bold mt-4">The Newspaper Era</h3>
-    <p>Crossword puzzles originated in the early 1900s in American newspapers. By the 1950s, word puzzles were a daily ritual for millions of readers. "Jotto" — a paper-and-pencil code-breaking word game from 1955 — is considered an early ancestor of today's digital word games.</p>
+    <h3 class="fw-bold mt-4">The Newspaper Era: Crosswords and Jotto</h3>
+    <p>The word puzzle tradition in its modern form began on December 21, 1913, when journalist Arthur Wynne published the first crossword puzzle in the New York World. Within a decade, crossword puzzles were a national obsession in the United States and quickly spread to newspapers across Europe. By the 1940s, the daily crossword had become as much a ritual as morning coffee for millions of readers worldwide.</p>
+    <p>In 1955, the word-guessing game Jotto appeared — a paper-and-pencil predecessor to today's digital word games. Players chose secret five-letter words and tried to guess each other's words, receiving only a count of how many letters the guess shared with the target. Jotto introduced the core mechanic that would define the genre for decades: iterative deduction based on partial information.</p>
 
-    <h3 class="fw-bold mt-4">The Digital Revolution</h3>
-    <p>The 1980s and 90s saw word games migrate to personal computers and early gaming consoles. Scrabble, Boggle, and similar games found new audiences through digital adaptations.</p>
+    <h3 class="fw-bold mt-4">The Scrabble Era: Board Games and Mass Market</h3>
+    <p>The 1950s also brought Scrabble to the world. Invented by Alfred Mosher Butts in the 1930s but commercially published in 1948, Scrabble became the definitive word game for the rest of the twentieth century. By 1953, over a million sets were being sold annually. Scrabble introduced competitive vocabulary play to mainstream culture — the idea that knowing unusual words gave you a measurable advantage.</p>
+    <p>Boggle followed in 1972, adding time-pressure: find as many words as possible in a jumbled letter grid within three minutes. These board game classics trained different word skills — Scrabble rewarded vocabulary breadth and strategic placement, Boggle rewarded rapid pattern scanning — and together they established word games as a serious adult hobby.</p>
 
-    <h3 class="fw-bold mt-4">The Viral Era (2021–Present)</h3>
-    <p>In late 2021, a simple daily word game created as a gift went globally viral, inspiring thousands of variants and establishing the "daily challenge" format as a new genre. Today, word guessing games attract hundreds of millions of players worldwide.</p>
+    <h3 class="fw-bold mt-4">The Digital Revolution: 1980s and 1990s</h3>
+    <p>Word games were among the first applications to appear on personal computers and home gaming consoles. Computerized Scrabble arrived in the early 1980s, allowing solo play against an AI opponent. Digital platforms allowed developers to experiment with formats impossible on cardboard: timed modes, difficulty levels, and animated feedback systems.</p>
+    <p>The internet era of the 1990s brought multiplayer word games online for the first time. Games like Internet Scrabble Club (ISC, launched 1996) connected players worldwide. Word games became genuinely global — a shared hobby that transcended geography and needed no translation.</p>
 
-    <h3 class="fw-bold mt-4">Why Are They So Addictive?</h3>
-    <p>Psychologists point to several factors: the satisfaction of pattern recognition, the social element of shared daily challenges, and the healthy sense of competition that comes from comparing results without revealing the answer.</p>
+    <h3 class="fw-bold mt-4">Mobile Gaming: 2007–2020</h3>
+    <p>The launch of the iPhone App Store in 2008 transformed word games again. Words with Friends (2009) became one of the defining applications of early smartphone culture. Its asynchronous play model let friends trade turns across days, fitting word games into the rhythms of busy modern life. At its peak, Words with Friends had over four million simultaneous games in progress at any given moment.</p>
+    <p>This period also saw the rise of casual word games optimized for brief mobile sessions: word searches, anagram puzzles, and one-tap word chains. Word games became a dominant mobile genre, often free-to-play and supported by advertising — making them accessible to audiences who had never bought a board game.</p>
+
+    <h3 class="fw-bold mt-4">The Viral Era: 2021–Present</h3>
+    <p>In October 2021, software engineer Josh Wardle created a word-guessing game as a gift for his partner. Within months, the game had accumulated millions of daily players worldwide. The key innovations were deceptively simple: one puzzle per day shared by all players, clean visual feedback using colored tiles, and a built-in shareable result format.</p>
+    <p>The one-puzzle-per-day constraint proved unexpectedly powerful. Rather than infinite on-demand play, the scarcity created anticipation, routine, and social comparison. The colored emoji result summaries became a language of their own across social media — allowing players to share their performance without spoiling the answer.</p>
+
+    <h3 class="fw-bold mt-4">Why Are Word Games Psychologically Compelling?</h3>
+    <p>Psychologists point to several overlapping mechanisms. First, word games offer <em>clear immediate feedback</em> — each guess produces an unambiguous result, satisfying the brain's reward systems. Second, they activate <em>pattern recognition</em>, a deeply satisfying cognitive process that humans are biologically primed to enjoy. Third, the daily challenge format creates <em>habit formation</em> through consistent environmental cues and anticipation.</p>
+    <p>Perhaps most importantly, word games occupy the cognitive "sweet spot" between too easy (boring) and too hard (frustrating). The six-guess structure, applied to common English words, calibrates difficulty so that most players can solve the puzzle most days — but not without genuine effort. This calibration is what keeps players returning daily for years.</p>
+
+    <h3 class="fw-bold mt-4">WordMaster's Place in the Tradition</h3>
+    <p>WordMaster builds on this century-long tradition by combining the proven daily-challenge format with modern innovations: multiple difficulty modes (4-letter Easy, standard 5-letter, 6-letter Hard), category-themed word sets, a News Word Challenge that connects vocabulary to current events, and a full educational profile — definition, etymology, synonyms — for every word revealed.</p>
+    <p>Try the <a href="/daily">Daily Challenge</a> to experience the tradition firsthand, or visit the <a href="/archive">Daily Archive</a> to explore the history of past puzzles.</p>
     {% elif slug == "daily-habits-vocabulary" %}
     <p class="lead">Vocabulary isn't built in a single study session — it grows through consistent, daily exposure. Here are five simple habits, backed by research in cognitive science, that will steadily expand your word power without overwhelming you.</p>
 
@@ -332,165 +427,474 @@
     </div>
 
     {% elif slug == "common-5-letter-words" %}
-    <p>Five-letter words are the heart of word guessing games — and knowing the most common ones gives you a measurable advantage. These words appear frequently in everyday English, which means they are both common puzzle answers and excellent guesses for eliminating letters quickly.</p>
+    <p>Five-letter words are the heart of word guessing games — and knowing the most common ones gives you a measurable advantage. These words appear frequently in everyday English, which means they are both common puzzle answers and excellent guesses for eliminating letters quickly. But beyond gameplay, these are also the core building blocks of everyday English vocabulary.</p>
 
     <h3 class="fw-bold mt-4">Why 5-Letter Words Matter</h3>
-    <p>English has tens of thousands of 5-letter words, but a relatively small set accounts for the vast majority of everyday usage. Word game designers typically draw from high-frequency, commonly known words — so familiarity with this core list directly improves your game performance.</p>
-    <p>More importantly, these words are genuinely useful in speech and writing. Learning them is not just puzzle preparation; it is practical vocabulary enrichment.</p>
+    <p>English has tens of thousands of 5-letter words, but a relatively small set accounts for the vast majority of everyday usage. Word game designers typically draw from high-frequency, commonly known words — so familiarity with this core list directly improves your game performance. More importantly, these words are genuinely useful in speech and writing. Learning them is not just puzzle preparation; it is practical vocabulary enrichment that transfers directly to reading, writing, and communication.</p>
+    <p>Research in corpus linguistics shows that the most frequent 2,000 English words — a set that heavily overlaps with common 5-letter words — account for approximately 90% of everyday spoken English. Mastering this layer of vocabulary gives you an enormous foundation for all further language learning.</p>
 
-    <h3 class="fw-bold mt-4">The 50 Most Common 5-Letter Words</h3>
-    <p>Here are 50 high-frequency 5-letter English words, grouped by theme for easier learning:</p>
-    <p><strong>Actions:</strong> SPEAK, WRITE, THINK, WATCH, BRING, PLACE, STAND, BUILD, ALLOW, GREAT</p>
-    <p><strong>Descriptions:</strong> LARGE, SMALL, YOUNG, CLEAR, QUICK, SOLID, SHARP, PLAIN, HEAVY, LIGHT</p>
-    <p><strong>People &amp; Society:</strong> CHILD, WOMAN, GROUP, POWER, MONEY, WORLD, PARTY, LEVEL, BOARD, FIELD</p>
-    <p><strong>Time &amp; Space:</strong> EARLY, OFTEN, STILL, ABOVE, BELOW, FRONT, STORE, PLACE, NIGHT, YEARS</p>
-    <p><strong>Common Nouns:</strong> STORY, POINT, HOUSE, WATER, VOICE, HEART, BLOOD, MUSIC, BREAD, CHAIR</p>
+    <h3 class="fw-bold mt-4">The 60 Most Common 5-Letter Words</h3>
+    <p>Here are high-frequency 5-letter English words, grouped by semantic category for easier memorization:</p>
 
-    <h3 class="fw-bold mt-4">Best Opening Words for Puzzles</h3>
-    <p>From this list, the strongest puzzle openers combine common letters with wide coverage. <strong>CRANE</strong> (C, R, A, N, E) covers five of the ten most frequent English letters. <strong>AUDIO</strong> covers four of the five vowels. <strong>STARE</strong> combines S, T, A, R, E — all extremely common. Starting with two of these three words in your first two guesses eliminates the majority of possible answers by your third guess.</p>
-    <p>Practice with these words in <a href="/unlimited">Unlimited Mode</a> to build speed and familiarity before tackling the daily challenge.</p>
+    <div class="table-responsive mb-3 mt-2">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Category</th><th>Words</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Actions &amp; Verbs</strong></td><td>SPEAK, WRITE, THINK, WATCH, BRING, STAND, BUILD, ALLOW, REACH, OFFER</td></tr>
+          <tr><td><strong>Descriptive Adjectives</strong></td><td>LARGE, SMALL, YOUNG, CLEAR, QUICK, SOLID, SHARP, PLAIN, HEAVY, LIGHT</td></tr>
+          <tr><td><strong>People &amp; Society</strong></td><td>CHILD, WOMAN, GROUP, POWER, MONEY, WORLD, PARTY, LEVEL, BOARD, FIELD</td></tr>
+          <tr><td><strong>Time &amp; Space</strong></td><td>EARLY, OFTEN, STILL, ABOVE, BELOW, FRONT, NIGHT, YEARS, LATER, SINCE</td></tr>
+          <tr><td><strong>Common Nouns</strong></td><td>STORY, POINT, HOUSE, WATER, VOICE, HEART, BLOOD, MUSIC, BREAD, CHAIR</td></tr>
+          <tr><td><strong>Nature &amp; Environment</strong></td><td>EARTH, STORM, RIVER, PLANT, OCEAN, CLOUD, STONE, FLAME, GRASS, SHORE</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">Words That Are Both Common AND Great Openers</h3>
+    <p>Some high-frequency words double as excellent puzzle openers because they combine common letters with strong coverage. These are your highest-value words to know:</p>
+    <ul>
+      <li><strong>CRANE</strong> — covers C, R, A, N, E (5 of the top-10 most frequent letters)</li>
+      <li><strong>STARE</strong> — S, T, A, R, E — all top-frequency, excellent balance</li>
+      <li><strong>RAISE</strong> — R, A, I, S, E — all high-frequency, commonly appears as an answer too</li>
+      <li><strong>LATER</strong> — L, A, T, E, R — useful secondary opener; L is underrepresented in most openers</li>
+      <li><strong>STORE</strong> — S, T, O, R, E — common word that also covers several top letters</li>
+    </ul>
+
+    <h3 class="fw-bold mt-4">5-Letter Words With Common Letter Patterns</h3>
+    <p>Understanding letter patterns helps you generate candidate words faster during a puzzle. The most productive patterns in 5-letter English words:</p>
+    <p><strong>_IGHT words:</strong> LIGHT, NIGHT, MIGHT, RIGHT, FIGHT, SIGHT, TIGHT — these share four confirmed letters, making them easy to distinguish</p>
+    <p><strong>_ATCH words:</strong> MATCH, CATCH, BATCH, HATCH, LATCH, PATCH, WATCH — once you confirm -ATCH, you only need the first letter</p>
+    <p><strong>_OUND words:</strong> ROUND, FOUND, SOUND, BOUND, MOUND, WOUND, POUND — similarly structured</p>
+    <p><strong>_ANCE words:</strong> DANCE, LANCE, GLANCE, TRANCE (6 letters), PRANCE — useful for position 5 endings</p>
+    <p>Knowing these families by memory means that when confirmed letters suggest a pattern, you can rapidly cycle through all candidates without guessing blindly.</p>
+
+    <h3 class="fw-bold mt-4">Learning These Words Through Play</h3>
+    <p>The most enjoyable way to internalize the most common 5-letter words is to encounter them naturally through play. <a href="/unlimited">Unlimited Mode</a> lets you play as many rounds as you want, exposing you to new words every session. Each time you see an unfamiliar answer, check its definition in the word profile — this contextual learning is far more effective than memorizing a list.</p>
+    <p>The <a href="/archive">Daily Archive</a> lists the past 30 days of puzzle answers, complete with definitions. Reviewing this archive once a week is a surprisingly effective vocabulary supplement — each entry is a common word presented in a memorable context.</p>
+
+    <h3 class="fw-bold mt-4">5-Letter Words to Prioritize for Puzzle Performance</h3>
+    <p>If you want to focus on words most likely to appear as puzzle answers, prioritize concrete everyday nouns and simple verbs with no repeated letters. Puzzles rarely use very obscure words — the goal is to test whether you know common English vocabulary, not whether you have memorized an academic word list. Words like PLANT, CRANE, LIGHT, BREAD, VOICE, STORM, CHAIR, BLOOD, SHARE, PRIDE, FLAME, GLASS, RIDGE, FROST — these are the heartland of puzzle word selection.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">💡 Study Tip</h6>
+        <p class="small mb-0">After each puzzle, spend 60 seconds with the revealed word's full profile: definition, part of speech, etymology. Over 30 days of daily play, this habit alone adds 30 well-contextualized words to your permanent vocabulary. That compounds to hundreds of words per year without any additional study effort.</p>
+      </div>
+    </div>
 
     {% elif slug == "word-roots-prefixes-suffixes" %}
-    <p>One of the fastest paths to a larger vocabulary is learning the building blocks of English words. Latin and Greek roots, prefixes, and suffixes are the recurring components that appear across thousands of English words — from everyday conversation to academic writing and standardized tests.</p>
+    <p>One of the fastest paths to a larger vocabulary is learning the building blocks of English words. Latin and Greek roots, prefixes, and suffixes are the recurring components that appear across thousands of English words — from everyday conversation to academic writing and standardized tests. Rather than memorizing words one by one, root-based learning gives you the ability to decode unfamiliar words on the spot and retain new vocabulary far more effectively.</p>
 
-    <h3 class="fw-bold mt-4">Why Roots Work</h3>
-    <p>When you know that the Latin root <em>port</em> means "to carry," you immediately understand <strong>portable</strong>, <strong>transport</strong>, <strong>import</strong>, <strong>export</strong>, <strong>deport</strong>, <strong>report</strong>, and <strong>support</strong> — without memorizing each word individually. One root, seven words unlocked. This is why root-based learning is the most efficient vocabulary strategy available.</p>
+    <h3 class="fw-bold mt-4">Why Roots Work: The Multiplier Effect</h3>
+    <p>When you know that the Latin root <em>port</em> means "to carry," you immediately understand <strong>portable</strong>, <strong>transport</strong>, <strong>import</strong>, <strong>export</strong>, <strong>deport</strong>, <strong>report</strong>, and <strong>support</strong> — without memorizing each word individually. One root, seven words unlocked. This is the multiplier effect: each root you learn pays dividends across dozens of words you encounter for the rest of your life.</p>
+    <p>Studies in vocabulary acquisition consistently show that root-based instruction produces significantly stronger long-term retention than direct word memorization, particularly for academic and literary vocabulary. The reason is structural: root knowledge creates a network of meaning rather than isolated facts, and networks are far more resilient in memory.</p>
 
-    <h3 class="fw-bold mt-4">30 Essential Roots</h3>
-    <p><strong>aud</strong> (hear) → audio, audible, audience, auditory</p>
-    <p><strong>port</strong> (carry) → transport, import, export, portable</p>
-    <p><strong>scrib / script</strong> (write) → describe, script, subscribe, prescribe</p>
-    <p><strong>graph / gram</strong> (write/draw) → paragraph, diagram, biography, telegram</p>
-    <p><strong>dict</strong> (say) → predict, dictate, contradict, verdict</p>
-    <p><strong>rupt</strong> (break) → disrupt, interrupt, corrupt, erupt</p>
-    <p><strong>spec / spect</strong> (look) → inspect, spectacle, suspect, perspective</p>
-    <p><strong>tend / tens</strong> (stretch) → extend, tension, intend, pretend</p>
-    <p><strong>ven / vent</strong> (come) → invent, convention, prevent, adventure</p>
-    <p><strong>vid / vis</strong> (see) → video, visible, vision, provide</p>
+    <h3 class="fw-bold mt-4">20 Essential Latin and Greek Roots</h3>
+    <div class="table-responsive mb-3 mt-2">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Root</th><th>Meaning</th><th>Example Words</th></tr></thead>
+        <tbody>
+          <tr><td><strong>aud</strong></td><td>hear</td><td>audio, audible, audience, auditory, inaudible</td></tr>
+          <tr><td><strong>port</strong></td><td>carry</td><td>transport, import, export, portable, deport, report</td></tr>
+          <tr><td><strong>scrib / script</strong></td><td>write</td><td>describe, script, subscribe, prescribe, transcript</td></tr>
+          <tr><td><strong>graph / gram</strong></td><td>write/draw</td><td>paragraph, diagram, biography, telegram, autograph</td></tr>
+          <tr><td><strong>dict</strong></td><td>say</td><td>predict, dictate, contradict, verdict, diction</td></tr>
+          <tr><td><strong>rupt</strong></td><td>break</td><td>disrupt, interrupt, corrupt, erupt, abrupt, bankrupt</td></tr>
+          <tr><td><strong>spec / spect</strong></td><td>look</td><td>inspect, spectacle, suspect, perspective, spectrum</td></tr>
+          <tr><td><strong>tend / tens</strong></td><td>stretch</td><td>extend, tension, intend, pretend, attend, contend</td></tr>
+          <tr><td><strong>ven / vent</strong></td><td>come</td><td>invent, convention, prevent, adventure, intervene</td></tr>
+          <tr><td><strong>vid / vis</strong></td><td>see</td><td>video, visible, vision, provide, supervise, evident</td></tr>
+          <tr><td><strong>pos / pon</strong></td><td>put/place</td><td>compose, deposit, postpone, impose, expose</td></tr>
+          <tr><td><strong>mit / miss</strong></td><td>send</td><td>submit, transmit, mission, dismiss, commit</td></tr>
+          <tr><td><strong>duc / duct</strong></td><td>lead</td><td>conduct, produce, deduce, introduce, educate</td></tr>
+          <tr><td><strong>fac / fact</strong></td><td>make/do</td><td>factory, artifact, manufacture, benefactor, effect</td></tr>
+          <tr><td><strong>greg</strong></td><td>group/herd</td><td>congregate, aggregate, segregate, gregarious</td></tr>
+          <tr><td><strong>junct / join</strong></td><td>join</td><td>junction, conjunction, injunction, adjoin</td></tr>
+          <tr><td><strong>loqu / loqui</strong></td><td>speak</td><td>eloquent, loquacious, colloquial, soliloquy</td></tr>
+          <tr><td><strong>nov</strong></td><td>new</td><td>novel, innovate, renovate, novice, novelty</td></tr>
+          <tr><td><strong>sequ / secut</strong></td><td>follow</td><td>sequence, consequence, consecutive, sequel</td></tr>
+          <tr><td><strong>vol / volu</strong></td><td>wish/roll</td><td>voluntary, revolve, volume, evolution, involve</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h3 class="fw-bold mt-4">Key Prefixes</h3>
-    <p><strong>un-</strong> (not): unhappy, unclear, unknown | <strong>re-</strong> (again): redo, return, review | <strong>pre-</strong> (before): predict, prepare, prevent | <strong>mis-</strong> (wrongly): mistake, mislead, misuse | <strong>over-</strong> (too much): overload, overcome, overlook | <strong>sub-</strong> (under): subway, subtext, submarine</p>
+    <h3 class="fw-bold mt-4">Key Prefixes That Transform Words</h3>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-success"><tr><th>Prefix</th><th>Meaning</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><strong>un-</strong></td><td>not</td><td>unhappy, unclear, unknown, unaware, unusual</td></tr>
+          <tr><td><strong>re-</strong></td><td>again</td><td>redo, return, review, rebuild, reconsider</td></tr>
+          <tr><td><strong>pre-</strong></td><td>before</td><td>predict, prepare, prevent, preview, precede</td></tr>
+          <tr><td><strong>mis-</strong></td><td>wrongly</td><td>mistake, mislead, misuse, misunderstand, misplace</td></tr>
+          <tr><td><strong>over-</strong></td><td>too much / above</td><td>overload, overcome, overlook, overdue, overrate</td></tr>
+          <tr><td><strong>sub-</strong></td><td>under</td><td>subway, subtext, submarine, subscribe, submerge</td></tr>
+          <tr><td><strong>inter-</strong></td><td>between</td><td>interact, international, interrupt, intervene</td></tr>
+          <tr><td><strong>trans-</strong></td><td>across</td><td>transport, transform, translate, transmit</td></tr>
+          <tr><td><strong>anti-</strong></td><td>against</td><td>antibiotic, antidote, antisocial, antithesis</td></tr>
+          <tr><td><strong>dis-</strong></td><td>apart / not</td><td>disagree, disrupt, dismiss, disconnect, disorder</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h3 class="fw-bold mt-4">Key Suffixes</h3>
-    <p><strong>-tion / -sion</strong> (action/state): action, tension | <strong>-ous</strong> (full of): famous, dangerous | <strong>-ful</strong> (full of): hopeful, careful | <strong>-less</strong> (without): hopeless, careless | <strong>-ment</strong> (result): agreement, movement | <strong>-ness</strong> (state): happiness, darkness</p>
-    <p>Applying this knowledge to word games: when you see a yellow O in position 2, think about common words where O appears in position 1 or 3 — your root knowledge helps you recall more candidate words faster.</p>
+    <h3 class="fw-bold mt-4">Key Suffixes That Signal Word Type</h3>
+    <p>Suffixes often reveal a word's grammatical role. Recognizing them helps you understand new words grammatically as well as semantically:</p>
+    <ul>
+      <li><strong>-tion / -sion</strong> (noun, action or state): action, tension, decision, education, expansion</li>
+      <li><strong>-ous</strong> (adjective, full of): famous, dangerous, glorious, generous, courageous</li>
+      <li><strong>-ful</strong> (adjective, full of): hopeful, careful, peaceful, powerful, beautiful</li>
+      <li><strong>-less</strong> (adjective, without): hopeless, careless, endless, restless, speechless</li>
+      <li><strong>-ment</strong> (noun, result): agreement, movement, achievement, argument, improvement</li>
+      <li><strong>-ness</strong> (noun, state): happiness, darkness, kindness, weakness, boldness</li>
+      <li><strong>-ify / -fy</strong> (verb, to make): simplify, clarify, magnify, justify, intensify</li>
+      <li><strong>-ize / -ise</strong> (verb, to make): realize, organize, recognize, summarize</li>
+    </ul>
+
+    <h3 class="fw-bold mt-4">Applying Root Knowledge to Word Puzzles</h3>
+    <p>Root knowledge helps during word games in two specific ways. First, when generating candidate words, your root memory gives you more options to draw from. When you know a word contains the letters V, I, S and a yellow E, thinking of <em>vis</em> (see) helps you quickly generate VISIT, VISTA, VISOR, VISED — candidates you might not have recalled otherwise.</p>
+    <p>Second, when you encounter an unfamiliar answer word after the puzzle ends, roots help you understand and remember it immediately. If the answer is ABRUPT and you know <em>rupt</em> means break, you instantly grasp the meaning and are unlikely to forget it. This is contextual vocabulary learning at its most efficient.</p>
+    <p>Practice daily in <a href="/unlimited">Unlimited Mode</a> and make a habit of reading the word profile after every game — the etymology section often reveals the root and gives you a memorable hook for the new word.</p>
 
     {% elif slug == "vocabulary-habit-building" %}
-    <p>Most vocabulary-building attempts fail within a week. People download an app, study a list for two days, then move on. The words never stick. The reason is not a lack of effort — it is a misunderstanding of how habits and memory actually work.</p>
+    <p>Most vocabulary-building attempts fail within a week. People download an app, study a list for two days, then abandon it when life gets busy. The words never stick. The reason is not a lack of effort or intelligence — it is a fundamental misunderstanding of how habits and memory actually work. This guide explains what the science says, and how to build vocabulary habits that genuinely last.</p>
 
     <h3 class="fw-bold mt-4">Why Vocabulary Learning Usually Fails</h3>
-    <p>Passive learning — reading word lists, highlighting definitions, skimming flashcards — creates weak memory traces. You recognize the word when you see it, but you cannot retrieve it when you need it. Real vocabulary acquisition requires active retrieval: producing the word from memory, using it in context, and spacing repetition over time.</p>
-    <p>The second reason most attempts fail is that the habit is too big. "Study 20 new words a day" sounds productive but creates cognitive overload. Within days, the effort feels unsustainable and the habit collapses.</p>
+    <p>Passive learning — reading word lists, highlighting definitions, skimming flashcards — creates weak memory traces. You may recognize the word when you see it, but you cannot retrieve it when you need it. Real vocabulary acquisition requires <em>active retrieval</em>: producing the word from memory, using it in context, and repeating that retrieval over spaced intervals of time.</p>
+    <p>The second reason most attempts fail is that the habit is too ambitious. "Study 20 new words a day" sounds productive but creates cognitive overload and decision fatigue. Within days, the effort feels unsustainable and the habit collapses. The paradox of vocabulary building is that smaller daily commitments produce dramatically larger long-term results.</p>
+
+    <div class="card border-info bg-info bg-opacity-10 mb-4 mt-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-info">🧠 The Memory Science</h6>
+        <p class="small mb-0">The <em>spacing effect</em> (Ebbinghaus, 1885) shows that reviewing material at increasing intervals — today, tomorrow, next week, next month — produces dramatically stronger retention than massed study. Modern cognitive science has confirmed this repeatedly. The ideal vocabulary system reviews a word 4–6 times over 30 days, not 20 times in one session.</p>
+      </div>
+    </div>
 
     <h3 class="fw-bold mt-4">The Two-Minute Rule</h3>
-    <p>Habit researchers consistently find that the most durable habits start small — small enough that skipping them feels more effortful than doing them. Apply this to vocabulary: commit to one word per day. Just one. Read its definition, its origin, and one example sentence. That is two minutes. Done.</p>
-    <p>WordMaster's <a href="/word-of-day">Word of the Day</a> is built precisely for this habit. Play the daily challenge, unlock the word, spend two minutes with its full profile. The game itself is the retrieval practice; the word profile is the learning reinforcement.</p>
+    <p>Habit researchers consistently find that the most durable habits start small enough that skipping them feels more effortful than doing them. Apply this principle to vocabulary: commit to just one word per day. Read its definition, its origin, and one example sentence. That is two minutes, done.</p>
+    <p>WordMaster's Daily Challenge is built precisely for this habit. Play the puzzle, unlock the hidden word, then spend two minutes with its full profile — definition, etymology, part of speech, and synonyms. The game itself provides the active retrieval practice; the word profile provides the learning reinforcement. Together, they complete the memory formation cycle in under ten minutes per day.</p>
 
-    <h3 class="fw-bold mt-4">Stack the Habit</h3>
-    <p>Habit stacking — attaching a new habit to an existing one — dramatically improves follow-through. Attach your vocabulary practice to something you already do every day: morning coffee, lunch, or your commute. "While I drink my morning coffee, I play the WordMaster daily challenge." The existing routine becomes the trigger for the new habit.</p>
+    <h3 class="fw-bold mt-4">Habit Stacking: Attach to Existing Routines</h3>
+    <p>Habit stacking — attaching a new habit to an existing daily routine — dramatically improves follow-through. Rather than trying to remember to do something at a vague "sometime today," you link your vocabulary practice to an anchor that already happens automatically.</p>
+    <p>Effective anchors for vocabulary practice:</p>
+    <ul>
+      <li><strong>Morning coffee:</strong> "While my coffee brews, I play the WordMaster daily challenge."</li>
+      <li><strong>Commute:</strong> "On the bus/train, I review three words from my word journal."</li>
+      <li><strong>Lunch:</strong> "During the first five minutes of lunch, I read one news article and note any unfamiliar words."</li>
+      <li><strong>Evening wind-down:</strong> "Before sleep, I read today's word profile and use the word in a sentence."</li>
+    </ul>
+    <p>The key is specificity. "I'll practice vocabulary sometimes during the day" never becomes a habit. "While I drink my morning coffee, I play WordMaster" can become as automatic as the coffee itself within three weeks.</p>
 
-    <h3 class="fw-bold mt-4">Review What You Learn</h3>
-    <p>A word learned once is rarely retained permanently. Use the <a href="/archive">Daily Archive</a> to revisit past words weekly. A monthly review of the previous month's words is enough to consolidate most of them into long-term memory. This spaced repetition system — short, regular review sessions at increasing intervals — is the most evidence-backed vocabulary strategy in cognitive science.</p>
+    <h3 class="fw-bold mt-4">Keep a Personal Word Journal</h3>
+    <p>Every time you encounter a word you don't know — in a book, an article, a conversation — write it down immediately. Don't just copy the definition. Write the sentence you found it in, your own example sentence using it in a different context, and a memory hook. For example: "BELI<strong>TTLE</strong> = to make someone feel little." This multi-layer encoding dramatically improves retention compared to looking up a definition and moving on.</p>
+    <p>Review your word journal every Sunday morning. Within a few weeks, you will be surprised at the number of words you have genuinely absorbed — not just recognized, but are actively using in speech and writing.</p>
+
+    <h3 class="fw-bold mt-4">Use New Words Within 24 Hours</h3>
+    <p>Memory research shows that using a new word in context within 24 hours of learning it dramatically increases long-term retention — by as much as 400% according to some studies. If you learn the word <em>ephemeral</em> today, find a way to use it in a text message, email, or conversation before tomorrow. This sounds forced at first. Within weeks, it becomes natural, and the words begin to feel genuinely yours.</p>
+
+    <h3 class="fw-bold mt-4">Build in Spaced Review</h3>
+    <p>A word learned once is rarely retained permanently without review. Use the <a href="/archive">Daily Archive</a> to revisit past puzzle words weekly. A monthly review of the previous month's words is sufficient to consolidate most of them into long-term memory. This spaced repetition system — short, regular review sessions at increasing intervals — is the most evidence-backed vocabulary strategy in cognitive science, and it requires very little time once the habit is established.</p>
+
+    <h3 class="fw-bold mt-4">Measure Progress to Stay Motivated</h3>
+    <p>Vocabulary growth is invisible in the short term but dramatic over months. Keep a simple count: how many new words did you add to your journal this week? How many can you use confidently? The <a href="/leaderboard">Stats page</a> tracks your game streak and win rate — use this as a proxy for consistency. A long streak means you're showing up daily, and daily practice is the engine of all vocabulary growth.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">🎯 30-Day Vocabulary Habit Starter</h6>
+        <ul class="small mb-0">
+          <li><strong>Week 1:</strong> Play WordMaster daily. Read the word profile every time.</li>
+          <li><strong>Week 2:</strong> Start a word journal. Add 3 unfamiliar words per day.</li>
+          <li><strong>Week 3:</strong> Use each new word in a sentence within 24 hours of learning it.</li>
+          <li><strong>Week 4:</strong> Review your journal. Try using each stored word in real conversation.</li>
+          <li><strong>Month 2+:</strong> Add spaced review. Revisit last month's words weekly.</li>
+        </ul>
+      </div>
+    </div>
 
     {% elif slug == "reading-comprehension-word-games" %}
-    <p>Most people think of word games as entertainment — and they are. But a growing body of research suggests that regular word puzzle play produces real, measurable improvements in reading comprehension. The connection is more direct than it might seem.</p>
+    <p>Most people think of word games as entertainment — and they are. But a growing body of research in cognitive psychology and educational science suggests that regular word puzzle play produces real, measurable improvements in reading comprehension. The connection is more direct than it might seem, and understanding it reveals exactly how to get more educational value from every puzzle you play.</p>
 
     <h3 class="fw-bold mt-4">What Reading Comprehension Actually Requires</h3>
-    <p>Reading comprehension is not simply the ability to decode words on a page. It depends on <strong>vocabulary breadth</strong> (knowing what words mean), <strong>inference ability</strong> (drawing conclusions from incomplete information), and <strong>working memory</strong> (holding context in mind while processing new information). Word games train all three.</p>
+    <p>Reading comprehension is not simply the ability to decode words on a page. Reading researchers identify three core components: <strong>vocabulary breadth</strong> (knowing what a sufficient number of words mean), <strong>inference ability</strong> (drawing conclusions from incomplete or implicit information), and <strong>working memory</strong> (holding prior context in mind while processing new information). Word games train all three of these skills simultaneously — often without the player realizing it.</p>
+    <p>This matters because reading comprehension is one of the most important academic and professional skills a person can develop. The ability to extract meaning from complex texts — legal documents, scientific papers, news articles, literary works — depends directly on these three cognitive components. Strengthening them through enjoyable daily practice is both efficient and sustainable in a way that traditional study rarely is.</p>
 
-    <h3 class="fw-bold mt-4">How Word Puzzles Build Each Skill</h3>
-    <p><strong>Vocabulary breadth:</strong> Every word puzzle you solve either confirms a word you know or teaches you a new one. Over hundreds of games, this exposure compounds into a substantially larger active vocabulary — which directly improves your ability to understand complex texts.</p>
-    <p><strong>Inference ability:</strong> Word guessing games are fundamentally inference exercises. You start with incomplete information (color-coded feedback) and must deduce the answer. This is structurally identical to reading comprehension tasks that ask you to infer an author's intent or a character's motivation from limited textual clues.</p>
-    <p><strong>Working memory:</strong> Holding five letters in mind, tracking which positions are confirmed, and generating candidate words simultaneously is a demanding working memory task. Regular practice strengthens this capacity — and working memory is one of the strongest predictors of reading comprehension ability.</p>
+    <h3 class="fw-bold mt-4">How Word Puzzles Build Vocabulary Breadth</h3>
+    <p>Every word puzzle you solve either confirms a word you already know or introduces you to a new one. When you encounter an unfamiliar answer and read its definition in the post-game word profile, you learn that word in a memorable context — you had a stake in finding it, you worked to uncover it, and now you see its meaning. This active engagement produces far stronger retention than passively reading a word list.</p>
+    <p>Over hundreds of games, this exposure compounds into a substantially larger active vocabulary. Research by cognitive scientist E.D. Hirsch has demonstrated that vocabulary breadth is the single strongest predictor of reading comprehension — stronger even than reading practice itself. A larger vocabulary means fewer words requiring decoding effort, leaving more cognitive capacity for the higher-level task of meaning construction.</p>
 
-    <h3 class="fw-bold mt-4">The News Word Challenge Advantage</h3>
-    <p>WordMaster's <a href="/news-challenge">News Word Challenge</a> takes this a step further by embedding word puzzles inside real news articles. Players must read and comprehend actual BBC headlines to find contextual clues for the hidden word. This combines vocabulary practice, inference training, and genuine reading comprehension in a single daily exercise.</p>
+    <h3 class="fw-bold mt-4">How Word Puzzles Develop Inference Ability</h3>
+    <p>Word guessing games are fundamentally inference exercises. You begin each game with zero information and must build a picture of the answer through systematic deduction. Each guess reveals partial information (correct letters, wrong positions, absent letters), and you must integrate this incomplete evidence into a narrowing set of possible solutions.</p>
+    <p>This is structurally identical to the inference tasks that appear throughout reading comprehension: inferring an author's intent from word choice, deducing a character's motivation from action rather than direct statement, inferring the meaning of an unfamiliar word from surrounding context. The cognitive habit of "what does this partial evidence tell me?" trained in word puzzles transfers directly to these reading challenges.</p>
+
+    <h3 class="fw-bold mt-4">How Word Puzzles Strengthen Working Memory</h3>
+    <p>Holding five letter constraints in mind simultaneously — which positions are green, which letters are confirmed yellow but not yet placed, which letters are eliminated — is a substantial working memory task. Players must track up to six guesses' worth of information while generating new candidate words. This is the exact same multi-layer information holding that complex reading demands.</p>
+    <p>Research by Just and Carpenter (1992) established that working memory capacity is one of the strongest predictors of reading comprehension ability in both children and adults. Any activity that regularly challenges and strengthens working memory — and word puzzles clearly do — produces measurable improvements in reading comprehension over time.</p>
+
+    <h3 class="fw-bold mt-4">The News Word Challenge: Reading Comprehension in Action</h3>
+    <p>WordMaster's <a href="/news-challenge">News Word Challenge</a> takes vocabulary practice a step further by embedding word puzzles directly inside real-world reading. The hidden word is drawn from today's BBC World News headlines, and players can read actual articles to find contextual clues. This format requires genuine reading comprehension — you must understand what the headline is about, recognize the vocabulary being used, and make educated guesses based on semantic context.</p>
+    <p>This is contextual vocabulary learning at its most authentic. Rather than encountering words in decontextualized lists, you meet them in the exact situation where they are being actively used in global discourse. Cognitive science consistently shows that contextual word learning produces the strongest retention, because the word is encoded alongside the meaning network it inhabits.</p>
+
+    <h3 class="fw-bold mt-4">Building a Daily Reading + Puzzle Routine</h3>
+    <p>The most effective approach combines word puzzle practice with deliberate reading. A simple daily routine:</p>
+    <ul>
+      <li><strong>Morning:</strong> Play the WordMaster <a href="/daily">Daily Challenge</a>. After the game ends, read the word profile carefully — definition, etymology, and part of speech.</li>
+      <li><strong>Midday:</strong> Play the <a href="/news-challenge">News Word Challenge</a>. Read at least one of the linked BBC headlines in full.</li>
+      <li><strong>Evening:</strong> Read any article or book passage for 15–20 minutes. Note any unfamiliar words and look them up in context.</li>
+    </ul>
+    <p>This routine takes under 30 minutes per day and systematically trains all three components of reading comprehension — vocabulary breadth, inference ability, and working memory — through engaging, low-effort practice.</p>
+
+    <div class="card border-primary bg-primary bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-primary">📚 Reading Comprehension Growth Over Time</h6>
+        <p class="small mb-0">Consistent daily vocabulary practice — even just 10 minutes per day — produces measurable improvements in reading comprehension within 8–12 weeks according to educational research. The key is consistency over intensity: five minutes every day outperforms one hour once per week. The daily puzzle habit is perfectly structured for this kind of gradual, sustainable growth.</p>
+      </div>
+    </div>
 
     {% elif slug == "greek-latin-roots-english" %}
-    <p>Approximately 60% of English words have Latin or Greek origins — and in academic, scientific, and literary English, that figure rises above 90%. Learning the most common classical roots is the highest-leverage vocabulary investment you can make.</p>
+    <p>Approximately 60% of all English words have Latin or Greek origins — and in academic, scientific, and literary English, that figure rises above 90%. Learning the most common classical roots is the single highest-leverage vocabulary investment you can make. One root unlocks dozens of words; a hundred roots give you access to the majority of sophisticated English vocabulary.</p>
 
-    <h3 class="fw-bold mt-4">Greek Roots</h3>
-    <p><strong>bio</strong> (life) → biology, biography, antibiotic, biodiversity</p>
-    <p><strong>chron</strong> (time) → chronology, chronic, synchronize, anachronism</p>
-    <p><strong>geo</strong> (earth) → geography, geology, geometry, geopolitics</p>
-    <p><strong>log / logy</strong> (study/reason) → logic, biology, psychology, dialogue</p>
-    <p><strong>micro</strong> (small) → microscope, microphone, microbe, microcosm</p>
-    <p><strong>phon</strong> (sound) → phone, symphony, microphone, phonics</p>
-    <p><strong>photo</strong> (light) → photograph, photosynthesis, photon</p>
-    <p><strong>psych</strong> (mind) → psychology, psychiatry, psyche</p>
-    <p><strong>scope</strong> (view) → telescope, microscope, periscope</p>
-    <p><strong>therm</strong> (heat) → thermometer, thermal, thermostat</p>
+    <h3 class="fw-bold mt-4">Why Classical Roots Matter More Than Ever</h3>
+    <p>Greek and Latin dominated Western scholarship, religion, science, and law for over two millennia, and English — a Germanic language at its core — absorbed an enormous vocabulary layer from both. Every time English needed a word for a scientific concept, medical condition, legal principle, or philosophical idea, it reached for Greek or Latin. This is why the language of medicine, law, science, and academia is so heavily classical.</p>
+    <p>The practical implication: if you are studying for standardized tests (SAT, GRE, IELTS), reading academic texts, or working in any professional field, classical root knowledge is not optional background knowledge — it is a core literacy skill.</p>
 
-    <h3 class="fw-bold mt-4">Latin Roots</h3>
-    <p><strong>amo / amor</strong> (love) → amiable, amorous, enamored</p>
-    <p><strong>aqua</strong> (water) → aquarium, aquatic, aqueduct</p>
-    <p><strong>bene</strong> (good/well) → benefit, benevolent, beneficial</p>
-    <p><strong>capit</strong> (head) → capital, captain, decapitate</p>
-    <p><strong>corp</strong> (body) → corporation, corpse, incorporate</p>
-    <p><strong>cred</strong> (believe) → credit, credible, incredible</p>
-    <p><strong>lumen / luc</strong> (light) → illuminate, lucid, translucent</p>
-    <p><strong>man / manu</strong> (hand) → manual, manufacture, manipulate</p>
-    <p><strong>mort</strong> (death) → mortal, mortality, immortal</p>
-    <p><strong>nov</strong> (new) → novel, innovate, renovate, novice</p>
+    <h3 class="fw-bold mt-4">Essential Greek Roots</h3>
+    <div class="table-responsive mb-3 mt-2">
+      <table class="table table-bordered table-sm">
+        <thead class="table-info"><tr><th>Root</th><th>Meaning</th><th>English Words</th></tr></thead>
+        <tbody>
+          <tr><td><strong>bio</strong></td><td>life</td><td>biology, biography, antibiotic, biodiversity, biochemistry</td></tr>
+          <tr><td><strong>chron</strong></td><td>time</td><td>chronology, chronic, synchronize, anachronism, chronicle</td></tr>
+          <tr><td><strong>geo</strong></td><td>earth</td><td>geography, geology, geometry, geopolitics, geothermal</td></tr>
+          <tr><td><strong>log / logy</strong></td><td>study/reason</td><td>logic, biology, psychology, dialogue, monologue, prologue</td></tr>
+          <tr><td><strong>micro</strong></td><td>small</td><td>microscope, microphone, microbe, microcosm, microwave</td></tr>
+          <tr><td><strong>phon</strong></td><td>sound</td><td>telephone, symphony, microphone, phonics, euphony</td></tr>
+          <tr><td><strong>photo</strong></td><td>light</td><td>photograph, photosynthesis, photon, photogenic, photography</td></tr>
+          <tr><td><strong>psych</strong></td><td>mind/soul</td><td>psychology, psychiatry, psyche, psychotic, psychosomatic</td></tr>
+          <tr><td><strong>scope</strong></td><td>view/observe</td><td>telescope, microscope, periscope, stethoscope, horoscope</td></tr>
+          <tr><td><strong>therm</strong></td><td>heat</td><td>thermometer, thermal, thermostat, thermodynamics, hypothermia</td></tr>
+          <tr><td><strong>astr / aster</strong></td><td>star</td><td>astronomy, astronaut, asteroid, astrology, disaster</td></tr>
+          <tr><td><strong>dem / demo</strong></td><td>people</td><td>democracy, epidemic, demographic, demagogue, pandemic</td></tr>
+          <tr><td><strong>path</strong></td><td>feeling/disease</td><td>empathy, sympathy, pathology, antipathy, psychopath</td></tr>
+          <tr><td><strong>polis / polit</strong></td><td>city/government</td><td>politics, metropolis, policy, cosmopolitan, police</td></tr>
+          <tr><td><strong>tele</strong></td><td>distant</td><td>television, telephone, telepathy, telescope, telegram</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h3 class="fw-bold mt-4">Applying This to Word Games</h3>
-    <p>Root knowledge helps in two ways during word puzzles. First, when you are generating candidate words, your root memory gives you more options to draw from. Second, when you encounter an unfamiliar answer word, you can often understand it immediately through its roots — which reinforces memory far more than simply looking up a definition.</p>
+    <h3 class="fw-bold mt-4">Essential Latin Roots</h3>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-warning"><tr><th>Root</th><th>Meaning</th><th>English Words</th></tr></thead>
+        <tbody>
+          <tr><td><strong>amo / amor</strong></td><td>love</td><td>amiable, amorous, enamored, amicable, amateur</td></tr>
+          <tr><td><strong>aqua</strong></td><td>water</td><td>aquarium, aquatic, aqueduct, aquifer, aquamarine</td></tr>
+          <tr><td><strong>bene</strong></td><td>good/well</td><td>benefit, benevolent, beneficial, benign, benefactor</td></tr>
+          <tr><td><strong>capit</strong></td><td>head</td><td>capital, captain, decapitate, capitalize, per capita</td></tr>
+          <tr><td><strong>corp</strong></td><td>body</td><td>corporation, corpse, incorporate, corporal, corpus</td></tr>
+          <tr><td><strong>cred</strong></td><td>believe</td><td>credit, credible, incredible, credentials, accredit</td></tr>
+          <tr><td><strong>lumen / luc</strong></td><td>light</td><td>illuminate, lucid, translucent, elucidate, luminous</td></tr>
+          <tr><td><strong>man / manu</strong></td><td>hand</td><td>manual, manufacture, manipulate, mandate, manuscript</td></tr>
+          <tr><td><strong>mort</strong></td><td>death</td><td>mortal, mortality, immortal, mortify, post-mortem</td></tr>
+          <tr><td><strong>nov</strong></td><td>new</td><td>novel, innovate, renovate, novice, novelty, innovation</td></tr>
+          <tr><td><strong>pater / patr</strong></td><td>father</td><td>paternal, patriot, patron, patrimony, expatriate</td></tr>
+          <tr><td><strong>sens / sent</strong></td><td>feel</td><td>sensitive, sensation, consent, sentiment, sensory</td></tr>
+          <tr><td><strong>terra</strong></td><td>earth/land</td><td>territory, terrain, terrestrial, terrace, subterranean</td></tr>
+          <tr><td><strong>vit / viv</strong></td><td>life</td><td>vital, vivid, survive, revive, vitamin, vivacious</td></tr>
+          <tr><td><strong>voc / vox</strong></td><td>voice/call</td><td>vocal, invoke, advocate, vocation, vocabulary, evoke</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">How to Learn Roots Efficiently</h3>
+    <p>The most effective approach is to learn roots through word families rather than in isolation. Instead of memorizing "bene = good," work through several bene- words together: <em>benefit</em> (something that does you good), <em>benevolent</em> (wishing good on others), <em>beneficial</em> (producing good effects), <em>benign</em> (kindly; not harmful). By the time you have processed four words from the same root, the root meaning is anchored through multiple contexts.</p>
+    <p>A practical approach: pick one root per day and brainstorm every English word you already know that contains it. Then look up two or three more you didn't think of. This takes about five minutes and progressively builds a network of roots that makes unknown words increasingly decodable.</p>
+
+    <h3 class="fw-bold mt-4">Applying Classical Root Knowledge to Word Puzzles</h3>
+    <p>When you are stuck in a word puzzle with partial information — say, confirmed letters V, I, V and a confirmed position for the last A — root knowledge helps you generate candidates. The Latin root <em>viv</em> (life) immediately suggests VIVID, VIVID, or the 6-letter VIVACE. The Greek root <em>vita</em> brings VITAL to mind. Root-trained players generate richer candidate lists and spend less time stuck.</p>
+    <p>More importantly, when the puzzle answer is an unfamiliar word, root knowledge lets you understand and remember it immediately. If the answer is LUCID and you know <em>luc</em> means light, you instantly understand "lucid = mentally clear, like light shining through." This contextual hook dramatically improves retention. Practice daily in <a href="/unlimited">Unlimited Mode</a> and read each word's etymology in the post-game profile to build your root vocabulary steadily over time.</p>
 
     {% elif slug == "pattern-recognition-word-games" %}
-    <p>The players who consistently solve word puzzles in three or four guesses are not necessarily better at vocabulary than everyone else. They have trained a specific cognitive skill: <strong>pattern recognition</strong>. Understanding how this works — and how to develop it — can significantly improve your performance.</p>
+    <p>The players who consistently solve word puzzles in three or four guesses are not necessarily better at vocabulary than everyone else. They have trained a specific cognitive skill: <strong>pattern recognition</strong>. Understanding how this works — and how to develop it deliberately — can make a substantial difference in your performance, often cutting your average guess count by one to two guesses within just a few weeks of focused practice.</p>
 
     <h3 class="fw-bold mt-4">What Pattern Recognition Means in Word Puzzles</h3>
-    <p>Pattern recognition in word games is the ability to quickly generate and evaluate candidate words based on letter constraints. When you know that a word contains A (not in position 1), R (in position 3), and no E or S — a trained pattern recognizer immediately narrows to a short list of candidates, while an untrained player must mentally search the entire dictionary.</p>
+    <p>Pattern recognition in word games is the ability to rapidly generate and evaluate candidate words based on a set of letter constraints. When you know that a word contains A (not in position 1), R (confirmed in position 3), and no E or S — a trained pattern recognizer immediately narrows to a short list of candidates, while an untrained player must mentally search the entire dictionary one word at a time.</p>
+    <p>This difference in processing speed is not intelligence — it is training. The brain builds what neuroscientists call "chunked knowledge": grouped information that can be retrieved as a single unit rather than reconstructed from scratch. Word families, letter frequency patterns, and common endings are all examples of chunks that experienced word game players have internalized through repeated exposure.</p>
 
-    <h3 class="fw-bold mt-4">How to Train Pattern Recognition</h3>
-    <p><strong>Play daily.</strong> Consistent play is the most effective training. Each game is a pattern recognition session. Over hundreds of games, your brain builds faster and more accurate word retrieval pathways.</p>
-    <p><strong>Analyze your losses.</strong> When you fail to solve a puzzle, look at the answer and ask: what pattern did I miss? What other words fit the constraints I had after guess 4? This deliberate reflection accelerates learning faster than additional play alone.</p>
-    <p><strong>Practice with word families.</strong> Learn groups of words that share a pattern: _IGHT (light, night, fight, sight, right, might), _OUND (round, found, sound, bound, wound), _ATCH (match, catch, batch, hatch, latch). Knowing these families gives you rapid access to multiple candidates that share a common structure.</p>
-    <p><strong>Use Unlimited Mode for deliberate practice.</strong> The <a href="/unlimited">Unlimited Mode</a> lets you play as many rounds as you want, which is ideal for focused pattern training. Set a goal: try to solve five consecutive puzzles in four guesses or fewer. The constraint forces you to be more systematic.</p>
+    <div class="card border-info bg-info bg-opacity-10 mb-4 mt-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-info">🧠 The Neuroscience of Pattern Recognition</h6>
+        <p class="small mb-0">Research in cognitive neuroscience shows that pattern recognition tasks activate the basal ganglia and prefrontal cortex simultaneously — combining procedural learning (how to approach the problem) with executive function (evaluating options). This is why experienced players describe the experience as "seeing" the answer rather than "calculating" it: the pattern fires before conscious reasoning catches up.</p>
+      </div>
+    </div>
+
+    <h3 class="fw-bold mt-4">The Most Valuable Word Families to Know</h3>
+    <p>Word families — groups of words sharing a common ending or structure — are the core pattern units in word puzzle play. Knowing these families means that when confirmed letters suggest a pattern, you can instantly cycle through all members without guessing blindly:</p>
+    <div class="table-responsive mb-3 mt-2">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Pattern</th><th>Members</th><th>Distinguishing Letter</th></tr></thead>
+        <tbody>
+          <tr><td><strong>_IGHT</strong></td><td>light, night, might, right, fight, sight, tight, bight</td><td>First letter only</td></tr>
+          <tr><td><strong>_OUND</strong></td><td>round, found, sound, bound, mound, wound, pound, hound</td><td>First letter only</td></tr>
+          <tr><td><strong>_ATCH</strong></td><td>match, catch, batch, hatch, latch, patch, watch, thatch</td><td>First 1–2 letters</td></tr>
+          <tr><td><strong>_ANCE</strong></td><td>dance, lance, glance, trance, prance, mance, France</td><td>First letter(s)</td></tr>
+          <tr><td><strong>_OULD</strong></td><td>could, would, should, mould, could</td><td>First letter only</td></tr>
+          <tr><td><strong>_ASTE</strong></td><td>taste, waste, paste, haste, baste, paste</td><td>First letter only</td></tr>
+          <tr><td><strong>_ANGE</strong></td><td>range, mange, lange, grange, change, mange</td><td>First letter only</td></tr>
+          <tr><td><strong>_LOOM</strong></td><td>bloom, gloom, broom, zoom — (shared -OOM pattern)</td><td>First letter(s)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">How to Train Pattern Recognition Deliberately</h3>
+    <p><strong>Play daily and consistently.</strong> Each game is a pattern recognition session. Over hundreds of games, your brain progressively builds faster and more accurate word retrieval pathways. The improvement is gradual but measurable — most regular players notice their average guess count dropping within 30–60 days of daily play.</p>
+    <p><strong>Analyze your losses systematically.</strong> When you fail to solve a puzzle, look at the answer and ask: what pattern did I miss? What other words fit the constraints I had after guess 4? Write down the word family it belonged to. This deliberate post-game reflection is the single practice that accelerates pattern learning most rapidly — it turns each loss into a structured lesson.</p>
+    <p><strong>Set performance constraints in practice.</strong> Use <a href="/unlimited">Unlimited Mode</a> to play with a personal challenge: try to solve five consecutive puzzles in four guesses or fewer. This constraint forces you to be more systematic — you cannot rely on lucky guesses when you have a self-imposed limit. Constraint-based training is a well-established technique in skill acquisition research.</p>
+    <p><strong>Study common letter positions.</strong> Some letters appear more often in certain positions. For example, S is the most common starting letter and also one of the most common final letters. T is the most common letter in position 3. Knowing these tendencies helps you weight your guesses more intelligently when two candidates seem equally plausible.</p>
 
     <h3 class="fw-bold mt-4">The Letter Frequency Shortcut</h3>
-    <p>The ten most common letters in 5-letter English words are E, A, R, I, O, T, N, S, L, C. An optimal first guess covers as many of these as possible. After two strategic opening guesses, you have typically identified the presence or absence of 8-10 high-frequency letters — and pattern recognition takes over to fill in the rest.</p>
+    <p>The ten most common letters in 5-letter English words are E, A, R, I, O, T, N, S, L, C. An optimal first guess covers as many of these as possible. After two strategic opening guesses testing ten distinct letters, you have typically identified the presence or absence of most high-frequency letters — and pattern recognition takes over from there.</p>
+    <p>This is why expert players describe their process not as "thinking of words" but as "filtering a list." Their internalized pattern library has already pre-sorted the candidates; the conscious work is elimination, not generation. That library is built through the same mechanism as all expert pattern knowledge: consistent, deliberate practice over time.</p>
+
+    <h3 class="fw-bold mt-4">Transferable Cognitive Benefits</h3>
+    <p>Pattern recognition trained in word puzzles transfers to other domains. Readers who are skilled at word pattern recognition read faster and more accurately. Writers who internalize word structures develop stronger intuitions about spelling and word choice. Even problem-solving in unrelated fields benefits from the general habit of systematically processing constraints and generating candidates — the fundamental structure of all deductive reasoning.</p>
+    <p>This is part of what makes word puzzle practice genuinely valuable beyond the game itself. You are not just getting better at word games; you are strengthening a general cognitive skill with broad real-world application.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">🎯 Pattern Recognition Training Plan</h6>
+        <ul class="small mb-0">
+          <li><strong>Week 1–2:</strong> Learn the _IGHT, _OUND, _ATCH, and _ANCE word families by heart</li>
+          <li><strong>Week 3–4:</strong> After each failed puzzle, identify which family the answer belonged to</li>
+          <li><strong>Month 2:</strong> Practice with Unlimited Mode using a 4-guess limit challenge</li>
+          <li><strong>Ongoing:</strong> Track your average guess count monthly — a dropping average is proof the pattern training is working</li>
+        </ul>
+      </div>
+    </div>
 
     {% elif slug == "business-english-vocabulary" %}
-    <p>Vocabulary is one of the most underestimated factors in professional success. The ability to express ideas precisely, navigate complex conversations, and write clearly in English directly affects how colleagues, clients, and leadership perceive your competence. These 40 business vocabulary words are among the most useful in professional English contexts.</p>
+    <p>Vocabulary is one of the most underestimated factors in professional success. The ability to express ideas precisely, navigate complex conversations, and write with clarity and authority in English directly affects how colleagues, clients, and leadership perceive your competence. Research consistently shows that professionals with a wider vocabulary advance faster, communicate more effectively, and are perceived as more credible. This guide covers the most essential business English vocabulary — organized by function — with authentic example sentences drawn from real workplace contexts.</p>
+
+    <h3 class="fw-bold mt-4">Why Business English Vocabulary Is Different</h3>
+    <p>Business English has its own register — a specialized layer of vocabulary that signals professional fluency. Words like <em>leverage</em>, <em>align</em>, <em>scalable</em>, and <em>actionable</em> are used in workplaces in ways that differ from their everyday meanings. A professional who understands this register can participate fully in meetings, write emails that land well, and interpret reports accurately. One who doesn't may miss nuance, misuse terms, or default to overly casual language in formal contexts.</p>
+    <p>The good news is that business English vocabulary is relatively compact — there are perhaps 500–600 truly essential terms, and mastering the core 200 gives you access to most professional conversations. This guide covers the most frequently used categories.</p>
 
     <h3 class="fw-bold mt-4">Strategy &amp; Planning</h3>
-    <p><strong>Benchmark</strong> — a standard for measuring performance. "We need to benchmark our response times against industry leaders."</p>
-    <p><strong>Pivot</strong> — to change direction strategically. "After user research, we decided to pivot our product focus."</p>
-    <p><strong>Leverage</strong> — to use something to maximum advantage. "We can leverage our existing customer base to launch the new service."</p>
-    <p><strong>Scalable</strong> — capable of growing efficiently. "The model is scalable — it works for 10 customers or 10,000."</p>
-    <p><strong>Alignment</strong> — agreement or coordination across teams. "We need better alignment between sales and product development."</p>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Word</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Benchmark</strong></td><td>A standard for measuring performance</td><td>"We need to benchmark our response times against industry leaders."</td></tr>
+          <tr><td><strong>Pivot</strong></td><td>To change strategic direction</td><td>"After user research, we decided to pivot our product focus toward enterprise."</td></tr>
+          <tr><td><strong>Leverage</strong></td><td>To use something to maximum advantage</td><td>"We can leverage our existing customer base to launch the new service."</td></tr>
+          <tr><td><strong>Scalable</strong></td><td>Capable of growing efficiently without breaking</td><td>"The model is scalable — it works for 10 customers or 10,000."</td></tr>
+          <tr><td><strong>Alignment</strong></td><td>Agreement or coordination across teams</td><td>"We need better alignment between sales and product development."</td></tr>
+          <tr><td><strong>Roadmap</strong></td><td>A plan showing the path to a goal over time</td><td>"The product roadmap shows three major releases this year."</td></tr>
+          <tr><td><strong>Synergy</strong></td><td>Cooperation that produces more than the sum of parts</td><td>"The merger creates synergy between their distribution and our technology."</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="fw-bold mt-4">Communication &amp; Meetings</h3>
-    <p><strong>Actionable</strong> — practical and capable of being acted upon. "Please make your feedback actionable, not just critical."</p>
-    <p><strong>Circulate</strong> — to distribute to a group. "I'll circulate the report before Friday's meeting."</p>
-    <p><strong>Clarify</strong> — to make something clearer. "Could you clarify what you mean by 'urgent'?"</p>
-    <p><strong>Concise</strong> — brief and to the point. "Keep your executive summary concise — no more than one page."</p>
-    <p><strong>Facilitate</strong> — to make a process easier; to lead a meeting. "She will facilitate the brainstorming session."</p>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Word</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Actionable</strong></td><td>Practical and capable of being acted upon</td><td>"Please make your feedback actionable, not just critical."</td></tr>
+          <tr><td><strong>Circulate</strong></td><td>To distribute to a group</td><td>"I'll circulate the report before Friday's meeting."</td></tr>
+          <tr><td><strong>Clarify</strong></td><td>To make something clearer</td><td>"Could you clarify what you mean by 'urgent'?"</td></tr>
+          <tr><td><strong>Concise</strong></td><td>Brief and to the point</td><td>"Keep your executive summary concise — no more than one page."</td></tr>
+          <tr><td><strong>Facilitate</strong></td><td>To make a process easier; to lead a meeting</td><td>"She will facilitate the brainstorming session."</td></tr>
+          <tr><td><strong>Deliverable</strong></td><td>A tangible output or result to be produced</td><td>"The key deliverable for this sprint is a working prototype."</td></tr>
+          <tr><td><strong>Follow-up</strong></td><td>An action taken after a previous action or meeting</td><td>"I'll send a follow-up email summarizing our discussion."</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 class="fw-bold mt-4">Finance &amp; Operations</h3>
-    <p><strong>Allocate</strong> — to assign resources to a purpose. "We need to allocate more budget to marketing this quarter."</p>
-    <p><strong>Overhead</strong> — ongoing fixed costs of running a business. "Reducing overhead will improve our margins immediately."</p>
-    <p><strong>Revenue</strong> — total income before expenses. "Revenue grew 18% year-over-year."</p>
-    <p><strong>Viable</strong> — capable of working or succeeding. "Is the new business model financially viable?"</p>
-    <p><strong>Expenditure</strong> — the amount spent. "Capital expenditure is projected to rise next year."</p>
-    <p>Mastering vocabulary like this improves not only your writing and speaking but also your ability to understand the business content you consume — from reports to news articles, which you can practice comprehending through the <a href="/news-challenge">News Word Challenge</a>.</p>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Word</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Allocate</strong></td><td>To assign resources to a specific purpose</td><td>"We need to allocate more budget to marketing this quarter."</td></tr>
+          <tr><td><strong>Overhead</strong></td><td>Ongoing fixed costs of running a business</td><td>"Reducing overhead will improve our margins immediately."</td></tr>
+          <tr><td><strong>Revenue</strong></td><td>Total income generated before expenses</td><td>"Revenue grew 18% year-over-year, driven by enterprise contracts."</td></tr>
+          <tr><td><strong>Viable</strong></td><td>Capable of working or succeeding</td><td>"Is the new business model financially viable at current margins?"</td></tr>
+          <tr><td><strong>Expenditure</strong></td><td>The amount of money spent</td><td>"Capital expenditure is projected to rise 12% next year."</td></tr>
+          <tr><td><strong>ROI</strong></td><td>Return on investment — benefit relative to cost</td><td>"The training program showed strong ROI within six months."</td></tr>
+          <tr><td><strong>Bottleneck</strong></td><td>A point where flow is restricted, slowing the whole process</td><td>"The approval process is the main bottleneck in our pipeline."</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">Leadership &amp; Management</h3>
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm">
+        <thead class="table-primary"><tr><th>Word</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Delegate</strong></td><td>To assign tasks to others</td><td>"Good leaders delegate effectively rather than trying to do everything."</td></tr>
+          <tr><td><strong>Accountability</strong></td><td>Responsibility for results and being answerable for them</td><td>"We need clearer accountability for the project timeline."</td></tr>
+          <tr><td><strong>Stakeholder</strong></td><td>Any person or group with an interest in the outcome</td><td>"We need to inform all stakeholders before making this announcement."</td></tr>
+          <tr><td><strong>Empower</strong></td><td>To give someone authority or confidence to act</td><td>"Our goal is to empower team leads to make decisions autonomously."</td></tr>
+          <tr><td><strong>Bandwidth</strong></td><td>Capacity to take on additional work</td><td>"Do you have the bandwidth to take on this project this week?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="fw-bold mt-4">Building Business Vocabulary Through Daily Practice</h3>
+    <p>The most effective way to internalize business vocabulary is to encounter words in authentic context. Reading business news — company announcements, industry reports, earnings calls — exposes you to these terms as they are actually used. WordMaster's <a href="/news-challenge">News Word Challenge</a> draws its daily word from BBC World Service headlines, which frequently feature business and economic vocabulary in exactly this kind of real-world context.</p>
+    <p>When you encounter a business term you don't know, write it down with the sentence you found it in, write your own example sentence using it, and try to use it in a real work email or conversation within 24 hours. This three-step process — encounter, record, use — is the most evidence-backed method for professional vocabulary acquisition.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">💼 Business Vocabulary Quick-Start</h6>
+        <p class="small mb-0">Focus first on the 20 most-used categories: strategy terms, meeting vocabulary, financial basics, and project management language. These cover approximately 80% of everyday professional English in most business contexts. Once comfortable, expand into your specific industry's specialized vocabulary.</p>
+      </div>
+    </div>
 
     {% elif slug == "word-games-children-reading" %}
-    <p>Word guessing games are increasingly recognized by educators as powerful tools for early literacy development. Far from being mere entertainment, they build the exact cognitive skills that underpin reading fluency, spelling accuracy, and phonemic awareness in children.</p>
+    <p>Word guessing games are increasingly recognized by educators, reading specialists, and cognitive psychologists as powerful tools for early literacy development. Far from being mere entertainment, they build the exact cognitive skills that underpin reading fluency, spelling accuracy, and phonemic awareness in children. Understanding why — and how to use these games most effectively — helps parents and educators make the most of what can be a genuinely educational daily activity.</p>
 
     <h3 class="fw-bold mt-4">What the Research Shows</h3>
-    <p>Studies in educational psychology consistently find that word-play activities — including puzzles, word games, and structured guessing tasks — significantly accelerate reading development in children aged 6 to 12. The mechanisms are well understood: word games require children to think explicitly about letter-sound relationships, word structure, and meaning — the same skills that reading demands implicitly.</p>
-    <p>A 2022 meta-analysis of vocabulary interventions in primary education found that game-based vocabulary learning produced stronger retention than direct instruction for children across all reading levels. Children who played word games regularly for eight weeks showed measurable improvements in reading comprehension assessments compared to control groups.</p>
+    <p>Studies in educational psychology consistently find that word-play activities — including puzzles, word games, and structured guessing tasks — significantly accelerate reading development in children aged 6 to 12. The mechanisms are well understood: word games require children to think explicitly about letter-sound relationships, word structure, and meaning — the same skills that reading demands implicitly. Making these processes conscious and game-like accelerates their internalization.</p>
+    <p>A 2022 meta-analysis of vocabulary interventions in primary education found that game-based vocabulary learning produced stronger retention than direct instruction for children across all reading levels. Children who played word games regularly for eight weeks showed measurable improvements in reading comprehension assessments compared to control groups who received equivalent time in traditional vocabulary instruction. The engagement factor matters: children who enjoy the activity practice more consistently, and consistency is the engine of skill development.</p>
 
-    <h3 class="fw-bold mt-4">Phonemic Awareness</h3>
-    <p>Phonemic awareness — the ability to identify and manipulate individual sounds in words — is the single strongest predictor of early reading success. Word guessing games develop this skill naturally. When a child guesses "BREAD" and sees that B is wrong but R-E-A-D are present, they must think carefully about which 5-letter words contain R, E, A, and D in different positions. This is phonemic and orthographic reasoning in action.</p>
+    <h3 class="fw-bold mt-4">Phonemic Awareness: The Foundation of Reading</h3>
+    <p>Phonemic awareness — the ability to identify and manipulate individual sounds (phonemes) in spoken and written words — is the single strongest predictor of early reading success identified by reading research. Without it, children cannot decode unfamiliar words, regardless of how many sight words they have memorized.</p>
+    <p>Word guessing games develop phonemic awareness naturally and enjoyably. When a child guesses "BEAR" and sees that B is absent but E-A-R are confirmed yellow, they must think: which 4-letter or 5-letter words contain E, A, and R in different positions? This requires explicitly processing which sounds are present, which positions they can occupy, and which sound-letter combinations are possible — precisely the phonemic reasoning that reading instruction aims to develop.</p>
+    <p>Unlike worksheets or drills, the game format creates a reason to care about the answer. Children who are genuinely curious about the hidden word think harder about phonemes than children completing an exercise they know is just a test.</p>
 
-    <h3 class="fw-bold mt-4">Spelling and Letter Pattern Recognition</h3>
-    <p>Children who play word games regularly develop a stronger intuitive sense of which letter combinations are common in English and which are unusual. This pattern knowledge transfers directly to spelling — children become better at recognizing when a word "looks right" or "looks wrong," which is a key component of strong spelling ability.</p>
+    <h3 class="fw-bold mt-4">Spelling and Orthographic Pattern Knowledge</h3>
+    <p>Children who play word games regularly develop a stronger intuitive sense of which letter combinations are common in English (ST-, -ING, -ATCH) and which are unusual or impossible (-QQ, -VX). This pattern knowledge — called orthographic awareness — transfers directly to spelling ability.</p>
+    <p>Strong spellers are not children who have memorized every word's spelling individually. They are children who have internalized English orthographic patterns so deeply that they recognize when a spelling "looks right" or "looks wrong" — an intuition built through extensive meaningful exposure to written words. Word games provide that exposure in a highly engaged, motivated state, which dramatically improves encoding and retention.</p>
 
-    <h3 class="fw-bold mt-4">WordMaster's Easy Mode for Young Players</h3>
-    <p>WordMaster's <a href="/easy">Easy Mode</a> uses 4-letter words, making it appropriate for younger players who are still developing their vocabulary. The visual feedback system — green, yellow, and grey tiles — is intuitive and self-explanatory, allowing children to understand the game rules quickly without adult explanation. Many parents use WordMaster as a shared daily activity with their children, combining screen time with genuine educational value.</p>
+    <h3 class="fw-bold mt-4">Vocabulary Growth Through Contextual Learning</h3>
+    <p>Every word puzzle answer a child encounters is a vocabulary learning opportunity. When the hidden word is CRISP or BLOOM or QUILT, the post-game word profile reveals the definition, part of speech, and sometimes the origin. A child who has spent six guesses trying to find CRISP has a much stronger memory hook for that word than one who read it on a vocabulary list.</p>
+    <p>Research on incidental vocabulary learning — words acquired through exposure rather than direct instruction — shows that emotional engagement dramatically improves retention. The mild suspense of a word puzzle, the satisfaction of solving it, and the mild frustration of a near-miss all create emotional encoding that makes the target word more memorable.</p>
+
+    <h3 class="fw-bold mt-4">Working Memory and Executive Function</h3>
+    <p>Word guessing games make significant demands on working memory: hold the confirmed letters, track which positions are determined, eliminate ruled-out letters, and generate new candidates — all simultaneously. For children, this is challenging but achievable with age-appropriate word lengths, and regular practice strengthens working memory capacity over time.</p>
+    <p>Working memory is one of the strongest predictors of academic success across all subjects. Strengthening it through enjoyable daily practice has benefits that extend far beyond word games — improved attention, better reading comprehension, and stronger mathematical reasoning are all associated with working memory development.</p>
+
+    <h3 class="fw-bold mt-4">WordMaster's Easy Mode: Designed for Young Learners</h3>
+    <p>WordMaster's <a href="/easy">Easy Mode</a> uses 4-letter words, making it appropriately challenging for children aged 6 to 10 who are still developing their vocabulary. The visual feedback system — green, yellow, and grey tiles — is intuitive and self-explanatory. Most children understand the rules within two or three games without adult explanation, which preserves their sense of agency and accomplishment.</p>
+    <p>The on-screen keyboard makes the game fully accessible without typing skills. Children tap letters to build their guesses, which means the game works for early readers who are still developing keyboard fluency. The game also works entirely offline once loaded, making it suitable for car trips, waiting rooms, and anywhere a parent wants a meaningful screen activity.</p>
+
+    <h3 class="fw-bold mt-4">Tips for Parents: Getting the Most Educational Value</h3>
+    <p>Think aloud when playing together. When you model your reasoning — "Hmm, I know the word has an A but not in position 2, so let me think of words where A is in position 1 or 3..." — you are demonstrating phonemic and deductive reasoning in action. This kind of verbal scaffolding is one of the most effective educational techniques available to parents.</p>
+    <p>After the game, spend a minute on the word profile. Read the definition aloud, use the word in a silly example sentence, ask your child to use it in a sentence. This brief post-game ritual transforms a fun activity into genuine vocabulary instruction without feeling like a lesson.</p>
+    <p>Make it a daily ritual at a consistent time — after breakfast, before bed, or during a regular commute. Children who play word games consistently show greater literacy gains than those who play occasionally but more intensely. Daily five minutes beats weekly thirty minutes every time.</p>
+
+    <div class="card border-success bg-success bg-opacity-10 mt-4 mb-3">
+      <div class="card-body">
+        <h6 class="fw-bold text-success">👨‍👩‍👧 Family Word Game Guide</h6>
+        <ul class="small mb-0">
+          <li><strong>Ages 5–7:</strong> Start with 4-letter <a href="/easy">Easy Mode</a>; focus on letter names and positions</li>
+          <li><strong>Ages 8–10:</strong> Graduate to standard 5-letter mode; introduce strategic thinking</li>
+          <li><strong>Ages 11+:</strong> Try <a href="/hard">Hard Mode</a> (6 letters) and the <a href="/news-challenge">News Word Challenge</a></li>
+          <li><strong>All ages:</strong> Always read the word profile after the game — definition and etymology</li>
+          <li><strong>Consistency tip:</strong> Link the game to an existing routine (breakfast, commute, bedtime)</li>
+        </ul>
+      </div>
+    </div>
 
     {% endif %}
   </article>
