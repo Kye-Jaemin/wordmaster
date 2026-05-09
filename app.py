@@ -274,7 +274,7 @@ def blog():
         {"slug": "reading-comprehension-word-games", "title": "How Word Games Improve Reading Comprehension", "date": "2026-04-03", "excerpt": "The link between word game performance and reading ability is stronger than most people realize. Here is what research shows."},
         {"slug": "greek-latin-roots-english", "title": "Greek and Latin Roots Every English Learner Should Know", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. These 25 classical roots appear in thousands of modern words across every subject."},
         {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster."},
-        {"slug": "wordle-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
+        {"slug": "word-game-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
         {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage."},
         {"slug": "business-english-vocabulary", "title": "40 Essential Business English Words You Need at Work", "date": "2026-02-15", "excerpt": "From boardroom to email, these 40 business vocabulary words will make you sound more confident and professional."},
         {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children."},
@@ -298,7 +298,7 @@ def blog_post(slug):
             "date": "2026-04-10",
             "content": "ielts_essential_words"
         },
-        "wordle-tips": {
+        "word-game-tips": {
             "title": "10 Best Strategies to Win Word Games Every Time",
             "date": "2026-03-01",
             "content": "wordle_tips"
@@ -541,7 +541,7 @@ def sitemap():
         "/category/animals", "/category/food",
         "/leaderboard", "/how-to-play", "/about",
         "/contact", "/faq", "/privacy", "/terms", "/blog",
-        "/blog/wordle-tips", "/blog/best-starting-words", "/blog/word-game-history",
+        "/blog/word-game-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
         "/blog/daily-habits-vocabulary", "/blog/science-of-word-games",
         "/blog/common-5-letter-words", "/blog/word-roots-prefixes-suffixes",
