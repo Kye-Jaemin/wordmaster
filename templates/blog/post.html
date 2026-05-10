@@ -939,6 +939,25 @@
     {% endif %}
   </article>
 
+  {% if related_posts %}
+  <div class="mt-5 pt-4 border-top">
+    <h4 class="fw-bold text-primary mb-3"><i class="bi bi-bookmark-star me-2"></i>Related Articles</h4>
+    <div class="row g-3">
+      {% for rp in related_posts %}
+      <div class="col-md-4">
+        <a href="{{ rp.url }}" class="text-decoration-none">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h6 class="card-title text-primary mb-0">{{ rp.title }}</h6>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   <hr class="my-5"/>
   <div class="d-flex gap-2">
     <a href="/blog" class="btn btn-outline-primary"><i class="bi bi-arrow-left me-1"></i>All Posts</a>

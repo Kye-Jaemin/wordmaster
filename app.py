@@ -292,100 +292,123 @@ def blog_post(slug):
             "title": "Top 100 SAT Vocabulary Words You Must Know",
             "date": "2026-04-15",
             "content": "top_100_sat_words",
-            "meta_desc": "Boost your SAT verbal score with the 100 highest-frequency vocabulary words. Definitions, example sentences, and proven memory techniques for fast retention."
+            "meta_desc": "Boost your SAT verbal score with the 100 highest-frequency vocabulary words. Definitions, example sentences, and proven memory techniques for fast retention.",
+            "related": ["ielts-essential-words", "business-english-vocabulary", "word-roots-prefixes-suffixes"]
         },
         "ielts-essential-words": {
             "title": "50 Essential IELTS Words to Improve Your Band Score",
             "date": "2026-04-10",
             "content": "ielts_essential_words",
-            "meta_desc": "Master 50 essential IELTS vocabulary words to lift your writing and speaking band score. Definitions, example sentences, and natural usage in academic English."
+            "meta_desc": "Master 50 essential IELTS vocabulary words to lift your writing and speaking band score. Definitions, example sentences, and natural usage in academic English.",
+            "related": ["top-100-sat-words", "business-english-vocabulary", "vocabulary-habit-building"]
         },
         "word-game-tips": {
             "title": "10 Best Strategies to Win Word Games Every Time",
             "date": "2026-03-01",
             "content": "wordle_tips",
-            "meta_desc": "10 expert strategies to consistently win word guessing games. Best starting words, letter frequency tactics, double-letter detection, and elimination tricks."
+            "meta_desc": "10 expert strategies to consistently win word guessing games. Best starting words, letter frequency tactics, double-letter detection, and elimination tricks.",
+            "related": ["best-starting-words", "pattern-recognition-word-games", "word-game-history"]
         },
         "best-starting-words": {
             "title": "The Best Starting Words for Word Games in 2026",
             "date": "2026-02-20",
             "content": "best_starting_words",
-            "meta_desc": "Discover the top 20 starting words for word puzzle games in 2026. CRANE, STARE, AUDIO ranked by letter coverage. Solve faster with the best opener for you."
+            "meta_desc": "Discover the top 20 starting words for word puzzle games in 2026. CRANE, STARE, AUDIO ranked by letter coverage. Solve faster with the best opener for you.",
+            "related": ["word-game-tips", "common-5-letter-words", "pattern-recognition-word-games"]
         },
         "word-game-history": {
             "title": "The History of Word Guessing Games",
             "date": "2026-02-10",
             "content": "word_game_history",
-            "meta_desc": "From 1913 crosswords to Scrabble, Boggle, and modern viral daily puzzles — a century of design that shaped today's word game culture and global appeal."
+            "meta_desc": "From 1913 crosswords to Scrabble, Boggle, and modern viral daily puzzles — a century of design that shaped today's word game culture and global appeal.",
+            "related": ["science-of-word-games", "word-games-children-reading", "reading-comprehension-word-games"]
         },
         "daily-habits-vocabulary": {
             "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary",
             "date": "2026-04-25",
             "content": "daily_habits_vocabulary",
-            "meta_desc": "5 research-backed daily habits to expand your vocabulary fast. The simple 10-minute routine that beats cramming, plus how to make new words actually stick."
+            "meta_desc": "5 research-backed daily habits to expand your vocabulary fast. The simple 10-minute routine that beats cramming, plus how to make new words actually stick.",
+            "related": ["vocabulary-habit-building", "word-roots-prefixes-suffixes", "word-games-children-reading"]
         },
         "science-of-word-games": {
             "title": "The Science Behind Word Games: How Puzzles Boost Your Brain",
             "date": "2026-04-22",
             "content": "science_of_word_games",
-            "meta_desc": "The neuroscience of word games: how daily puzzles boost memory, attention, and verbal fluency. Research-backed evidence for brain benefits at any age."
+            "meta_desc": "The neuroscience of word games: how daily puzzles boost memory, attention, and verbal fluency. Research-backed evidence for brain benefits at any age.",
+            "related": ["reading-comprehension-word-games", "word-games-children-reading", "word-game-history"]
         },
         "common-5-letter-words": {
             "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)",
             "date": "2026-05-03",
             "content": "common_5_letter_words",
-            "meta_desc": "The 50 most common 5-letter English words ranked by frequency. Definitions, usage examples, and how knowing these words improves daily word game performance."
+            "meta_desc": "The 50 most common 5-letter English words ranked by frequency. Definitions, usage examples, and how knowing these words improves daily word game performance.",
+            "related": ["best-starting-words", "word-game-tips", "word-roots-prefixes-suffixes"]
         },
         "word-roots-prefixes-suffixes": {
             "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet",
             "date": "2026-04-30",
             "content": "word_roots_prefixes_suffixes",
-            "meta_desc": "30 essential Latin and Greek roots, prefixes, and suffixes that unlock thousands of English words. Learn one root, gain 20 words. Vocabulary multiplier guide."
+            "meta_desc": "30 essential Latin and Greek roots, prefixes, and suffixes that unlock thousands of English words. Learn one root, gain 20 words. Vocabulary multiplier guide.",
+            "related": ["greek-latin-roots-english", "vocabulary-habit-building", "top-100-sat-words"]
         },
         "vocabulary-habit-building": {
             "title": "How to Build a Vocabulary Habit That Actually Sticks",
             "date": "2026-04-27",
             "content": "vocabulary_habit_building",
-            "meta_desc": "How to build a vocabulary habit that survives past week one. Behavioral science principles for lasting word learning, plus daily and weekly routine templates."
+            "meta_desc": "How to build a vocabulary habit that survives past week one. Behavioral science principles for lasting word learning, plus daily and weekly routine templates.",
+            "related": ["daily-habits-vocabulary", "word-roots-prefixes-suffixes", "ielts-essential-words"]
         },
         "reading-comprehension-word-games": {
             "title": "How Word Games Improve Reading Comprehension",
             "date": "2026-04-03",
             "content": "reading_comprehension_word_games",
-            "meta_desc": "Research shows daily word games measurably improve reading comprehension, vocabulary recall, and verbal IQ. Here's the cognitive science and how to apply it."
+            "meta_desc": "Research shows daily word games measurably improve reading comprehension, vocabulary recall, and verbal IQ. Here's the cognitive science and how to apply it.",
+            "related": ["science-of-word-games", "word-games-children-reading", "vocabulary-habit-building"]
         },
         "greek-latin-roots-english": {
             "title": "Greek and Latin Roots Every English Learner Should Know",
             "date": "2026-03-28",
             "content": "greek_latin_roots_english",
-            "meta_desc": "25 classical Greek and Latin roots that appear in thousands of English words. Definitions, modern examples, and how knowing roots accelerates vocabulary growth."
+            "meta_desc": "25 classical Greek and Latin roots that appear in thousands of English words. Definitions, modern examples, and how knowing roots accelerates vocabulary growth.",
+            "related": ["word-roots-prefixes-suffixes", "top-100-sat-words", "business-english-vocabulary"]
         },
         "pattern-recognition-word-games": {
             "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles",
             "date": "2026-03-20",
             "content": "pattern_recognition_word_games",
-            "meta_desc": "Pattern recognition separates expert word puzzle solvers from beginners. Learn how to train this hidden skill with practical drills and daily exercises."
+            "meta_desc": "Pattern recognition separates expert word puzzle solvers from beginners. Learn how to train this hidden skill with practical drills and daily exercises.",
+            "related": ["word-game-tips", "best-starting-words", "science-of-word-games"]
         },
         "business-english-vocabulary": {
             "title": "40 Essential Business English Words You Need at Work",
             "date": "2026-02-15",
             "content": "business_english_vocabulary",
-            "meta_desc": "40 essential business English vocabulary words to sound confident in meetings, emails, and presentations. Definitions, real examples, and natural usage tips."
+            "meta_desc": "40 essential business English vocabulary words to sound confident in meetings, emails, and presentations. Definitions, real examples, and natural usage tips.",
+            "related": ["top-100-sat-words", "ielts-essential-words", "vocabulary-habit-building"]
         },
         "word-games-children-reading": {
             "title": "How Word Games Help Children Learn to Read",
             "date": "2026-02-12",
             "content": "word_games_children_reading",
-            "meta_desc": "Research-backed evidence on how word games accelerate phonics, spelling, and reading fluency in children. Age-by-age guidance for parents and educators."
+            "meta_desc": "Research-backed evidence on how word games accelerate phonics, spelling, and reading fluency in children. Age-by-age guidance for parents and educators.",
+            "related": ["reading-comprehension-word-games", "science-of-word-games", "daily-habits-vocabulary"]
         },
     }
     post = posts.get(slug)
     if not post:
         return render_template("404.html"), 404
+
+    # Resolve related slugs to title+url for template
+    related_posts = [
+        {"slug": s, "title": posts[s]["title"], "url": f"/blog/{s}"}
+        for s in post.get("related", []) if s in posts
+    ]
+
     return render_template("blog/post.html",
         title=f"{post['title']} — WordMaster Blog",
         meta_desc=post.get("meta_desc", f"Read: {post['title']}"),
-        post=post, slug=slug)
+        post=post, slug=slug,
+        related_posts=related_posts)
 
 # ─── Helper: Full Dictionary Lookup ──────────────────────────
 
