@@ -45,6 +45,11 @@ function newRound() {
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) hintBtn.disabled = false;
   document.querySelectorAll(".key[data-key]").forEach(b => b.classList.remove("correct", "absent"));
+  // Hide the post-game result ad + Word Learning Card when starting fresh
+  const resultAd = document.getElementById("result-ad");
+  if (resultAd) resultAd.classList.add("d-none");
+  const wlCard = document.getElementById("word-learning-card");
+  if (wlCard) wlCard.classList.add("d-none");
   render();
 }
 
@@ -143,22 +148,12 @@ async function showHint() {
   }
 }
 
-async function fetchDefinition() {
+function fetchDefinition() {
+  // Same shared population path that anagram and tile-guess use, so all
+  // three puzzle formats present an identical post-game learning card.
   if (!secretWord) return;
-  const defEl = document.getElementById("definition");
-  if (!defEl) return;
-  defEl.textContent = "Loading definition...";
-  try {
-    const res = await fetch(`/api/hint?word=${secretWord.toLowerCase()}`);
-    const data = await res.json();
-    let line = "";
-    if (data.partOfSpeech) line += `(${data.partOfSpeech}) `;
-    if (data.definition)   line += data.definition;
-    if (data.example)      line += ` — "${data.example}"`;
-    defEl.textContent = line || "";
-  } catch (e) {
-    defEl.textContent = "";
-  }
+  if (window.wmPopulateLearningCard) window.wmPopulateLearningCard(secretWord);
+  if (window.wmShowResultAd)         window.wmShowResultAd();
 }
 
 let toastTimer;

@@ -18,123 +18,286 @@
   #keyboard .key.correct { background: #198754; color: #fff; }
   #keyboard .key.absent  { background: #adb5bd; color: #fff; }
   #keyboard .key-row { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 4px; }
+  .current-format-card { background: rgba(25, 135, 84, 0.10) !important; border-width: 2px !important; }
 </style>
 
-<div class="container py-3" style="max-width:720px">
-
-  <!-- Puzzle format banner -->
-  <div class="text-center small mb-2">
-    <span class="text-muted me-2">{% if lang == 'ko' %}같은 어휘로 다른 형식:{% else %}Same vocabulary in:{% endif %}</span>
-    <a href="{{ wordle_url }}" class="btn btn-sm btn-outline-primary me-1">Tile Guess</a>
-    <a href="{{ anagram_url }}" class="btn btn-sm btn-outline-primary me-1">Anagram</a>
-    <button class="btn btn-sm btn-primary" disabled>Hangman</button>
+<!-- Hero / Value Proposition (matches Tile Guess) -->
+<div class="container-xl pt-3 pb-1">
+  <div class="text-center px-2">
+    <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
+      Daily word games that build your vocabulary.
+    </h1>
+    <p class="text-muted small mb-0" style="max-width:620px;margin:0 auto;">
+      A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.
+    </p>
   </div>
+</div>
 
-  <!-- Vocab category + difficulty switcher (stays in Hangman format) -->
-  <div class="mb-3">
-    <div class="text-center mb-1">
-      <small class="text-muted">{% if lang == 'ko' %}어휘 카테고리 변경 (행맨 유지){% else %}Switch vocabulary (stays in Hangman){% endif %}</small>
-    </div>
-    <div class="d-flex gap-1 flex-wrap justify-content-center mb-2">
-      <a href="{{ selector_urls.middle }}"  class="btn btn-sm btn-outline-primary">🎓 {% if lang == 'ko' %}중학생{% else %}Middle{% endif %}</a>
-      <a href="{{ selector_urls.high }}"    class="btn btn-sm btn-outline-primary">📚 {% if lang == 'ko' %}고등학생{% else %}High{% endif %}</a>
-      <a href="{{ selector_urls.college }}" class="btn btn-sm btn-outline-primary">🎒 {% if lang == 'ko' %}대학생{% else %}College{% endif %}</a>
-      <a href="{{ selector_urls.custom }}"  class="btn btn-sm btn-outline-primary">✍️ {% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}</a>
-      <a href="{{ selector_urls.news }}"    class="btn btn-sm btn-outline-primary">📰 {% if lang == 'ko' %}뉴스{% else %}News{% endif %}</a>
-      <a href="{{ selector_urls.animals }}" class="btn btn-sm btn-outline-secondary">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a>
-      <a href="{{ selector_urls.food }}"    class="btn btn-sm btn-outline-secondary">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a>
-    </div>
-    <div class="text-center mb-1">
-      <small class="text-muted">{% if lang == 'ko' %}난이도 변경{% else %}Change difficulty{% endif %}</small>
-    </div>
-    <div class="d-flex gap-1 flex-wrap justify-content-center">
-      <a href="{{ selector_urls.easy }}"   class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4){% endif %}</a>
-      <a href="{{ selector_urls.normal }}" class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}보통 (5글자){% else %}Normal (5){% endif %}</a>
-      <a href="{{ selector_urls.hard }}"   class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6){% endif %}</a>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <div class="text-center mb-3">
-    <span class="badge bg-primary fs-6 mb-2">Hangman · {{ category_label }}</span>
-    <h1 class="fw-bold h3 mb-1">Guess the hidden word</h1>
-    <p class="text-muted small mb-0">Pick letters one at a time. Six wrong guesses and the word stays hidden.</p>
-  </div>
-
-  <!-- Lives -->
+<!-- Vocabulary Category Selector (puzzle-format-aware) -->
+<div class="container-xl pb-3 pt-1">
   <div class="text-center mb-2">
-    <div id="lives-display" class="fs-4"></div>
+    <small class="text-muted">{% if lang == 'ko' %}어휘 카테고리 선택{% else %}Choose a vocabulary category{% endif %}</small>
   </div>
-
-  <!-- Word reveal -->
-  <div id="word-display" class="text-center mb-3"></div>
-
-  <!-- Wrong letters -->
-  <div id="wrong-display" class="text-center text-danger small mb-3" style="min-height:24px"></div>
-
-  <!-- Toast -->
-  <div id="toast-area" class="text-center text-muted small mb-2" style="min-height:24px"></div>
-
-  <!-- Keyboard -->
-  <div id="keyboard" class="mb-3">
-    <div class="key-row">
-      <button class="key" data-key="Q" type="button">Q</button>
-      <button class="key" data-key="W" type="button">W</button>
-      <button class="key" data-key="E" type="button">E</button>
-      <button class="key" data-key="R" type="button">R</button>
-      <button class="key" data-key="T" type="button">T</button>
-      <button class="key" data-key="Y" type="button">Y</button>
-      <button class="key" data-key="U" type="button">U</button>
-      <button class="key" data-key="I" type="button">I</button>
-      <button class="key" data-key="O" type="button">O</button>
-      <button class="key" data-key="P" type="button">P</button>
+  <div class="row g-2 justify-content-center">
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.middle }}" class="card text-decoration-none h-100 border-primary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-primary">{% if lang == 'ko' %}중학생 수준{% else %}Middle School{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}11–14세 일상 5글자 영단어. 핵심 기초 어휘.{% else %}Common 5-letter English vocabulary for ages 11–14. Core everyday words.{% endif %}
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="key-row">
-      <button class="key" data-key="A" type="button">A</button>
-      <button class="key" data-key="S" type="button">S</button>
-      <button class="key" data-key="D" type="button">D</button>
-      <button class="key" data-key="F" type="button">F</button>
-      <button class="key" data-key="G" type="button">G</button>
-      <button class="key" data-key="H" type="button">H</button>
-      <button class="key" data-key="J" type="button">J</button>
-      <button class="key" data-key="K" type="button">K</button>
-      <button class="key" data-key="L" type="button">L</button>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.high }}" class="card text-decoration-none h-100 border-primary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-primary">{% if lang == 'ko' %}고등학생 수준{% else %}High School{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}SAT 수준 5글자 어휘. 학문적 영어 유창성.{% else %}SAT-level 5-letter vocabulary. Builds academic English fluency.{% endif %}
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="key-row">
-      <button class="key" data-key="Z" type="button">Z</button>
-      <button class="key" data-key="X" type="button">X</button>
-      <button class="key" data-key="C" type="button">C</button>
-      <button class="key" data-key="V" type="button">V</button>
-      <button class="key" data-key="B" type="button">B</button>
-      <button class="key" data-key="N" type="button">N</button>
-      <button class="key" data-key="M" type="button">M</button>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.college }}" class="card text-decoration-none h-100 border-primary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-primary">{% if lang == 'ko' %}대학생 수준{% else %}College Level{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}GRE 수준 5글자 어휘. 고급 학술 단어.{% else %}GRE-level 5-letter vocabulary. Advanced academic words.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.custom }}" class="card text-decoration-none h-100 border-primary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-primary">{% if lang == 'ko' %}내 단어{% else %}My Custom Words{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}본인이 외우고 싶은 단어로 게임. 이 기기에만 저장.{% else %}Play with words you want to master. Stored on this device only.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.news }}" class="card text-decoration-none h-100 border-primary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-primary">{% if lang == 'ko' %}시사 뉴스{% else %}News Words{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}오늘의 BBC 헤드라인에서 뽑힌 단어. 실시간 어휘.{% else %}A 5-letter word drawn from today's BBC headlines. Real-world vocabulary.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.animals }}" class="card text-decoration-none h-100 border-secondary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-secondary">{% if lang == 'ko' %}동물{% else %}Animals{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}동물 주제 5글자 단어. 가벼운 테마 모드.{% else %}Animal-themed 5-letter words. A light themed warm-up.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <a href="{{ selector_urls.food }}" class="card text-decoration-none h-100 border-secondary cat-card">
+        <div class="card-body py-2 px-2 text-center">
+          <div class="fw-bold text-secondary">{% if lang == 'ko' %}음식{% else %}Food{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}음식 주제 5글자 단어. 가벼운 테마 모드.{% else %}Food-themed 5-letter words. A light themed warm-up.{% endif %}
+          </div>
+        </div>
+      </a>
     </div>
   </div>
+</div>
 
-  <!-- Controls -->
-  <div class="text-center mb-4">
-    <button id="btn-hint"   class="btn btn-outline-warning btn-sm me-1" type="button">Hint (reveals 1 letter)</button>
-    <button id="btn-giveup" class="btn btn-outline-danger btn-sm" type="button">Give up</button>
+<!-- Game Format Selector (current marked) -->
+<div class="container-xl pb-3 pt-2">
+  <div class="text-center mb-2">
+    <small class="text-muted">{% if lang == 'ko' %}게임 형식 선택{% else %}Or choose a game format{% endif %}</small>
   </div>
-
-  <!-- Result -->
-  <div id="result-panel" class="text-center d-none mb-4">
-    <div id="result-emoji" class="fs-1"></div>
-    <h5 id="result-message" class="fw-bold mb-1"></h5>
-    <p id="result-word" class="text-muted mb-1"></p>
-    <p id="definition" class="text-muted small mb-3"></p>
-    <button id="btn-new" class="btn btn-primary" type="button">New word</button>
+  <div class="row g-2 justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4">
+      <a href="{{ wordle_url }}" class="card text-decoration-none h-100 border-success cat-card{% if current_format == 'tile' %} current-format-card{% endif %}">
+        <div class="card-body py-2 px-3 text-center">
+          <div class="fw-bold text-success">{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}{% if current_format == 'tile' %} <span class="badge bg-success ms-1" style="font-size:0.62rem">{% if lang == 'ko' %}현재{% else %}current{% endif %}</span>{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}6번 안에 단어 추측. 색상 타일 피드백. 패턴 인지 훈련.{% else %}Guess the word in 6 tries with color-tile feedback. Trains pattern recognition.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <a href="{{ anagram_url }}" class="card text-decoration-none h-100 border-success cat-card{% if current_format == 'anagram' %} current-format-card{% endif %}">
+        <div class="card-body py-2 px-3 text-center">
+          <div class="fw-bold text-success">{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}{% if current_format == 'anagram' %} <span class="badge bg-success ms-1" style="font-size:0.62rem">{% if lang == 'ko' %}현재{% else %}current{% endif %}</span>{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}섞인 글자를 재배열해 단어 만들기. 스펠링 + 생산 어휘 훈련.{% else %}Unscramble shuffled letters into the target word. Trains spelling and production.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <a href="{{ hangman_url }}" class="card text-decoration-none h-100 border-success cat-card{% if current_format == 'hangman' %} current-format-card{% endif %}">
+        <div class="card-body py-2 px-3 text-center">
+          <div class="fw-bold text-success">{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}{% if current_format == 'hangman' %} <span class="badge bg-success ms-1" style="font-size:0.62rem">{% if lang == 'ko' %}현재{% else %}current{% endif %}</span>{% endif %}</div>
+          <div class="text-muted" style="font-size:0.72rem;line-height:1.3">
+            {% if lang == 'ko' %}글자 하나씩 추측 (6 생명). 글자 빈도 직관 훈련.{% else %}Guess letters one at a time with 6 lives. Trains letter-frequency intuition.{% endif %}
+          </div>
+        </div>
+      </a>
+    </div>
   </div>
+</div>
 
-  <!-- About this puzzle -->
-  <hr class="my-4">
-  <div class="text-muted small">
-    <h6 class="fw-bold">About hangman as a learning tool</h6>
-    <p class="mb-2">Hangman has been a paper-and-pencil staple for over a century because the game mechanic happens to teach English letter frequency. Players quickly learn to guess vowels and common consonants (E, T, A, O, I, N, S, R) first, because those letters carry the most information at low cost.</p>
-    <p class="mb-2">For vocabulary learning, hangman has an underrated property: when you fail to guess a word, the answer is revealed alongside the letters you got right and wrong. You see exactly which letters were unexpected — and that surprise is what makes the spelling stick. Word games with too much hand-holding don't produce this kind of durable memory; the small sting of being wrong is the feature, not a bug.</p>
-    <p class="mb-0">Six lives is a tradition, not a constant. Some prefer harder versions with fewer. The number matters less than playing daily — your letter-frequency intuition keeps sharpening as long as you keep playing.</p>
+<!-- Game container with AdSense sidebar (matches Tile Guess layout) -->
+<div class="container-xl py-3">
+  <div class="row justify-content-center g-3">
+
+    <!-- AdSense Sidebar -->
+    <div class="col-lg-2 d-none d-lg-block">
+      <div class="ad-sidebar sticky-top pt-3">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:160px;height:600px"
+             data-ad-client="ca-pub-3911396624649383"
+             data-ad-slot="2917734576"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="col-12 col-lg-6">
+
+      <!-- Mode Badge -->
+      <div class="text-center mb-2">
+        <span class="badge bg-primary fs-6"><i class="bi bi-shield-check me-1"></i>Hangman · {{ category_label }}</span>
+      </div>
+
+      <!-- Notification Toast -->
+      <div id="toast-area" class="text-center mb-2" style="min-height:36px;"></div>
+
+      <!-- Lives Counter -->
+      <div class="text-center mb-2">
+        <span class="badge bg-secondary fs-6">
+          <i class="bi bi-heart-fill me-1"></i>{% if lang == 'ko' %}생명{% else %}Lives{% endif %}:
+          <span id="lives-display" class="ms-1"></span>
+        </span>
+      </div>
+
+      <!-- Word Reveal -->
+      <div id="word-display" class="text-center mb-3"></div>
+
+      <!-- Wrong Letters -->
+      <div id="wrong-display" class="text-center text-danger small mb-3" style="min-height:24px"></div>
+
+      <!-- Keyboard -->
+      <div id="keyboard" class="mb-3">
+        <div class="key-row">
+          <button class="key" data-key="Q" type="button">Q</button>
+          <button class="key" data-key="W" type="button">W</button>
+          <button class="key" data-key="E" type="button">E</button>
+          <button class="key" data-key="R" type="button">R</button>
+          <button class="key" data-key="T" type="button">T</button>
+          <button class="key" data-key="Y" type="button">Y</button>
+          <button class="key" data-key="U" type="button">U</button>
+          <button class="key" data-key="I" type="button">I</button>
+          <button class="key" data-key="O" type="button">O</button>
+          <button class="key" data-key="P" type="button">P</button>
+        </div>
+        <div class="key-row">
+          <button class="key" data-key="A" type="button">A</button>
+          <button class="key" data-key="S" type="button">S</button>
+          <button class="key" data-key="D" type="button">D</button>
+          <button class="key" data-key="F" type="button">F</button>
+          <button class="key" data-key="G" type="button">G</button>
+          <button class="key" data-key="H" type="button">H</button>
+          <button class="key" data-key="J" type="button">J</button>
+          <button class="key" data-key="K" type="button">K</button>
+          <button class="key" data-key="L" type="button">L</button>
+        </div>
+        <div class="key-row">
+          <button class="key" data-key="Z" type="button">Z</button>
+          <button class="key" data-key="X" type="button">X</button>
+          <button class="key" data-key="C" type="button">C</button>
+          <button class="key" data-key="V" type="button">V</button>
+          <button class="key" data-key="B" type="button">B</button>
+          <button class="key" data-key="N" type="button">N</button>
+          <button class="key" data-key="M" type="button">M</button>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="text-center mb-3">
+        <button id="btn-hint"   class="btn btn-outline-warning btn-sm me-1" type="button">{% if lang == 'ko' %}힌트 (1글자 공개){% else %}Hint (reveals 1){% endif %}</button>
+        <button id="btn-giveup" class="btn btn-outline-danger btn-sm" type="button">{% if lang == 'ko' %}포기{% else %}Give up{% endif %}</button>
+      </div>
+
+      <!-- AdSense Result -->
+      <div id="result-ad" class="text-center mt-2 d-none">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-3911396624649383"
+             data-ad-slot="9633203230"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <!-- Result Panel (matches Tile Guess) -->
+      <div id="result-panel" class="text-center d-none mt-3">
+        <div id="result-emoji" class="fs-4 mb-2"></div>
+        <h5 id="result-message" class="fw-bold"></h5>
+        <p id="result-word" class="text-muted small"></p>
+
+        <!-- Word Learning Card -->
+        <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-3 mb-2" style="max-width:460px;">
+          <div class="card-header bg-primary text-white py-2 px-3">
+            <span class="fw-bold"><i class="bi bi-book me-1"></i>{% if lang == 'ko' %}이번 게임의 단어{% else %}Word of the Game{% endif %}</span>
+          </div>
+          <div class="card-body py-2 px-3">
+            <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+              <span id="learn-word" class="fw-bold text-primary fs-5"></span>
+              <span id="learn-phonetic" class="text-muted small"></span>
+            </div>
+            <div id="learn-meanings"></div>
+            <div id="learn-synant" class="d-none mt-2">
+              <div id="learn-synonyms-wrap" class="d-none mb-1">
+                <span class="badge bg-success me-1">{% if lang == 'ko' %}유의어{% else %}Synonyms{% endif %}</span>
+                <span id="learn-synonyms" class="small text-muted"></span>
+              </div>
+              <div id="learn-antonyms-wrap" class="d-none">
+                <span class="badge bg-danger me-1">{% if lang == 'ko' %}반의어{% else %}Antonyms{% endif %}</span>
+                <span id="learn-antonyms" class="small text-muted"></span>
+              </div>
+            </div>
+            <div id="learn-etymology" class="d-none mt-2 pt-2 border-top">
+              <small class="text-muted"><i class="bi bi-clock-history me-1 text-warning"></i><strong>{% if lang == 'ko' %}어원:{% else %}Origin:{% endif %}</strong> <span id="learn-origin"></span></small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Definition loading spinner -->
+        <div id="definition-loading" class="text-muted small d-none mt-1 mb-2">
+          <span class="spinner-border spinner-border-sm me-1" role="status"></span>{% if lang == 'ko' %}뜻 불러오는 중…{% else %}Loading definition…{% endif %}
+        </div>
+
+        <!-- Action buttons -->
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-2">
+          <button id="btn-new" class="btn btn-primary btn-sm" type="button">
+            <i class="bi bi-arrow-clockwise me-1"></i>{% if lang == 'ko' %}새 단어{% else %}New word{% endif %}
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
+</div>
 
+<!-- Educational content for SEO / AdSense long-form requirement -->
+<div class="container py-3" style="max-width:760px">
+  <h6 class="fw-bold">{% if lang == 'ko' %}학습 도구로서의 행맨{% else %}About hangman as a learning tool{% endif %}</h6>
+  <p class="text-muted small mb-2">{% if lang == 'ko' %}행맨은 백 년 넘게 종이와 연필로 즐겨온 게임입니다. 그 이유 중 하나는 — 게임 메카닉 자체가 영어 글자 빈도를 학습시키기 때문입니다. 플레이어는 자연스럽게 정보값이 큰 모음과 흔한 자음(E, T, A, O, I, N, S, R)부터 추측하는 법을 익히게 됩니다.{% else %}Hangman has been a paper-and-pencil staple for over a century because the game mechanic happens to teach English letter frequency. Players quickly learn to guess vowels and common consonants (E, T, A, O, I, N, S, R) first, because those letters carry the most information at low cost.{% endif %}</p>
+  <p class="text-muted small mb-2">{% if lang == 'ko' %}어휘 학습 관점에서 행맨이 가진 과소평가된 강점: 단어를 못 맞췄을 때, 정답이 본인이 시도한 글자(맞춘 것 + 틀린 것)와 함께 공개됩니다. 어떤 글자가 의외였는지가 눈에 보이고 — 그 작은 놀라움이 스펠링을 기억하게 만듭니다. 너무 친절한 단어 게임은 이런 종류의 견고한 기억을 만들지 못합니다.{% else %}For vocabulary learning, hangman has an underrated property: when you fail to guess a word, the answer is revealed alongside the letters you got right and wrong. You see exactly which letters were unexpected — and that surprise is what makes the spelling stick. Word games with too much hand-holding don't produce this kind of durable memory; the small sting of being wrong is the feature, not a bug.{% endif %}</p>
+  <p class="text-muted small mb-0">{% if lang == 'ko' %}생명 6개는 전통일 뿐, 절대적 수치는 아닙니다. 더 어려운 버전을 선호하는 사람도 있습니다. 숫자보다 중요한 건 매일 플레이하는 것 — 계속하기만 하면 글자 빈도 직관은 끊임없이 다듬어집니다.{% else %}Six lives is a tradition, not a constant. Some prefer harder versions with fewer. The number matters less than playing daily — your letter-frequency intuition keeps sharpening as long as you keep playing.{% endif %}</p>
 </div>
 
 <script>

@@ -346,17 +346,24 @@ def _selector_urls(prefix):
 
 @app.context_processor
 def inject_selector_urls():
-    """Inject puzzle-format-aware vocab + difficulty switcher URLs into every template."""
+    """Inject puzzle-format-aware vocab + difficulty switcher URLs into every template,
+    plus the current_format key used by the three Game Format cards to mark which one
+    the user is currently playing.
+    """
     path = request.path or "/"
     if path.startswith("/anagram"):
         prefix = "/anagram"
+        current_format = "anagram"
     elif path.startswith("/hangman"):
         prefix = "/hangman"
+        current_format = "hangman"
     else:
         prefix = ""
+        current_format = "tile"
     return {
-        "puzzle_prefix": prefix,
-        "selector_urls": _selector_urls(prefix),
+        "puzzle_prefix":  prefix,
+        "selector_urls":  _selector_urls(prefix),
+        "current_format": current_format,
     }
 
 def _puzzle_context(category):

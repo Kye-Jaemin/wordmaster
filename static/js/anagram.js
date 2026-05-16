@@ -53,9 +53,20 @@ function newRound() {
   attempts = 0;
   hintUsed = false;
   gameOver = false;
+  updateAttemptCount();
   document.getElementById("result-panel").classList.add("d-none");
   document.getElementById("btn-hint").disabled = false;
+  // Hide the post-game result ad + Word Learning Card when starting fresh
+  const resultAd = document.getElementById("result-ad");
+  if (resultAd) resultAd.classList.add("d-none");
+  const wlCard = document.getElementById("word-learning-card");
+  if (wlCard) wlCard.classList.add("d-none");
   render();
+}
+
+function updateAttemptCount() {
+  const el = document.getElementById("attempt-count");
+  if (el) el.textContent = attempts;
 }
 
 function render() {
@@ -96,6 +107,7 @@ function returnFromSlot(slotIdx) {
 
 function checkAnswer() {
   attempts++;
+  updateAttemptCount();
   const guess = slots.join("");
   if (guess === secretWord) {
     win();
@@ -135,22 +147,13 @@ function giveUp() {
   fetchDefinition();
 }
 
-async function fetchDefinition() {
+function fetchDefinition() {
+  // Delegates to the shared learning-storage helper so all puzzle formats
+  // populate the same rich Word Learning Card (phonetic, meanings, synonyms,
+  // antonyms, etymology). Also reveals the result AdSense block.
   if (!secretWord) return;
-  const defEl = document.getElementById("definition");
-  if (!defEl) return;
-  defEl.textContent = "Loading definition...";
-  try {
-    const res = await fetch(`/api/hint?word=${secretWord.toLowerCase()}`);
-    const data = await res.json();
-    let line = "";
-    if (data.partOfSpeech) line += `(${data.partOfSpeech}) `;
-    if (data.definition)   line += data.definition;
-    if (data.example)      line += ` — "${data.example}"`;
-    defEl.textContent = line || "";
-  } catch (e) {
-    defEl.textContent = "";
-  }
+  if (window.wmPopulateLearningCard) window.wmPopulateLearningCard(secretWord);
+  if (window.wmShowResultAd)         window.wmShowResultAd();
 }
 
 function shuffleVisible() {
