@@ -362,6 +362,7 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "wordle-anagram-hangman-compared", "title": "Wordle, Anagram, Hangman: Why I Built Three Puzzle Formats", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each."},
         {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
         {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
         {"slug": "common-5-letter-words", "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)", "date": "2026-05-03", "excerpt": "These 50 high-frequency 5-letter words appear constantly in word games and everyday English. Master them to gain a serious advantage."},
@@ -386,6 +387,13 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
+        "wordle-anagram-hangman-compared": {
+            "title": "Wordle, Anagram, Hangman: Why I Built Three Puzzle Formats",
+            "date": "2026-05-16",
+            "content": "wordle_anagram_hangman_compared",
+            "meta_desc": "Wordle, Anagram, and Hangman train three different vocabulary skills. Why WordMaster offers all three side-by-side, and which one to play when.",
+            "related": ["word-game-tips", "best-starting-words", "pattern-recognition-word-games"]
+        },
         "top-100-sat-words": {
             "title": "Top 100 SAT Vocabulary Words You Must Know",
             "date": "2026-04-15",
@@ -684,6 +692,7 @@ def sitemap():
         "/blog/vocabulary-habit-building", "/blog/reading-comprehension-word-games",
         "/blog/greek-latin-roots-english", "/blog/pattern-recognition-word-games",
         "/blog/business-english-vocabulary", "/blog/word-games-children-reading",
+        "/blog/wordle-anagram-hangman-compared",
         "/word-of-day", "/news-challenge", "/archive"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
