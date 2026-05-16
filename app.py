@@ -731,11 +731,33 @@ def api_hint():
 @app.route("/sitemap.xml")
 def sitemap():
     base = "https://wordmaster.store"
-    urls = [
+
+    # Core static pages
+    static_urls = [
         "/", "/daily", "/unlimited", "/easy", "/hard",
-        "/category/animals", "/category/food",
         "/leaderboard", "/how-to-play", "/about",
-        "/contact", "/faq", "/privacy", "/terms", "/blog",
+        "/contact", "/faq", "/privacy", "/terms",
+        "/news-challenge", "/archive",
+        # Learning-level Tile Guess routes
+        "/middle", "/high", "/college", "/custom",
+        # Themed Tile Guess routes
+        "/category/animals", "/category/food",
+        # Learning data pages
+        "/my-words", "/my-weak-words", "/my-progress",
+    ]
+
+    # Alternate puzzle formats — same vocabulary sources rendered as Anagram / Hangman
+    _puzzle_categories = ["middle", "high", "college", "custom", "news",
+                          "animals", "food", "easy", "hard"]
+    puzzle_urls = ["/anagram", "/hangman"]
+    for cat in _puzzle_categories:
+        puzzle_urls.append(f"/anagram/{cat}")
+        puzzle_urls.append(f"/hangman/{cat}")
+
+    # Blog index + individual posts
+    blog_urls = [
+        "/blog",
+        "/blog/three-puzzle-formats",
         "/blog/word-game-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
         "/blog/daily-habits-vocabulary", "/blog/science-of-word-games",
@@ -743,13 +765,21 @@ def sitemap():
         "/blog/vocabulary-habit-building", "/blog/reading-comprehension-word-games",
         "/blog/greek-latin-roots-english", "/blog/pattern-recognition-word-games",
         "/blog/business-english-vocabulary", "/blog/word-games-children-reading",
-        "/blog/three-puzzle-formats",
-        "/word-of-day", "/news-challenge", "/archive"
     ]
+
+    # /word-of-day was retired — do not list (it 301-redirects to /daily and
+    # redirect URLs in a sitemap are flagged as low-quality signals by Google).
+
+    urls = static_urls + puzzle_urls + blog_urls
+
+    today_str = date.today().isoformat()
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
                  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
-        xml_lines.append(f"  <url><loc>{base}{u}</loc></url>")
+        xml_lines.append(
+            f"  <url><loc>{base}{u}</loc>"
+            f"<lastmod>{today_str}</lastmod></url>"
+        )
     xml_lines.append("</urlset>")
     return Response("\n".join(xml_lines), mimetype="application/xml")
 
