@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .anagram-slot {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 60px; margin: 0 4px;
+    border: 2px dashed #adb5bd; border-radius: 8px;
+    background: #fff; font-size: 1.6rem; font-weight: 700; color: #212529;
+    transition: all 0.15s;
+  }
+  .anagram-slot.filled { border-style: solid; border-color: #0d6efd; background: #e7f1ff; }
+  .anagram-tile {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 60px; margin: 4px;
+    background: #0d6efd; color: #fff; border: 0; border-radius: 8px;
+    font-size: 1.5rem; font-weight: 700; cursor: pointer;
+    transition: transform 0.1s, background 0.15s;
+  }
+  .anagram-tile:hover:not(:disabled) { transform: translateY(-2px); background: #0b5ed7; }
+  .anagram-tile.used { background: #dee2e6; color: #adb5bd; cursor: not-allowed; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+  .shake { animation: shake 0.4s; }
+</style>
+
+<div class="container py-3" style="max-width:720px">
+
+  <!-- Puzzle format banner -->
+  <div class="text-center small mb-3">
+    <span class="text-muted me-2">{% if lang == 'ko' %}같은 어휘로 다른 형식:{% else %}Same vocabulary in:{% endif %}</span>
+    <a href="{{ wordle_url }}" class="btn btn-sm btn-outline-primary me-1">Wordle</a>
+    <button class="btn btn-sm btn-primary me-1" disabled>Anagram</button>
+    <a href="{{ hangman_url }}" class="btn btn-sm btn-outline-primary">Hangman</a>
+  </div>
+
+  <!-- Header -->
+  <div class="text-center mb-3">
+    <span class="badge bg-primary fs-6 mb-2">Anagram · {{ category_label }}</span>
+    <h1 class="fw-bold h3 mb-1">Unscramble the word</h1>
+    <p class="text-muted small mb-0">Click letters below to arrange them into a real 5-letter word. Click a placed letter to send it back.</p>
+  </div>
+
+  <!-- Word slots -->
+  <div id="slots" class="text-center mb-3"></div>
+
+  <!-- Scrambled letter tiles -->
+  <div id="scrambled" class="text-center mb-3"></div>
+
+  <!-- Toast -->
+  <div id="toast-area" class="text-center text-muted small" style="min-height:24px"></div>
+
+  <!-- Controls -->
+  <div class="text-center mb-4">
+    <button id="btn-shuffle" class="btn btn-outline-secondary btn-sm me-1" type="button">Shuffle</button>
+    <button id="btn-clear"   class="btn btn-outline-secondary btn-sm me-1" type="button">Clear</button>
+    <button id="btn-hint"    class="btn btn-outline-warning btn-sm me-1" type="button">Hint</button>
+    <button id="btn-giveup"  class="btn btn-outline-danger btn-sm" type="button">Give up</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result-panel" class="text-center d-none mb-4">
+    <div id="result-emoji" class="fs-1"></div>
+    <h5 id="result-message" class="fw-bold mb-1"></h5>
+    <p id="result-word" class="text-muted mb-1"></p>
+    <p id="definition" class="text-muted small mb-3"></p>
+    <button id="btn-new" class="btn btn-primary" type="button">New word</button>
+  </div>
+
+  <!-- About this puzzle -->
+  <hr class="my-4">
+  <div class="text-muted small">
+    <h6 class="fw-bold">About anagram puzzles</h6>
+    <p class="mb-2">An anagram rearranges the letters of a word to form a different arrangement. The puzzle here is the reverse: you see the letters jumbled, and your job is to reconstruct the original word.</p>
+    <p class="mb-2">Why this matters for learning: anagrams force you to engage with spelling at the letter level. You can't shortcut by recognizing a word's shape — you have to genuinely know how it's spelled. That makes anagrams an underrated tool for moving vocabulary from passive recognition (you'd know it if you saw it) into active production (you can write it from memory).</p>
+    <p class="mb-0">Pair anagram and wordle on the same word and you cover both halves of vocabulary mastery: shape recognition + letter-level spelling.</p>
+  </div>
+
+</div>
+
+<script>
+  window.GAME_MODE   = "{{ mode }}";
+  window.WORD_LENGTH = {{ word_length }};
+</script>
+<script src="/static/js/learning_storage.js"></script>
+<script src="/static/js/anagram.js"></script>
+{% endblock %}

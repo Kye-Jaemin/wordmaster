@@ -289,6 +289,58 @@ def custom_words():
         title="My Custom Words — WordMaster",
         meta_desc="Build your own word list and practice with it. Add personal vocabulary you want to master and play through them with WordMaster.")
 
+# ─── Alternate puzzle formats: Anagram & Hangman ──────────────
+# Same vocabulary sources as Wordle, presented as different puzzle mechanics.
+_CATEGORY_TO_MODE = {
+    "middle":  ("category_middle",  "Middle School"),
+    "high":    ("category_high",    "High School"),
+    "college": ("category_college", "College"),
+    "animals": ("category_animals", "Animals"),
+    "food":    ("category_food",    "Food"),
+    "daily":   ("daily",            "Daily"),
+    "custom":  ("custom",           "Custom Words"),
+}
+_WORDLE_URL_FOR_CATEGORY = {
+    None:      "/",
+    "middle":  "/middle",
+    "high":    "/high",
+    "college": "/college",
+    "animals": "/category/animals",
+    "food":    "/category/food",
+    "daily":   "/daily",
+    "custom":  "/custom",
+}
+
+def _puzzle_context(category):
+    """Build mode, label, and sibling URLs for an alternate-format puzzle page."""
+    mode, label = _CATEGORY_TO_MODE.get(category, ("standard", "Standard 5-Letter"))
+    cat_suffix = f"/{category}" if category in _CATEGORY_TO_MODE else ""
+    return {
+        "mode": mode,
+        "category_label": label,
+        "wordle_url":  _WORDLE_URL_FOR_CATEGORY.get(category, "/"),
+        "anagram_url": f"/anagram{cat_suffix}",
+        "hangman_url": f"/hangman{cat_suffix}",
+    }
+
+@app.route("/anagram")
+@app.route("/anagram/<category>")
+def anagram(category=None):
+    ctx = _puzzle_context(category)
+    return render_template("anagram_game.html",
+        title=f"Anagram Word Puzzle — {ctx['category_label']} | WordMaster",
+        meta_desc="Anagram word puzzle: unscramble the letters to form a 5-letter word. Reinforces spelling and letter-level vocabulary recall. Free, no signup.",
+        word_length=5, **ctx)
+
+@app.route("/hangman")
+@app.route("/hangman/<category>")
+def hangman(category=None):
+    ctx = _puzzle_context(category)
+    return render_template("hangman_game.html",
+        title=f"Hangman Word Puzzle — {ctx['category_label']} | WordMaster",
+        meta_desc="Hangman word game: guess letters before lives run out. Classic spelling and letter-frequency practice with curated vocabulary. Free.",
+        word_length=5, **ctx)
+
 @app.route("/my-words")
 def my_words():
     return render_template("my_words.html",

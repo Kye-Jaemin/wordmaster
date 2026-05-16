@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .hangman-letter {
+    display: inline-block; width: 48px; padding: 8px 0;
+    margin: 0 4px; border-bottom: 3px solid #adb5bd;
+    font-size: 1.6rem; font-weight: 700; text-align: center; color: #212529;
+  }
+  .hangman-letter.revealed { border-bottom-color: #198754; color: #198754; }
+  #keyboard .key {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 38px; height: 48px; margin: 2px; padding: 0 8px;
+    background: #e9ecef; border: 0; border-radius: 6px;
+    font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    transition: background 0.15s;
+  }
+  #keyboard .key:hover { background: #ced4da; }
+  #keyboard .key.correct { background: #198754; color: #fff; }
+  #keyboard .key.absent  { background: #adb5bd; color: #fff; }
+  #keyboard .key-row { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 4px; }
+</style>
+
+<div class="container py-3" style="max-width:720px">
+
+  <!-- Puzzle format banner -->
+  <div class="text-center small mb-3">
+    <span class="text-muted me-2">{% if lang == 'ko' %}같은 어휘로 다른 형식:{% else %}Same vocabulary in:{% endif %}</span>
+    <a href="{{ wordle_url }}" class="btn btn-sm btn-outline-primary me-1">Wordle</a>
+    <a href="{{ anagram_url }}" class="btn btn-sm btn-outline-primary me-1">Anagram</a>
+    <button class="btn btn-sm btn-primary" disabled>Hangman</button>
+  </div>
+
+  <!-- Header -->
+  <div class="text-center mb-3">
+    <span class="badge bg-primary fs-6 mb-2">Hangman · {{ category_label }}</span>
+    <h1 class="fw-bold h3 mb-1">Guess the hidden word</h1>
+    <p class="text-muted small mb-0">Pick letters one at a time. Six wrong guesses and the word stays hidden.</p>
+  </div>
+
+  <!-- Lives -->
+  <div class="text-center mb-2">
+    <div id="lives-display" class="fs-4"></div>
+  </div>
+
+  <!-- Word reveal -->
+  <div id="word-display" class="text-center mb-3"></div>
+
+  <!-- Wrong letters -->
+  <div id="wrong-display" class="text-center text-danger small mb-3" style="min-height:24px"></div>
+
+  <!-- Toast -->
+  <div id="toast-area" class="text-center text-muted small mb-2" style="min-height:24px"></div>
+
+  <!-- Keyboard -->
+  <div id="keyboard" class="mb-3">
+    <div class="key-row">
+      <button class="key" data-key="Q" type="button">Q</button>
+      <button class="key" data-key="W" type="button">W</button>
+      <button class="key" data-key="E" type="button">E</button>
+      <button class="key" data-key="R" type="button">R</button>
+      <button class="key" data-key="T" type="button">T</button>
+      <button class="key" data-key="Y" type="button">Y</button>
+      <button class="key" data-key="U" type="button">U</button>
+      <button class="key" data-key="I" type="button">I</button>
+      <button class="key" data-key="O" type="button">O</button>
+      <button class="key" data-key="P" type="button">P</button>
+    </div>
+    <div class="key-row">
+      <button class="key" data-key="A" type="button">A</button>
+      <button class="key" data-key="S" type="button">S</button>
+      <button class="key" data-key="D" type="button">D</button>
+      <button class="key" data-key="F" type="button">F</button>
+      <button class="key" data-key="G" type="button">G</button>
+      <button class="key" data-key="H" type="button">H</button>
+      <button class="key" data-key="J" type="button">J</button>
+      <button class="key" data-key="K" type="button">K</button>
+      <button class="key" data-key="L" type="button">L</button>
+    </div>
+    <div class="key-row">
+      <button class="key" data-key="Z" type="button">Z</button>
+      <button class="key" data-key="X" type="button">X</button>
+      <button class="key" data-key="C" type="button">C</button>
+      <button class="key" data-key="V" type="button">V</button>
+      <button class="key" data-key="B" type="button">B</button>
+      <button class="key" data-key="N" type="button">N</button>
+      <button class="key" data-key="M" type="button">M</button>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="text-center mb-4">
+    <button id="btn-hint"   class="btn btn-outline-warning btn-sm me-1" type="button">Hint (reveals 1 letter)</button>
+    <button id="btn-giveup" class="btn btn-outline-danger btn-sm" type="button">Give up</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result-panel" class="text-center d-none mb-4">
+    <div id="result-emoji" class="fs-1"></div>
+    <h5 id="result-message" class="fw-bold mb-1"></h5>
+    <p id="result-word" class="text-muted mb-1"></p>
+    <p id="definition" class="text-muted small mb-3"></p>
+    <button id="btn-new" class="btn btn-primary" type="button">New word</button>
+  </div>
+
+  <!-- About this puzzle -->
+  <hr class="my-4">
+  <div class="text-muted small">
+    <h6 class="fw-bold">About hangman as a learning tool</h6>
+    <p class="mb-2">Hangman has been a paper-and-pencil staple for over a century because the game mechanic happens to teach English letter frequency. Players quickly learn to guess vowels and common consonants (E, T, A, O, I, N, S, R) first, because those letters carry the most information at low cost.</p>
+    <p class="mb-2">For vocabulary learning, hangman has an underrated property: when you fail to guess a word, the answer is revealed alongside the letters you got right and wrong. You see exactly which letters were unexpected — and that surprise is what makes the spelling stick. Word games with too much hand-holding don't produce this kind of durable memory; the small sting of being wrong is the feature, not a bug.</p>
+    <p class="mb-0">Six lives is a tradition, not a constant. Some prefer harder versions with fewer. The number matters less than playing daily — your letter-frequency intuition keeps sharpening as long as you keep playing.</p>
+  </div>
+
+</div>
+
+<script>
+  window.GAME_MODE   = "{{ mode }}";
+  window.WORD_LENGTH = {{ word_length }};
+</script>
+<script src="/static/js/learning_storage.js"></script>
+<script src="/static/js/hangman.js"></script>
+{% endblock %}
