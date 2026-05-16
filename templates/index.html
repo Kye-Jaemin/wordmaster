@@ -204,9 +204,6 @@
         <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-3 mb-2" style="max-width:460px;">
           <div class="card-header bg-primary text-white py-2 px-3 d-flex align-items-center justify-content-between">
             <span class="fw-bold"><i class="bi bi-book me-1"></i>{% if lang == 'ko' %}이번 게임의 단어{% else %}Word of the Game{% endif %}</span>
-            <a id="wotd-link" href="/word-of-day" class="text-white text-decoration-none small">
-              <i class="bi bi-arrow-right-circle me-1"></i>{% if lang == 'ko' %}상세보기{% else %}Full page{% endif %}
-            </a>
           </div>
           <div class="card-body py-2 px-3">
             <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
@@ -387,7 +384,7 @@
         <p class="text-muted">Regular players report noticeable improvements in reading speed, spelling accuracy, and vocabulary range within weeks of daily play. For standardized test preparation (SAT, GRE, IELTS, TOEFL), WordMaster's curated word library covers a large proportion of high-frequency vocabulary items that appear on these exams.</p>
         <div class="d-flex flex-wrap gap-2 mt-3">
           <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>Today's Daily Challenge</a>
-          <a href="/word-of-day" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-stars me-1"></i>Word of the Day</a>
+          <a href="/anagram" class="btn btn-sm btn-outline-success"><i class="bi bi-shuffle me-1"></i>Try Anagram</a>
           <a href="/blog" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Vocabulary Blog</a>
         </div>
       </div>
@@ -398,7 +395,7 @@
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-day me-2"></i>How the Daily Challenge Works</h2>
         <p class="text-muted">Every day at midnight, WordMaster resets to a new hidden word — the same word for every player in the world. You have six attempts to guess it using color-coded tile feedback. A green tile means the correct letter in the correct position. A yellow tile means the letter is in the word but in the wrong spot. A grey tile eliminates that letter entirely.</p>
         <p class="text-muted">The daily word is chosen from a curated library of high-value English vocabulary — words that appear frequently in literature, journalism, academic writing, and standardized tests. Each word is selected to be challenging but fair: you should be able to solve it through logical deduction, not just luck.</p>
-        <p class="text-muted">After you finish, visit the <a href="/word-of-day" class="text-decoration-none">Word of the Day</a> page to unlock the full word profile: definition, pronunciation, etymology, synonyms, and antonyms. This learning step is what transforms a solved puzzle into genuine vocabulary growth.</p>
+        <p class="text-muted">After you finish, the result panel reveals the full word profile inline: definition, pronunciation, etymology, synonyms, and antonyms. This learning step is what transforms a solved puzzle into genuine vocabulary growth — and it is why solving a daily puzzle and then closing the tab still leaves something behind.</p>
       </div>
       <div class="mb-5">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>Building and Keeping Your Streak</h2>
@@ -412,7 +409,7 @@
         <p class="text-muted">The leaderboard tracks your overall statistics: games played, win percentage, current streak, and best streak. These numbers give you a long-term view of your progress and a benchmark to improve against. For more practice between daily challenges, try <a href="/unlimited" class="text-decoration-none">Unlimited Mode</a> or the <a href="/news-challenge" class="text-decoration-none">News Word Challenge</a>.</p>
         <div class="d-flex flex-wrap gap-2 mt-3">
           <a href="/archive" class="btn btn-sm btn-outline-secondary"><i class="bi bi-clock-history me-1"></i>Past Daily Words</a>
-          <a href="/word-of-day" class="btn btn-sm btn-outline-warning text-dark"><i class="bi bi-stars me-1"></i>Unlock Today's Word</a>
+          <a href="/hangman" class="btn btn-sm btn-outline-success"><i class="bi bi-shield-check me-1"></i>Try Hangman</a>
           <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Play More</a>
         </div>
       </div>
