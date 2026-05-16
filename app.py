@@ -210,16 +210,10 @@ def leaderboard():
 
 @app.route("/word-of-day")
 def word_of_day():
-    today = date.today()
-    word = get_daily_word()
-    # Fetch full dictionary data
-    word_data = fetch_full_word_info(word.lower())
-    return render_template("word_of_day.html",
-        title=f"Word of the Day: {word} — WordMaster",
-        meta_desc=f"Today's Word of the Day is {word}. Learn its definition, examples, synonyms, and etymology.",
-        word=word,
-        word_data=word_data,
-        today=today.strftime("%B %d, %Y"))
+    # Word of Day was a static dictionary page that duplicated content already
+    # surfaced in the Daily Challenge result panel. Redirect permanently so
+    # any existing inbound links still land somewhere useful.
+    return redirect("/daily", code=301)
 
 @app.route("/archive")
 def archive():
@@ -290,17 +284,19 @@ def custom_words():
         meta_desc="Build your own word list and practice with it. Add personal vocabulary you want to master and play through them with WordMaster.")
 
 # ─── Alternate puzzle formats: Anagram & Hangman ──────────────
-# Same vocabulary sources as Wordle, presented as different puzzle mechanics.
+# Same vocabulary sources as the Tile Guess game, presented as different puzzle mechanics.
 _CATEGORY_TO_MODE = {
-    "middle":  ("category_middle",  "Middle School"),
-    "high":    ("category_high",    "High School"),
-    "college": ("category_college", "College"),
-    "animals": ("category_animals", "Animals"),
-    "food":    ("category_food",    "Food"),
-    "daily":   ("daily",            "Daily"),
-    "custom":  ("custom",           "Custom Words"),
+    "middle":  ("category_middle",  "Middle School",     5),
+    "high":    ("category_high",    "High School",       5),
+    "college": ("category_college", "College",           5),
+    "animals": ("category_animals", "Animals",           5),
+    "food":    ("category_food",    "Food",              5),
+    "daily":   ("daily",            "Daily",             5),
+    "custom":  ("custom",           "Custom Words",      5),
+    "easy":    ("easy",             "Easy (4 Letters)",  4),
+    "hard":    ("hard",             "Hard (6 Letters)",  6),
 }
-_WORDLE_URL_FOR_CATEGORY = {
+_TILE_URL_FOR_CATEGORY = {
     None:      "/",
     "middle":  "/middle",
     "high":    "/high",
@@ -309,16 +305,21 @@ _WORDLE_URL_FOR_CATEGORY = {
     "food":    "/category/food",
     "daily":   "/daily",
     "custom":  "/custom",
+    "easy":    "/easy",
+    "hard":    "/hard",
 }
 
 def _puzzle_context(category):
-    """Build mode, label, and sibling URLs for an alternate-format puzzle page."""
-    mode, label = _CATEGORY_TO_MODE.get(category, ("standard", "Standard 5-Letter"))
+    """Build mode, label, word_length, and sibling URLs for an alternate-format puzzle page."""
+    mode, label, length = _CATEGORY_TO_MODE.get(category, ("standard", "Standard 5-Letter", 5))
     cat_suffix = f"/{category}" if category in _CATEGORY_TO_MODE else ""
     return {
         "mode": mode,
         "category_label": label,
-        "wordle_url":  _WORDLE_URL_FOR_CATEGORY.get(category, "/"),
+        "word_length": length,
+        # Template variable retains the old name for backward compatibility,
+        # but it now points to the Tile Guess URL for the matching category.
+        "wordle_url":  _TILE_URL_FOR_CATEGORY.get(category, "/"),
         "anagram_url": f"/anagram{cat_suffix}",
         "hangman_url": f"/hangman{cat_suffix}",
     }
@@ -329,8 +330,8 @@ def anagram(category=None):
     ctx = _puzzle_context(category)
     return render_template("anagram_game.html",
         title=f"Anagram Word Puzzle — {ctx['category_label']} | WordMaster",
-        meta_desc="Anagram word puzzle: unscramble the letters to form a 5-letter word. Reinforces spelling and letter-level vocabulary recall. Free, no signup.",
-        word_length=5, **ctx)
+        meta_desc="Anagram word puzzle: unscramble the letters to form a word. Reinforces spelling and letter-level vocabulary recall. Free, no signup.",
+        **ctx)
 
 @app.route("/hangman")
 @app.route("/hangman/<category>")
@@ -339,7 +340,7 @@ def hangman(category=None):
     return render_template("hangman_game.html",
         title=f"Hangman Word Puzzle — {ctx['category_label']} | WordMaster",
         meta_desc="Hangman word game: guess letters before lives run out. Classic spelling and letter-frequency practice with curated vocabulary. Free.",
-        word_length=5, **ctx)
+        **ctx)
 
 @app.route("/my-words")
 def my_words():
@@ -362,7 +363,7 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
-        {"slug": "wordle-anagram-hangman-compared", "title": "Wordle, Anagram, Hangman: Why I Built Three Puzzle Formats", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each."},
+        {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each."},
         {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
         {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
         {"slug": "common-5-letter-words", "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)", "date": "2026-05-03", "excerpt": "These 50 high-frequency 5-letter words appear constantly in word games and everyday English. Master them to gain a serious advantage."},
@@ -387,11 +388,11 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
-        "wordle-anagram-hangman-compared": {
-            "title": "Wordle, Anagram, Hangman: Why I Built Three Puzzle Formats",
+        "three-puzzle-formats": {
+            "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman",
             "date": "2026-05-16",
-            "content": "wordle_anagram_hangman_compared",
-            "meta_desc": "Wordle, Anagram, and Hangman train three different vocabulary skills. Why WordMaster offers all three side-by-side, and which one to play when.",
+            "content": "three_puzzle_formats",
+            "meta_desc": "Tile Guess, Anagram, and Hangman train three different vocabulary skills. Why WordMaster offers all three side-by-side, and which one to play when.",
             "related": ["word-game-tips", "best-starting-words", "pattern-recognition-word-games"]
         },
         "top-100-sat-words": {
@@ -692,7 +693,7 @@ def sitemap():
         "/blog/vocabulary-habit-building", "/blog/reading-comprehension-word-games",
         "/blog/greek-latin-roots-english", "/blog/pattern-recognition-word-games",
         "/blog/business-english-vocabulary", "/blog/word-games-children-reading",
-        "/blog/wordle-anagram-hangman-compared",
+        "/blog/three-puzzle-formats",
         "/word-of-day", "/news-challenge", "/archive"
     ]
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
