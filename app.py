@@ -174,8 +174,8 @@ def how_to_play():
 @app.route("/about")
 def about():
     return render_template("about.html",
-        title="About WordMaster — Free Word Game",
-        meta_desc="WordMaster is a free, browser-based word guessing game. No download needed. Play daily or unlimited!")
+        title="About WordMaster — Daily Word Game That Builds Vocabulary",
+        meta_desc="WordMaster is a daily word puzzle that tracks the vocabulary you learn. A one-person project built to make word games actually teach. Play, learn, remember.")
 
 @app.route("/contact")
 def contact():
