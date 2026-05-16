@@ -448,6 +448,77 @@ function saveStats(won) {
   }
 
   localStorage.setItem("wm_stats", JSON.stringify(stats));
+
+  // Also record vocabulary learning data for /my-words, /my-weak-words, /my-progress
+  saveLearning(won);
+}
+
+// ─── Vocabulary Learning Tracker ──────────────────────────────
+function saveLearning(won) {
+  if (!secretWord) return;
+  const word  = secretWord.toUpperCase();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const defaults = {
+    words: {},
+    weak_words: [],
+    daily: {},
+    streak: { current: 0, longest: 0, last_daily: null }
+  };
+  const v = JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(defaults));
+  v.words      = v.words || {};
+  v.weak_words = v.weak_words || [];
+  v.daily      = v.daily || {};
+  v.streak     = v.streak || { current: 0, longest: 0, last_daily: null };
+
+  // Word entry
+  const isNewWord = !v.words[word];
+  if (isNewWord) {
+    v.words[word] = { first_seen: today, last_seen: today, play_count: 0, won_count: 0, best_guess: null };
+  }
+  const w = v.words[word];
+  w.last_seen = today;
+  w.play_count = (w.play_count || 0) + 1;
+  if (won) {
+    w.won_count = (w.won_count || 0) + 1;
+    const guesses = currentRow + 1;
+    if (w.best_guess === null || w.best_guess === undefined || guesses < w.best_guess) {
+      w.best_guess = guesses;
+    }
+  }
+
+  // Weak words: add on loss, remove on win
+  const idx = v.weak_words.indexOf(word);
+  if (!won && idx === -1) {
+    v.weak_words.push(word);
+  } else if (won && idx !== -1) {
+    v.weak_words.splice(idx, 1);
+  }
+
+  // Daily activity
+  if (!v.daily[today]) v.daily[today] = { games: 0, wins: 0, new_words: 0 };
+  v.daily[today].games++;
+  if (won) v.daily[today].wins++;
+  if (isNewWord) v.daily[today].new_words++;
+
+  // Streak (daily mode only)
+  if (GAME_MODE === "daily") {
+    if (won) {
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      if (v.streak.last_daily === yesterday) {
+        v.streak.current = (v.streak.current || 0) + 1;
+      } else if (v.streak.last_daily !== today) {
+        v.streak.current = 1;
+      }
+      if (v.streak.current > (v.streak.longest || 0)) v.streak.longest = v.streak.current;
+      v.streak.last_daily = today;
+    } else {
+      v.streak.current = 0;
+      v.streak.last_daily = today;
+    }
+  }
+
+  localStorage.setItem("wm_vocab", JSON.stringify(v));
 }
 
 // ─── Give Up ──────────────────────────────────────────────────

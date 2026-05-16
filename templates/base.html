@@ -175,6 +175,24 @@
             </a>
           </li>
 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-mortarboard me-1"></i>
+              {% if lang == 'ko' %}내 학습{% else %}My Learning{% endif %}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/my-words">
+                <i class="bi bi-book me-1"></i>{% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/my-weak-words">
+                <i class="bi bi-exclamation-triangle me-1"></i>{% if lang == 'ko' %}약점 단어{% else %}Weak Words{% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/my-progress">
+                <i class="bi bi-graph-up me-1"></i>{% if lang == 'ko' %}진척도{% else %}Progress{% endif %}
+              </a></li>
+            </ul>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="/how-to-play">
               <i class="bi bi-question-circle me-1"></i>

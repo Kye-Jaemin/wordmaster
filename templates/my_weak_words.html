@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width:900px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Weak Words</h1>
+  <p class="text-muted mb-4">Words you couldn't solve, kept here for focused practice. They automatically leave this list when you win them in any game mode.</p>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h5 class="fw-bold mb-0">Your Practice List</h5>
+        <span id="weak-count" class="badge bg-warning text-dark"></span>
+      </div>
+      <div id="weak-list"></div>
+      <div id="weak-empty" class="text-center text-muted py-4 d-none">
+        <i class="bi bi-emoji-sunglasses fs-1 text-success"></i>
+        <p class="mb-2 mt-2">No weak words! Either you haven't lost a game yet, or you've mastered every word you missed.</p>
+        <a href="/" class="btn btn-primary btn-sm">Play a Game</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-muted small">
+    <i class="bi bi-info-circle me-1"></i>
+    Tip: Use Unlimited Mode to practice — every game uses a random word, and you'll have more chances to encounter these again.
+  </p>
+</div>
+
+<script>
+function getVocab() {
+  return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
+}
+
+function renderWeakWords() {
+  const v = getVocab();
+  const weak = v.weak_words || [];
+  const list  = document.getElementById("weak-list");
+  const empty = document.getElementById("weak-empty");
+  const count = document.getElementById("weak-count");
+
+  if (weak.length === 0) {
+    list.innerHTML = "";
+    count.textContent = "";
+    empty.classList.remove("d-none");
+    return;
+  }
+
+  count.textContent = `${weak.length} ${weak.length === 1 ? "word" : "words"}`;
+  empty.classList.add("d-none");
+
+  list.innerHTML = `
+    <div class="row g-2">
+      ${weak.map(word => {
+        const wd     = (v.words && v.words[word]) || {};
+        const played = wd.play_count || 1;
+        const won    = wd.won_count  || 0;
+        const lost   = played - won;
+        return `
+        <div class="col-md-6 col-lg-4">
+          <div class="card border-warning h-100">
+            <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold text-primary fs-5">${word}</div>
+                <small class="text-muted">Lost ${lost}× of ${played}</small>
+              </div>
+              <a href="/unlimited" class="btn btn-sm btn-outline-primary" title="Practice in Unlimited Mode">
+                <i class="bi bi-arrow-clockwise"></i> Practice
+              </a>
+            </div>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+}
+
+document.addEventListener("DOMContentLoaded", renderWeakWords);
+</script>
+{% endblock %}

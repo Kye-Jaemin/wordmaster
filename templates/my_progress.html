@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width:900px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-graph-up me-2"></i>My Progress</h1>
+  <p class="text-muted mb-4">Your learning journey at a glance — streak, vocabulary growth, and daily activity. All data stays on this device.</p>
+
+  <div id="progress-stats" class="row g-2 mb-4"></div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3"><i class="bi bi-book me-2"></i>Vocabulary Growth — last 30 days</h5>
+      <div style="position:relative;height:280px"><canvas id="vocab-chart"></canvas></div>
+      <div id="vocab-empty" class="text-center text-muted py-4 d-none">Play a few games to see your vocabulary growth here.</div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3"><i class="bi bi-calendar-week me-2"></i>Daily Activity — last 14 days</h5>
+      <div style="position:relative;height:240px"><canvas id="activity-chart"></canvas></div>
+      <div id="activity-empty" class="text-center text-muted py-4 d-none">No activity yet. Play a game today to start!</div>
+    </div>
+  </div>
+
+  <p class="text-muted small">
+    <i class="bi bi-shield-lock me-1"></i>
+    Progress data is stored only on this device. Clearing browser data will reset it.
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+function getVocab() {
+  return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
+}
+
+function renderProgress() {
+  const v      = getVocab();
+  const words  = v.words || {};
+  const daily  = v.daily || {};
+  const streak = v.streak || { current: 0, longest: 0 };
+
+  const totalWords = Object.keys(words).length;
+  const totalGames = Object.values(words).reduce((s, w) => s + (w.play_count || 0), 0);
+
+  document.getElementById("progress-stats").innerHTML = `
+    <div class="col-6 col-md-3"><div class="card bg-warning shadow-sm h-100"><div class="card-body py-2 px-3 text-center text-dark">
+      <div class="fs-2 fw-bold"><i class="bi bi-fire"></i> ${streak.current || 0}</div><div class="small">Current Streak</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-danger text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-2 fw-bold">${streak.longest || 0}</div><div class="small">Best Streak</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-primary text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-2 fw-bold">${totalWords}</div><div class="small">Vocabulary Size</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-info text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-2 fw-bold">${totalGames}</div><div class="small">Total Games</div>
+    </div></div></div>`;
+
+  const today = new Date();
+  const dayStr = d => d.toISOString().slice(0, 10);
+  const days30 = [];
+  for (let i = 29; i >= 0; i--) days30.push(dayStr(new Date(today.getTime() - i * 86400000)));
+  const days14 = [];
+  for (let i = 13; i >= 0; i--) days14.push(dayStr(new Date(today.getTime() - i * 86400000)));
+
+  // Vocabulary growth — cumulative count of unique words first_seen on or before each day
+  const wordsByDay = Object.values(words);
+  const cumulative = days30.map(d => wordsByDay.filter(w => (w.first_seen || "9999") <= d).length);
+
+  if (totalWords === 0) {
+    document.getElementById("vocab-chart").style.display = "none";
+    document.getElementById("vocab-empty").classList.remove("d-none");
+  } else {
+    new Chart(document.getElementById("vocab-chart"), {
+      type: "line",
+      data: {
+        labels: days30.map(d => d.slice(5)),
+        datasets: [{
+          label: "Words encountered",
+          data: cumulative,
+          borderColor: "#0d6efd",
+          backgroundColor: "rgba(13,110,253,0.12)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+      }
+    });
+  }
+
+  // Daily activity bars (games vs wins)
+  const games = days14.map(d => (daily[d]?.games) || 0);
+  const wins  = days14.map(d => (daily[d]?.wins)  || 0);
+  const hasActivity = games.some(g => g > 0);
+
+  if (!hasActivity) {
+    document.getElementById("activity-chart").style.display = "none";
+    document.getElementById("activity-empty").classList.remove("d-none");
+  } else {
+    new Chart(document.getElementById("activity-chart"), {
+      type: "bar",
+      data: {
+        labels: days14.map(d => d.slice(5)),
+        datasets: [
+          { label: "Games", data: games, backgroundColor: "rgba(13,110,253,0.55)" },
+          { label: "Wins",  data: wins,  backgroundColor: "rgba(25,135,84,0.85)" }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+      }
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderProgress);
+</script>
+{% endblock %}

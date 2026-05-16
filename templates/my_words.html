@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width:900px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-book me-2"></i>My Words</h1>
+  <p class="text-muted mb-4">Every word you've encountered in WordMaster, stored locally on this device. Your vocabulary grows with every game.</p>
+
+  <div id="words-stats" class="row g-2 mb-4"></div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h5 class="fw-bold mb-0">Word List</h5>
+        <div class="d-flex gap-2 flex-wrap">
+          <select id="word-sort" class="form-select form-select-sm" style="max-width:160px">
+            <option value="recent">Most recent</option>
+            <option value="oldest">Oldest first</option>
+            <option value="az">A → Z</option>
+            <option value="played">Most played</option>
+          </select>
+          <input type="search" id="word-search" class="form-control form-control-sm" placeholder="Search..." style="max-width:180px">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Word</th>
+              <th class="d-none d-md-table-cell">First Seen</th>
+              <th class="text-center">Played</th>
+              <th class="text-center">Won</th>
+              <th class="text-center">Best</th>
+            </tr>
+          </thead>
+          <tbody id="words-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="text-center text-muted py-4 d-none">
+        <i class="bi bi-emoji-smile fs-1 text-primary"></i>
+        <p class="mb-2 mt-2">No words yet. Play your first game to start tracking your vocabulary!</p>
+        <a href="/" class="btn btn-primary btn-sm">Play Now</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-muted small">
+    <i class="bi bi-shield-lock me-1"></i>
+    Your vocabulary data is stored only on this device. Clearing your browser data will reset it.
+  </p>
+</div>
+
+<script>
+function getVocab() {
+  return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
+}
+
+function renderStats(words) {
+  const wordList = Object.entries(words);
+  const total = wordList.length;
+  const totalGames = wordList.reduce((s, [, w]) => s + (w.play_count || 0), 0);
+  const totalWins  = wordList.reduce((s, [, w]) => s + (w.won_count  || 0), 0);
+  const winRate = totalGames ? Math.round((totalWins / totalGames) * 100) : 0;
+  document.getElementById("words-stats").innerHTML = `
+    <div class="col-6 col-md-3"><div class="card bg-primary text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-3 fw-bold">${total}</div><div class="small">Unique Words</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-info text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-3 fw-bold">${totalGames}</div><div class="small">Games Played</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-success text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-3 fw-bold">${totalWins}</div><div class="small">Games Won</div>
+    </div></div></div>
+    <div class="col-6 col-md-3"><div class="card bg-warning text-dark shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
+      <div class="fs-3 fw-bold">${winRate}%</div><div class="small">Win Rate</div>
+    </div></div></div>`;
+}
+
+function renderWords() {
+  const v = getVocab();
+  const words = v.words || {};
+  renderStats(words);
+
+  let wordList = Object.entries(words);
+  const sortMode = document.getElementById("word-sort")?.value || "recent";
+  const search   = (document.getElementById("word-search")?.value || "").toUpperCase().trim();
+
+  wordList = wordList.filter(([word]) => !search || word.includes(search));
+
+  wordList.sort((a, b) => {
+    if (sortMode === "recent") return (b[1].first_seen || "").localeCompare(a[1].first_seen || "");
+    if (sortMode === "oldest") return (a[1].first_seen || "").localeCompare(b[1].first_seen || "");
+    if (sortMode === "az")     return a[0].localeCompare(b[0]);
+    if (sortMode === "played") return (b[1].play_count || 0) - (a[1].play_count || 0);
+    return 0;
+  });
+
+  const tbody  = document.getElementById("words-tbody");
+  const empty  = document.getElementById("empty-state");
+  if (Object.keys(words).length === 0) {
+    tbody.innerHTML = "";
+    empty.classList.remove("d-none");
+    return;
+  }
+  empty.classList.add("d-none");
+
+  tbody.innerHTML = wordList.map(([word, w]) => `
+    <tr>
+      <td class="fw-bold text-primary">${word}</td>
+      <td class="d-none d-md-table-cell text-muted small">${w.first_seen || "—"}</td>
+      <td class="text-center">${w.play_count || 0}</td>
+      <td class="text-center">${w.won_count || 0}</td>
+      <td class="text-center">${w.best_guess !== null && w.best_guess !== undefined ? w.best_guess : "—"}</td>
+    </tr>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderWords();
+  document.getElementById("word-search")?.addEventListener("input", renderWords);
+  document.getElementById("word-sort")?.addEventListener("change", renderWords);
+});
+</script>
+{% endblock %}

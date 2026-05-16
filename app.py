@@ -261,6 +261,24 @@ def archive_day(date_str):
         prev_date=prev_date,
         next_date=next_date)
 
+@app.route("/my-words")
+def my_words():
+    return render_template("my_words.html",
+        title="My Words — Your WordMaster Vocabulary Log",
+        meta_desc="Every word you've encountered in WordMaster, tracked with dates and stats. Your personal vocabulary log, stored locally on your device.")
+
+@app.route("/my-weak-words")
+def my_weak_words():
+    return render_template("my_weak_words.html",
+        title="Weak Words — Targeted Practice | WordMaster",
+        meta_desc="Words you couldn't solve, kept here for focused practice. Master them in any WordMaster game mode and they'll graduate off the list.")
+
+@app.route("/my-progress")
+def my_progress():
+    return render_template("my_progress.html",
+        title="My Progress — Vocabulary Growth Dashboard | WordMaster",
+        meta_desc="Track your vocabulary growth, daily streak, and game activity over time. Personal learning dashboard with charts, stored locally.")
+
 @app.route("/blog")
 def blog():
     posts = [
