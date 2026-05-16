@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4" style="max-width:900px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-pencil-square me-2"></i>{% if lang == 'ko' %}내 단어로 게임{% else %}My Custom Words{% endif %}</h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}
+      외우고 싶은 5글자 단어를 직접 추가하고, 그 단어들로만 게임을 즐기세요. 모든 데이터는 이 기기에만 저장됩니다.
+    {% else %}
+      Add 5-letter words you want to master, then play games using only those words. All data is stored locally on this device.
+    {% endif %}
+  </p>
+
+  <!-- Word manager -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3">{% if lang == 'ko' %}내 단어 목록{% else %}My Word List{% endif %}</h5>
+      <form id="add-word-form" class="row g-2 mb-3" onsubmit="return false;">
+        <div class="col">
+          <input type="text" id="new-word-input" class="form-control" placeholder="{% if lang == 'ko' %}5글자 영단어 입력 (예: APPLE){% else %}Enter a 5-letter word (e.g. APPLE){% endif %}" maxlength="5" autocomplete="off" style="text-transform:uppercase">
+        </div>
+        <div class="col-auto">
+          <button id="add-word-btn" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i>{% if lang == 'ko' %}추가{% else %}Add{% endif %}
+          </button>
+        </div>
+      </form>
+      <div id="word-feedback" class="small mb-2"></div>
+      <div id="word-chips" class="d-flex flex-wrap gap-2"></div>
+      <div id="word-empty" class="text-muted small py-2 d-none">
+        {% if lang == 'ko' %}아직 단어가 없습니다. 위에 5글자 단어를 입력해서 추가하세요.{% else %}No words yet. Add a 5-letter word above to get started.{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Start game button -->
+  <div class="text-center mb-4">
+    <button id="start-game-btn" class="btn btn-success btn-lg" disabled>
+      <i class="bi bi-play-fill me-1"></i>{% if lang == 'ko' %}내 단어로 시작{% else %}Play with My Words{% endif %}
+    </button>
+    <div class="small text-muted mt-2" id="start-hint">
+      {% if lang == 'ko' %}단어를 1개 이상 추가하면 시작할 수 있습니다.{% else %}Add at least one word to start playing.{% endif %}
+    </div>
+  </div>
+
+  <!-- Game area (hidden until started) -->
+  <div id="custom-game-area" class="d-none">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="text-center mb-2">
+          <span class="badge bg-primary fs-6"><i class="bi bi-pencil-square me-1"></i>{% if lang == 'ko' %}내 단어 모드{% else %}Custom Words Mode{% endif %}</span>
+        </div>
+        <div id="toast-area" class="text-center mb-2" style="min-height:36px;"></div>
+        <div id="guess-counter" class="text-center mb-2">
+          <span class="badge bg-secondary fs-6">
+            {% if lang == 'ko' %}
+              <i class="bi bi-hash me-1"></i><span id="guess-current">1</span> / 6 번째 시도
+            {% else %}
+              <i class="bi bi-hash me-1"></i>Guess <span id="guess-current">1</span> / 6
+            {% endif %}
+          </span>
+        </div>
+        <div id="board" class="game-board mx-auto mb-3" data-length="5" data-maxguesses="6"></div>
+        <div id="result-panel" class="text-center d-none mt-3">
+          <div id="result-emoji" class="fs-4 mb-2"></div>
+          <h5 id="result-message" class="fw-bold"></h5>
+          <p id="result-word" class="text-muted small mb-2"></p>
+          <div class="d-flex gap-2 justify-content-center flex-wrap mt-2">
+            <button id="btn-play-again" class="btn btn-primary btn-sm" onclick="location.reload()">
+              <i class="bi bi-arrow-clockwise me-1"></i>{% if lang == 'ko' %}새 게임{% else %}New Game{% endif %}
+            </button>
+          </div>
+        </div>
+        <div id="keyboard" class="keyboard mt-2 mx-auto">
+          <div class="key-row">
+            <button class="key" data-key="Q">Q</button><button class="key" data-key="W">W</button><button class="key" data-key="E">E</button><button class="key" data-key="R">R</button><button class="key" data-key="T">T</button><button class="key" data-key="Y">Y</button><button class="key" data-key="U">U</button><button class="key" data-key="I">I</button><button class="key" data-key="O">O</button><button class="key" data-key="P">P</button>
+          </div>
+          <div class="key-row">
+            <button class="key" data-key="A">A</button><button class="key" data-key="S">S</button><button class="key" data-key="D">D</button><button class="key" data-key="F">F</button><button class="key" data-key="G">G</button><button class="key" data-key="H">H</button><button class="key" data-key="J">J</button><button class="key" data-key="K">K</button><button class="key" data-key="L">L</button>
+          </div>
+          <div class="key-row">
+            <button class="key key-wide" data-key="ENTER"><i class="bi bi-check-lg"></i> ENTER</button>
+            <button class="key" data-key="Z">Z</button><button class="key" data-key="X">X</button><button class="key" data-key="C">C</button><button class="key" data-key="V">V</button><button class="key" data-key="B">B</button><button class="key" data-key="N">N</button><button class="key" data-key="M">M</button>
+            <button class="key key-wide" data-key="BACKSPACE"><i class="bi bi-backspace"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-muted small mt-3">
+    <i class="bi bi-shield-lock me-1"></i>
+    {% if lang == 'ko' %}
+      모든 단어는 이 기기의 브라우저에만 저장됩니다. 브라우저 데이터를 삭제하면 사라집니다.
+    {% else %}
+      All words are stored only in this browser. Clearing browser data will erase them.
+    {% endif %}
+  </p>
+</div>
+
+<script>
+const STORAGE_KEY = "wm_custom_words";
+
+function getWords() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+}
+function saveWords(arr) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+
+function showFeedback(msg, isError) {
+  const el = document.getElementById("word-feedback");
+  el.textContent = msg;
+  el.className = "small mb-2 " + (isError ? "text-danger" : "text-success");
+  setTimeout(() => { if (el.textContent === msg) el.textContent = ""; }, 2500);
+}
+
+function render() {
+  const words = getWords();
+  const chips = document.getElementById("word-chips");
+  const empty = document.getElementById("word-empty");
+  const startBtn = document.getElementById("start-game-btn");
+  const startHint = document.getElementById("start-hint");
+
+  if (words.length === 0) {
+    chips.innerHTML = "";
+    empty.classList.remove("d-none");
+    startBtn.disabled = true;
+    startHint.classList.remove("d-none");
+    return;
+  }
+  empty.classList.add("d-none");
+  startBtn.disabled = false;
+  startHint.classList.add("d-none");
+
+  chips.innerHTML = words.map(w => `
+    <span class="badge bg-primary d-flex align-items-center gap-1 py-2 px-3">
+      <span class="fw-bold">${w}</span>
+      <button class="btn-close btn-close-white btn-sm" style="font-size:0.6rem" data-word="${w}" aria-label="Remove"></button>
+    </span>
+  `).join("");
+  chips.querySelectorAll("button[data-word]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const w = btn.dataset.word;
+      const arr = getWords().filter(x => x !== w);
+      saveWords(arr);
+      render();
+    });
+  });
+}
+
+document.getElementById("add-word-btn").addEventListener("click", () => {
+  const input = document.getElementById("new-word-input");
+  const word = (input.value || "").trim().toUpperCase();
+  if (word.length !== 5) { showFeedback("Word must be exactly 5 letters.", true); return; }
+  if (!/^[A-Z]+$/.test(word)) { showFeedback("Letters only (A–Z).", true); return; }
+  const words = getWords();
+  if (words.includes(word)) { showFeedback(`"${word}" is already in your list.`, true); return; }
+  words.push(word);
+  saveWords(words);
+  showFeedback(`Added "${word}".`, false);
+  input.value = "";
+  render();
+});
+
+document.getElementById("new-word-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    document.getElementById("add-word-btn").click();
+  }
+});
+
+document.getElementById("start-game-btn").addEventListener("click", () => {
+  document.getElementById("custom-game-area").classList.remove("d-none");
+  document.getElementById("custom-game-area").scrollIntoView({ behavior: "smooth", block: "start" });
+  // Set GAME_MODE globally so game.js picks it up via custom branch
+  window.GAME_MODE   = "custom";
+  window.WORD_LENGTH = 5;
+  window.MAX_GUESSES = 6;
+  // Load the game script if not already loaded
+  if (!window.__customGameStarted) {
+    window.__customGameStarted = true;
+    const s = document.createElement("script");
+    s.src = "/static/js/game.js";
+    document.body.appendChild(s);
+  } else {
+    location.reload();
+  }
+});
+
+render();
+</script>
+{% endblock %}

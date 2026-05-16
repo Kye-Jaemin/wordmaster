@@ -110,73 +110,44 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
 
+          <!-- Play: all game modes consolidated -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="/daily" data-bs-toggle="dropdown">
-              <i class="bi bi-calendar-day me-1"></i>
-              {% if lang == 'ko' %}데일리{% else %}Daily{% endif %}
+              <i class="bi bi-play-fill me-1"></i>
+              {% if lang == 'ko' %}플레이{% else %}Play{% endif %}
             </a>
             <ul class="dropdown-menu">
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}오늘의 게임{% else %}Today{% endif %}</h6></li>
               <li><a class="dropdown-item" href="/daily">
-                <i class="bi bi-play-fill me-1"></i>
-                {% if lang == 'ko' %}오늘의 챌린지{% else %}Today's Challenge{% endif %}
+                <i class="bi bi-calendar-day me-1"></i>{% if lang == 'ko' %}오늘의 챌린지{% else %}Daily Challenge{% endif %}
               </a></li>
-              <li><a class="dropdown-item" href="/archive">
-                <i class="bi bi-clock-history me-1"></i>
-                {% if lang == 'ko' %}보관함{% else %}Archive{% endif %}
-              </a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/unlimited">
-              <i class="bi bi-infinity me-1"></i>
-              {% if lang == 'ko' %}무제한{% else %}Unlimited{% endif %}
-            </a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-              {% if lang == 'ko' %}모드{% else %}Modes{% endif %}
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/easy">
-                {% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}
-              </a></li>
-              <li><a class="dropdown-item" href="/">
-                {% if lang == 'ko' %}기본 (5글자){% else %}Normal (5 Letters){% endif %}
-              </a></li>
-              <li><a class="dropdown-item" href="/hard">
-                {% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}
+              <li><a class="dropdown-item" href="/unlimited">
+                <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한{% else %}Unlimited{% endif %}
               </a></li>
               <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}학습 수준별{% else %}By Learning Level{% endif %}</h6></li>
+              <li><a class="dropdown-item" href="/middle">🎓 {% if lang == 'ko' %}중학생 수준{% else %}Middle School{% endif %}</a></li>
+              <li><a class="dropdown-item" href="/high">📚 {% if lang == 'ko' %}고등학생 수준{% else %}High School{% endif %}</a></li>
+              <li><a class="dropdown-item" href="/college">🎒 {% if lang == 'ko' %}대학생 수준{% else %}College Level{% endif %}</a></li>
+              <li><a class="dropdown-item" href="/custom">✍️ {% if lang == 'ko' %}내 단어{% else %}My Custom Words{% endif %}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}난이도{% else %}Difficulty{% endif %}</h6></li>
+              <li><a class="dropdown-item" href="/easy">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}</a></li>
+              <li><a class="dropdown-item" href="/hard">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}테마{% else %}Themed{% endif %}</h6></li>
               <li><a class="dropdown-item" href="/category/animals">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a></li>
               <li><a class="dropdown-item" href="/category/food">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/archive">
+                <i class="bi bi-clock-history me-1"></i>{% if lang == 'ko' %}보관함{% else %}Archive{% endif %}
+              </a></li>
             </ul>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/word-of-day">
-              <i class="bi bi-stars me-1"></i>
-              {% if lang == 'ko' %}오늘의 단어{% else %}Word of Day{% endif %}
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/news-challenge">
-              <i class="bi bi-newspaper me-1"></i>
-              {% if lang == 'ko' %}뉴스 챌린지{% else %}News{% endif %}
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/leaderboard">
-              <i class="bi bi-trophy me-1"></i>
-              {% if lang == 'ko' %}통계{% else %}Stats{% endif %}
-            </a>
-          </li>
-
+          <!-- My Learning: promoted to 2nd position for AdSense identity -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
               <i class="bi bi-mortarboard me-1"></i>
               {% if lang == 'ko' %}내 학습{% else %}My Learning{% endif %}
             </a>
@@ -194,9 +165,23 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/how-to-play">
-              <i class="bi bi-question-circle me-1"></i>
-              {% if lang == 'ko' %}게임 방법{% else %}How to Play{% endif %}
+            <a class="nav-link" href="/word-of-day">
+              <i class="bi bi-stars me-1"></i>
+              {% if lang == 'ko' %}오늘의 단어{% else %}Word of Day{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/news-challenge">
+              <i class="bi bi-newspaper me-1"></i>
+              {% if lang == 'ko' %}뉴스{% else %}News{% endif %}
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/leaderboard">
+              <i class="bi bi-trophy me-1"></i>
+              {% if lang == 'ko' %}통계{% else %}Stats{% endif %}
             </a>
           </li>
 
@@ -206,11 +191,26 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/contact">
-              <i class="bi bi-envelope me-1"></i>
-              {% if lang == 'ko' %}문의{% else %}Contact{% endif %}
+          <!-- More: secondary info pages consolidated -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots me-1"></i>
+              {% if lang == 'ko' %}더보기{% else %}More{% endif %}
             </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/how-to-play">
+                <i class="bi bi-question-circle me-1"></i>{% if lang == 'ko' %}게임 방법{% else %}How to Play{% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/faq">
+                <i class="bi bi-patch-question me-1"></i>FAQ
+              </a></li>
+              <li><a class="dropdown-item" href="/about">
+                <i class="bi bi-info-circle me-1"></i>{% if lang == 'ko' %}소개{% else %}About{% endif %}
+              </a></li>
+              <li><a class="dropdown-item" href="/contact">
+                <i class="bi bi-envelope me-1"></i>{% if lang == 'ko' %}문의{% else %}Contact{% endif %}
+              </a></li>
+            </ul>
           </li>
 
           <!-- Language Toggle -->

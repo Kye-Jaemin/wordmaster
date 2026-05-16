@@ -13,6 +13,57 @@
   </div>
 </div>
 
+<!-- Category Selector — learning-first ordering -->
+<div class="container-xl pb-2 pt-1">
+  <div class="row g-2 justify-content-center">
+    <div class="col-12 text-center mb-1">
+      <small class="text-muted">{% if lang == 'ko' %}카테고리 선택{% else %}Choose a category{% endif %}</small>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/middle" class="btn btn-outline-primary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">🎓</span><br>
+        <small class="fw-bold">{% if lang == 'ko' %}중학생{% else %}Middle School{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/high" class="btn btn-outline-primary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">📚</span><br>
+        <small class="fw-bold">{% if lang == 'ko' %}고등학생{% else %}High School{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/college" class="btn btn-outline-primary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">🎒</span><br>
+        <small class="fw-bold">{% if lang == 'ko' %}대학생{% else %}College{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/custom" class="btn btn-outline-primary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">✍️</span><br>
+        <small class="fw-bold">{% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/news-challenge" class="btn btn-outline-primary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">📰</span><br>
+        <small class="fw-bold">{% if lang == 'ko' %}시사 뉴스{% else %}News{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/category/animals" class="btn btn-outline-secondary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">🐾</span><br>
+        <small>{% if lang == 'ko' %}동물{% else %}Animals{% endif %}</small>
+      </a>
+    </div>
+    <div class="col-6 col-sm-4 col-md-2-4" style="flex:0 0 auto;width:auto;min-width:135px">
+      <a href="/category/food" class="btn btn-outline-secondary btn-sm w-100 py-2">
+        <span style="font-size:1.2rem">🍕</span><br>
+        <small>{% if lang == 'ko' %}음식{% else %}Food{% endif %}</small>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div class="container-xl py-3">
   <div class="row justify-content-center g-3">
 

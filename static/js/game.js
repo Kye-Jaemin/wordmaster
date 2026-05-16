@@ -76,6 +76,18 @@ function buildBoard() {
 }
 
 async function fetchWord() {
+  // Custom mode: read words from user's localStorage list (never hits server)
+  if (typeof GAME_MODE !== "undefined" && GAME_MODE === "custom") {
+    const customWords = JSON.parse(localStorage.getItem("wm_custom_words") || "[]")
+      .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
+    if (customWords.length === 0) {
+      showToast("Add custom words first!");
+      secretWord = "";
+      return;
+    }
+    secretWord = customWords[Math.floor(Math.random() * customWords.length)].toUpperCase();
+    return;
+  }
   try {
     const params = new URLSearchParams({ mode: GAME_MODE, length: WORD_LENGTH });
     const res  = await fetch(`/api/word?${params}`);
@@ -228,7 +240,7 @@ function updateKeyboard(result) {
 // ─── Result ───────────────────────────────────────────────────
 function showResult(won, message = "") {
   resultPanel.classList.remove("d-none");
-  resultAd.classList.remove("d-none");
+  if (resultAd) resultAd.classList.remove("d-none");
 
   const emojis    = document.getElementById("result-emoji");
   const msgEl     = document.getElementById("result-message");
@@ -392,7 +404,7 @@ async function resetGame() {
   currentGuess  = [];
   hintUsed      = false;
   resultPanel.classList.add("d-none");
-  resultAd.classList.add("d-none");
+  if (resultAd) resultAd.classList.add("d-none");
   keyboard.querySelectorAll(".key").forEach(btn => {
     btn.className = btn.classList.contains("key-wide") ? "key key-wide" : "key";
     delete btn.dataset.state;

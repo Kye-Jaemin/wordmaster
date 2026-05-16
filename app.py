@@ -23,7 +23,8 @@ def fetch_news_articles():
             desc  = item.findtext("description", "").strip()
             link  = item.findtext("link", "").strip()
             pub   = item.findtext("pubDate", "").strip()
-            desc  = re.sub(r"<[^>]+>", "", desc)[:180]
+            # Use full description (was [:180]) so word picker has more body text to draw from
+            desc  = re.sub(r"<[^>]+>", "", desc).strip()
             if title and link:
                 articles.append({"title": title, "description": desc,
                                   "link": link, "source": "BBC News", "pubDate": pub})
@@ -260,6 +261,33 @@ def archive_day(date_str):
         is_today=is_today,
         prev_date=prev_date,
         next_date=next_date)
+
+@app.route("/middle")
+def middle_level():
+    return render_template("index.html",
+        title="Middle School Word Game — WordMaster",
+        meta_desc="Daily 5-letter word puzzle using middle school vocabulary. Build core English fluency through play. Free, no signup needed.",
+        mode="category_middle", word_length=5, max_guesses=6)
+
+@app.route("/high")
+def high_level():
+    return render_template("index.html",
+        title="High School Word Game — WordMaster",
+        meta_desc="5-letter word puzzle using high school and SAT-prep vocabulary. Strengthen academic English daily. Free, no signup.",
+        mode="category_high", word_length=5, max_guesses=6)
+
+@app.route("/college")
+def college_level():
+    return render_template("index.html",
+        title="College Word Game — WordMaster",
+        meta_desc="Advanced 5-letter word puzzle using college and GRE-level vocabulary. Sharpen academic English while you play. Free.",
+        mode="category_college", word_length=5, max_guesses=6)
+
+@app.route("/custom")
+def custom_words():
+    return render_template("custom_words.html",
+        title="My Custom Words — WordMaster",
+        meta_desc="Build your own word list and practice with it. Add personal vocabulary you want to master and play through them with WordMaster.")
 
 @app.route("/my-words")
 def my_words():
