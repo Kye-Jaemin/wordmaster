@@ -293,6 +293,7 @@ _CATEGORY_TO_MODE = {
     "food":    ("category_food",    "Food",              5),
     "daily":   ("daily",            "Daily",             5),
     "custom":  ("custom",           "Custom Words",      5),
+    "news":    ("news",             "News Words",        5),
     "easy":    ("easy",             "Easy (4 Letters)",  4),
     "hard":    ("hard",             "Hard (6 Letters)",  6),
 }
@@ -305,9 +306,58 @@ _TILE_URL_FOR_CATEGORY = {
     "food":    "/category/food",
     "daily":   "/daily",
     "custom":  "/custom",
+    "news":    "/news-challenge",
     "easy":    "/easy",
     "hard":    "/hard",
 }
+
+def _selector_urls(prefix):
+    """Build the category + difficulty URLs for a given puzzle format prefix.
+
+    prefix = "" for Tile Guess (the homepage / standard 5-letter game)
+    prefix = "/anagram" or "/hangman" for the alternate puzzle formats
+    """
+    if prefix == "":
+        # Tile Guess uses bespoke URLs from the original site structure
+        return {
+            "middle":  "/middle",
+            "high":    "/high",
+            "college": "/college",
+            "custom":  "/custom",
+            "news":    "/news-challenge",
+            "animals": "/category/animals",
+            "food":    "/category/food",
+            "easy":    "/easy",
+            "normal":  "/",
+            "hard":    "/hard",
+        }
+    return {
+        "middle":  f"{prefix}/middle",
+        "high":    f"{prefix}/high",
+        "college": f"{prefix}/college",
+        "custom":  f"{prefix}/custom",
+        "news":    f"{prefix}/news",
+        "animals": f"{prefix}/animals",
+        "food":    f"{prefix}/food",
+        "easy":    f"{prefix}/easy",
+        "normal":  prefix,
+        "hard":    f"{prefix}/hard",
+    }
+
+@app.context_processor
+def inject_selector_urls():
+    """Inject puzzle-format-aware vocab + difficulty switcher URLs into every template."""
+    path = request.path or "/"
+    if path.startswith("/anagram"):
+        prefix = "/anagram"
+    elif path.startswith("/hangman"):
+        prefix = "/hangman"
+    else:
+        prefix = ""
+    return {
+        "puzzle_prefix": prefix,
+        "selector_urls": _selector_urls(prefix),
+    }
 
 def _puzzle_context(category):
     """Build mode, label, word_length, and sibling URLs for an alternate-format puzzle page."""

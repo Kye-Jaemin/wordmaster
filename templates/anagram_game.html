@@ -29,11 +29,35 @@
 <div class="container py-3" style="max-width:720px">
 
   <!-- Puzzle format banner -->
-  <div class="text-center small mb-3">
+  <div class="text-center small mb-2">
     <span class="text-muted me-2">{% if lang == 'ko' %}같은 어휘로 다른 형식:{% else %}Same vocabulary in:{% endif %}</span>
     <a href="{{ wordle_url }}" class="btn btn-sm btn-outline-primary me-1">Tile Guess</a>
     <button class="btn btn-sm btn-primary me-1" disabled>Anagram</button>
     <a href="{{ hangman_url }}" class="btn btn-sm btn-outline-primary">Hangman</a>
+  </div>
+
+  <!-- Vocab category + difficulty switcher (stays in Anagram format) -->
+  <div class="mb-3">
+    <div class="text-center mb-1">
+      <small class="text-muted">{% if lang == 'ko' %}어휘 카테고리 변경 (애너그램 유지){% else %}Switch vocabulary (stays in Anagram){% endif %}</small>
+    </div>
+    <div class="d-flex gap-1 flex-wrap justify-content-center mb-2">
+      <a href="{{ selector_urls.middle }}"  class="btn btn-sm btn-outline-primary">🎓 {% if lang == 'ko' %}중학생{% else %}Middle{% endif %}</a>
+      <a href="{{ selector_urls.high }}"    class="btn btn-sm btn-outline-primary">📚 {% if lang == 'ko' %}고등학생{% else %}High{% endif %}</a>
+      <a href="{{ selector_urls.college }}" class="btn btn-sm btn-outline-primary">🎒 {% if lang == 'ko' %}대학생{% else %}College{% endif %}</a>
+      <a href="{{ selector_urls.custom }}"  class="btn btn-sm btn-outline-primary">✍️ {% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}</a>
+      <a href="{{ selector_urls.news }}"    class="btn btn-sm btn-outline-primary">📰 {% if lang == 'ko' %}뉴스{% else %}News{% endif %}</a>
+      <a href="{{ selector_urls.animals }}" class="btn btn-sm btn-outline-secondary">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a>
+      <a href="{{ selector_urls.food }}"    class="btn btn-sm btn-outline-secondary">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a>
+    </div>
+    <div class="text-center mb-1">
+      <small class="text-muted">{% if lang == 'ko' %}난이도 변경{% else %}Change difficulty{% endif %}</small>
+    </div>
+    <div class="d-flex gap-1 flex-wrap justify-content-center">
+      <a href="{{ selector_urls.easy }}"   class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4){% endif %}</a>
+      <a href="{{ selector_urls.normal }}" class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}보통 (5글자){% else %}Normal (5){% endif %}</a>
+      <a href="{{ selector_urls.hard }}"   class="btn btn-sm btn-outline-secondary">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6){% endif %}</a>
+    </div>
   </div>
 
   <!-- Header -->
