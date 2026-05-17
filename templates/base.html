@@ -25,7 +25,17 @@
        crossorigin="anonymous"></script>
 
   <!-- Google Analytics 4 -->
-  <!-- GA4_CODE -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9LTQ64C145"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9LTQ64C145', {
+      // Honor the language the visitor is actually seeing so Korean and English
+      // sessions are reported as separate language dimensions in GA4.
+      'language': '{{ lang }}'
+    });
+  </script>
 
   <link rel="stylesheet" href="/static/css/style.css"/>
   <link rel="icon" href="/static/img/favicon.png" type="image/png"/>
