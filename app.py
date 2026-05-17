@@ -450,21 +450,21 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
-        {"slug": "anagram-strategy", "title": "Anagram Strategy: Where I Lose Words I Thought I Knew", "date": "2026-05-17", "excerpt": "Anagram is not the easy warm-up I thought it was. Here is what I started doing differently after losing more anagrams than I expected."},
-        {"slug": "hangman-letter-frequency", "title": "Hangman as Letter-Frequency Practice", "date": "2026-05-17", "excerpt": "Hangman taught me what English actually looks like. The instinct for which letters carry information transfers to every other word puzzle."},
-        {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each."},
+        {"slug": "anagram-strategy", "title": "Anagram Strategy: Where I Lose Words I Thought I Knew", "title_ko": "애너그램 전략: 내가 안다고 생각한 단어를 놓치는 지점", "date": "2026-05-17", "excerpt": "Anagram is not the easy warm-up I thought it was. Here is what I started doing differently after losing more anagrams than I expected.", "excerpt_ko": "애너그램은 제가 생각했던 쉬운 워밍업이 아니었습니다. 예상보다 더 많은 애너그램을 놓치고 난 뒤 무엇을 다르게 하기 시작했는지."},
+        {"slug": "hangman-letter-frequency", "title": "Hangman as Letter-Frequency Practice", "title_ko": "행맨, 글자 빈도 직관을 키우는 도구", "date": "2026-05-17", "excerpt": "Hangman taught me what English actually looks like. The instinct for which letters carry information transfers to every other word puzzle.", "excerpt_ko": "행맨은 영어가 실제로 어떻게 생겼는지 가르쳐 줍니다. 어떤 글자가 정보를 담는지에 대한 직관은 모든 단어 퍼즐에 그대로 이전됩니다."},
+        {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "title_ko": "한 단어, 세 가지 퍼즐: 타일 게임, 애너그램, 행맨", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each.", "excerpt_ko": "세 가지 퍼즐 메카닉이 어휘의 세 가지 다른 능력을 훈련합니다 — 인지, 생산, 글자 단위 직관. 각각을 어떻게 활용하는지."},
         {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
         {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
         {"slug": "common-5-letter-words", "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)", "date": "2026-05-03", "excerpt": "These 50 high-frequency 5-letter words appear constantly in word games and everyday English. Master them to gain a serious advantage."},
         {"slug": "word-roots-prefixes-suffixes", "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet", "date": "2026-04-30", "excerpt": "Learn 30 Latin and Greek roots that unlock thousands of English words. One root can teach you 20 new words at once."},
         {"slug": "vocabulary-habit-building", "title": "How to Build a Vocabulary Habit That Actually Sticks", "date": "2026-04-27", "excerpt": "Most vocabulary-building attempts fail within a week. Here is the habit-building science that makes the difference."},
-        {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included."},
+        {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "title_ko": "SAT 필수 어휘 100개", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included.", "excerpt_ko": "고빈출 SAT 어휘로 점수를 올리세요. 정의, 예문, 암기 팁이 포함되어 있습니다."},
         {"slug": "ielts-essential-words", "title": "50 Essential IELTS Words to Improve Your Band Score", "date": "2026-04-10", "excerpt": "Master these 50 essential IELTS vocabulary words and watch your writing and speaking scores improve dramatically."},
         {"slug": "reading-comprehension-word-games", "title": "How Word Games Improve Reading Comprehension", "date": "2026-04-03", "excerpt": "The link between word game performance and reading ability is stronger than most people realize. Here is what research shows."},
         {"slug": "greek-latin-roots-english", "title": "Greek and Latin Roots Every English Learner Should Know", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. These 25 classical roots appear in thousands of modern words across every subject."},
         {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster."},
-        {"slug": "word-game-tips", "title": "10 Best Strategies to Win Word Games Every Time", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips."},
-        {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage."},
+        {"slug": "word-game-tips", "title": "10 Best Strategies to Win Word Games Every Time", "title_ko": "단어 게임 승리 전략 10가지", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips.", "excerpt_ko": "검증된 시작 단어 전략과 패턴 인지 팁으로 단어 추측 게임을 마스터하세요."},
+        {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "title_ko": "2026년 단어 게임 최고의 시작 단어", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage.", "excerpt_ko": "CRANE, AUDIO, STARE — 글자 커버리지를 최대화하는 시작 단어 20개를 순위 매겼습니다."},
         {"slug": "business-english-vocabulary", "title": "40 Essential Business English Words You Need at Work", "date": "2026-02-15", "excerpt": "From boardroom to email, these 40 business vocabulary words will make you sound more confident and professional."},
         {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children."},
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
@@ -472,9 +472,16 @@ def blog():
     # Attach a tag to each post so the index can show a colour-coded badge
     for p in posts:
         p["tag"] = BLOG_TAGS.get(p["slug"], "vocab")
+    lang = session.get("lang", "en")
+    page_title = ("워드마스터 블로그 — 어휘 팁과 단어 게임 가이드 | WordMaster"
+                  if lang == "ko"
+                  else "Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster")
+    page_meta  = ("WordMaster 블로그: 어휘 강화 전략, 단어 게임의 두뇌 과학, SAT/IELTS 단어 리스트, 그리고 모든 퍼즐을 이기는 검증된 전술."
+                  if lang == "ko"
+                  else "WordMaster blog: expert vocabulary-building strategies, brain science behind word games, SAT/IELTS word lists, and proven tactics to win every puzzle.")
     return render_template("blog/index.html",
-        title="Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster",
-        meta_desc="WordMaster blog: expert vocabulary-building strategies, brain science behind word games, SAT/IELTS word lists, and proven tactics to win every puzzle.",
+        title=page_title,
+        meta_desc=page_meta,
         posts=posts)
 
 @app.route("/blog/<slug>")
@@ -482,30 +489,38 @@ def blog_post(slug):
     posts = {
         "anagram-strategy": {
             "title": "Anagram Strategy: Where I Lose Words I Thought I Knew",
+            "title_ko": "애너그램 전략: 내가 안다고 생각한 단어를 놓치는 지점",
             "date": "2026-05-17",
             "content": "anagram_strategy",
             "meta_desc": "Anagram is not the easy warm-up most players think. A first-person look at why anagram exposes the gap between recognizing a word and owning it — and how to close that gap.",
+            "meta_desc_ko": "애너그램은 대부분의 사람들이 생각하는 쉬운 워밍업이 아닙니다. 단어를 인지하는 것과 진짜로 소유하는 것 사이의 격차를 애너그램이 어떻게 드러내는지, 그리고 그 격차를 어떻게 줄이는지에 대한 1인칭 기록.",
             "related": ["three-puzzle-formats", "hangman-letter-frequency", "word-roots-prefixes-suffixes"]
         },
         "hangman-letter-frequency": {
             "title": "Hangman as Letter-Frequency Practice",
+            "title_ko": "행맨, 글자 빈도 직관을 키우는 도구",
             "date": "2026-05-17",
             "content": "hangman_letter_frequency",
             "meta_desc": "Hangman is the only word puzzle that teaches what English actually looks like. How letter-frequency intuition built in hangman transfers to every other word puzzle and to reading.",
+            "meta_desc_ko": "행맨은 영어가 실제로 어떻게 생겼는지 가르쳐 주는 유일한 단어 퍼즐입니다. 행맨에서 쌓은 글자 빈도 직관이 다른 모든 단어 퍼즐과 읽기로 어떻게 이전되는지.",
             "related": ["three-puzzle-formats", "anagram-strategy", "pattern-recognition-word-games"]
         },
         "three-puzzle-formats": {
             "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman",
+            "title_ko": "한 단어, 세 가지 퍼즐: 타일 게임, 애너그램, 행맨",
             "date": "2026-05-16",
             "content": "three_puzzle_formats",
             "meta_desc": "Tile Guess, Anagram, and Hangman train three different vocabulary skills. Why WordMaster offers all three side-by-side, and which one to play when.",
+            "meta_desc_ko": "타일 게임, 애너그램, 행맨이 어휘의 세 가지 다른 능력을 훈련합니다. WordMaster가 세 가지를 함께 제공하는 이유와 언제 무엇을 플레이해야 하는지.",
             "related": ["word-game-tips", "best-starting-words", "pattern-recognition-word-games"]
         },
         "top-100-sat-words": {
             "title": "Top 100 SAT Vocabulary Words You Must Know",
+            "title_ko": "SAT 필수 어휘 100개",
             "date": "2026-04-15",
             "content": "top_100_sat_words",
             "meta_desc": "Boost your SAT verbal score with the 100 highest-frequency vocabulary words. Definitions, example sentences, and proven memory techniques for fast retention.",
+            "meta_desc_ko": "SAT 버벌 점수를 높여주는 고빈출 어휘 100개. 정의, 예문, 그리고 빠른 암기를 위한 검증된 기억법.",
             "related": ["ielts-essential-words", "business-english-vocabulary", "word-roots-prefixes-suffixes"]
         },
         "ielts-essential-words": {
@@ -519,14 +534,18 @@ def blog_post(slug):
             "title": "10 Best Strategies to Win Word Games Every Time",
             "date": "2026-03-01",
             "content": "wordle_tips",
+            "title_ko": "단어 게임 승리 전략 10가지",
             "meta_desc": "10 expert strategies to consistently win word guessing games. Best starting words, letter frequency tactics, double-letter detection, and elimination tricks.",
+            "meta_desc_ko": "단어 추측 게임에서 일관되게 이기는 10가지 전문 전략. 최고의 시작 단어, 글자 빈도 활용법, 중복 글자 탐지, 그리고 제거법.",
             "related": ["best-starting-words", "pattern-recognition-word-games", "word-game-history"]
         },
         "best-starting-words": {
             "title": "The Best Starting Words for Word Games in 2026",
             "date": "2026-02-20",
             "content": "best_starting_words",
+            "title_ko": "2026년 단어 게임 최고의 시작 단어",
             "meta_desc": "Discover the top 20 starting words for word puzzle games in 2026. CRANE, STARE, AUDIO ranked by letter coverage. Solve faster with the best opener for you.",
+            "meta_desc_ko": "2026년 단어 퍼즐 최고의 시작 단어 20개. CRANE, STARE, AUDIO를 글자 커버리지 기준으로 순위 매김. 본인에게 맞는 최고의 시작 단어로 더 빨리 풀어보세요.",
             "related": ["word-game-tips", "common-5-letter-words", "pattern-recognition-word-games"]
         },
         "word-game-history": {
@@ -614,15 +633,22 @@ def blog_post(slug):
     # Attach tag for the badge shown next to the post title
     post["tag"] = BLOG_TAGS.get(slug, "vocab")
 
-    # Resolve related slugs to title+url for template
-    related_posts = [
-        {"slug": s, "title": posts[s]["title"], "url": f"/blog/{s}"}
-        for s in post.get("related", []) if s in posts
-    ]
+    # Resolve related slugs to title+url for template (prefer KO title when available)
+    lang = session.get("lang", "en")
+    related_posts = []
+    for s in post.get("related", []):
+        if s in posts:
+            other = posts[s]
+            other_title = other.get("title_ko") if lang == "ko" and other.get("title_ko") else other["title"]
+            related_posts.append({"slug": s, "title": other_title, "url": f"/blog/{s}"})
+
+    # Pick title/meta in the current language with a clean fallback to English
+    page_title = post.get("title_ko") if lang == "ko" and post.get("title_ko") else post["title"]
+    page_meta  = post.get("meta_desc_ko") if lang == "ko" and post.get("meta_desc_ko") else post.get("meta_desc", f"Read: {post['title']}")
 
     return render_template("blog/post.html",
-        title=f"{post['title']} — WordMaster Blog",
-        meta_desc=post.get("meta_desc", f"Read: {post['title']}"),
+        title=f"{page_title} — WordMaster Blog",
+        meta_desc=page_meta,
         post=post, slug=slug,
         related_posts=related_posts)
 

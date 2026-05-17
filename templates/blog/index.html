@@ -26,8 +26,8 @@
           {% else %}
             <span class="badge bg-secondary mb-2">{% if lang == 'ko' %}어휘 학습{% else %}Vocab Learning{% endif %}</span>
           {% endif %}
-          <h5 class="fw-bold">{{ post.title }}</h5>
-          <p class="text-muted small">{{ post.excerpt }}</p>
+          <h5 class="fw-bold">{% if lang == 'ko' and post.title_ko %}{{ post.title_ko }}{% else %}{{ post.title }}{% endif %}</h5>
+          <p class="text-muted small">{% if lang == 'ko' and post.excerpt_ko %}{{ post.excerpt_ko }}{% else %}{{ post.excerpt }}{% endif %}</p>
         </div>
         <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
           <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ post.date }}</small>
