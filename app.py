@@ -478,7 +478,9 @@ def blog():
     # Attach a tag to each post so the index can show a colour-coded badge
     for p in posts:
         p["tag"] = BLOG_TAGS.get(p["slug"], "vocab")
-    lang = session.get("lang", "en")
+    lang = request.args.get("lang") or session.get("lang", "en")
+    if lang not in ("en", "ko"):
+        lang = "en"
     page_title = ("워드마스터 블로그 — 어휘 팁과 단어 게임 가이드 | WordMaster"
                   if lang == "ko"
                   else "Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster")
@@ -640,7 +642,9 @@ def blog_post(slug):
     post["tag"] = BLOG_TAGS.get(slug, "vocab")
 
     # Resolve related slugs to title+url for template (prefer KO title when available)
-    lang = session.get("lang", "en")
+    lang = request.args.get("lang") or session.get("lang", "en")
+    if lang not in ("en", "ko"):
+        lang = "en"
     related_posts = []
     for s in post.get("related", []):
         if s in posts:
