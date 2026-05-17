@@ -71,8 +71,14 @@ with open("words.json", encoding="utf-8") as f:
 
 @app.context_processor
 def inject_lang():
-    """Inject current language into every template automatically."""
-    return dict(lang=session.get("lang", "en"))
+    """Inject current language. Priority: ?lang query param > session > 'en' default.
+    The query-param override lets Google index the same URL twice — once as English
+    and once as Korean — without needing per-language URL paths.
+    """
+    lang = request.args.get("lang") or session.get("lang", "en")
+    if lang not in ("en", "ko"):
+        lang = "en"
+    return dict(lang=lang)
 
 @app.route("/set-lang/<lang>")
 def set_lang(lang):
@@ -859,14 +865,59 @@ def sitemap():
 
     urls = static_urls + puzzle_urls + blog_urls
 
-    today_str = date.today().isoformat()
-    xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
-                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u in urls:
-        xml_lines.append(
-            f"  <url><loc>{base}{u}</loc>"
-            f"<lastmod>{today_str}</lastmod></url>"
+    # Blog posts whose body is still English-only — no Korean variant emitted
+    # for these. Everything else has at least bilingual UI chrome plus partial
+    # or full Korean body content, so we list both /X and /X?lang=ko.
+    en_only_urls = {
+        "/blog/ielts-essential-words",
+        "/blog/daily-habits-vocabulary",
+        "/blog/science-of-word-games",
+        "/blog/common-5-letter-words",
+        "/blog/word-roots-prefixes-suffixes",
+        "/blog/vocabulary-habit-building",
+        "/blog/reading-comprehension-word-games",
+        "/blog/greek-latin-roots-english",
+        "/blog/business-english-vocabulary",
+        "/blog/word-games-children-reading",
+        "/blog/word-game-history",
+    }
+
+    def _hreflang_block(path):
+        """Build the xhtml:link rel=alternate trio for one URL path."""
+        return (
+            f'<xhtml:link rel="alternate" hreflang="en" href="{base}{path}"/>'
+            f'<xhtml:link rel="alternate" hreflang="ko" href="{base}{path}?lang=ko"/>'
+            f'<xhtml:link rel="alternate" hreflang="x-default" href="{base}{path}"/>'
         )
+
+    today_str = date.today().isoformat()
+    xml_lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">'
+    ]
+    for u in urls:
+        bilingual = u not in en_only_urls
+        if bilingual:
+            # English (default) entry with hreflang annotations
+            xml_lines.append(
+                f"  <url><loc>{base}{u}</loc>"
+                f"<lastmod>{today_str}</lastmod>"
+                f"{_hreflang_block(u)}"
+                f"</url>"
+            )
+            # Korean variant — same path with ?lang=ko, also hreflang-annotated
+            xml_lines.append(
+                f"  <url><loc>{base}{u}?lang=ko</loc>"
+                f"<lastmod>{today_str}</lastmod>"
+                f"{_hreflang_block(u)}"
+                f"</url>"
+            )
+        else:
+            xml_lines.append(
+                f"  <url><loc>{base}{u}</loc>"
+                f"<lastmod>{today_str}</lastmod></url>"
+            )
     xml_lines.append("</urlset>")
     return Response("\n".join(xml_lines), mimetype="application/xml")
 

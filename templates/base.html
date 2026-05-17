@@ -29,7 +29,17 @@
 
   <link rel="stylesheet" href="/static/css/style.css"/>
   <link rel="icon" href="/static/img/favicon.png" type="image/png"/>
+  {# Canonical URL: include the ?lang=ko query string when serving Korean so Google
+     treats the two language variants as distinct, related URLs. #}
+  {% if lang == 'ko' %}
+  <link rel="canonical" href="https://wordmaster.store{{ request.path }}?lang=ko"/>
+  {% else %}
   <link rel="canonical" href="https://wordmaster.store{{ request.path }}"/>
+  {% endif %}
+  {# hreflang annotations so Google understands the two language variants. #}
+  <link rel="alternate" hreflang="en" href="https://wordmaster.store{{ request.path }}"/>
+  <link rel="alternate" hreflang="ko" href="https://wordmaster.store{{ request.path }}?lang=ko"/>
+  <link rel="alternate" hreflang="x-default" href="https://wordmaster.store{{ request.path }}"/>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
