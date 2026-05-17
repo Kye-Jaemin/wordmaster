@@ -125,25 +125,25 @@
                 <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한{% else %}Unlimited{% endif %}
               </a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><h6 class="dropdown-header">{% if lang == 'ko' %}학습 수준별{% else %}By Learning Level{% endif %}</h6></li>
-              <li><a class="dropdown-item" href="/middle">🎓 {% if lang == 'ko' %}중학생 수준{% else %}Middle School{% endif %}</a></li>
-              <li><a class="dropdown-item" href="/high">📚 {% if lang == 'ko' %}고등학생 수준{% else %}High School{% endif %}</a></li>
-              <li><a class="dropdown-item" href="/college">🎒 {% if lang == 'ko' %}대학생 수준{% else %}College Level{% endif %}</a></li>
-              <li><a class="dropdown-item" href="/custom">✍️ {% if lang == 'ko' %}내 단어{% else %}My Custom Words{% endif %}</a></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}학습 수준별 (현재 게임 형식 유지){% else %}By Learning Level (stays in current format){% endif %}</h6></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.middle }}">🎓 {% if lang == 'ko' %}중학생 수준{% else %}Middle School{% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.high }}">📚 {% if lang == 'ko' %}고등학생 수준{% else %}High School{% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.college }}">🎒 {% if lang == 'ko' %}대학생 수준{% else %}College Level{% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.custom }}">✍️ {% if lang == 'ko' %}내 단어{% else %}My Custom Words{% endif %}</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><h6 class="dropdown-header">{% if lang == 'ko' %}퍼즐 형식{% else %}Puzzle Format{% endif %}</h6></li>
               <li><a class="dropdown-item" href="/">{% if lang == 'ko' %}타일 게임 (색상 타일 추측){% else %}Tile Guess (color-tile feedback){% endif %}</a></li>
               <li><a class="dropdown-item" href="/anagram">{% if lang == 'ko' %}애너그램 (글자 재배열){% else %}Anagram (rearrange letters){% endif %}</a></li>
               <li><a class="dropdown-item" href="/hangman">{% if lang == 'ko' %}행맨 (글자 하나씩 추측){% else %}Hangman (guess letter by letter){% endif %}</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><h6 class="dropdown-header">{% if lang == 'ko' %}난이도{% else %}Difficulty{% endif %}</h6></li>
-              <li><a class="dropdown-item" href="/easy">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}</a></li>
-              <li><a class="dropdown-item" href="/">{% if lang == 'ko' %}보통 (5글자){% else %}Normal (5 Letters){% endif %}</a></li>
-              <li><a class="dropdown-item" href="/hard">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}</a></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}난이도 (현재 게임 형식 유지){% else %}Difficulty (stays in current format){% endif %}</h6></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.easy }}">{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4 Letters){% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.normal }}">{% if lang == 'ko' %}보통 (5글자){% else %}Normal (5 Letters){% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.hard }}">{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6 Letters){% endif %}</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><h6 class="dropdown-header">{% if lang == 'ko' %}테마{% else %}Themed{% endif %}</h6></li>
-              <li><a class="dropdown-item" href="/category/animals">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a></li>
-              <li><a class="dropdown-item" href="/category/food">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a></li>
+              <li><h6 class="dropdown-header">{% if lang == 'ko' %}테마 (현재 게임 형식 유지){% else %}Themed (stays in current format){% endif %}</h6></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.animals }}">🐾 {% if lang == 'ko' %}동물{% else %}Animals{% endif %}</a></li>
+              <li><a class="dropdown-item" href="{{ selector_urls.food }}">🍕 {% if lang == 'ko' %}음식{% else %}Food{% endif %}</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/archive">
                 <i class="bi bi-clock-history me-1"></i>{% if lang == 'ko' %}보관함{% else %}Archive{% endif %}

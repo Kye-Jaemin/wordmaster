@@ -11,7 +11,19 @@
 
   <article>
     <h1 class="fw-bold text-primary mb-1">{{ post.title }}</h1>
-    <p class="text-muted small mb-4"><i class="bi bi-calendar3 me-1"></i>{{ post.date }}</p>
+    <p class="text-muted small mb-4">
+      <i class="bi bi-calendar3 me-1"></i>{{ post.date }}
+      &middot;
+      {% if post.tag == "tile" %}
+        <span class="badge bg-primary">{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</span>
+      {% elif post.tag == "anagram" %}
+        <span class="badge bg-warning text-dark">{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</span>
+      {% elif post.tag == "hangman" %}
+        <span class="badge bg-success">{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</span>
+      {% else %}
+        <span class="badge bg-secondary">{% if lang == 'ko' %}어휘 학습{% else %}Vocab Learning{% endif %}</span>
+      {% endif %}
+    </p>
 
     {% if slug == "word-game-tips" %}
     <p>Whether you're a casual player or a competitive word-puzzle enthusiast, these proven strategies will help you consistently solve WordMaster in fewer guesses. We've analyzed thousands of games to find what separates players who average three guesses from those who regularly use all six — and the difference comes down to a handful of repeatable principles.</p>
@@ -1015,6 +1027,64 @@
     <p>I will keep adding more puzzle formats over time. The two on my list right now are <strong>Word Ladder</strong> (change one letter at a time to transform one word into another) and <strong>Definition Match</strong> (read a definition, type the word — the purest test of production). Both are harder to build right, so they will take longer.</p>
 
     <p>In the meantime, the three formats here cover most of what vocabulary learning needs. Pick the one that matches today's mood, and play it on whichever category fits your level. The same words wait for you in all three.</p>
+
+    {% elif slug == "anagram-strategy" %}
+    <p>For most of last year I treated anagram as a warm-up. You see five scrambled letters, you slot them into the right order, you move on. It felt like the easiest of the three puzzles I have on WordMaster — until I started losing more of them than I expected.</p>
+
+    <p>The first anagram I failed and was confident I would solve was PLUSH. The letters in front of me were P, L, U, S, H. The right order is obvious in hindsight, but I burned three attempts before I saw it. I had been treating the letters as a word-shape recognition problem — what five-letter word is hiding in this jumble? — when anagram is actually a different problem entirely.</p>
+
+    <p>Anagram is about knowing how a word is spelled, letter by letter. The shape of PLUSH on a page is familiar to anyone who reads English. Reconstructing PLUSH from a pile of letters, without the surrounding context of a sentence, is a different skill. You are not pattern-matching; you are producing.</p>
+
+    <h3 class="fw-bold mt-4">The words I kept failing</h3>
+
+    <p>Once I noticed that gap, I started keeping track of which words I failed in anagram. The pattern was clear quickly. Words with unusual letter combinations — PSALM, QUASH, MYTHS, FJORD — tripped me up much more than words I genuinely knew well. So did words where the letters happen to suggest a more common arrangement. KNEAD wants to become NAKED. HEART wants to become EARTH. SAINT wants to become STAIN. The anagram exploits this. Your brain reaches for the more familiar word, and you have to override that reach to find the target.</p>
+
+    <h3 class="fw-bold mt-4">What I changed</h3>
+
+    <p>I stopped trying to "see" the word at a glance. The instinct to recognize a five-letter word's shape from its component letters is strong, but it is misleading in anagram. The correct mental motion is to ask a different question — what does this word actually spell, letter by letter? — and answer it deliberately. I now whisper the letters silently as I place them. It is slower but it works.</p>
+
+    <p>I started using the Shuffle button as a strategy, not a panic button. When I am stuck on an anagram, shuffling the visible letters resets my pattern-matcher. The configuration I was looking at suddenly looks unfamiliar, and the word I was trying to find is more visible. Anagram solvers I respect do this between every attempt, almost reflexively.</p>
+
+    <p>And I learned to use my <a href="/">tile-guess vocabulary</a> against itself. The most common five-letter words I have collected from playing the tile-guess format — words like CRANE, AUDIO, STARE — are familiar to me as shapes. In anagram, I deliberately disassemble that familiarity. If the letters suggest CRANE, I ask whether they could also spell NACRE. The familiar word is a hypothesis I have to actively challenge.</p>
+
+    <h3 class="fw-bold mt-4">Anagram measures a different kind of knowing</h3>
+
+    <p>If you find anagram unexpectedly hard, do not assume it is because you do not know words. Assume it is because anagram measures a kind of knowing that recognition-based reading never tested for. The gap between recognizing PLUSH on a page and reconstructing PLUSH from five scattered letters is the gap between recognizing a word and owning it.</p>
+
+    <p>Closing that gap is slow work. The best practice I have found is to add my failed words to my <a href="/custom">custom anagram list</a> and play them again after a week or two. The second time around, the word arrives faster, and the third time it just appears. After enough repetition, the anagram is no longer hard. The word has crossed from passive vocabulary into active vocabulary, and the puzzle has done what I built it to do.</p>
+
+    <p>I will keep adding words to my list. You should too. The <a href="/anagram">Anagram format</a> waits.</p>
+
+    {% elif slug == "hangman-letter-frequency" %}
+    <p>Hangman is the only word puzzle that taught me what English actually looks like.</p>
+
+    <p>I had always known abstractly that some letters are more common than others. Scrabble assigns one point to E, A, I, O, N, R, T, L, S, U for a reason. But knowing the letter frequency table is different from having an instinct about it — the kind of instinct that lets you look at five blank squares and feel which letter to try first.</p>
+
+    <p>Hangman built that instinct in me without me noticing. After a few weeks of daily hangman, I stopped consciously thinking about which letter to guess. My hand would just move to E, then T or A, then I or O. The order was not memorized; it had become reflex.</p>
+
+    <p>This kind of pattern knowledge has practical consequences beyond playing hangman. It speeds up reading. It improves spelling under pressure. It makes you faster at every other word puzzle, including the tile-guessing format on this site. The shared resource is your sense of which letters carry information.</p>
+
+    <h3 class="fw-bold mt-4">Every guess is an information bet</h3>
+
+    <p>The single most important fact about hangman: every guess is an information bet. When you pick a letter, you are asking "is this letter in the word?" — and the answer reveals not just whether you were right but where. A correct guess of E in a five-letter word tells you which positions are filled by E, which is more information than a guess that only confirms presence.</p>
+
+    <p>So the optimal strategy is not to guess your favourite letter. It is to guess the letter that resolves the most uncertainty. For most short English words, E does this best. It appears in roughly 11% of all letters in written English and shows up in some position in the majority of five- and six-letter words. Starting with E is correct in almost every game.</p>
+
+    <p>After E, the order of useful guesses is not the same as the order of letter frequency. It depends on what you already know. If E gave you two positions, you now know the word has the shape _E_E_ or E___E or similar. The most informative next guess is whatever letter is most likely given that pattern. For words with E in them, T and N are surprisingly more useful than A.</p>
+
+    <h3 class="fw-bold mt-4">The misses are the data</h3>
+
+    <p>I am not going to give you a full decision tree. The whole point of hangman is that you build it yourself by playing. What I will say is that the words you fail in hangman are the most valuable data. They are telling you which letters in your intuition are mis-weighted. If you keep failing words with K or W in unusual positions, your intuition is under-weighting K and W. Pay attention to those misses.</p>
+
+    <p>One specific letter most players underweight at five letters: Y. Many five-letter words end in Y (HAPPY, SHINY, FANCY, BOSSY, FUZZY) and players forget to check this. If you have four positions filled and the last is open, Y is worth a guess before R or D.</p>
+
+    <h3 class="fw-bold mt-4">Beyond frequency: partial-word constraints</h3>
+
+    <p>Beyond letter frequency, hangman teaches something else: how to use partial words as constraints. Once you have three letters revealed in a five-letter word, the remaining two positions are heavily constrained by English orthography. There are very few valid English words that match _O_ED, so if you have that pattern, your guess becomes nearly deterministic — try common endings first.</p>
+
+    <p>For me, the daily practice has paid off in places I did not expect — typing speed, spelling under fatigue, even reading speed on dense academic text. The skills hangman trains are general. The puzzle is just where they are easiest to practice.</p>
+
+    <p>Six lives is plenty. Most of my recent <a href="/hangman">hangman games</a> end with one life remaining or two. The lives are the safety net for the misses you learn from. Use them.</p>
 
     {% endif %}
   </article>

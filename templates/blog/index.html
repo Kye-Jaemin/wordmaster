@@ -2,20 +2,36 @@
 {% block content %}
 <div class="container py-5">
   <h1 class="fw-bold text-primary mb-1"><i class="bi bi-journal-text me-2"></i>WordMaster Blog</h1>
-  <p class="text-muted mb-4">Tips, strategies, and word game guides.</p>
+  <p class="text-muted mb-4">{% if lang == 'ko' %}팁, 전략, 단어 게임 가이드. 각 글은 어느 퍼즐 형식에 관한지 배지로 표시됩니다.{% else %}Tips, strategies, and word game guides. Each post is tagged by the puzzle format it covers.{% endif %}</p>
+
+  <!-- Tag legend -->
+  <div class="mb-4 small text-muted">
+    <span class="badge bg-primary me-1">{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</span>
+    <span class="badge bg-warning text-dark me-1">{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</span>
+    <span class="badge bg-success me-1">{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</span>
+    <span class="badge bg-secondary me-1">{% if lang == 'ko' %}어휘 학습{% else %}Vocab Learning{% endif %}</span>
+  </div>
 
   <div class="row g-4">
     {% for post in posts %}
     <div class="col-md-4">
       <div class="card h-100 shadow-sm blog-card border-0">
         <div class="card-body">
-          <span class="badge bg-primary mb-2">Word Tips</span>
+          {% if post.tag == "tile" %}
+            <span class="badge bg-primary mb-2">{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</span>
+          {% elif post.tag == "anagram" %}
+            <span class="badge bg-warning text-dark mb-2">{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</span>
+          {% elif post.tag == "hangman" %}
+            <span class="badge bg-success mb-2">{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</span>
+          {% else %}
+            <span class="badge bg-secondary mb-2">{% if lang == 'ko' %}어휘 학습{% else %}Vocab Learning{% endif %}</span>
+          {% endif %}
           <h5 class="fw-bold">{{ post.title }}</h5>
           <p class="text-muted small">{{ post.excerpt }}</p>
         </div>
         <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
           <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>{{ post.date }}</small>
-          <a href="/blog/{{ post.slug }}" class="btn btn-sm btn-outline-primary">Read →</a>
+          <a href="/blog/{{ post.slug }}" class="btn btn-sm btn-outline-primary">{% if lang == 'ko' %}읽기 →{% else %}Read →{% endif %}</a>
         </div>
       </div>
     </div>

@@ -283,6 +283,36 @@ def custom_words():
         title="My Custom Words — WordMaster",
         meta_desc="Build your own word list and practice with it. Add personal vocabulary you want to master and play through them with WordMaster.")
 
+# ─── Blog tag map ─────────────────────────────────────────────
+# Marks each blog post with the puzzle format it is primarily about, so the
+# blog index and post pages can display a coloured badge ("Tile Guess",
+# "Anagram", "Hangman", or "Vocab Learning" for game-agnostic vocabulary posts).
+BLOG_TAGS = {
+    # Tile Guess specific (color-tile strategy, 5-letter starting words)
+    "word-game-tips":               "tile",
+    "best-starting-words":          "tile",
+    "common-5-letter-words":        "tile",
+    "pattern-recognition-word-games": "tile",
+    # Anagram specific
+    "anagram-strategy":             "anagram",
+    # Hangman specific
+    "hangman-letter-frequency":     "hangman",
+    # General overview / multi-format
+    "three-puzzle-formats":         "vocab",
+    "word-game-history":            "vocab",
+    # Vocabulary learning (game-agnostic)
+    "top-100-sat-words":            "vocab",
+    "ielts-essential-words":        "vocab",
+    "daily-habits-vocabulary":      "vocab",
+    "science-of-word-games":        "vocab",
+    "word-roots-prefixes-suffixes": "vocab",
+    "vocabulary-habit-building":    "vocab",
+    "reading-comprehension-word-games": "vocab",
+    "greek-latin-roots-english":    "vocab",
+    "business-english-vocabulary":  "vocab",
+    "word-games-children-reading":  "vocab",
+}
+
 # ─── Alternate puzzle formats: Anagram & Hangman ──────────────
 # Same vocabulary sources as the Tile Guess game, presented as different puzzle mechanics.
 _CATEGORY_TO_MODE = {
@@ -420,6 +450,8 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "anagram-strategy", "title": "Anagram Strategy: Where I Lose Words I Thought I Knew", "date": "2026-05-17", "excerpt": "Anagram is not the easy warm-up I thought it was. Here is what I started doing differently after losing more anagrams than I expected."},
+        {"slug": "hangman-letter-frequency", "title": "Hangman as Letter-Frequency Practice", "date": "2026-05-17", "excerpt": "Hangman taught me what English actually looks like. The instinct for which letters carry information transfers to every other word puzzle."},
         {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each."},
         {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
         {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
@@ -437,6 +469,9 @@ def blog():
         {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children."},
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
     ]
+    # Attach a tag to each post so the index can show a colour-coded badge
+    for p in posts:
+        p["tag"] = BLOG_TAGS.get(p["slug"], "vocab")
     return render_template("blog/index.html",
         title="Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster",
         meta_desc="WordMaster blog: expert vocabulary-building strategies, brain science behind word games, SAT/IELTS word lists, and proven tactics to win every puzzle.",
@@ -445,6 +480,20 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
+        "anagram-strategy": {
+            "title": "Anagram Strategy: Where I Lose Words I Thought I Knew",
+            "date": "2026-05-17",
+            "content": "anagram_strategy",
+            "meta_desc": "Anagram is not the easy warm-up most players think. A first-person look at why anagram exposes the gap between recognizing a word and owning it — and how to close that gap.",
+            "related": ["three-puzzle-formats", "hangman-letter-frequency", "word-roots-prefixes-suffixes"]
+        },
+        "hangman-letter-frequency": {
+            "title": "Hangman as Letter-Frequency Practice",
+            "date": "2026-05-17",
+            "content": "hangman_letter_frequency",
+            "meta_desc": "Hangman is the only word puzzle that teaches what English actually looks like. How letter-frequency intuition built in hangman transfers to every other word puzzle and to reading.",
+            "related": ["three-puzzle-formats", "anagram-strategy", "pattern-recognition-word-games"]
+        },
         "three-puzzle-formats": {
             "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman",
             "date": "2026-05-16",
@@ -561,6 +610,9 @@ def blog_post(slug):
     post = posts.get(slug)
     if not post:
         return render_template("404.html"), 404
+
+    # Attach tag for the badge shown next to the post title
+    post["tag"] = BLOG_TAGS.get(slug, "vocab")
 
     # Resolve related slugs to title+url for template
     related_posts = [
@@ -764,6 +816,8 @@ def sitemap():
     # Blog index + individual posts
     blog_urls = [
         "/blog",
+        "/blog/anagram-strategy",
+        "/blog/hangman-letter-frequency",
         "/blog/three-puzzle-formats",
         "/blog/word-game-tips", "/blog/best-starting-words", "/blog/word-game-history",
         "/blog/top-100-sat-words", "/blog/ielts-essential-words",
