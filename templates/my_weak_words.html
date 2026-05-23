@@ -1,31 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-4" style="max-width:900px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Weak Words</h1>
-  <p class="text-muted mb-4">Words you couldn't solve, kept here for focused practice. They automatically leave this list when you win them in any game mode.</p>
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>
+    {% if lang == 'ko' %}약점 단어{% else %}Weak Words{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}풀지 못한 단어들. 집중 연습을 위해 여기 보관됩니다. 어떤 게임 모드에서든 한 번 이기면 자동으로 목록에서 빠집니다.{% else %}Words you couldn't solve, kept here for focused practice. They automatically leave this list when you win them in any game mode.{% endif %}
+  </p>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <h5 class="fw-bold mb-0">Your Practice List</h5>
+        <h5 class="fw-bold mb-0">{% if lang == 'ko' %}연습 목록{% else %}Your Practice List{% endif %}</h5>
         <span id="weak-count" class="badge bg-warning text-dark"></span>
       </div>
       <div id="weak-list"></div>
       <div id="weak-empty" class="text-center text-muted py-4 d-none">
         <i class="bi bi-emoji-sunglasses fs-1 text-success"></i>
-        <p class="mb-2 mt-2">No weak words! Either you haven't lost a game yet, or you've mastered every word you missed.</p>
-        <a href="/" class="btn btn-primary btn-sm">Play a Game</a>
+        <p class="mb-2 mt-2">{% if lang == 'ko' %}약점 단어가 없습니다! 아직 게임에서 진 적이 없거나, 놓쳤던 모든 단어를 마스터하셨네요.{% else %}No weak words! Either you haven't lost a game yet, or you've mastered every word you missed.{% endif %}</p>
+        <a href="/" class="btn btn-primary btn-sm">{% if lang == 'ko' %}게임 시작{% else %}Play a Game{% endif %}</a>
       </div>
     </div>
   </div>
 
   <p class="text-muted small">
     <i class="bi bi-info-circle me-1"></i>
-    Tip: Use Unlimited Mode to practice — every game uses a random word, and you'll have more chances to encounter these again.
+    {% if lang == 'ko' %}팁: 무제한 모드를 활용해 연습하세요 — 매 게임이 무작위 단어이므로 이 단어들을 다시 만날 기회가 더 많아집니다.{% else %}Tip: Use Unlimited Mode to practice — every game uses a random word, and you'll have more chances to encounter these again.{% endif %}
   </p>
 </div>
 
 <script>
+// Localized labels (server-rendered) so dynamic cards stay in sync with the page language.
+const T = {
+  word:     {% if lang == 'ko' %}"단어"{% else %}"word"{% endif %},
+  words:    {% if lang == 'ko' %}"단어"{% else %}"words"{% endif %},
+  lost:     {% if lang == 'ko' %}"패배"{% else %}"Lost"{% endif %},
+  of:       {% if lang == 'ko' %}"중"{% else %}"of"{% endif %},
+  practice: {% if lang == 'ko' %}"연습"{% else %}"Practice"{% endif %},
+  practiceTitle: {% if lang == 'ko' %}"무제한 모드에서 연습"{% else %}"Practice in Unlimited Mode"{% endif %}
+};
+
 function getVocab() {
   return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
 }
@@ -44,7 +58,7 @@ function renderWeakWords() {
     return;
   }
 
-  count.textContent = `${weak.length} ${weak.length === 1 ? "word" : "words"}`;
+  count.textContent = `${weak.length} ${weak.length === 1 ? T.word : T.words}`;
   empty.classList.add("d-none");
 
   list.innerHTML = `
@@ -60,10 +74,10 @@ function renderWeakWords() {
             <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
               <div>
                 <div class="fw-bold text-primary fs-5">${word}</div>
-                <small class="text-muted">Lost ${lost}× of ${played}</small>
+                <small class="text-muted">${T.lost} ${lost}× ${T.of} ${played}</small>
               </div>
-              <a href="/unlimited" class="btn btn-sm btn-outline-primary" title="Practice in Unlimited Mode">
-                <i class="bi bi-arrow-clockwise"></i> Practice
+              <a href="/unlimited" class="btn btn-sm btn-outline-primary" title="${T.practiceTitle}">
+                <i class="bi bi-arrow-clockwise"></i> ${T.practice}
               </a>
             </div>
           </div>

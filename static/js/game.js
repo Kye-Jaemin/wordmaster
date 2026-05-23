@@ -34,7 +34,7 @@ const _EN = {
   voteHard:      "🔥 Nice work pushing through!",
   submitting:    "Submitting…",
 };
-const T = (typeof WM_LANG !== "undefined" && WM_LANG === "ko") ? _KO : _EN;
+const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
 
 // ─── State ────────────────────────────────────────────────────
 let secretWord  = "";

@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5" style="max-width:720px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-calendar3 me-2"></i>Daily Word Archive</h1>
-  <p class="text-muted mb-1">Every WordMaster daily challenge from the past 30 days.</p>
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-calendar3 me-2"></i>
+    {% if lang == 'ko' %}매일 단어 보관함{% else %}Daily Word Archive{% endif %}
+  </h1>
+  <p class="text-muted mb-1">
+    {% if lang == 'ko' %}지난 30일간의 모든 WordMaster 매일 챌린지.{% else %}Every WordMaster daily challenge from the past 30 days.{% endif %}
+  </p>
   <p class="text-muted small mb-4">
-    Missed a day? Replay any past challenge and discover its full definition, etymology, and synonyms. Hover or tap a date to peek at the word — or click through for the complete learning breakdown.
+    {% if lang == 'ko' %}하루를 놓치셨나요? 지난 챌린지를 다시 플레이하고 정의, 어원, 동의어까지 모두 확인하세요. 날짜에 마우스를 올리거나 탭하여 단어를 살짝 보거나 — 클릭해서 전체 학습 내용을 보세요.{% else %}Missed a day? Replay any past challenge and discover its full definition, etymology, and synonyms. Hover or tap a date to peek at the word — or click through for the complete learning breakdown.{% endif %}
   </p>
 
   <!-- Today's highlight -->
@@ -12,12 +16,12 @@
   <div class="card border-primary shadow mb-4">
     <div class="card-body d-flex align-items-center justify-content-between flex-wrap gap-2">
       <div>
-        <span class="badge bg-warning text-dark mb-1">Today</span>
+        <span class="badge bg-warning text-dark mb-1">{% if lang == 'ko' %}오늘{% else %}Today{% endif %}</span>
         <h4 class="fw-bold mb-0">{{ today_entry.date_display }}</h4>
-        <span class="text-muted small">Can you guess today's word?</span>
+        <span class="text-muted small">{% if lang == 'ko' %}오늘의 단어를 맞혀보시겠어요?{% else %}Can you guess today's word?{% endif %}</span>
       </div>
       <a href="/daily" class="btn btn-primary">
-        <i class="bi bi-play-fill me-1"></i>Play Today's Challenge
+        <i class="bi bi-play-fill me-1"></i>{% if lang == 'ko' %}오늘의 챌린지 플레이{% else %}Play Today's Challenge{% endif %}
       </a>
     </div>
   </div>
@@ -25,8 +29,8 @@
   <!-- Past days table -->
   <div class="card shadow-sm">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <span class="fw-semibold"><i class="bi bi-clock-history me-1"></i>Past 30 Days</span>
-      <span class="text-muted small">Spoilers below — hover/tap to reveal word</span>
+      <span class="fw-semibold"><i class="bi bi-clock-history me-1"></i>{% if lang == 'ko' %}지난 30일{% else %}Past 30 Days{% endif %}</span>
+      <span class="text-muted small">{% if lang == 'ko' %}스포일러 — 호버/탭하면 단어 표시{% else %}Spoilers below — hover/tap to reveal word{% endif %}</span>
     </div>
     <div class="list-group list-group-flush">
       {% for entry in entries %}
@@ -50,30 +54,53 @@
   </div>
 
   <p class="text-muted small text-center mt-3">
-    <i class="bi bi-info-circle me-1"></i>Archive shows the past 30 days. Click any date for full details &amp; definition.
+    <i class="bi bi-info-circle me-1"></i>{% if lang == 'ko' %}보관함은 지난 30일간을 표시합니다. 날짜를 클릭하면 자세한 내용과 정의를 볼 수 있습니다.{% else %}Archive shows the past 30 days. Click any date for full details &amp; definition.{% endif %}
   </p>
 
   <!-- Educational content section -->
   <div class="mt-5 pt-2">
 
     <div class="mb-5">
-      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i>How to Use the Archive for Deliberate Vocabulary Practice</h2>
+      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-clock-history me-2"></i>
+        {% if lang == 'ko' %}의도적인 어휘 연습에 보관함을 활용하는 법{% else %}How to Use the Archive for Deliberate Vocabulary Practice{% endif %}
+      </h2>
+      {% if lang == 'ko' %}
+      <p class="text-muted">매일 보관함은 지난 퍼즐의 기록 이상입니다 — 어휘 훈련 자원입니다. 각 항목은 전체 단어 프로필로 연결됩니다: 정의, 품사, 어원, 동의어, 반의어, 예문까지. 의도적으로 활용하면, 보관함은 시간이 지나면서 영어 어휘를 복습하고, 강화하고, 확장하는 체계적인 방법이 됩니다.</p>
+      <p class="text-muted">가장 효과적인 접근법은 <strong>분산 반복(spaced repetition)</strong>입니다 — 익숙해질수록 점점 더 긴 간격으로 단어를 복습하는 방식이에요. 예를 들어, 지난주 단어는 오늘, 지난달 단어는 다음 주, 떠올리기 어려운 단어는 더 빨리 다시 보는 식입니다. 이는 가장 빨리 유창함에 도달하는 언어 학습자들이 사용하는 기법과 같습니다: 한 세션에서 같은 내용을 계속 반복해서 읽기보다, 복습을 시간에 걸쳐 분산해 자연스럽게 기억이 정착하도록 합니다.</p>
+      <p class="text-muted">WordMaster는 문학, 저널리즘, 표준화 시험에서 자주 등장하는 고가치 영어 어휘 라이브러리에서 매일의 단어를 선택하기 때문에, 보관함은 SAT, GRE, IELTS, TOEFL 준비에도 유용한 참고 자료입니다.</p>
+      {% else %}
       <p class="text-muted">The Daily Archive is more than a record of past puzzles — it is a vocabulary training resource. Every entry links to the full word profile: definition, part of speech, etymology, synonyms, antonyms, and example sentences. Used intentionally, the archive becomes a structured way to review, reinforce, and expand your English vocabulary over time.</p>
       <p class="text-muted">The most effective approach is <strong>spaced repetition</strong> — reviewing words at increasing intervals as you become more familiar with them. For example, revisit last week's words today, last month's words next week, and repeat any words you struggled to recall sooner. This mirrors the technique used by language learners who achieve fluency fastest: instead of re-reading the same material repeatedly in a single session, they spread review out over time to let memory consolidation work naturally.</p>
       <p class="text-muted">Because WordMaster chooses its daily words from a curated library of high-value English vocabulary — words that appear frequently in literature, journalism, and standardized tests — the archive is also a useful reference for SAT, GRE, IELTS, and TOEFL preparation.</p>
+      {% endif %}
     </div>
 
     <div class="mb-5">
-      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-trophy me-2"></i>Replay Any Past Challenge</h2>
+      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-trophy me-2"></i>
+        {% if lang == 'ko' %}지난 챌린지 다시 플레이{% else %}Replay Any Past Challenge{% endif %}
+      </h2>
+      {% if lang == 'ko' %}
+      <p class="text-muted">하루를 놓치셨나요? 보관된 모든 퍼즐을 완전히 다시 플레이할 수 있습니다. 단어 추측 게임을 진행하고, 끝나면 라이브 매일 챌린지와 똑같이 전체 단어 프로필을 잠금 해제하세요. 지난 퍼즐을 다시 플레이하는 것은 부담 없는 연습 방법이며, 특히 처음 만났을 때 어렵거나 낯설었던 단어에 효과적입니다.</p>
+      <p class="text-muted">각 퍼즐의 재플레이는 단어를 맥락 속에서 보여줍니다 — 단어를 추상적이 아닌 의미 있게 만드는 정의, 사용 예시, 어원. 이 맥락적 학습이 수동적 어휘(인지하는 단어)와 능동적 어휘(말하기와 쓰기에 자신 있게 쓸 수 있는 단어)를 가르는 것입니다.</p>
+      {% else %}
       <p class="text-muted">Missed a day? Every archived puzzle can be replayed in full. Work through the word guessing game, then unlock the complete word profile at the end — just as you would with a live daily challenge. Replaying past puzzles is a low-pressure way to practice, especially for words that felt difficult or unfamiliar when they first appeared.</p>
       <p class="text-muted">Each puzzle replay also shows you the word in context — the definition, usage example, and etymology that make the word meaningful rather than abstract. This contextual learning is what separates passive vocabulary (words you recognize) from active vocabulary (words you can use confidently in speaking and writing).</p>
+      {% endif %}
     </div>
 
     <div class="mb-4">
-      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-check me-2"></i>Building a Daily Habit That Lasts</h2>
+      <h2 class="fw-bold text-primary mb-3"><i class="bi bi-calendar-check me-2"></i>
+        {% if lang == 'ko' %}오래가는 일일 습관 만들기{% else %}Building a Daily Habit That Lasts{% endif %}
+      </h2>
+      {% if lang == 'ko' %}
+      <p class="text-muted">WordMaster에서 가장 큰 어휘 성장을 얻는 플레이어는 꾸준히 플레이하는 사람들입니다 — 완벽하게가 아니라요. 매일 챌린지 3일 연속 + 보관함 복습 세션 하나만 해도 한 달이면 의미 있는 결과가 나옵니다. 보관함 덕분에 놓친 날을 따라잡으면서도 흐름을 잃지 않을 수 있어요.</p>
+      <p class="text-muted">잘 작동하는 간단한 습관 루프: 매일 아침 오늘의 챌린지 플레이, 결과 패널에 나오는 전체 단어 프로필(정의, 어원, 동의어) 읽기, 그리고 보관함에서 지난주 단어 하나 복습에 2분 사용. 이 10분 루틴을 꾸준히 하면 가장 효율적인 어휘 형성 시스템 중 하나가 됩니다 — 그리고 완전히 무료입니다.</p>
+      <p class="text-muted">어휘 전략, 어원, 언어 학습 과학에 대한 더 깊은 내용은 <a href="/blog" class="text-decoration-none">WordMaster 블로그</a>를 방문하세요. 게임에 관한 질문은 <a href="/faq" class="text-decoration-none">FAQ</a>를 확인하세요.</p>
+      {% else %}
       <p class="text-muted">The players who see the biggest vocabulary gains from WordMaster are the ones who play consistently — not necessarily perfectly. Even a 3-day streak of daily challenges followed by an archive review session produces meaningful results over a month. The archive makes it easy to catch up on missed days without losing momentum.</p>
       <p class="text-muted">A simple habit loop that works: play today's daily challenge each morning, read the full word profile that appears in the result panel (definition, etymology, synonyms), and spend two minutes in the archive reviewing one word from the previous week. This 10-minute routine, done regularly, is one of the most efficient vocabulary-building systems available — and it is completely free.</p>
       <p class="text-muted">For deeper dives into vocabulary strategy, etymology, and language learning science, visit the <a href="/blog" class="text-decoration-none">WordMaster Blog</a>. For questions about the game, check the <a href="/faq" class="text-decoration-none">FAQ</a>.</p>
+      {% endif %}
     </div>
 
   </div>

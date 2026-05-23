@@ -1,34 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-4" style="max-width:900px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-book me-2"></i>My Words</h1>
-  <p class="text-muted mb-4">Every word you've encountered in WordMaster, stored locally on this device. Your vocabulary grows with every game.</p>
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-book me-2"></i>
+    {% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}WordMaster에서 만난 모든 단어가 이 기기에 저장됩니다. 게임을 할 때마다 어휘가 늘어납니다.{% else %}Every word you've encountered in WordMaster, stored locally on this device. Your vocabulary grows with every game.{% endif %}
+  </p>
 
   <div id="words-stats" class="row g-2 mb-4"></div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        <h5 class="fw-bold mb-0">Word List</h5>
+        <h5 class="fw-bold mb-0">{% if lang == 'ko' %}단어 목록{% else %}Word List{% endif %}</h5>
         <div class="d-flex gap-2 flex-wrap">
           <select id="word-sort" class="form-select form-select-sm" style="max-width:160px">
-            <option value="recent">Most recent</option>
-            <option value="oldest">Oldest first</option>
-            <option value="az">A → Z</option>
-            <option value="played">Most played</option>
+            <option value="recent">{% if lang == 'ko' %}최신순{% else %}Most recent{% endif %}</option>
+            <option value="oldest">{% if lang == 'ko' %}오래된 순{% else %}Oldest first{% endif %}</option>
+            <option value="az">{% if lang == 'ko' %}가나다순{% else %}A → Z{% endif %}</option>
+            <option value="played">{% if lang == 'ko' %}많이 플레이한 순{% else %}Most played{% endif %}</option>
           </select>
-          <input type="search" id="word-search" class="form-control form-control-sm" placeholder="Search..." style="max-width:180px">
+          <input type="search" id="word-search" class="form-control form-control-sm" placeholder="{% if lang == 'ko' %}검색...{% else %}Search...{% endif %}" style="max-width:180px">
         </div>
       </div>
       <div class="table-responsive">
         <table class="table table-sm table-hover align-middle">
           <thead class="table-light">
             <tr>
-              <th>Word</th>
-              <th class="d-none d-md-table-cell">First Seen</th>
-              <th class="text-center">Played</th>
-              <th class="text-center">Won</th>
-              <th class="text-center">Best</th>
+              <th>{% if lang == 'ko' %}단어{% else %}Word{% endif %}</th>
+              <th class="d-none d-md-table-cell">{% if lang == 'ko' %}처음 본 날{% else %}First Seen{% endif %}</th>
+              <th class="text-center">{% if lang == 'ko' %}플레이{% else %}Played{% endif %}</th>
+              <th class="text-center">{% if lang == 'ko' %}승리{% else %}Won{% endif %}</th>
+              <th class="text-center">{% if lang == 'ko' %}최단{% else %}Best{% endif %}</th>
             </tr>
           </thead>
           <tbody id="words-tbody"></tbody>
@@ -36,19 +40,28 @@
       </div>
       <div id="empty-state" class="text-center text-muted py-4 d-none">
         <i class="bi bi-emoji-smile fs-1 text-primary"></i>
-        <p class="mb-2 mt-2">No words yet. Play your first game to start tracking your vocabulary!</p>
-        <a href="/" class="btn btn-primary btn-sm">Play Now</a>
+        <p class="mb-2 mt-2">{% if lang == 'ko' %}아직 단어가 없습니다. 첫 게임을 플레이해서 어휘 추적을 시작하세요!{% else %}No words yet. Play your first game to start tracking your vocabulary!{% endif %}</p>
+        <a href="/" class="btn btn-primary btn-sm">{% if lang == 'ko' %}지금 플레이{% else %}Play Now{% endif %}</a>
       </div>
     </div>
   </div>
 
   <p class="text-muted small">
     <i class="bi bi-shield-lock me-1"></i>
-    Your vocabulary data is stored only on this device. Clearing your browser data will reset it.
+    {% if lang == 'ko' %}어휘 데이터는 이 기기에만 저장됩니다. 브라우저 데이터를 지우면 초기화됩니다.{% else %}Your vocabulary data is stored only on this device. Clearing your browser data will reset it.{% endif %}
   </p>
 </div>
 
 <script>
+// Localized labels emitted by the server based on the current ?lang. Used by
+// dynamically-rendered cards so they match the page language without any JS i18n library.
+const T = {
+  unique:   {% if lang == 'ko' %}"고유 단어"{% else %}"Unique Words"{% endif %},
+  played:   {% if lang == 'ko' %}"플레이한 게임"{% else %}"Games Played"{% endif %},
+  won:      {% if lang == 'ko' %}"이긴 게임"{% else %}"Games Won"{% endif %},
+  winRate:  {% if lang == 'ko' %}"승률"{% else %}"Win Rate"{% endif %}
+};
+
 function getVocab() {
   return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
 }
@@ -61,16 +74,16 @@ function renderStats(words) {
   const winRate = totalGames ? Math.round((totalWins / totalGames) * 100) : 0;
   document.getElementById("words-stats").innerHTML = `
     <div class="col-6 col-md-3"><div class="card bg-primary text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
-      <div class="fs-3 fw-bold">${total}</div><div class="small">Unique Words</div>
+      <div class="fs-3 fw-bold">${total}</div><div class="small">${T.unique}</div>
     </div></div></div>
     <div class="col-6 col-md-3"><div class="card bg-info text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
-      <div class="fs-3 fw-bold">${totalGames}</div><div class="small">Games Played</div>
+      <div class="fs-3 fw-bold">${totalGames}</div><div class="small">${T.played}</div>
     </div></div></div>
     <div class="col-6 col-md-3"><div class="card bg-success text-white shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
-      <div class="fs-3 fw-bold">${totalWins}</div><div class="small">Games Won</div>
+      <div class="fs-3 fw-bold">${totalWins}</div><div class="small">${T.won}</div>
     </div></div></div>
     <div class="col-6 col-md-3"><div class="card bg-warning text-dark shadow-sm h-100"><div class="card-body py-2 px-3 text-center">
-      <div class="fs-3 fw-bold">${winRate}%</div><div class="small">Win Rate</div>
+      <div class="fs-3 fw-bold">${winRate}%</div><div class="small">${T.winRate}</div>
     </div></div></div>`;
 }
 

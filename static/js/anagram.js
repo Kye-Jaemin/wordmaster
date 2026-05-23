@@ -1,6 +1,31 @@
 // Anagram puzzle: scramble a target word; user clicks letters to arrange them back.
 // Reads word from /api/word (or wm_custom_words localStorage for custom mode).
 
+// ─── i18n ────────────────────────────────────────────────────
+const _KO = {
+  needCustom:      "먼저 /custom 에서 단어를 추가하세요.",
+  failedLoad:      "단어를 불러올 수 없습니다.",
+  tryAgain:        (n) => `아쉽네요 — ${n}번째 시도, 다시 해보세요.`,
+  solvedFirst:     "첫 시도에 풀었어요.",
+  solvedInN:       (n) => `${n}번 시도 만에 풀었어요.`,
+  theWord:         (w) => `정답: ${w}`,
+  betterLuck:      "다음 라운드는 더 쉬울 거예요.",
+  theWordWas:      (w) => `정답은: ${w} 였어요.`,
+  hintPlaced:      "힌트: 첫 글자가 배치됐어요.",
+};
+const _EN = {
+  needCustom:      "Add custom words at /custom first.",
+  failedLoad:      "Could not load word.",
+  tryAgain:        (n) => `Not quite — attempt ${n}, try again.`,
+  solvedFirst:     "Solved on the first try.",
+  solvedInN:       (n) => `Solved in ${n} ${n === 2 ? "attempt" : "attempts"}.`,
+  theWord:         (w) => `The word: ${w}`,
+  betterLuck:      "Next round will be easier.",
+  theWordWas:      (w) => `The word was: ${w}`,
+  hintPlaced:      "Hint: first letter placed.",
+};
+const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
+
 const WORD_LENGTH = window.WORD_LENGTH || 5;
 const GAME_MODE   = window.GAME_MODE   || "standard";
 
@@ -17,7 +42,7 @@ async function fetchWord() {
     const arr = (JSON.parse(localStorage.getItem("wm_custom_words") || "[]") || [])
       .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
     if (!arr.length) {
-      showToast("Add custom words at /custom first.", 4000);
+      showToast(T.needCustom, 4000);
       secretWord = "";
       return;
     }
@@ -30,7 +55,7 @@ async function fetchWord() {
     const data = await res.json();
     secretWord = (data.word || "").toUpperCase();
   } catch (e) {
-    showToast("Could not load word.");
+    showToast(T.failedLoad);
   }
 }
 
@@ -117,7 +142,7 @@ function checkAnswer() {
       slots = Array(secretWord.length).fill("");
       usedIdx.clear();
       render();
-      showToast(`Not quite — attempt ${attempts}, try again.`);
+      showToast(T.tryAgain(attempts));
     }, 550);
   }
 }
@@ -129,9 +154,9 @@ function win() {
   panel.classList.remove("d-none");
   document.getElementById("result-emoji").textContent = "🎉";
   document.getElementById("result-message").textContent = attempts === 1
-    ? "Solved on the first try."
-    : `Solved in ${attempts} ${attempts === 2 ? "attempt" : "attempts"}.`;
-  document.getElementById("result-word").textContent = `The word: ${secretWord}`;
+    ? T.solvedFirst
+    : T.solvedInN(attempts);
+  document.getElementById("result-word").textContent = T.theWord(secretWord);
   fetchDefinition();
 }
 
@@ -142,8 +167,8 @@ function giveUp() {
   const panel = document.getElementById("result-panel");
   panel.classList.remove("d-none");
   document.getElementById("result-emoji").textContent = "😔";
-  document.getElementById("result-message").textContent = "Next round will be easier.";
-  document.getElementById("result-word").textContent = `The word was: ${secretWord}`;
+  document.getElementById("result-message").textContent = T.betterLuck;
+  document.getElementById("result-word").textContent = T.theWordWas(secretWord);
   fetchDefinition();
 }
 
@@ -187,7 +212,7 @@ async function showHint() {
     }
   }
   render();
-  showToast("Hint: first letter placed.");
+  showToast(T.hintPlaced);
 }
 
 function shakeEl(el) {

@@ -582,10 +582,10 @@
 
 {% block scripts %}
 <script>
+  // WM_LANG is set globally in base.html so all JS files share it.
   const GAME_MODE    = "{{ mode }}";
   const WORD_LENGTH  = {{ word_length }};
   const MAX_GUESSES  = {{ max_guesses }};
-  const WM_LANG      = "{{ lang }}";
 </script>
 <script src="/static/js/game.js"></script>
 {% endblock %}

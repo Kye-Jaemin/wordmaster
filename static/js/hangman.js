@@ -1,6 +1,31 @@
 // Hangman puzzle: guess letters one at a time before lives run out.
 // Reads word from /api/word (or wm_custom_words localStorage for custom mode).
 
+// ─── i18n ────────────────────────────────────────────────────
+const _KO = {
+  needCustom:      "먼저 /custom 에서 단어를 추가하세요.",
+  failedLoad:      "단어를 불러올 수 없습니다.",
+  wrongPrefix:     "오답: ",
+  solvedClean:     "틀린 글자 없이 풀었어요.",
+  solvedWithWrong: (n) => `틀린 글자 ${n}개로 풀었어요.`,
+  theWord:         (w) => `정답: ${w}`,
+  outOfLives:      "생명이 다 떨어졌어요. 다음 기회에.",
+  theWordWas:      (w) => `정답은: ${w} 였어요.`,
+  hintRevealed:    "힌트: 글자 하나가 공개됐어요.",
+};
+const _EN = {
+  needCustom:      "Add custom words at /custom first.",
+  failedLoad:      "Could not load word.",
+  wrongPrefix:     "Wrong: ",
+  solvedClean:     "Solved with no wrong letters.",
+  solvedWithWrong: (n) => `Solved with ${n} wrong letter${n > 1 ? "s" : ""}.`,
+  theWord:         (w) => `The word: ${w}`,
+  outOfLives:      "Out of lives. Next time.",
+  theWordWas:      (w) => `The word was: ${w}`,
+  hintRevealed:    "Hint: revealed one letter.",
+};
+const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
+
 const WORD_LENGTH = window.WORD_LENGTH || 5;
 const GAME_MODE   = window.GAME_MODE   || "standard";
 const MAX_LIVES   = 6;
@@ -17,7 +42,7 @@ async function fetchWord() {
     const arr = (JSON.parse(localStorage.getItem("wm_custom_words") || "[]") || [])
       .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
     if (!arr.length) {
-      showToast("Add custom words at /custom first.", 4000);
+      showToast(T.needCustom, 4000);
       secretWord = "";
       return;
     }
@@ -30,7 +55,7 @@ async function fetchWord() {
     const data = await res.json();
     secretWord = (data.word || "").toUpperCase();
   } catch (e) {
-    showToast("Could not load word.");
+    showToast(T.failedLoad);
   }
 }
 
@@ -62,7 +87,7 @@ function render() {
     "❤️".repeat(livesLeft) + '<span class="opacity-25">' + "♡".repeat(MAX_LIVES - livesLeft) + "</span>";
 
   document.getElementById("wrong-display").textContent = wrongLetters.length
-    ? "Wrong: " + wrongLetters.join("  ")
+    ? T.wrongPrefix + wrongLetters.join("  ")
     : "";
 }
 
@@ -101,9 +126,9 @@ function win() {
   panel.classList.remove("d-none");
   document.getElementById("result-emoji").textContent = "🎉";
   document.getElementById("result-message").textContent = wrongLetters.length === 0
-    ? "Solved with no wrong letters."
-    : `Solved with ${wrongLetters.length} wrong letter${wrongLetters.length > 1 ? "s" : ""}.`;
-  document.getElementById("result-word").textContent = `The word: ${secretWord}`;
+    ? T.solvedClean
+    : T.solvedWithWrong(wrongLetters.length);
+  document.getElementById("result-word").textContent = T.theWord(secretWord);
   fetchDefinition();
 }
 
@@ -116,8 +141,8 @@ function lose() {
   const panel = document.getElementById("result-panel");
   panel.classList.remove("d-none");
   document.getElementById("result-emoji").textContent = "😔";
-  document.getElementById("result-message").textContent = "Out of lives. Next time.";
-  document.getElementById("result-word").textContent = `The word was: ${secretWord}`;
+  document.getElementById("result-message").textContent = T.outOfLives;
+  document.getElementById("result-word").textContent = T.theWordWas(secretWord);
   fetchDefinition();
 }
 
@@ -143,7 +168,7 @@ async function showHint() {
     const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
     if (keyBtn) keyBtn.classList.add("correct");
     render();
-    showToast("Hint: revealed one letter.");
+    showToast(T.hintRevealed);
     if (revealed.every(r => r)) win();
   }
 }
