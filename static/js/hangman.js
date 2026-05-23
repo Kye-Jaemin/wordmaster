@@ -176,9 +176,11 @@ async function showHint() {
 function fetchDefinition() {
   // Same shared population path that anagram and tile-guess use, so all
   // three puzzle formats present an identical post-game learning card.
+  // In News mode, also surfaces the headline this word came from.
   if (!secretWord) return;
   if (window.wmPopulateLearningCard) window.wmPopulateLearningCard(secretWord);
   if (window.wmShowResultAd)         window.wmShowResultAd();
+  if (typeof window.revealNewsSource === "function") window.revealNewsSource();
 }
 
 let toastTimer;

@@ -152,9 +152,33 @@
 </div>
 
 <!-- Game container with AdSense sidebar (matches Tile Guess layout) -->
+<!-- Game container. In News mode, news panel takes the place of the AdSense
+     sidebar (mirroring the Tile Guess /news-challenge layout). In all other
+     modes, the wide-skyscraper ad keeps its slot. -->
 <div class="container-xl py-3">
   <div class="row justify-content-center g-3">
 
+    {% if mode == 'news' %}
+    <!-- LEFT: BBC News Articles (same layout as /news-challenge) -->
+    <div class="col-12 col-lg-5">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-danger text-white py-2 px-3">
+          <i class="bi bi-broadcast me-1"></i><strong>{% if lang == 'ko' %}BBC 세계 뉴스{% else %}BBC World News{% endif %}</strong>
+          <span class="float-end small opacity-75" id="news-date"></span>
+        </div>
+        <div class="card-body p-0" id="news-articles-container">
+          <div class="text-center py-5 text-muted" id="news-loading">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            {% if lang == 'ko' %}오늘의 뉴스 불러오는 중…{% else %}Loading today's news…{% endif %}
+          </div>
+        </div>
+        <div class="card-footer bg-light text-muted small py-2 px-3">
+          <i class="bi bi-info-circle me-1"></i>
+          {% if lang == 'ko' %}오늘 게임의 단어가 이 헤드라인 어딘가에 숨어있어요.{% else %}Today's game word is hidden somewhere in these headlines.{% endif %}
+        </div>
+      </div>
+    </div>
+    {% else %}
     <!-- AdSense Sidebar -->
     <div class="col-lg-2 d-none d-lg-block">
       <div class="ad-sidebar sticky-top pt-3">
@@ -165,9 +189,10 @@
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
     </div>
+    {% endif %}
 
     <!-- Game Area -->
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-{% if mode == 'news' %}7{% else %}6{% endif %}">
 
       <!-- Mode Badge -->
       <div class="text-center mb-2">
@@ -248,6 +273,14 @@
         <h5 id="result-message" class="fw-bold"></h5>
         <p id="result-word" class="text-muted small"></p>
 
+        {% if mode == 'news' %}
+        <!-- News headline reveal (filled in by revealNewsSource() after game ends) -->
+        <div id="news-source-reveal" class="alert alert-info py-2 px-3 small text-start d-none mx-auto" style="max-width:460px">
+          <i class="bi bi-newspaper me-1"></i><strong>{% if lang == 'ko' %}오늘 뉴스에서:{% else %}Found in today's news:{% endif %}</strong>
+          <p id="news-source-headline" class="mb-0 fst-italic mt-1"></p>
+        </div>
+        {% endif %}
+
         <!-- Word Learning Card -->
         <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-3 mb-2" style="max-width:460px;">
           <div class="card-header bg-primary text-white py-2 px-3">
@@ -304,6 +337,74 @@
   window.GAME_MODE   = "{{ mode }}";
   window.WORD_LENGTH = {{ word_length }};
 </script>
+
+{% if mode == 'news' %}
+<script>
+  // ── News mode: load BBC headlines into the LEFT panel and expose
+  // window.revealNewsSource() so hangman.js can highlight the source headline
+  // when the game ends. Shared /api/news-articles endpoint with the daily-
+  // cached news word, so the puzzle word is guaranteed to be in these headlines.
+  window._wmNewsWordSource = "";
+
+  async function loadNewsArticles() {
+    try {
+      const res  = await fetch("/api/news-articles");
+      const data = await res.json();
+      window._wmNewsWordSource = data.wordSource || "";
+
+      const container = document.getElementById("news-articles-container");
+      const loading   = document.getElementById("news-loading");
+      if (loading) loading.remove();
+
+      const dateEl = document.getElementById("news-date");
+      if (dateEl) dateEl.textContent = new Date().toLocaleDateString("{{ 'ko-KR' if lang == 'ko' else 'en-US' }}", { month:"short", day:"numeric", year:"numeric" });
+
+      if (!data.articles || data.articles.length === 0) {
+        container.innerHTML = '<p class="text-muted p-3 small">{% if lang == "ko" %}오늘 뉴스를 불러올 수 없어요. 새로고침 해보세요.{% else %}Could not load news today. Try refreshing.{% endif %}</p>';
+        return;
+      }
+
+      data.articles.forEach((art, i) => {
+        const item = document.createElement("a");
+        item.href   = art.link;
+        item.target = "_blank";
+        item.rel    = "noopener noreferrer";
+        item.className = "d-block text-decoration-none border-bottom px-3 py-2 news-item";
+        item.style.transition = "background 0.15s";
+        item.innerHTML = `
+          <div class="d-flex gap-2 align-items-start">
+            <span class="badge bg-danger mt-1 flex-shrink-0">${i + 1}</span>
+            <div>
+              <p class="fw-semibold mb-0 small text-dark">${art.title}</p>
+              ${art.description ? `<p class="text-muted mb-0" style="font-size:0.78rem">${art.description}</p>` : ""}
+              <span class="text-muted" style="font-size:0.72rem"><i class="bi bi-link-45deg"></i>${art.source}</span>
+            </div>
+          </div>`;
+        item.addEventListener("mouseenter", () => item.style.background = "#fff5f5");
+        item.addEventListener("mouseleave", () => item.style.background = "");
+        container.appendChild(item);
+      });
+    } catch (e) {
+      const container = document.getElementById("news-articles-container");
+      if (container) container.innerHTML = '<p class="text-muted p-3 small">{% if lang == "ko" %}뉴스를 불러올 수 없어요.{% else %}News unavailable.{% endif %}</p>';
+    }
+  }
+
+  // anagram.js / hangman.js / game.js all call window.revealNewsSource if defined
+  window.revealNewsSource = function() {
+    if (!window._wmNewsWordSource) return;
+    const box = document.getElementById("news-source-reveal");
+    const hl  = document.getElementById("news-source-headline");
+    if (box && hl) {
+      hl.textContent = `"${window._wmNewsWordSource}"`;
+      box.classList.remove("d-none");
+    }
+  };
+
+  loadNewsArticles();
+</script>
+{% endif %}
+
 <script src="/static/js/learning_storage.js"></script>
 <script src="/static/js/hangman.js"></script>
 {% endblock %}

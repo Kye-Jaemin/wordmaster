@@ -176,9 +176,11 @@ function fetchDefinition() {
   // Delegates to the shared learning-storage helper so all puzzle formats
   // populate the same rich Word Learning Card (phonetic, meanings, synonyms,
   // antonyms, etymology). Also reveals the result AdSense block.
+  // In News mode, also surfaces the headline this word came from.
   if (!secretWord) return;
   if (window.wmPopulateLearningCard) window.wmPopulateLearningCard(secretWord);
   if (window.wmShowResultAd)         window.wmShowResultAd();
+  if (typeof window.revealNewsSource === "function") window.revealNewsSource();
 }
 
 function shuffleVisible() {
