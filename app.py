@@ -947,6 +947,16 @@ def ads_txt():
     txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
     return Response(txt, mimetype="text/plain")
 
+# app-ads.txt: AdMob authorized seller verification for the WordMaster Android app.
+# Lets AdMob confirm Tileworks Studio is an authorized publisher and unlocks
+# higher-quality demand. Same publisher ID as ads.txt — the file just needs to
+# live under the developer's declared website (wordmaster.store) so AdMob's
+# crawler can find it.
+@app.route("/app-ads.txt")
+def app_ads_txt():
+    txt = "google.com, pub-3911396624649383, DIRECT, f08c47fec0942fa0\n"
+    return Response(txt, mimetype="text/plain")
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", title="Page Not Found — WordMaster"), 404
