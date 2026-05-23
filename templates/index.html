@@ -5,12 +5,34 @@
 <div class="container-xl pt-3 pb-1">
   <div class="text-center px-2">
     <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
-      Daily word games that build your vocabulary.
+      {% if lang == 'ko' %}어휘를 진짜로 쌓아주는 매일의 단어 게임.{% else %}Daily word games that build your vocabulary.{% endif %}
     </h1>
     <p class="text-muted small mb-0" style="max-width:620px;margin:0 auto;">
-      A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.
+      {% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}
     </p>
   </div>
+</div>
+
+<!-- Featured: Daily Word Archive (CTR ~33% in Search Console — our #1 traffic page) -->
+<div class="container-xl pt-2 pb-1">
+  <a href="/archive" class="d-block text-decoration-none">
+    <div class="card border-warning shadow-sm" style="background: linear-gradient(90deg, #fff7e6 0%, #ffffff 100%);">
+      <div class="card-body py-2 px-3 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-clock-history text-warning fs-3 me-2"></i>
+          <div>
+            <div class="fw-bold text-dark" style="font-size:0.95rem">
+              {% if lang == 'ko' %}지난 30일의 단어 다시 보기{% else %}Replay the past 30 days of daily words{% endif %}
+            </div>
+            <div class="text-muted" style="font-size:0.75rem">
+              {% if lang == 'ko' %}각 단어의 정의, 어원, 동의어까지 모두 보기{% else %}With definition, etymology and synonyms for every word{% endif %}
+            </div>
+          </div>
+        </div>
+        <span class="badge bg-warning text-dark">{% if lang == 'ko' %}열기 →{% else %}Open →{% endif %}</span>
+      </div>
+    </div>
+  </a>
 </div>
 
 <!-- Category Selector — learning-first ordering -->

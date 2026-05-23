@@ -131,8 +131,8 @@ def check_guess(guess, answer):
 @app.route("/")
 def index():
     return render_template("index.html",
-        title="WordMaster — Free Word Guessing Game | Daily & Unlimited",
-        meta_desc="Play WordMaster free online word guessing game. Guess the hidden 5-letter word in 6 tries. Daily challenge, unlimited mode, news word puzzle and more. No signup needed.",
+        title="WordMaster — Daily Word Game That Builds Real Vocabulary",
+        meta_desc="Free word puzzles that actually teach. Play tile-guess, anagram, or hangman with SAT, IELTS, and business English words. Track every word you learn.",
         mode="standard", word_length=5, max_guesses=6)
 
 @app.route("/daily")
@@ -265,22 +265,22 @@ def archive_day(date_str):
 @app.route("/middle")
 def middle_level():
     return render_template("index.html",
-        title="Middle School Word Game — WordMaster",
-        meta_desc="Daily 5-letter word puzzle using middle school vocabulary. Build core English fluency through play. Free, no signup needed.",
+        title="Middle School Word Game — Build the Core 2,000 Words | WordMaster",
+        meta_desc="Daily 5-letter puzzles drawn from the core 2,000 words every middle-school English learner needs. Play, learn, and track each word. Free, no signup.",
         mode="category_middle", word_length=5, max_guesses=6)
 
 @app.route("/high")
 def high_level():
     return render_template("index.html",
-        title="High School Word Game — WordMaster",
-        meta_desc="5-letter word puzzle using high school and SAT-prep vocabulary. Strengthen academic English daily. Free, no signup.",
+        title="High School & SAT-Prep Word Puzzle | WordMaster",
+        meta_desc="5-letter daily puzzles built from high school and SAT-prep word lists. Strengthen academic English in 5 minutes a day. Free, no account.",
         mode="category_high", word_length=5, max_guesses=6)
 
 @app.route("/college")
 def college_level():
     return render_template("index.html",
-        title="College Word Game — WordMaster",
-        meta_desc="Advanced 5-letter word puzzle using college and GRE-level vocabulary. Sharpen academic English while you play. Free.",
+        title="College & GRE Vocabulary Word Game | WordMaster",
+        meta_desc="Advanced daily puzzles from college and GRE-level vocabulary. Stretch your academic English while you play. Free, no signup, every word tracked.",
         mode="category_college", word_length=5, max_guesses=6)
 
 @app.route("/custom")
@@ -423,7 +423,7 @@ def anagram(category=None):
     ctx = _puzzle_context(category)
     return render_template("anagram_game.html",
         title=f"Anagram Word Puzzle — {ctx['category_label']} | WordMaster",
-        meta_desc="Anagram word puzzle: unscramble the letters to form a word. Reinforces spelling and letter-level vocabulary recall. Free, no signup.",
+        meta_desc="Unscramble letters to find the hidden word — a faster, sharper kind of word puzzle. Free practice with curated SAT, business, and everyday English vocabulary.",
         **ctx)
 
 @app.route("/hangman")
@@ -432,7 +432,7 @@ def hangman(category=None):
     ctx = _puzzle_context(category)
     return render_template("hangman_game.html",
         title=f"Hangman Word Puzzle — {ctx['category_label']} | WordMaster",
-        meta_desc="Hangman word game: guess letters before lives run out. Classic spelling and letter-frequency practice with curated vocabulary. Free.",
+        meta_desc="Classic hangman with a vocabulary twist — every word you play goes into your personal learning log. Free, no signup, letter-frequency training built in.",
         **ctx)
 
 @app.route("/my-words")
@@ -459,20 +459,20 @@ def blog():
         {"slug": "anagram-strategy", "title": "Anagram Strategy: Where I Lose Words I Thought I Knew", "title_ko": "애너그램 전략: 내가 안다고 생각한 단어를 놓치는 지점", "date": "2026-05-17", "excerpt": "Anagram is not the easy warm-up I thought it was. Here is what I started doing differently after losing more anagrams than I expected.", "excerpt_ko": "애너그램은 제가 생각했던 쉬운 워밍업이 아니었습니다. 예상보다 더 많은 애너그램을 놓치고 난 뒤 무엇을 다르게 하기 시작했는지."},
         {"slug": "hangman-letter-frequency", "title": "Hangman as Letter-Frequency Practice", "title_ko": "행맨, 글자 빈도 직관을 키우는 도구", "date": "2026-05-17", "excerpt": "Hangman taught me what English actually looks like. The instinct for which letters carry information transfers to every other word puzzle.", "excerpt_ko": "행맨은 영어가 실제로 어떻게 생겼는지 가르쳐 줍니다. 어떤 글자가 정보를 담는지에 대한 직관은 모든 단어 퍼즐에 그대로 이전됩니다."},
         {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "title_ko": "한 단어, 세 가지 퍼즐: 타일 게임, 애너그램, 행맨", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each.", "excerpt_ko": "세 가지 퍼즐 메카닉이 어휘의 세 가지 다른 능력을 훈련합니다 — 인지, 생산, 글자 단위 직관. 각각을 어떻게 활용하는지."},
-        {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today."},
-        {"slug": "science-of-word-games", "title": "The Science Behind Word Games: How Puzzles Boost Your Brain", "date": "2026-04-22", "excerpt": "Research shows that daily word puzzles improve memory, focus, and problem-solving. Here's what the science actually says."},
+        {"slug": "daily-habits-vocabulary", "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary", "title_ko": "어휘를 빠르게 늘리는 5가지 일상 습관", "date": "2026-04-25", "excerpt": "Small daily actions compound into big vocabulary gains. Here are five research-backed habits you can start today.", "excerpt_ko": "작은 일상의 행동이 큰 어휘 성장으로 쌓입니다. 오늘 바로 시작할 수 있는 연구 기반의 다섯 가지 습관."},
+        {"slug": "science-of-word-games", "title": "What Word Games Do to Your Brain (Neuroscience Explained)", "date": "2026-04-22", "excerpt": "10 minutes of daily word puzzles measurably boosts memory, focus, and verbal fluency. Here is what the neuroscience research actually says."},
         {"slug": "common-5-letter-words", "title": "The 50 Most Common 5-Letter Words in English (And How to Use Them)", "date": "2026-05-03", "excerpt": "These 50 high-frequency 5-letter words appear constantly in word games and everyday English. Master them to gain a serious advantage."},
-        {"slug": "word-roots-prefixes-suffixes", "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet", "date": "2026-04-30", "excerpt": "Learn 30 Latin and Greek roots that unlock thousands of English words. One root can teach you 20 new words at once."},
-        {"slug": "vocabulary-habit-building", "title": "How to Build a Vocabulary Habit That Actually Sticks", "date": "2026-04-27", "excerpt": "Most vocabulary-building attempts fail within a week. Here is the habit-building science that makes the difference."},
-        {"slug": "top-100-sat-words", "title": "Top 100 SAT Vocabulary Words You Must Know", "title_ko": "SAT 필수 어휘 100개", "date": "2026-04-15", "excerpt": "Boost your SAT score with these high-frequency vocabulary words. Definitions, examples, and memory tips included.", "excerpt_ko": "고빈출 SAT 어휘로 점수를 올리세요. 정의, 예문, 암기 팁이 포함되어 있습니다."},
-        {"slug": "ielts-essential-words", "title": "50 Essential IELTS Words to Improve Your Band Score", "date": "2026-04-10", "excerpt": "Master these 50 essential IELTS vocabulary words and watch your writing and speaking scores improve dramatically."},
+        {"slug": "word-roots-prefixes-suffixes", "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet", "title_ko": "어근 · 접두사 · 접미사: 어휘 치트시트의 끝판왕", "date": "2026-04-30", "excerpt": "Learn 30 Latin and Greek roots that unlock thousands of English words. One root can teach you 20 new words at once.", "excerpt_ko": "수천 개의 영단어를 풀어주는 30개의 라틴어·그리스어 어근. 어근 하나로 20개의 새 단어를 한 번에 익힙니다."},
+        {"slug": "vocabulary-habit-building", "title": "How to Build a Vocabulary Habit That Actually Sticks", "title_ko": "1주 만에 무너지지 않는 어휘 습관 만들기", "date": "2026-04-27", "excerpt": "Most vocabulary-building attempts fail within a week. Here is the habit-building science that makes the difference.", "excerpt_ko": "대부분의 어휘 학습은 1주 안에 무너집니다. 그 차이를 만들어내는 습관 형성 과학을 정리했습니다."},
+        {"slug": "top-100-sat-words", "title": "100 Most-Tested SAT Words (Free 30-Day Memorization Plan)", "title_ko": "SAT 출제 빈도 1~100위 단어 (30일 암기 플랜)", "date": "2026-04-15", "excerpt": "The 100 SAT words tested most often, with definitions, examples, and a 30-day plan that actually fits into your school week.", "excerpt_ko": "가장 자주 출제되는 SAT 어휘 100개. 정의, 예문, 그리고 학교 일과에 실제로 끼워 넣을 수 있는 30일 암기 플랜."},
+        {"slug": "ielts-essential-words", "title": "50 IELTS Words That Lift Your Writing Band Score (with Examples)", "title_ko": "IELTS 라이팅 점수를 올리는 필수 어휘 50개", "date": "2026-04-10", "excerpt": "The 50 IELTS vocabulary words examiners reward most. Real sample sentences, common pitfalls, and how to use them without sounding forced.", "excerpt_ko": "시험관이 가장 좋게 평가하는 IELTS 어휘 50개. 실제 예문, 자주 하는 실수, 그리고 자연스럽게 쓰는 법."},
         {"slug": "reading-comprehension-word-games", "title": "How Word Games Improve Reading Comprehension", "date": "2026-04-03", "excerpt": "The link between word game performance and reading ability is stronger than most people realize. Here is what research shows."},
-        {"slug": "greek-latin-roots-english", "title": "Greek and Latin Roots Every English Learner Should Know", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. These 25 classical roots appear in thousands of modern words across every subject."},
-        {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster."},
-        {"slug": "word-game-tips", "title": "10 Best Strategies to Win Word Games Every Time", "title_ko": "단어 게임 승리 전략 10가지", "date": "2026-03-01", "excerpt": "Master word guessing games with these proven starting word strategies and pattern recognition tips.", "excerpt_ko": "검증된 시작 단어 전략과 패턴 인지 팁으로 단어 추측 게임을 마스터하세요."},
+        {"slug": "greek-latin-roots-english", "title": "25 Greek & Latin Roots That Unlock 1,000+ English Words", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. 25 classical roots that each open dozens of modern words across every subject."},
+        {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "title_ko": "패턴 인지: 단어 퍼즐을 이기는 숨은 능력", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster.", "excerpt_ko": "최고의 단어 퍼즐 플레이어는 다르게 생각합니다. 패턴 인지력을 훈련해 더 빠르게 푸는 법."},
+        {"slug": "word-game-tips", "title": "10 Word Game Tricks Pros Use (Apply Them Today)", "title_ko": "고수가 쓰는 단어 게임 트릭 10가지 (오늘부터 적용)", "date": "2026-03-01", "excerpt": "10 word game tricks the top 1% use: starter-word science, letter-frequency tactics, hidden double-letter clues. Apply them in your next puzzle.", "excerpt_ko": "상위 1% 플레이어가 쓰는 10가지 트릭: 시작 단어 과학, 글자 빈도 전술, 숨겨진 중복 글자 단서. 다음 퍼즐에 바로 적용해보세요."},
         {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "title_ko": "2026년 단어 게임 최고의 시작 단어", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage.", "excerpt_ko": "CRANE, AUDIO, STARE — 글자 커버리지를 최대화하는 시작 단어 20개를 순위 매겼습니다."},
-        {"slug": "business-english-vocabulary", "title": "40 Essential Business English Words You Need at Work", "date": "2026-02-15", "excerpt": "From boardroom to email, these 40 business vocabulary words will make you sound more confident and professional."},
-        {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children."},
+        {"slug": "business-english-vocabulary", "title": "40 Business English Words for Confident Meetings & Emails", "date": "2026-02-15", "excerpt": "Master 40 business English words that make you sound polished in meetings, emails, and presentations. Real examples + a 5-minute daily practice plan."},
+        {"slug": "word-games-children-reading", "title": "How Word Games Help Children Learn to Read", "title_ko": "단어 게임이 아이들의 독서 학습을 돕는 방법", "date": "2026-02-12", "excerpt": "Word puzzles are not just for adults. Research shows they significantly accelerate phonics, spelling, and reading fluency in children.", "excerpt_ko": "단어 퍼즐은 어른만을 위한 것이 아닙니다. 아이의 파닉스, 철자, 읽기 유창성을 크게 가속한다는 연구 결과."},
         {"slug": "word-game-history", "title": "The History of Word Guessing Games", "date": "2026-02-10", "excerpt": "From newspaper puzzles to viral internet games — how word guessing became a global phenomenon."},
     ]
     # Attach a tag to each post so the index can show a colour-coded badge
@@ -523,28 +523,30 @@ def blog_post(slug):
             "related": ["word-game-tips", "best-starting-words", "pattern-recognition-word-games"]
         },
         "top-100-sat-words": {
-            "title": "Top 100 SAT Vocabulary Words You Must Know",
-            "title_ko": "SAT 필수 어휘 100개",
+            "title": "100 Most-Tested SAT Words (Free 30-Day Memorization Plan)",
+            "title_ko": "SAT 출제 빈도 1~100위 단어 (30일 암기 플랜)",
             "date": "2026-04-15",
             "content": "top_100_sat_words",
-            "meta_desc": "Boost your SAT verbal score with the 100 highest-frequency vocabulary words. Definitions, example sentences, and proven memory techniques for fast retention.",
-            "meta_desc_ko": "SAT 버벌 점수를 높여주는 고빈출 어휘 100개. 정의, 예문, 그리고 빠른 암기를 위한 검증된 기억법.",
+            "meta_desc": "The 100 SAT words tested most often, with definitions, examples, and a 30-day plan that actually fits into a school week. Free practice with WordMaster puzzles.",
+            "meta_desc_ko": "가장 자주 출제되는 SAT 어휘 100개. 정의, 예문, 그리고 학교 일과에 실제로 끼워 넣을 수 있는 30일 암기 플랜. WordMaster 퍼즐로 무료 연습.",
             "related": ["ielts-essential-words", "business-english-vocabulary", "word-roots-prefixes-suffixes"]
         },
         "ielts-essential-words": {
-            "title": "50 Essential IELTS Words to Improve Your Band Score",
+            "title": "50 IELTS Words That Lift Your Writing Band Score (with Examples)",
+            "title_ko": "IELTS 라이팅 점수를 올리는 필수 어휘 50개",
             "date": "2026-04-10",
             "content": "ielts_essential_words",
-            "meta_desc": "Master 50 essential IELTS vocabulary words to lift your writing and speaking band score. Definitions, example sentences, and natural usage in academic English.",
+            "meta_desc": "The 50 IELTS vocabulary words examiners reward most. Real sample sentences, common pitfalls, and how to use them without sounding forced.",
+            "meta_desc_ko": "시험관이 가장 좋게 보는 IELTS 어휘 50개. 실제 예문, 자주 하는 실수, 그리고 어색하지 않게 자연스럽게 쓰는 법.",
             "related": ["top-100-sat-words", "business-english-vocabulary", "vocabulary-habit-building"]
         },
         "word-game-tips": {
-            "title": "10 Best Strategies to Win Word Games Every Time",
+            "title": "10 Word Game Tricks Pros Use (Apply Them Today)",
             "date": "2026-03-01",
             "content": "wordle_tips",
-            "title_ko": "단어 게임 승리 전략 10가지",
-            "meta_desc": "10 expert strategies to consistently win word guessing games. Best starting words, letter frequency tactics, double-letter detection, and elimination tricks.",
-            "meta_desc_ko": "단어 추측 게임에서 일관되게 이기는 10가지 전문 전략. 최고의 시작 단어, 글자 빈도 활용법, 중복 글자 탐지, 그리고 제거법.",
+            "title_ko": "고수가 쓰는 단어 게임 트릭 10가지 (오늘부터 적용)",
+            "meta_desc": "10 word game tricks the top 1% use: starter-word science, letter-frequency tactics, hidden double-letter clues. Apply them in your next puzzle.",
+            "meta_desc_ko": "상위 1% 플레이어가 쓰는 10가지 트릭: 시작 단어 과학, 글자 빈도 전술, 숨겨진 중복 글자 단서. 다음 퍼즐에 바로 적용해보세요.",
             "related": ["best-starting-words", "pattern-recognition-word-games", "word-game-history"]
         },
         "best-starting-words": {
@@ -565,16 +567,18 @@ def blog_post(slug):
         },
         "daily-habits-vocabulary": {
             "title": "5 Daily Habits That Will Rapidly Expand Your Vocabulary",
+            "title_ko": "어휘를 빠르게 늘리는 5가지 일상 습관",
             "date": "2026-04-25",
             "content": "daily_habits_vocabulary",
             "meta_desc": "5 research-backed daily habits to expand your vocabulary fast. The simple 10-minute routine that beats cramming, plus how to make new words actually stick.",
+            "meta_desc_ko": "어휘를 빠르게 늘려주는 연구 기반 5가지 일상 습관. 단기 암기를 이기는 10분 루틴과, 새 단어를 진짜로 기억에 남기는 방법.",
             "related": ["vocabulary-habit-building", "word-roots-prefixes-suffixes", "word-games-children-reading"]
         },
         "science-of-word-games": {
-            "title": "The Science Behind Word Games: How Puzzles Boost Your Brain",
+            "title": "What Word Games Do to Your Brain (Neuroscience Explained)",
             "date": "2026-04-22",
             "content": "science_of_word_games",
-            "meta_desc": "The neuroscience of word games: how daily puzzles boost memory, attention, and verbal fluency. Research-backed evidence for brain benefits at any age.",
+            "meta_desc": "10 minutes of daily word puzzles measurably boosts memory, focus, and verbal fluency. The neuroscience research and how to apply it at any age.",
             "related": ["reading-comprehension-word-games", "word-games-children-reading", "word-game-history"]
         },
         "common-5-letter-words": {
@@ -586,16 +590,20 @@ def blog_post(slug):
         },
         "word-roots-prefixes-suffixes": {
             "title": "Word Roots, Prefixes and Suffixes: The Ultimate Vocabulary Cheat Sheet",
+            "title_ko": "어근 · 접두사 · 접미사: 어휘 치트시트의 끝판왕",
             "date": "2026-04-30",
             "content": "word_roots_prefixes_suffixes",
             "meta_desc": "30 essential Latin and Greek roots, prefixes, and suffixes that unlock thousands of English words. Learn one root, gain 20 words. Vocabulary multiplier guide.",
+            "meta_desc_ko": "수천 개의 영단어를 풀어주는 라틴어·그리스어 어근 30개. 어근 하나로 20개의 단어를 동시에 얻는 어휘 배수 가이드.",
             "related": ["greek-latin-roots-english", "vocabulary-habit-building", "top-100-sat-words"]
         },
         "vocabulary-habit-building": {
             "title": "How to Build a Vocabulary Habit That Actually Sticks",
+            "title_ko": "1주 만에 무너지지 않는 어휘 습관 만들기",
             "date": "2026-04-27",
             "content": "vocabulary_habit_building",
             "meta_desc": "How to build a vocabulary habit that survives past week one. Behavioral science principles for lasting word learning, plus daily and weekly routine templates.",
+            "meta_desc_ko": "1주 뒤에 무너지지 않는 어휘 습관 만드는 법. 지속 학습을 위한 행동 과학 원칙과 일간 · 주간 루틴 템플릿.",
             "related": ["daily-habits-vocabulary", "word-roots-prefixes-suffixes", "ielts-essential-words"]
         },
         "reading-comprehension-word-games": {
@@ -606,31 +614,35 @@ def blog_post(slug):
             "related": ["science-of-word-games", "word-games-children-reading", "vocabulary-habit-building"]
         },
         "greek-latin-roots-english": {
-            "title": "Greek and Latin Roots Every English Learner Should Know",
+            "title": "25 Greek & Latin Roots That Unlock 1,000+ English Words",
             "date": "2026-03-28",
             "content": "greek_latin_roots_english",
-            "meta_desc": "25 classical Greek and Latin roots that appear in thousands of English words. Definitions, modern examples, and how knowing roots accelerates vocabulary growth.",
+            "meta_desc": "Learn 25 Greek and Latin roots — each unlocks dozens of English words at once. The smartest shortcut to multiplying your vocabulary in 30 days.",
             "related": ["word-roots-prefixes-suffixes", "top-100-sat-words", "business-english-vocabulary"]
         },
         "pattern-recognition-word-games": {
             "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles",
+            "title_ko": "패턴 인지: 단어 퍼즐을 이기는 숨은 능력",
             "date": "2026-03-20",
             "content": "pattern_recognition_word_games",
             "meta_desc": "Pattern recognition separates expert word puzzle solvers from beginners. Learn how to train this hidden skill with practical drills and daily exercises.",
+            "meta_desc_ko": "단어 퍼즐 고수와 초보를 가르는 결정적 차이는 패턴 인지력입니다. 실전 드릴과 매일 연습으로 이 숨은 능력을 키우는 법.",
             "related": ["word-game-tips", "best-starting-words", "science-of-word-games"]
         },
         "business-english-vocabulary": {
-            "title": "40 Essential Business English Words You Need at Work",
+            "title": "40 Business English Words for Confident Meetings & Emails",
             "date": "2026-02-15",
             "content": "business_english_vocabulary",
-            "meta_desc": "40 essential business English vocabulary words to sound confident in meetings, emails, and presentations. Definitions, real examples, and natural usage tips.",
+            "meta_desc": "Master 40 business English words that make you sound polished in meetings, emails, and presentations. Real examples + a 5-minute daily practice plan.",
             "related": ["top-100-sat-words", "ielts-essential-words", "vocabulary-habit-building"]
         },
         "word-games-children-reading": {
             "title": "How Word Games Help Children Learn to Read",
+            "title_ko": "단어 게임이 아이들의 독서 학습을 돕는 방법",
             "date": "2026-02-12",
             "content": "word_games_children_reading",
             "meta_desc": "Research-backed evidence on how word games accelerate phonics, spelling, and reading fluency in children. Age-by-age guidance for parents and educators.",
+            "meta_desc_ko": "단어 게임이 아이들의 파닉스, 철자, 읽기 유창성을 가속한다는 연구 증거. 학부모와 교육자를 위한 연령별 가이드.",
             "related": ["reading-comprehension-word-games", "science-of-word-games", "daily-habits-vocabulary"]
         },
     }
