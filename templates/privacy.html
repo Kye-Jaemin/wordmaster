@@ -1,79 +1,129 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5" style="max-width:720px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-shield-check me-2"></i>Privacy Policy</h1>
-  <p class="text-muted mb-4">Last updated: May 5, 2026</p>
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-shield-check me-2"></i>
+    {% if lang == 'ko' %}개인정보 처리방침{% else %}Privacy Policy{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}최종 업데이트: 2026년 5월 25일{% else %}Last updated: May 25, 2026{% endif %}
+  </p>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">1. Information We Collect</h5>
+      <h5 class="fw-bold">1. {% if lang == 'ko' %}수집하는 정보{% else %}Information We Collect{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 계정 가입을 요구하지 않습니다. 게임 플레이 중 이름, 이메일, 주소 같은 개인 식별 정보를 수집하지 않습니다.</p>
+      <p><strong>Google Analytics 4</strong>를 사용해 익명화된 사용 데이터(방문 페이지, 세션 시간, 기기 유형, 일반 지역)를 수집해 게임 사용 방식을 이해하고 개선합니다. 이 데이터로는 개인을 식별할 수 없습니다.</p>
+      <p>문의 양식을 제출할 때 본인의 이름과 이메일 주소를 자발적으로 제공합니다. 이 정보는 문의 답변에만 사용되며 이메일 전송 후 서버에 보관하지 않습니다.</p>
+      {% else %}
       <p>WordMaster does not require account registration. We do not collect personal identifying information such as your name, email, or address during gameplay.</p>
       <p>We use <strong>Google Analytics 4</strong> to collect anonymized usage data (pages visited, session duration, device type, general geographic region) to help us understand how the game is used and improve it over time. This data does not personally identify you.</p>
       <p>When you submit the contact form, you voluntarily provide your name and email address. This information is used solely to respond to your inquiry and is not stored on our servers beyond the email delivery.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">2. Cookies &amp; Local Storage</h5>
+      <h5 class="fw-bold">2. {% if lang == 'ko' %}쿠키 및 로컬 저장소{% else %}Cookies &amp; Local Storage{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>브라우저의 <strong>localStorage</strong>를 사용해 게임 통계(플레이 횟수, 연속 기록, 추측 분포)를 본인 기기에 저장합니다. 이 데이터는 절대 브라우저를 떠나지 않으며 서버로 전송되지 않습니다.</p>
+      <p>언어 설정(영어 또는 한국어)을 기억하기 위해 세션 쿠키를 사용합니다. 이 쿠키에는 개인 데이터가 없으며 브라우저를 닫으면 만료됩니다.</p>
+      <p>사용하는 제3자 서비스(Google Analytics, Google AdSense)는 자체 쿠키를 설정할 수 있습니다. 브라우저 설정이나 <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>에서 이러한 쿠키를 관리하거나 거부할 수 있습니다.</p>
+      {% else %}
       <p>We use browser <strong>localStorage</strong> to store your game statistics (games played, win streak, guess distribution) locally on your device. This data never leaves your browser and is never sent to our servers.</p>
       <p>We use a session cookie to remember your language preference (English or Korean). This cookie contains no personal data and expires when you close your browser.</p>
       <p>Third-party services we use (Google Analytics, Google AdSense) may set their own cookies. You can manage or opt out of these cookies via your browser settings or <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a>.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">3. Advertising</h5>
+      <h5 class="fw-bold">3. {% if lang == 'ko' %}광고{% else %}Advertising{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>이 사이트는 광고 표시를 위해 <strong>Google AdSense</strong>를 사용합니다. Google은 여러 웹사이트에서의 사용자 브라우징 기록을 기반으로 맞춤 광고를 표시하기 위해 쿠키와 유사한 기술을 사용할 수 있습니다. WordMaster는 어떤 광고가 표시되는지 통제하지 않습니다.</p>
+      <p><a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>이나 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>에서 언제든 맞춤 광고를 거부할 수 있습니다.</p>
+      <p>WordMaster는 Google AdSense 프로그램에 참여합니다. 게시자 ID는 <code>ca-pub-3911396624649383</code>입니다.</p>
+      {% else %}
       <p>This site uses <strong>Google AdSense</strong> to display advertisements. Google may use cookies and similar technologies to show personalized ads based on your browsing history across websites. WordMaster does not control which ads are displayed.</p>
       <p>You can opt out of personalized advertising at any time via <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a> or by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>.</p>
       <p>WordMaster participates in the Google AdSense program. Our publisher ID is <code>ca-pub-3911396624649383</code>.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">4. Data Retention</h5>
+      <h5 class="fw-bold">4. {% if lang == 'ko' %}데이터 보유{% else %}Data Retention{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>브라우저 localStorage에 저장된 게임 통계는 본인이 브라우저 데이터를 지울 때까지 유지됩니다. 서버에 어떠한 개인 데이터도 보관하지 않습니다. Google Analytics 데이터는 Google 기본 설정에 따라 14개월 동안 보관됩니다.</p>
+      {% else %}
       <p>Game statistics stored in your browser's localStorage remain until you clear your browser data. We do not retain any personal data on our servers. Google Analytics data is retained for 14 months per Google's default settings.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">5. Third-Party Links</h5>
+      <h5 class="fw-bold">5. {% if lang == 'ko' %}제3자 링크{% else %}Third-Party Links{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>블로그와 게임 페이지에는 외부 웹사이트 링크(예: 뉴스 단어 챌린지의 BBC News)가 포함될 수 있습니다. 우리는 해당 사이트의 개인정보 보호 관행이나 콘텐츠에 책임이 없습니다. 개인 정보를 제공하기 전에 해당 사이트의 개인정보 처리방침을 읽어보시기 바랍니다.</p>
+      {% else %}
       <p>Our blog and game pages may contain links to external websites (e.g., BBC News for the News Word Challenge). We are not responsible for the privacy practices or content of those sites. We recommend reading their privacy policies before providing any personal information.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">6. Children's Privacy</h5>
+      <h5 class="fw-bold">6. {% if lang == 'ko' %}아동의 개인정보{% else %}Children's Privacy{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 모든 연령에 적합합니다. 13세 미만 아동의 개인 정보를 의도적으로 수집하지 않습니다. 아동의 정보가 본의 아니게 수집되었다고 생각하시면 즉시 문의해 주세요 — 삭제하겠습니다.</p>
+      {% else %}
       <p>WordMaster is suitable for all ages. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected information from a child, please contact us immediately so we can delete it.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">7. Your Rights</h5>
+      <h5 class="fw-bold">7. {% if lang == 'ko' %}이용자의 권리{% else %}Your Rights{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>거주 지역에 따라 GDPR(EU), CCPA(캘리포니아), 또는 다른 개인정보 보호법에 따라 우리가 보유한 데이터에 대해 접근, 수정, 삭제할 권리가 있을 수 있습니다. 우리는 최소한의 개인 데이터만 수집하고 게임 통계는 본인 브라우저에만 저장하므로, 대부분의 권리는 브라우저 데이터를 지움으로써 직접 행사할 수 있습니다. 다른 요청은 아래로 문의해 주세요.</p>
+      {% else %}
       <p>Depending on your location, you may have rights under GDPR (EU), CCPA (California), or other privacy laws to access, correct, or delete data we hold about you. Since we collect minimal personal data and store game statistics only in your own browser, most of these rights can be exercised directly by clearing your browser data. For any other requests, contact us below.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">8. Changes to This Policy</h5>
+      <h5 class="fw-bold">8. {% if lang == 'ko' %}본 방침의 변경{% else %}Changes to This Policy{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>본 개인정보 처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 갱신된 날짜와 함께 이 페이지에 게시됩니다. 변경 사항이 게시된 이후 WordMaster를 계속 사용하시면 개정된 방침에 동의한 것으로 간주됩니다.</p>
+      {% else %}
       <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of WordMaster after changes are posted constitutes your acceptance of the revised policy.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-5">
     <div class="card-body">
-      <h5 class="fw-bold">9. Contact</h5>
+      <h5 class="fw-bold">9. {% if lang == 'ko' %}문의{% else %}Contact{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p class="mb-1">본 개인정보 처리방침에 대한 질문이 있거나 데이터 권리를 행사하고 싶다면 아래로 연락해 주세요:</p>
+      <ul class="mb-0">
+        <li>이메일: <a href="mailto:privacy@wordmaster.store">privacy@wordmaster.store</a></li>
+        <li>일반 문의: <a href="/contact">wordmaster.store/contact</a></li>
+      </ul>
+      {% else %}
       <p class="mb-1">If you have questions about this privacy policy or wish to exercise your data rights, please contact us:</p>
       <ul class="mb-0">
         <li>Email: <a href="mailto:privacy@wordmaster.store">privacy@wordmaster.store</a></li>
         <li>General contact: <a href="/contact">wordmaster.store/contact</a></li>
       </ul>
+      {% endif %}
     </div>
   </div>
 </div>

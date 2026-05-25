@@ -1,46 +1,149 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5" style="max-width:720px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-file-text me-2"></i>Terms of Service</h1>
-  <p class="text-muted mb-4">Last updated: March 15, 2026</p>
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-file-text me-2"></i>
+    {% if lang == 'ko' %}이용약관{% else %}Terms of Service{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}최종 업데이트: 2026년 5월 25일{% else %}Last updated: May 25, 2026{% endif %}
+  </p>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">1. Acceptance of Terms</h5>
+      <h5 class="fw-bold">1. {% if lang == 'ko' %}약관의 동의{% else %}Acceptance of Terms{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster("서비스")를 이용함으로써 본 이용약관에 동의하게 됩니다. 본 약관에 동의하지 않으면 서비스 사용을 중단해 주시기 바랍니다.</p>
+      <p>본 약관은 wordmaster.store 도메인 및 그 모든 하위 페이지에 적용되며, 사이트의 모든 게임 모드, 블로그 콘텐츠, 학습 도구를 포함합니다.</p>
+      {% else %}
       <p>By using WordMaster ("the Service"), you agree to these Terms of Service. If you do not agree, please discontinue use of the Service.</p>
+      <p>These Terms apply to the wordmaster.store domain and all its sub-pages, including all game modes, blog content, and learning tools on the site.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">2. Use of the Service</h5>
+      <h5 class="fw-bold">2. {% if lang == 'ko' %}서비스 이용{% else %}Use of the Service{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 개인적이고 비상업적인 사용을 위해 무료로 제공됩니다. 다음 행위를 하지 않을 것에 동의합니다:</p>
+      <ul>
+        <li>서비스의 역공학, 스크래핑, 자동화 시도</li>
+        <li>서비스를 불법적 목적으로 사용</li>
+        <li>서비스의 서버 또는 네트워크 방해</li>
+        <li>다른 사용자에게 해를 끼치는 행위 또는 사이트의 정상 운영 방해</li>
+        <li>저작권이 있는 단어 목록, 정의, 블로그 콘텐츠의 무단 복제 또는 재배포</li>
+      </ul>
+      {% else %}
       <p>WordMaster is provided free of charge for personal, non-commercial use. You agree not to:</p>
       <ul>
         <li>Attempt to reverse-engineer, scrape, or automate the Service</li>
         <li>Use the Service for any unlawful purpose</li>
         <li>Interfere with the Service's servers or networks</li>
+        <li>Harm other users or disrupt normal operation of the site</li>
+        <li>Reproduce or redistribute the copyrighted word lists, definitions, or blog content without authorization</li>
       </ul>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">3. Intellectual Property</h5>
-      <p>The WordMaster name, logo, and original content are the property of WordMaster. The general concept of a word-guessing puzzle is in the public domain.</p>
+      <h5 class="fw-bold">3. {% if lang == 'ko' %}연령 제한 및 아동 보호{% else %}Age &amp; Children's Use{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 모든 연령에 적합한 단어 퍼즐 게임으로 설계되었습니다. 13세 미만 아동이 부모 또는 보호자의 감독 하에 사용하는 것을 권장합니다.</p>
+      <p>13세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다. 자세한 내용은 <a href="/privacy">개인정보 처리방침</a>의 "아동의 개인정보" 섹션을 참조하세요.</p>
+      {% else %}
+      <p>WordMaster is designed as a word puzzle game suitable for all ages. We recommend that children under 13 use the Service with parental or guardian supervision.</p>
+      <p>We do not knowingly collect personal information from children under 13. For details, see the "Children's Privacy" section of our <a href="/privacy">Privacy Policy</a>.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold">4. Disclaimer</h5>
-      <p>The Service is provided "as is" without warranties of any kind. We are not responsible for any loss or damage arising from your use of the Service.</p>
+      <h5 class="fw-bold">4. {% if lang == 'ko' %}계정 및 사용자 데이터{% else %}Accounts &amp; User Data{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 계정 등록을 요구하지 않습니다. 게임 통계, 어휘 진척도, 약점 단어 목록은 모두 본인의 브라우저 localStorage에 저장되며 우리 서버로 전송되지 않습니다.</p>
+      <p>브라우저 데이터를 지우거나 다른 기기로 전환하면 게임 데이터는 손실됩니다. 우리는 이 데이터의 복구나 백업을 제공할 수 없습니다. 이는 의도된 개인정보 우선 설계이며, 결함이 아닙니다.</p>
+      {% else %}
+      <p>WordMaster does not require account registration. Your game statistics, vocabulary progress, and weak-words list are all stored in your browser's localStorage and are not transmitted to our servers.</p>
+      <p>If you clear your browser data or switch devices, your game data will be lost. We cannot offer recovery or backup of this data. This is an intentional privacy-first design, not a defect.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">5. {% if lang == 'ko' %}지적 재산권{% else %}Intellectual Property{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster의 이름, 로고, 블로그 글, 자체 제작한 콘텐츠는 WordMaster의 자산입니다. 단어 추측 퍼즐의 일반적 개념은 공공 영역에 있습니다.</p>
+      <p>WordMaster는 The New York Times, Wordle, 또는 다른 단어 퍼즐 플랫폼과 제휴, 후원, 연결되어 있지 않습니다. 모든 단어 목록은 공개된 영어 사전에서 큐레이션되었으며, 정의는 공개 사전 API에서 가져옵니다.</p>
+      {% else %}
+      <p>The WordMaster name, logo, blog posts, and self-authored content are the property of WordMaster. The general concept of a word-guessing puzzle is in the public domain.</p>
+      <p>WordMaster is not affiliated with, endorsed by, or connected to The New York Times, Wordle, or any other word puzzle platform. All word lists are curated from public English dictionaries, and definitions are sourced from open dictionary APIs.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">6. {% if lang == 'ko' %}광고 및 제3자 서비스{% else %}Advertising &amp; Third-Party Services{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>WordMaster는 Google AdSense를 통해 광고를 표시합니다. 광고 콘텐츠와 그 정확성, 적법성, 안전성에 대해 책임지지 않습니다. 광고로 인한 불만 사항은 광고주나 Google AdSense에 직접 문의해 주시기 바랍니다.</p>
+      <p>또한 Google Analytics, Free Dictionary API, BBC RSS 피드와 같은 제3자 서비스를 사용합니다. 이러한 서비스는 자체 이용약관과 개인정보 보호 정책을 가지고 있습니다.</p>
+      {% else %}
+      <p>WordMaster displays advertisements via Google AdSense. We are not responsible for advertising content or its accuracy, legality, or safety. For complaints about specific ads, please contact the advertiser or Google AdSense directly.</p>
+      <p>We also use third-party services including Google Analytics, the Free Dictionary API, and BBC RSS feeds. These services have their own terms of service and privacy policies.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">7. {% if lang == 'ko' %}면책 조항 및 책임 제한{% else %}Disclaimer &amp; Limitation of Liability{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>본 서비스는 어떠한 종류의 보증도 없이 "있는 그대로" 제공됩니다. 정확성, 신뢰성, 가용성, 또는 특정 목적에 대한 적합성을 보장하지 않습니다.</p>
+      <p>본 서비스 사용으로 발생하는 어떠한 직접적, 간접적, 우발적, 결과적 손해 또는 손실에 대해 책임지지 않습니다. 이에는 데이터 손실, 시간 손실, 또는 다른 무형 손실을 포함하되 이에 국한되지 않습니다.</p>
+      <p>일부 관할권에서는 묵시적 보증의 배제 또는 책임의 제한을 허용하지 않으므로, 본 조항이 본인에게 적용되지 않을 수 있습니다.</p>
+      {% else %}
+      <p>The Service is provided "as is" without warranties of any kind. We do not guarantee accuracy, reliability, availability, or fitness for any particular purpose.</p>
+      <p>We are not liable for any direct, indirect, incidental, or consequential damages or losses arising from your use of the Service. This includes but is not limited to loss of data, loss of time, or other intangible losses.</p>
+      <p>Some jurisdictions do not allow the exclusion of implied warranties or limitation of liability, so these provisions may not apply to you.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold">8. {% if lang == 'ko' %}서비스 변경 및 종료{% else %}Service Changes &amp; Termination{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>언제든지 사전 통지 없이 본 약관, 서비스의 기능, 가용성을 수정, 일시 중단, 또는 종료할 권리가 있습니다. 변경 후에도 서비스를 계속 이용하시면 갱신된 약관에 동의한 것으로 간주됩니다.</p>
+      <p>본 약관을 위반한 사용자의 서비스 접근을 차단할 권리를 가집니다.</p>
+      {% else %}
+      <p>We reserve the right to modify, suspend, or terminate these Terms, the Service's features, or its availability at any time without prior notice. Continued use of the Service after changes constitutes acceptance of the updated Terms.</p>
+      <p>We may block access for users who violate these Terms.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="card shadow-sm mb-5">
     <div class="card-body">
-      <h5 class="fw-bold">5. Changes</h5>
-      <p>We reserve the right to modify these Terms at any time. Continued use of the Service after changes constitutes acceptance of the updated Terms.</p>
+      <h5 class="fw-bold">9. {% if lang == 'ko' %}준거법 및 문의{% else %}Governing Law &amp; Contact{% endif %}</h5>
+      {% if lang == 'ko' %}
+      <p>본 약관과 본 서비스 사용에 관한 분쟁은 법의 충돌 원칙과 무관하게 대한민국 법률의 적용을 받습니다.</p>
+      <p>본 약관 또는 서비스 운영에 관한 질문은 아래로 연락해 주세요:</p>
+      <ul class="mb-0">
+        <li>이메일: <a href="mailto:jaemin.kye37@gmail.com">jaemin.kye37@gmail.com</a></li>
+        <li>일반 문의: <a href="/contact">wordmaster.store/contact</a></li>
+      </ul>
+      {% else %}
+      <p>These Terms and any dispute arising from your use of the Service are governed by the laws of the Republic of Korea, without regard to conflict-of-law principles.</p>
+      <p>For questions about these Terms or the operation of the Service, please contact us:</p>
+      <ul class="mb-0">
+        <li>Email: <a href="mailto:jaemin.kye37@gmail.com">jaemin.kye37@gmail.com</a></li>
+        <li>General contact: <a href="/contact">wordmaster.store/contact</a></li>
+      </ul>
+      {% endif %}
     </div>
   </div>
 </div>

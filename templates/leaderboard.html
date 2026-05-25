@@ -1,79 +1,223 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5" style="max-width:720px">
-  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-trophy me-2"></i>Leaderboard & Stats</h1>
-  <p class="text-muted mb-4">How does your score compare?</p>
+<div class="container py-5" style="max-width:760px">
+  <h1 class="fw-bold text-primary mb-1"><i class="bi bi-trophy me-2"></i>
+    {% if lang == 'ko' %}내 통계{% else %}My Stats{% endif %}
+  </h1>
+  <p class="text-muted mb-4">
+    {% if lang == 'ko' %}WordMaster에서의 나의 성장 기록. 모든 데이터는 이 기기에만 저장됩니다.{% else %}Your personal WordMaster progress. All data is stored locally on this device only.{% endif %}
+  </p>
 
+  <!-- 4 stat cards -->
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-primary text-white">
+      <div class="card text-center shadow-sm border-0 bg-primary text-white h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-played">—</div>
-          <div class="small">Played</div>
+          <div class="small">{% if lang == 'ko' %}플레이 횟수{% else %}Played{% endif %}</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-success text-white">
+      <div class="card text-center shadow-sm border-0 bg-success text-white h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-winpct">—</div>
-          <div class="small">Win %</div>
+          <div class="small">{% if lang == 'ko' %}승률{% else %}Win %{% endif %}</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-warning text-dark">
+      <div class="card text-center shadow-sm border-0 bg-warning text-dark h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-streak">—</div>
-          <div class="small">Streak</div>
+          <div class="small">{% if lang == 'ko' %}현재 연속 기록{% else %}Current Streak{% endif %}</div>
         </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card text-center shadow-sm border-0 bg-info text-dark">
+      <div class="card text-center shadow-sm border-0 bg-info text-dark h-100">
         <div class="card-body py-3">
           <div class="fs-2 fw-bold" id="stat-best">—</div>
-          <div class="small">Best Streak</div>
+          <div class="small">{% if lang == 'ko' %}최고 연속 기록{% else %}Best Streak{% endif %}</div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Guess distribution chart -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h5 class="fw-bold mb-3">Guess Distribution</h5>
+      <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart me-2 text-primary"></i>
+        {% if lang == 'ko' %}추측 횟수별 분포{% else %}Guess Distribution{% endif %}
+      </h5>
+      <p class="text-muted small mb-3">
+        {% if lang == 'ko' %}각 게임에서 몇 번 만에 답을 맞혔는지 분포. 막대가 왼쪽으로 몰릴수록 효율적인 플레이어입니다.{% else %}How many guesses it took to solve each game. The further left your bars lean, the more efficient your play.{% endif %}
+      </p>
       <div id="guess-dist"></div>
+      <div id="dist-empty" class="text-center text-muted py-3 d-none">
+        <i class="bi bi-emoji-smile fs-1 text-primary"></i>
+        <p class="mb-1 mt-2">{% if lang == 'ko' %}아직 게임 기록이 없습니다.{% else %}No game history yet.{% endif %}</p>
+        <small>{% if lang == 'ko' %}첫 게임을 풀고 다시 와보세요!{% else %}Solve your first game and come back to see the chart fill in.{% endif %}</small>
+      </div>
     </div>
   </div>
 
-  <div class="card shadow-sm mb-5 bg-light text-center">
+  <!-- Cross-link to deeper learning pages -->
+  <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <p class="text-muted mb-3">Stats are stored locally in your browser.</p>
-      <a href="/" class="btn btn-primary me-2"><i class="bi bi-play-fill me-1"></i>Play Now</a>
-      <a href="/daily" class="btn btn-outline-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+      <h5 class="fw-bold mb-3"><i class="bi bi-mortarboard me-2 text-primary"></i>
+        {% if lang == 'ko' %}더 깊이 보는 학습 대시보드{% else %}Deeper Learning Dashboards{% endif %}
+      </h5>
+      <p class="text-muted small mb-3">
+        {% if lang == 'ko' %}위 통계는 가장 기본적인 요약입니다. 어휘 성장을 본격적으로 추적하고 싶다면 다음 페이지를 확인하세요:{% else %}The numbers above are the basics. For deeper vocabulary tracking, check these:{% endif %}
+      </p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <a href="/my-words" class="text-decoration-none">
+            <div class="p-3 border rounded h-100 hover-bg-light">
+              <div class="fw-bold text-primary mb-1"><i class="bi bi-book me-1"></i>
+                {% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}
+              </div>
+              <p class="small text-muted mb-0">
+                {% if lang == 'ko' %}만난 모든 단어 기록과 각 단어의 플레이/승리 횟수.{% else %}Every word you've encountered, with play count and win count for each.{% endif %}
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/my-weak-words" class="text-decoration-none">
+            <div class="p-3 border rounded h-100 hover-bg-light">
+              <div class="fw-bold text-warning mb-1"><i class="bi bi-exclamation-triangle me-1"></i>
+                {% if lang == 'ko' %}약점 단어{% else %}Weak Words{% endif %}
+              </div>
+              <p class="small text-muted mb-0">
+                {% if lang == 'ko' %}풀지 못한 단어. 다시 만나서 마스터하면 자동으로 졸업.{% else %}Words you didn't solve. Master them in any mode and they graduate off the list.{% endif %}
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="/my-progress" class="text-decoration-none">
+            <div class="p-3 border rounded h-100 hover-bg-light">
+              <div class="fw-bold text-success mb-1"><i class="bi bi-graph-up me-1"></i>
+                {% if lang == 'ko' %}진척도 차트{% else %}Progress Charts{% endif %}
+              </div>
+              <p class="small text-muted mb-0">
+                {% if lang == 'ko' %}어휘 성장과 일일 활동을 시각화한 30일·14일 차트.{% else %}30-day vocabulary growth + 14-day daily activity charts.{% endif %}
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Educational content (helps with AdSense + SEO) -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>
+        {% if lang == 'ko' %}이 통계는 어떻게 해석하나요?{% else %}How to Read These Stats{% endif %}
+      </h5>
+      {% if lang == 'ko' %}
+      <p class="text-muted small">통계 카드를 보는 법:</p>
+      <ul class="text-muted small ps-3">
+        <li class="mb-2"><strong>플레이 횟수</strong> — 지금까지 시작한 게임의 총 횟수 (이긴 게임 + 진 게임 + 포기한 게임 포함).</li>
+        <li class="mb-2"><strong>승률</strong> — 이긴 게임 ÷ 플레이 횟수. <strong>70% 이상</strong>이면 매우 우수한 편입니다.</li>
+        <li class="mb-2"><strong>현재 연속 기록</strong> — 데일리 챌린지를 며칠 연속 풀었는지. 한 번 놓치면 0으로 초기화됩니다.</li>
+        <li class="mb-2"><strong>최고 연속 기록</strong> — 이제까지 도달한 가장 긴 연속 기록.</li>
+      </ul>
+      <p class="text-muted small">추측 분포 차트는 게임당 평균 몇 번 만에 풀었는지를 보여줍니다. 막대가 <strong>3~4번 사이에 쏠려 있으면 효율적인 플레이어</strong>이고, 5~6번 쪽으로 분산되어 있다면 시작 단어 전략이나 글자 빈도 직관을 다듬을 여지가 있습니다.</p>
+      <p class="text-muted small mb-0">전략 가이드는 <a href="/blog/word-game-tips" class="text-decoration-none">단어 게임 트릭 10가지</a>와 <a href="/blog/best-starting-words" class="text-decoration-none">최고의 시작 단어</a>를 참고하세요.</p>
+      {% else %}
+      <p class="text-muted small">What each stat means:</p>
+      <ul class="text-muted small ps-3">
+        <li class="mb-2"><strong>Played</strong> — Total games you have started so far (wins, losses, and give-ups all counted).</li>
+        <li class="mb-2"><strong>Win %</strong> — Wins divided by games played. <strong>Above 70%</strong> is considered very strong.</li>
+        <li class="mb-2"><strong>Current Streak</strong> — How many days in a row you have solved the Daily Challenge. Resets to 0 if you miss a day.</li>
+        <li class="mb-2"><strong>Best Streak</strong> — The longest streak you have ever reached.</li>
+      </ul>
+      <p class="text-muted small">The guess-distribution chart shows the average number of guesses it took to solve each game. If your bars are <strong>concentrated at 3 or 4 guesses, you are an efficient player</strong>. If they are spread toward 5 or 6, there is room to sharpen your opening-word strategy or letter-frequency instincts.</p>
+      <p class="text-muted small mb-0">Strategy guides: <a href="/blog/word-game-tips" class="text-decoration-none">10 Word Game Tricks</a> and <a href="/blog/best-starting-words" class="text-decoration-none">Best Starting Words</a>.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Why local-only -->
+  <div class="card shadow-sm mb-4 bg-light border-0">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3"><i class="bi bi-shield-lock me-2 text-primary"></i>
+        {% if lang == 'ko' %}통계가 이 기기에만 저장되는 이유{% else %}Why Stats Stay Local to This Device{% endif %}
+      </h5>
+      {% if lang == 'ko' %}
+      <p class="text-muted small">WordMaster는 의도적으로 통계를 <strong>이 브라우저</strong>에만 보관합니다. 서버로 전송하지 않습니다.</p>
+      <p class="text-muted small">이유:</p>
+      <ul class="text-muted small ps-3 mb-0">
+        <li class="mb-2"><strong>계정이 필요 없습니다</strong> — 가입, 비밀번호, 이메일 인증 없음. 그냥 플레이하면 됩니다.</li>
+        <li class="mb-2"><strong>개인정보 보호</strong> — 게임 기록은 본인 외 누구도 볼 수 없습니다. WordMaster 운영자도 모릅니다.</li>
+        <li class="mb-2"><strong>트레이드오프</strong> — 브라우저 데이터를 지우거나 다른 기기로 옮기면 통계가 이전되지 않습니다. 이건 의도된 설계이지 버그가 아닙니다.</li>
+      </ul>
+      {% else %}
+      <p class="text-muted small">WordMaster deliberately keeps your stats <strong>in this browser only</strong>. They are never sent to any server.</p>
+      <p class="text-muted small">Why:</p>
+      <ul class="text-muted small ps-3 mb-0">
+        <li class="mb-2"><strong>No account needed</strong> — No signup, password, or email verification. Just play.</li>
+        <li class="mb-2"><strong>Privacy</strong> — Your game history is visible only to you. Not even the operator of WordMaster can see it.</li>
+        <li class="mb-2"><strong>Tradeoff</strong> — If you clear browser data or switch devices, your stats do not carry over. This is intentional, not a bug.</li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="card shadow-sm mb-5 bg-primary text-white">
+    <div class="card-body text-center py-4">
+      <h5 class="fw-bold mb-2">{% if lang == 'ko' %}오늘의 챌린지로 연속 기록 시작하기{% else %}Start a Streak with Today's Daily Challenge{% endif %}</h5>
+      <p class="mb-3 opacity-75 small">
+        {% if lang == 'ko' %}매일 한 게임씩, 작은 습관이 큰 어휘 성장으로 쌓입니다.{% else %}One game a day. Small habit, big vocabulary gains.{% endif %}
+      </p>
+      <a href="/daily" class="btn btn-light text-primary fw-bold me-2">
+        <i class="bi bi-calendar-day me-1"></i>{% if lang == 'ko' %}오늘의 챌린지{% else %}Daily Challenge{% endif %}
+      </a>
+      <a href="/unlimited" class="btn btn-outline-light">
+        <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한 모드{% else %}Unlimited Mode{% endif %}
+      </a>
     </div>
   </div>
 </div>
 
+<style>
+  .hover-bg-light:hover { background: rgba(13, 110, 253, 0.05); transition: background 0.15s; }
+</style>
+
 <script>
-  const stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{1:0,2:0,3:0,4:0,5:0,6:0}}');
+  // ── Stats from localStorage ───────────────────────────────
+  const stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}}');
   document.getElementById("stat-played").textContent  = stats.played;
   document.getElementById("stat-winpct").textContent  = stats.played ? Math.round(stats.won/stats.played*100)+"%" : "—";
   document.getElementById("stat-streak").textContent  = stats.streak;
   document.getElementById("stat-best").textContent    = stats.best;
 
-  const dist = document.getElementById("guess-dist");
-  const max  = Math.max(...Object.values(stats.dist), 1);
-  [1,2,3,4,5,6].forEach(n => {
-    const v   = stats.dist[n] || 0;
-    const pct = Math.round(v/max*100);
-    dist.innerHTML += `<div class="d-flex align-items-center mb-2">
-      <div class="me-2 fw-bold" style="width:16px">${n}</div>
-      <div class="flex-grow-1 bg-light rounded overflow-hidden" style="height:28px">
-        <div class="bg-primary h-100 d-flex align-items-center px-2 text-white fw-bold"
-             style="width:${Math.max(pct,5)}%;min-width:32px;transition:width .4s">${v}</div>
-      </div>
-    </div>`;
-  });
+  // ── Guess distribution ────────────────────────────────────
+  const dist     = document.getElementById("guess-dist");
+  const distEmpty = document.getElementById("dist-empty");
+  const distVals = [1,2,3,4,5,6].map(n => stats.dist[n] || stats.dist[String(n)] || 0);
+  const max      = Math.max(...distVals, 1);
+  const hasGames = distVals.some(v => v > 0);
+
+  if (!hasGames) {
+    distEmpty.classList.remove("d-none");
+  } else {
+    [1,2,3,4,5,6].forEach((n, i) => {
+      const v   = distVals[i];
+      const pct = Math.round(v/max*100);
+      dist.innerHTML += `<div class="d-flex align-items-center mb-2">
+        <div class="me-2 fw-bold" style="width:16px">${n}</div>
+        <div class="flex-grow-1 bg-light rounded overflow-hidden" style="height:28px">
+          <div class="bg-primary h-100 d-flex align-items-center px-2 text-white fw-bold"
+               style="width:${Math.max(pct,5)}%;min-width:32px;transition:width .4s">${v}</div>
+        </div>
+      </div>`;
+    });
+  }
 </script>
 {% endblock %}
