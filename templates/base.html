@@ -69,6 +69,50 @@
     }
   }
   </script>
+  {# ── Auto BreadcrumbList for single-segment paths ──────────
+     /about, /faq, /archive, /leaderboard, etc. each get a Home › X
+     breadcrumb in Google search results, lifting visual cue + click-through.
+     Skipped for: homepage (no breadcrumb needed), nested /blog/X (blog/post.html
+     emits its own 3-level breadcrumb), and nested /anagram/X /hangman/X /archive/X
+     (deep game variants don't warrant a separate breadcrumb each). #}
+  {% set _bc_path = request.path or "/" %}
+  {% set _bc_segments = _bc_path.strip("/").split("/") %}
+  {% if _bc_segments|length == 1 and _bc_segments[0] not in ["", "blog"] %}
+    {% set _bc_names_ko = {
+      "about": "소개", "faq": "FAQ", "contact": "문의",
+      "how-to-play": "게임 방법", "privacy": "개인정보 처리방침", "terms": "이용약관",
+      "archive": "매일 단어 보관함", "leaderboard": "내 통계",
+      "daily": "데일리 챌린지", "unlimited": "무제한 모드",
+      "easy": "쉬움 모드", "hard": "어려움 모드",
+      "middle": "중학생 수준", "high": "고등학생 수준", "college": "대학생 수준",
+      "custom": "내 단어", "news-challenge": "뉴스 단어 챌린지",
+      "anagram": "애너그램", "hangman": "행맨",
+      "my-words": "내 단어", "my-weak-words": "약점 단어", "my-progress": "내 진척도"
+    } %}
+    {% set _bc_names_en = {
+      "about": "About", "faq": "FAQ", "contact": "Contact",
+      "how-to-play": "How to Play", "privacy": "Privacy Policy", "terms": "Terms of Service",
+      "archive": "Daily Word Archive", "leaderboard": "My Stats",
+      "daily": "Daily Challenge", "unlimited": "Unlimited Mode",
+      "easy": "Easy Mode", "hard": "Hard Mode",
+      "middle": "Middle School", "high": "High School", "college": "College Level",
+      "custom": "My Custom Words", "news-challenge": "News Word Challenge",
+      "anagram": "Anagram", "hangman": "Hangman",
+      "my-words": "My Words", "my-weak-words": "Weak Words", "my-progress": "My Progress"
+    } %}
+    {% set _bc_key = _bc_segments[0] %}
+    {% set _bc_name = (_bc_names_ko[_bc_key] if lang == 'ko' and _bc_key in _bc_names_ko else _bc_names_en.get(_bc_key, _bc_key.replace('-', ' ').title())) %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "{{ '홈' if lang == 'ko' else 'Home' }}", "item": "https://wordmaster.store/" },
+      { "@type": "ListItem", "position": 2, "name": "{{ _bc_name }}", "item": "https://wordmaster.store/{{ _bc_key }}" }
+    ]
+  }
+  </script>
+  {% endif %}
   <style>
     .footer-link:hover { color: #fff !important; }
     .lang-btn { font-size: 0.82rem; padding: 2px 8px; border-radius: 20px; }
