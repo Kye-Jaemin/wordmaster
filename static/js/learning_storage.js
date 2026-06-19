@@ -83,6 +83,97 @@
     if (ad) ad.classList.remove("d-none");
   };
 
+  // ── Initial meaning clue ────────────────────────────────────────────────
+  // Anagram and Hangman start with no semantic clue — just scrambled tiles or
+  // blanks — which makes harder words almost unguessable. This fetches a
+  // spoiler-safe definition from /api/hint and renders it into #clue-panel /
+  // #clue-content at round start. The answer (and simple inflections) is masked
+  // so the clue hints at meaning without handing over the word.
+  function maskAnswer(text, word) {
+    if (!text || !word) return text || "";
+    const esc = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re  = new RegExp("\\b" + esc + "(?:s|es|ed|ing|d)?\\b", "gi");
+    return text.replace(re, "•".repeat(Math.max(3, word.length)));
+  }
+
+  window.wmShowClue = async function (word) {
+    const panel   = document.getElementById("clue-panel");
+    const content = document.getElementById("clue-content");
+    const loading = document.getElementById("clue-loading");
+    if (!panel || !content || !word) return;
+    const ko = (window.WM_LANG === "ko");
+    panel.classList.add("d-none");
+    content.innerHTML = "";
+    if (loading) loading.classList.remove("d-none");
+    try {
+      const res  = await fetch(`/api/hint?word=${word.toLowerCase()}`);
+      const data = await res.json();
+      if (loading) loading.classList.add("d-none");
+      const def = maskAnswer(data.definition || "", word);
+      if (!def) return;
+      let html = `<strong><i class="bi bi-lightbulb-fill me-1 text-warning"></i>${ko ? "힌트" : "Clue"}</strong>`;
+      if (data.partOfSpeech) html += ` <em class="text-muted">(${data.partOfSpeech})</em>`;
+      html += `<br>${def}`;
+      if (data.example) html += `<br><small class="text-muted fst-italic">${ko ? "예: " : "e.g. "}"${maskAnswer(data.example, word)}"</small>`;
+      content.innerHTML = html;
+      panel.classList.remove("d-none");
+    } catch (e) {
+      if (loading) loading.classList.add("d-none");
+    }
+  };
+
+  // ── Rewarded-ad gate for extra hints ────────────────────────────────────
+  // Builds a one-off "advertisement" overlay containing the site's existing
+  // 300×250 AdSense unit plus a short countdown. When the countdown ends the
+  // Claim button activates and, on click, invokes onReward() — a rewarded-video
+  // style flow built on the display inventory the site already runs.
+  window.wmWatchAdForReward = function (onReward) {
+    const ko = (window.WM_LANG === "ko");
+    const COUNTDOWN = 5;
+
+    const ov = document.createElement("div");
+    ov.className = "wm-ad-overlay";
+    ov.style.cssText = "position:fixed;inset:0;z-index:1090;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;";
+    ov.innerHTML =
+      '<div style="background:#fff;border-radius:12px;max-width:360px;width:100%;padding:18px 18px 12px;text-align:center;box-shadow:0 12px 44px rgba(0,0,0,.35)">' +
+        '<div class="text-muted mb-2" style="font-size:.7rem;text-transform:uppercase;letter-spacing:.06em">' + (ko ? "광고" : "Advertisement") + '</div>' +
+        '<div style="min-height:250px;display:flex;align-items:center;justify-content:center;background:#f6f7f9;border-radius:8px;overflow:hidden">' +
+          '<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-3911396624649383" data-ad-slot="9633203230"></ins>' +
+        '</div>' +
+        '<button class="wm-ad-claim btn btn-primary w-100 mt-3" disabled><i class="bi bi-hourglass-split me-1"></i><span class="wm-ad-count">' + COUNTDOWN + '</span></button>' +
+        '<button class="wm-ad-cancel btn btn-sm btn-link text-muted mt-1 text-decoration-none">' + (ko ? "닫기" : "Close") + '</button>' +
+      '</div>';
+    document.body.appendChild(ov);
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+
+    const claimBtn = ov.querySelector(".wm-ad-claim");
+    const cancelBtn = ov.querySelector(".wm-ad-cancel");
+    const countEl  = ov.querySelector(".wm-ad-count");
+    let left = COUNTDOWN;
+    const timer = setInterval(() => {
+      left--;
+      if (left > 0) {
+        if (countEl) countEl.textContent = left;
+      } else {
+        clearInterval(timer);
+        claimBtn.disabled = false;
+        claimBtn.innerHTML = '<i class="bi bi-unlock-fill me-1"></i>' + (ko ? "힌트 받기" : "Claim hint");
+      }
+    }, 1000);
+
+    function close() {
+      clearInterval(timer);
+      if (ov.parentNode) ov.parentNode.removeChild(ov);
+    }
+    claimBtn.addEventListener("click", () => {
+      if (claimBtn.disabled) return;
+      close();
+      if (typeof onReward === "function") onReward();
+    });
+    cancelBtn.addEventListener("click", close);
+    ov.addEventListener("click", (e) => { if (e.target === ov) close(); });
+  };
+
 
   window.wmSaveVocab = function (word, won, scoreNumber, gameMode) {
     if (!word) return;

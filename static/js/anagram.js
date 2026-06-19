@@ -11,7 +11,7 @@ const _KO = {
   theWord:         (w) => `정답: ${w}`,
   betterLuck:      "다음 라운드는 더 쉬울 거예요.",
   theWordWas:      (w) => `정답은: ${w} 였어요.`,
-  hintPlaced:      "힌트: 첫 글자가 배치됐어요.",
+  hintPlaced:      "힌트: 글자 하나가 배치됐어요.",
 };
 const _EN = {
   needCustom:      "Add custom words at /custom first.",
@@ -22,7 +22,7 @@ const _EN = {
   theWord:         (w) => `The word: ${w}`,
   betterLuck:      "Next round will be easier.",
   theWordWas:      (w) => `The word was: ${w}`,
-  hintPlaced:      "Hint: first letter placed.",
+  hintPlaced:      "Hint: a letter was placed.",
 };
 const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
 
@@ -34,7 +34,6 @@ let scrambled  = [];
 let slots      = [];
 let usedIdx    = new Set();
 let attempts   = 0;
-let hintUsed   = false;
 let gameOver   = false;
 
 async function fetchWord() {
@@ -76,11 +75,12 @@ function newRound() {
   slots = Array(secretWord.length).fill("");
   usedIdx.clear();
   attempts = 0;
-  hintUsed = false;
   gameOver = false;
   updateAttemptCount();
   document.getElementById("result-panel").classList.add("d-none");
   document.getElementById("btn-hint").disabled = false;
+  // Auto-show the spoiler-safe meaning clue so the player has somewhere to start
+  if (window.wmShowClue) window.wmShowClue(secretWord);
   // Hide the post-game result ad + Word Learning Card when starting fresh
   const resultAd = document.getElementById("result-ad");
   if (resultAd) resultAd.classList.add("d-none");
@@ -198,23 +198,44 @@ function clearSlots() {
   render();
 }
 
-async function showHint() {
-  if (gameOver || hintUsed) return;
-  hintUsed = true;
-  document.getElementById("btn-hint").disabled = true;
-  // Place first letter into first slot
-  const first = secretWord[0];
-  for (let i = 0; i < scrambled.length; i++) {
-    if (scrambled[i] === first && !usedIdx.has(i)) {
-      // Clear slot 0 if occupied
-      if (slots[0]) returnFromSlot(0);
-      slots[0] = first;
-      usedIdx.add(i);
-      break;
+// Rebuild usedIdx (which scrambled tiles are consumed) from the current slots,
+// matching letters greedily. Used after a hint sets a slot directly.
+function syncUsedFromSlots() {
+  usedIdx.clear();
+  const avail = scrambled.map(() => true);
+  for (const ch of slots) {
+    if (!ch) continue;
+    for (let i = 0; i < scrambled.length; i++) {
+      if (avail[i] && scrambled[i] === ch) { avail[i] = false; usedIdx.add(i); break; }
     }
   }
+}
+
+// Lock the correct letter into the next not-yet-correct slot. Repeatable.
+function revealAnagramLetter() {
+  if (gameOver) return;
+  let p = -1;
+  for (let i = 0; i < secretWord.length; i++) {
+    if (slots[i] !== secretWord[i]) { p = i; break; }
+  }
+  if (p === -1) return; // already all correct
+  const need = secretWord[p];
+  // Drop wrong placements of the same letter elsewhere so tile counts stay valid
+  for (let i = 0; i < slots.length; i++) {
+    if (i !== p && slots[i] === need && slots[i] !== secretWord[i]) slots[i] = "";
+  }
+  slots[p] = need;
+  syncUsedFromSlots();
   render();
   showToast(T.hintPlaced);
+  if (slots.every(s => s !== "")) setTimeout(checkAnswer, 280);
+}
+
+// Hint button: watch a rewarded ad, then reveal one letter
+function handleAdHint() {
+  if (gameOver) return;
+  if (window.wmWatchAdForReward) window.wmWatchAdForReward(revealAnagramLetter);
+  else revealAnagramLetter();
 }
 
 function shakeEl(el) {
@@ -242,7 +263,7 @@ function attachEvents() {
   });
   document.getElementById("btn-shuffle").addEventListener("click", shuffleVisible);
   document.getElementById("btn-clear").addEventListener("click", clearSlots);
-  document.getElementById("btn-hint").addEventListener("click", showHint);
+  document.getElementById("btn-hint").addEventListener("click", handleAdHint);
   document.getElementById("btn-giveup").addEventListener("click", giveUp);
   document.getElementById("btn-new").addEventListener("click", async () => {
     await fetchWord();

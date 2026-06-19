@@ -34,7 +34,6 @@ let secretWord  = "";
 let revealed    = [];
 let wrongLetters = [];
 let livesLeft   = MAX_LIVES;
-let hintUsed    = false;
 let gameOver    = false;
 
 async function fetchWord() {
@@ -64,11 +63,12 @@ function newRound() {
   revealed = Array(secretWord.length).fill(false);
   wrongLetters = [];
   livesLeft = MAX_LIVES;
-  hintUsed = false;
   gameOver = false;
   document.getElementById("result-panel").classList.add("d-none");
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) hintBtn.disabled = false;
+  // Auto-show the spoiler-safe meaning clue so the player has somewhere to start
+  if (window.wmShowClue) window.wmShowClue(secretWord);
   document.querySelectorAll(".key[data-key]").forEach(b => b.classList.remove("correct", "absent"));
   // Hide the post-game result ad + Word Learning Card when starting fresh
   const resultAd = document.getElementById("result-ad");
@@ -152,25 +152,29 @@ function giveUp() {
   lose();
 }
 
-async function showHint() {
-  if (gameOver || hintUsed) return;
-  hintUsed = true;
-  document.getElementById("btn-hint").disabled = true;
-  // Reveal one unrevealed letter for free (no life cost)
+// Reveal one random unrevealed letter (no life cost). Repeatable.
+function revealHangmanLetter() {
+  if (gameOver) return;
   const candidates = [];
   for (let i = 0; i < secretWord.length; i++) {
     if (!revealed[i]) candidates.push(i);
   }
-  if (candidates.length) {
-    const pick = candidates[Math.floor(Math.random() * candidates.length)];
-    revealed[pick] = true;
-    const letter = secretWord[pick];
-    const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
-    if (keyBtn) keyBtn.classList.add("correct");
-    render();
-    showToast(T.hintRevealed);
-    if (revealed.every(r => r)) win();
-  }
+  if (!candidates.length) return;
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  revealed[pick] = true;
+  const letter = secretWord[pick];
+  const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
+  if (keyBtn) keyBtn.classList.add("correct");
+  render();
+  showToast(T.hintRevealed);
+  if (revealed.every(r => r)) win();
+}
+
+// Hint button: watch a rewarded ad, then reveal one letter
+function handleAdHint() {
+  if (gameOver) return;
+  if (window.wmWatchAdForReward) window.wmWatchAdForReward(revealHangmanLetter);
+  else revealHangmanLetter();
 }
 
 function fetchDefinition() {
@@ -200,7 +204,7 @@ function attachEvents() {
   document.addEventListener("keydown", e => {
     if (e.key && /^[a-zA-Z]$/.test(e.key)) guess(e.key);
   });
-  document.getElementById("btn-hint").addEventListener("click", showHint);
+  document.getElementById("btn-hint").addEventListener("click", handleAdHint);
   document.getElementById("btn-giveup").addEventListener("click", giveUp);
   document.getElementById("btn-new").addEventListener("click", async () => {
     await fetchWord();

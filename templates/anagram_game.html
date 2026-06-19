@@ -214,6 +214,14 @@
         </span>
       </div>
 
+      <!-- Initial Meaning Clue (auto-shown each round) -->
+      <div id="clue-loading" class="text-center text-muted small mb-2 d-none">
+        <span class="spinner-border spinner-border-sm me-1" role="status"></span>{% if lang == 'ko' %}힌트 불러오는 중…{% else %}Loading clue…{% endif %}
+      </div>
+      <div id="clue-panel" class="alert alert-warning py-2 px-3 mx-auto d-none text-start" style="max-width:460px;" role="note">
+        <div id="clue-content" class="small"></div>
+      </div>
+
       <!-- Word Slots -->
       <div id="slots" class="text-center mb-3"></div>
 
@@ -224,7 +232,7 @@
       <div class="text-center mb-3">
         <button id="btn-shuffle" class="btn btn-outline-secondary btn-sm me-1" type="button">{% if lang == 'ko' %}섞기{% else %}Shuffle{% endif %}</button>
         <button id="btn-clear"   class="btn btn-outline-secondary btn-sm me-1" type="button">{% if lang == 'ko' %}지우기{% else %}Clear{% endif %}</button>
-        <button id="btn-hint"    class="btn btn-outline-warning btn-sm me-1" type="button">{% if lang == 'ko' %}힌트{% else %}Hint{% endif %}</button>
+        <button id="btn-hint"    class="btn btn-outline-warning btn-sm me-1" type="button"><i class="bi bi-play-btn me-1"></i>{% if lang == 'ko' %}광고 보고 힌트{% else %}Hint (watch ad){% endif %}</button>
         <button id="btn-giveup"  class="btn btn-outline-danger btn-sm" type="button">{% if lang == 'ko' %}포기{% else %}Give up{% endif %}</button>
       </div>
 
