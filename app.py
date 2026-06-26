@@ -69,16 +69,28 @@ with open("words.json", encoding="utf-8") as f:
 
 # ─── Language Support ──────────────────────────────────────────
 
+def resolve_lang():
+    """Resolve the display language for the current request.
+
+    Priority: ?lang query param > session (user's explicit toggle) >
+    browser/system language (Korean → 'ko', anything else → 'en') > 'en'.
+
+    The Accept-Language step means a first-time visitor whose system language
+    is Korean lands on the Korean site automatically, while everyone else
+    defaults to English. Googlebot (which sends no/English Accept-Language)
+    keeps crawling the English version, so SEO is unaffected; ?lang=ko still
+    exposes the Korean variant for indexing, and the in-page toggle (stored in
+    session) always wins over auto-detection.
+    """
+    lang = request.args.get("lang") or session.get("lang")
+    if not lang:
+        lang = "ko" if request.accept_languages.best_match(["ko", "en"]) == "ko" else "en"
+    return lang if lang in ("en", "ko") else "en"
+
 @app.context_processor
 def inject_lang():
-    """Inject current language. Priority: ?lang query param > session > 'en' default.
-    The query-param override lets Google index the same URL twice — once as English
-    and once as Korean — without needing per-language URL paths.
-    """
-    lang = request.args.get("lang") or session.get("lang", "en")
-    if lang not in ("en", "ko"):
-        lang = "en"
-    return dict(lang=lang)
+    """Inject the resolved display language into every template."""
+    return dict(lang=resolve_lang())
 
 @app.route("/set-lang/<lang>")
 def set_lang(lang):
@@ -478,9 +490,7 @@ def blog():
     # Attach a tag to each post so the index can show a colour-coded badge
     for p in posts:
         p["tag"] = BLOG_TAGS.get(p["slug"], "vocab")
-    lang = request.args.get("lang") or session.get("lang", "en")
-    if lang not in ("en", "ko"):
-        lang = "en"
+    lang = resolve_lang()
     page_title = ("워드마스터 블로그 — 어휘 팁과 단어 게임 가이드 | WordMaster"
                   if lang == "ko"
                   else "Word Game Blog — Vocabulary Tips, Brain Science & Strategies | WordMaster")
@@ -664,9 +674,7 @@ def blog_post(slug):
     post["tag"] = BLOG_TAGS.get(slug, "vocab")
 
     # Resolve related slugs to title+url for template (prefer KO title when available)
-    lang = request.args.get("lang") or session.get("lang", "en")
-    if lang not in ("en", "ko"):
-        lang = "en"
+    lang = resolve_lang()
     related_posts = []
     for s in post.get("related", []):
         if s in posts:
