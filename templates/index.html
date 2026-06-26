@@ -157,19 +157,9 @@
 <div class="container-xl py-3">
   <div class="row justify-content-center g-3">
 
-    <!-- ② AdSense Sidebar — 160×600 Wide Skyscraper (desktop only) -->
-    <div class="col-lg-2 d-none d-lg-block">
-      <div class="ad-sidebar sticky-top pt-3">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:160px;height:600px"
-             data-ad-client="ca-pub-3911396624649383"
-             data-ad-slot="2917734576"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-    </div>
-
-    <!-- Game Area -->
-    <div class="col-12 col-lg-6">
+    <!-- Game Area — centered. Ad sidebars removed so the board sits in the
+         middle instead of being pushed off to one side by empty ad columns. -->
+    <div class="col-12 col-lg-8">
       <!-- Mode Badge -->
       <div class="text-center mb-2">
         {% if mode == "daily" %}
@@ -206,15 +196,6 @@
       <!-- Game Board -->
       <div id="board" class="game-board mx-auto mb-3" data-length="{{ word_length }}" data-maxguesses="{{ max_guesses }}">
         <!-- Tiles rendered by JS -->
-      </div>
-
-      <!-- ③ AdSense Result — 300×250 Medium Rectangle (shown after game ends) -->
-      <div id="result-ad" class="text-center mt-2 d-none">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:300px;height:250px"
-             data-ad-client="ca-pub-3911396624649383"
-             data-ad-slot="9633203230"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
       <!-- Result Panel -->
@@ -336,12 +317,6 @@
             <span class="demo-tile absent-demo">X</span> Not in word
           {% endif %}
         </small>
-      </div>
-    </div>
-
-    <!-- Right sidebar ad -->
-    <div class="col-lg-2 d-none d-lg-block">
-      <div class="ad-sidebar sticky-top pt-3">
       </div>
     </div>
 

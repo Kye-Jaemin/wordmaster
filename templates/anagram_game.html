@@ -183,21 +183,11 @@
         </div>
       </div>
     </div>
-    {% else %}
-    <!-- AdSense Sidebar — 160×600 Wide Skyscraper (desktop only) -->
-    <div class="col-lg-2 d-none d-lg-block">
-      <div class="ad-sidebar sticky-top pt-3">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:160px;height:600px"
-             data-ad-client="ca-pub-3911396624649383"
-             data-ad-slot="2917734576"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-    </div>
     {% endif %}
 
-    <!-- Game Area -->
-    <div class="col-12 col-lg-{% if mode == 'news' %}7{% else %}6{% endif %}">
+    <!-- Game Area — centered. No ad sidebar; in News mode the news panel is to
+         the left, otherwise the board is centered in the page. -->
+    <div class="col-12 col-lg-{% if mode == 'news' %}7{% else %}8{% endif %}">
 
       <!-- Mode Badge -->
       <div class="text-center mb-2">
@@ -234,15 +224,6 @@
         <button id="btn-clear"   class="btn btn-outline-secondary btn-sm me-1" type="button">{% if lang == 'ko' %}지우기{% else %}Clear{% endif %}</button>
         <button id="btn-hint"    class="btn btn-outline-warning btn-sm me-1" type="button"><i class="bi bi-lightbulb me-1"></i>{% if lang == 'ko' %}힌트{% else %}Hint{% endif %}</button>
         <button id="btn-giveup"  class="btn btn-outline-danger btn-sm" type="button">{% if lang == 'ko' %}포기{% else %}Give up{% endif %}</button>
-      </div>
-
-      <!-- AdSense Result — 300×250 (shown after game ends) -->
-      <div id="result-ad" class="text-center mt-2 d-none">
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:300px;height:250px"
-             data-ad-client="ca-pub-3911396624649383"
-             data-ad-slot="9633203230"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
       <!-- Result Panel (matches Tile Guess) -->
