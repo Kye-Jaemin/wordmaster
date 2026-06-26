@@ -746,6 +746,48 @@
       {% elif mode == "hard" %}
       <!-- ══ HARD MODE (6 LETTERS) ══ -->
       {% if lang == 'ko' %}
+      <!-- 검색 의도 섹션: "어려운 6글자 단어" 검색자는 게임이 아니라 단어 목록을 원함.
+           목록을 먼저 보여주고 어려움 모드 플레이로 유도. -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>맞추기 가장 어려운 6글자 단어 25개</h2>
+        <p class="text-muted">어떤 6글자 단어는 뇌가 예상하는 패턴을 깨뜨려서 맞추기가 정말 까다롭습니다 — 드문 글자(J, Q, X, Z), 반복 글자, 모음이 거의 없는 철자. 가장 어려운 25개와 각각이 사람들을 헷갈리게 하는 이유입니다. <a href="/hard" class="text-decoration-none">어려움 모드</a>에서 직접 플레이해보세요.</p>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead class="table-light"><tr><th>단어</th><th>왜 맞추기 어려운가</th></tr></thead>
+            <tbody class="small">
+              <tr><td class="fw-bold text-danger">ZEPHYR</td><td class="text-muted">Z로 시작, 진짜 모음이 하나뿐, 드문 PH + YR 조합</td></tr>
+              <tr><td class="fw-bold text-danger">SPHINX</td><td class="text-muted">X로 끝남, 자음 3개 뭉침(SPH), 쉬운 모음 패턴 없음</td></tr>
+              <tr><td class="fw-bold text-danger">QUARTZ</td><td class="text-muted">Q, 그리고 거의 없는 TZ 어미</td></tr>
+              <tr><td class="fw-bold text-danger">RHYTHM</td><td class="text-muted">Y만 모음 역할 — RH와 THM 자음군이 모두를 속임</td></tr>
+              <tr><td class="fw-bold text-danger">SYZYGY</td><td class="text-muted">Y 세 개와 Z — 영어에서 가장 어려운 단어로 유명</td></tr>
+              <tr><td class="fw-bold text-danger">NYMPHS</td><td class="text-muted">표준 모음이 전혀 없음, MPH 자음 더미</td></tr>
+              <tr><td class="fw-bold text-danger">JINXED</td><td class="text-muted">J로 시작하고 중간에 X가 숨어 있음</td></tr>
+              <tr><td class="fw-bold text-danger">VORTEX</td><td class="text-muted">X 어미, 흔치 않은 V 시작, 놓치기 쉬움</td></tr>
+              <tr><td class="fw-bold text-danger">OXYGEN</td><td class="text-muted">두 번째 자리에 X — 일찍 맞히는 사람이 거의 없음</td></tr>
+              <tr><td class="fw-bold text-danger">ENZYME</td><td class="text-muted">Z 옆에 Y라는 드문 글자 이웃</td></tr>
+              <tr><td class="fw-bold text-danger">WIZARD</td><td class="text-muted">중간에 Z — 추측자가 잘 배치하지 않는 위치</td></tr>
+              <tr><td class="fw-bold text-danger">JOCKEY</td><td class="text-muted">J 시작, CK 자음군, EY 어미 — 한 단어에 함정 셋</td></tr>
+              <tr><td class="fw-bold text-danger">WHISKY</td><td class="text-muted">모음이 적고, WH 시작, Y 어미</td></tr>
+              <tr><td class="fw-bold text-danger">FJORDS</td><td class="text-muted">FJ 시작은 다른 영단어에 거의 없음</td></tr>
+              <tr><td class="fw-bold text-danger">ZODIAC</td><td class="text-muted">Z 시작과 아무도 예상 못 하는 DIAC 어미</td></tr>
+              <tr><td class="fw-bold text-danger">GAZEBO</td><td class="text-muted">중간에 Z, O로 끝남 — 흔치 않은 모양</td></tr>
+              <tr><td class="fw-bold text-danger">KAYAKS</td><td class="text-muted">회문 같은 KAYAK 패턴에 Y가 끼어 있음</td></tr>
+              <tr><td class="fw-bold text-danger">DWARFS</td><td class="text-muted">DW 시작, 그 뒤 모음-RFS의 뒤섞임</td></tr>
+              <tr><td class="fw-bold text-danger">PLAQUE</td><td class="text-muted">자음군 뒤의 QUE 어미 — 놓치기 쉬움</td></tr>
+              <tr><td class="fw-bold text-danger">SQUAWK</td><td class="text-muted">SQU 시작에 AWK 어미, 둘 다 드묾</td></tr>
+              <tr><td class="fw-bold text-danger">JUMBLE</td><td class="text-muted">J 시작에 MBL 중간 자음군</td></tr>
+              <tr><td class="fw-bold text-danger">QUOKKA</td><td class="text-muted">Q, 이중 K, 모음 많은 꼬리</td></tr>
+              <tr><td class="fw-bold text-danger">ZIGZAG</td><td class="text-muted">Z 두 개와 반복되는 ZG 패턴</td></tr>
+              <tr><td class="fw-bold text-danger">BUYOUT</td><td class="text-muted">일반적 철자 직관을 깨는 UYOU 모음 연속</td></tr>
+              <tr><td class="fw-bold text-danger">MUSEUM</td><td class="text-muted">반복되는 M과 UEU 모음군이 눈을 혼란시킴</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          <a href="/hard" class="btn btn-sm btn-danger"><i class="bi bi-fire me-1"></i>어려움 모드에서 플레이</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>무제한 연습</a>
+        </div>
+      </div>
       <div class="mb-5">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>어려움 모드 — 6글자 단어 맞히기</h2>
         <p class="text-muted">어려움 모드는 <strong>6글자 단어</strong>를 사용하며, 답을 찾기 위한 6번의 시도가 주어집니다.</p>
@@ -806,6 +848,49 @@
         </div>
       </div>
       {% else %}
+      <!-- Search-intent section: people searching "hardest 6 letter word to guess"
+           want a LIST of hard words, not just a game. Lead with it, then funnel
+           them into actually playing Hard Mode. -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>The 25 Hardest 6-Letter Words to Guess</h2>
+        <p class="text-muted">Some 6-letter words are brutal to guess because they break the patterns your brain expects — rare letters (J, Q, X, Z), repeated letters, or vowel-starved spellings. Here are 25 of the hardest, with why each one trips people up. Tap <a href="/hard" class="text-decoration-none">Hard Mode</a> to actually play them.</p>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead class="table-light"><tr><th>Word</th><th>Why it's hard to guess</th></tr></thead>
+            <tbody class="small">
+              <tr><td class="fw-bold text-danger">ZEPHYR</td><td class="text-muted">Starts with Z, only one true vowel, rare PH + YR combo</td></tr>
+              <tr><td class="fw-bold text-danger">SPHINX</td><td class="text-muted">Ends in X, three consonants clustered (SPH), no easy vowel pattern</td></tr>
+              <tr><td class="fw-bold text-danger">QUARTZ</td><td class="text-muted">Q, plus a TZ ending almost no other word has</td></tr>
+              <tr><td class="fw-bold text-danger">RHYTHM</td><td class="text-muted">Only Y acts as a vowel — RH and THM clusters fool everyone</td></tr>
+              <tr><td class="fw-bold text-danger">SYZYGY</td><td class="text-muted">Three Y's and a Z — famously one of the hardest English words</td></tr>
+              <tr><td class="fw-bold text-danger">NYMPHS</td><td class="text-muted">No standard vowel at all, MPH consonant pile-up</td></tr>
+              <tr><td class="fw-bold text-danger">JINXED</td><td class="text-muted">J opener and an X buried in the middle</td></tr>
+              <tr><td class="fw-bold text-danger">VORTEX</td><td class="text-muted">X ending, uncommon V-start, easy to overlook</td></tr>
+              <tr><td class="fw-bold text-danger">OXYGEN</td><td class="text-muted">X in position two — almost nobody guesses it early</td></tr>
+              <tr><td class="fw-bold text-danger">ENZYME</td><td class="text-muted">Z next to Y, an unusual letter neighbor</td></tr>
+              <tr><td class="fw-bold text-danger">WIZARD</td><td class="text-muted">Z in the middle, where guessers rarely place it</td></tr>
+              <tr><td class="fw-bold text-danger">JOCKEY</td><td class="text-muted">J start, CK cluster, EY ending — three traps in one word</td></tr>
+              <tr><td class="fw-bold text-danger">WHISKY</td><td class="text-muted">Vowel-light, WH opener, Y ending</td></tr>
+              <tr><td class="fw-bold text-danger">FJORDS</td><td class="text-muted">The FJ opening exists in almost no other English word</td></tr>
+              <tr><td class="fw-bold text-danger">ZODIAC</td><td class="text-muted">Z start and a DIAC ending people never expect</td></tr>
+              <tr><td class="fw-bold text-danger">GAZEBO</td><td class="text-muted">Z in the middle, ends in O — an unusual shape</td></tr>
+              <tr><td class="fw-bold text-danger">KAYAKS</td><td class="text-muted">Palindrome-like KAYAK pattern with a stray Y</td></tr>
+              <tr><td class="fw-bold text-danger">DWARFS</td><td class="text-muted">DW opener, then a vowel-then-RFS scramble</td></tr>
+              <tr><td class="fw-bold text-danger">PLAQUE</td><td class="text-muted">QUE ending after a consonant cluster — easy to miss</td></tr>
+              <tr><td class="fw-bold text-danger">SQUAWK</td><td class="text-muted">SQU opening plus an AWK ending, both rare</td></tr>
+              <tr><td class="fw-bold text-danger">JUMBLE</td><td class="text-muted">J start with an MBL middle cluster</td></tr>
+              <tr><td class="fw-bold text-danger">QUOKKA</td><td class="text-muted">Q, a double K, and a vowel-heavy tail</td></tr>
+              <tr><td class="fw-bold text-danger">ZIGZAG</td><td class="text-muted">Two Z's and a repeated ZG pattern</td></tr>
+              <tr><td class="fw-bold text-danger">BUYOUT</td><td class="text-muted">A UYOU vowel run that breaks normal spelling instincts</td></tr>
+              <tr><td class="fw-bold text-danger">MUSEUM</td><td class="text-muted">Repeated M and a UEU vowel cluster confuse the eye</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          <a href="/hard" class="btn btn-sm btn-danger"><i class="bi bi-fire me-1"></i>Play These in Hard Mode</a>
+          <a href="/unlimited" class="btn btn-sm btn-outline-success"><i class="bi bi-infinity me-1"></i>Unlimited Practice</a>
+        </div>
+      </div>
       <div class="mb-5">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>Hard Mode — Guess the 6-Letter Word</h2>
         <p class="text-muted">Hard Mode uses 6-letter words, giving you six attempts to find the answer. At first glance, one extra letter might not seem like much. In practice, the jump from 5 letters to 6 letters is dramatic. The number of valid English words in the 6-letter space is significantly larger, common openers cover a smaller proportion of the possible solutions, and the feedback from each guess eliminates fewer candidates. This is a genuinely difficult puzzle format.</p>

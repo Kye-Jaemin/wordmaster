@@ -159,8 +159,8 @@ def easy():
 @app.route("/hard")
 def hard():
     return render_template("index.html",
-        title="Hard Mode (6-Letter Words) — WordMaster",
-        meta_desc="Up for a challenge? Try WordMaster Hard mode with 6-letter words. Only for word masters!",
+        title="Hardest 6-Letter Words to Guess — Free 6-Letter Word Game | WordMaster",
+        meta_desc="The 25 hardest 6-letter words to guess — ZEPHYR, SPHINX, QUARTZ and more, with why each one is tricky. Then play them in WordMaster's free 6-letter word puzzle.",
         mode="hard", word_length=6, max_guesses=6)
 
 @app.route("/category/<name>")
@@ -467,7 +467,7 @@ def blog():
         {"slug": "top-100-sat-words", "title": "100 Most-Tested SAT Words (Free 30-Day Memorization Plan)", "title_ko": "SAT 출제 빈도 1~100위 단어 (30일 암기 플랜)", "date": "2026-04-15", "excerpt": "The 100 SAT words tested most often, with definitions, examples, and a 30-day plan that actually fits into your school week.", "excerpt_ko": "가장 자주 출제되는 SAT 어휘 100개. 정의, 예문, 그리고 학교 일과에 실제로 끼워 넣을 수 있는 30일 암기 플랜."},
         {"slug": "ielts-essential-words", "title": "50 IELTS Words That Lift Your Writing Band Score (with Examples)", "title_ko": "IELTS 라이팅 점수를 올리는 필수 어휘 50개", "date": "2026-04-10", "excerpt": "The 50 IELTS vocabulary words examiners reward most. Real sample sentences, common pitfalls, and how to use them without sounding forced.", "excerpt_ko": "시험관이 가장 좋게 평가하는 IELTS 어휘 50개. 실제 예문, 자주 하는 실수, 그리고 자연스럽게 쓰는 법."},
         {"slug": "reading-comprehension-word-games", "title": "How Word Games Improve Reading Comprehension", "title_ko": "단어 게임이 독해력을 어떻게 향상시키는가", "date": "2026-04-03", "excerpt": "The link between word game performance and reading ability is stronger than most people realize. Here is what research shows.", "excerpt_ko": "단어 게임 실력과 독해 능력의 연결은 대부분이 생각하는 것보다 훨씬 강합니다. 연구가 말하는 것을 정리했습니다."},
-        {"slug": "greek-latin-roots-english", "title": "25 Greek & Latin Roots That Unlock 1,000+ English Words", "title_ko": "1,000개 이상의 영단어를 풀어주는 그리스어 · 라틴어 어근 25개", "date": "2026-03-28", "excerpt": "Unlock the building blocks of English. 25 classical roots that each open dozens of modern words across every subject.", "excerpt_ko": "영어의 구성 요소를 푸세요. 25개의 고전 어근이 각각 수십 개의 현대 단어를 모든 주제에서 열어줍니다."},
+        {"slug": "greek-latin-roots-english", "title": "Greek and Latin Roots in English: Complete List of 25 (with Meanings)", "title_ko": "영어 속 그리스어 · 라틴어 어근 — 의미와 함께 보는 완전 목록 25개", "date": "2026-03-28", "excerpt": "A complete list of the 25 most common Greek and Latin roots in English, each with its meaning and example words. One root opens dozens of words.", "excerpt_ko": "영어에서 가장 흔한 그리스어·라틴어 어근 25개의 완전 목록. 각 어근의 의미와 예시 단어 포함. 어근 하나가 수십 개의 단어를 엽니다."},
         {"slug": "pattern-recognition-word-games", "title": "Pattern Recognition: The Hidden Skill That Wins Word Puzzles", "title_ko": "패턴 인지: 단어 퍼즐을 이기는 숨은 능력", "date": "2026-03-20", "excerpt": "The best word puzzle players think differently. Here is how to train your pattern recognition to solve puzzles faster.", "excerpt_ko": "최고의 단어 퍼즐 플레이어는 다르게 생각합니다. 패턴 인지력을 훈련해 더 빠르게 푸는 법."},
         {"slug": "word-game-tips", "title": "10 Word Game Tricks Pros Use (Apply Them Today)", "title_ko": "고수가 쓰는 단어 게임 트릭 10가지 (오늘부터 적용)", "date": "2026-03-01", "excerpt": "10 word game tricks the top 1% use: starter-word science, letter-frequency tactics, hidden double-letter clues. Apply them in your next puzzle.", "excerpt_ko": "상위 1% 플레이어가 쓰는 10가지 트릭: 시작 단어 과학, 글자 빈도 전술, 숨겨진 중복 글자 단서. 다음 퍼즐에 바로 적용해보세요."},
         {"slug": "best-starting-words", "title": "The Best Starting Words for Word Games in 2026", "title_ko": "2026년 단어 게임 최고의 시작 단어", "date": "2026-02-20", "excerpt": "CRANE, AUDIO, STARE — we ranked the top 20 starting words for maximum letter coverage.", "excerpt_ko": "CRANE, AUDIO, STARE — 글자 커버리지를 최대화하는 시작 단어 20개를 순위 매겼습니다."},
@@ -545,8 +545,8 @@ def blog_post(slug):
             "date": "2026-03-01",
             "content": "wordle_tips",
             "title_ko": "고수가 쓰는 단어 게임 트릭 10가지 (오늘부터 적용)",
-            "meta_desc": "10 word game tricks the top 1% use: starter-word science, letter-frequency tactics, hidden double-letter clues. Apply them in your next puzzle.",
-            "meta_desc_ko": "상위 1% 플레이어가 쓰는 10가지 트릭: 시작 단어 과학, 글자 빈도 전술, 숨겨진 중복 글자 단서. 다음 퍼즐에 바로 적용해보세요.",
+            "meta_desc": "10 strategies and tricks the top 1% use to solve difficult word games: starter-word science, letter-frequency tactics, hidden double-letter clues. Apply them now.",
+            "meta_desc_ko": "상위 1% 플레이어가 어려운 단어 게임을 푸는 10가지 전략과 트릭: 시작 단어 과학, 글자 빈도 전술, 숨겨진 중복 글자 단서. 지금 바로 적용해보세요.",
             "related": ["best-starting-words", "pattern-recognition-word-games", "word-game-history"]
         },
         "best-starting-words": {
@@ -620,12 +620,12 @@ def blog_post(slug):
             "related": ["science-of-word-games", "word-games-children-reading", "vocabulary-habit-building"]
         },
         "greek-latin-roots-english": {
-            "title": "25 Greek & Latin Roots That Unlock 1,000+ English Words",
-            "title_ko": "1,000개 이상의 영단어를 풀어주는 그리스어 · 라틴어 어근 25개",
+            "title": "Greek and Latin Roots in English: Complete List of 25 (with Meanings)",
+            "title_ko": "영어 속 그리스어 · 라틴어 어근 — 의미와 함께 보는 완전 목록 25개",
             "date": "2026-03-28",
             "content": "greek_latin_roots_english",
-            "meta_desc": "Learn 25 Greek and Latin roots — each unlocks dozens of English words at once. The smartest shortcut to multiplying your vocabulary in 30 days.",
-            "meta_desc_ko": "그리스어와 라틴어 어근 25개 — 각각이 수십 개의 영단어를 한 번에 풀어줍니다. 30일 만에 어휘를 배수로 늘리는 가장 똑똑한 지름길.",
+            "meta_desc": "A complete list of the 25 most common Greek and Latin roots in English, each with its meaning and example words. Learn one root and unlock dozens of words at once.",
+            "meta_desc_ko": "영어에서 가장 흔한 그리스어·라틴어 어근 25개의 완전 목록. 각 어근의 의미와 예시 단어 포함. 어근 하나로 수십 개의 단어를 한 번에 익히세요.",
             "related": ["word-roots-prefixes-suffixes", "top-100-sat-words", "business-english-vocabulary"]
         },
         "pattern-recognition-word-games": {
