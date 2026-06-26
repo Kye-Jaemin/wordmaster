@@ -312,6 +312,20 @@
           {% else %}
             <p class="small text-muted">Free daily word guessing game. Challenge your vocabulary every day!</p>
           {% endif %}
+          <!-- Google Play: the WordMaster Android app (same brand) — cross-promo on every page -->
+          <p class="small text-muted mb-1">
+            {% if lang == 'ko' %}모바일 앱으로도 플레이하세요{% else %}Play on mobile too{% endif %}
+          </p>
+          <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster"
+             target="_blank" rel="noopener">
+            {% if lang == 'ko' %}
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
+                 alt="Google Play에서 다운로드" height="54">
+            {% else %}
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                 alt="Get it on Google Play" height="54">
+            {% endif %}
+          </a>
         </div>
         <div class="col-md-4 mb-3">
           <h6 class="fw-bold">{% if lang == 'ko' %}게임 모드{% else %}Game Modes{% endif %}</h6>

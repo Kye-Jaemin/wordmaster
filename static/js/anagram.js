@@ -79,8 +79,9 @@ function newRound() {
   updateAttemptCount();
   document.getElementById("result-panel").classList.add("d-none");
   document.getElementById("btn-hint").disabled = false;
-  // Auto-show the spoiler-safe meaning clue so the player has somewhere to start
-  if (window.wmShowClue) window.wmShowClue(secretWord);
+  // Clue stays hidden until the player taps the Hint button (no auto-show).
+  const cluePanel = document.getElementById("clue-panel");
+  if (cluePanel) cluePanel.classList.add("d-none");
   // Hide the post-game result ad + Word Learning Card when starting fresh
   const resultAd = document.getElementById("result-ad");
   if (resultAd) resultAd.classList.add("d-none");
@@ -198,44 +199,13 @@ function clearSlots() {
   render();
 }
 
-// Rebuild usedIdx (which scrambled tiles are consumed) from the current slots,
-// matching letters greedily. Used after a hint sets a slot directly.
-function syncUsedFromSlots() {
-  usedIdx.clear();
-  const avail = scrambled.map(() => true);
-  for (const ch of slots) {
-    if (!ch) continue;
-    for (let i = 0; i < scrambled.length; i++) {
-      if (avail[i] && scrambled[i] === ch) { avail[i] = false; usedIdx.add(i); break; }
-    }
-  }
-}
-
-// Lock the correct letter into the next not-yet-correct slot. Repeatable.
-function revealAnagramLetter() {
-  if (gameOver) return;
-  let p = -1;
-  for (let i = 0; i < secretWord.length; i++) {
-    if (slots[i] !== secretWord[i]) { p = i; break; }
-  }
-  if (p === -1) return; // already all correct
-  const need = secretWord[p];
-  // Drop wrong placements of the same letter elsewhere so tile counts stay valid
-  for (let i = 0; i < slots.length; i++) {
-    if (i !== p && slots[i] === need && slots[i] !== secretWord[i]) slots[i] = "";
-  }
-  slots[p] = need;
-  syncUsedFromSlots();
-  render();
-  showToast(T.hintPlaced);
-  if (slots.every(s => s !== "")) setTimeout(checkAnswer, 280);
-}
-
-// Hint button: watch a rewarded ad, then reveal one letter
-function handleAdHint() {
-  if (gameOver) return;
-  if (window.wmWatchAdForReward) window.wmWatchAdForReward(revealAnagramLetter);
-  else revealAnagramLetter();
+// Hint button: reveal the spoiler-safe meaning clue on demand. Hidden until
+// the player asks for it; disabled once shown so it's a one-tap reveal.
+function showHintClue() {
+  if (gameOver || !secretWord) return;
+  if (window.wmShowClue) window.wmShowClue(secretWord);
+  const btn = document.getElementById("btn-hint");
+  if (btn) btn.disabled = true;
 }
 
 function shakeEl(el) {
@@ -263,7 +233,7 @@ function attachEvents() {
   });
   document.getElementById("btn-shuffle").addEventListener("click", shuffleVisible);
   document.getElementById("btn-clear").addEventListener("click", clearSlots);
-  document.getElementById("btn-hint").addEventListener("click", handleAdHint);
+  document.getElementById("btn-hint").addEventListener("click", showHintClue);
   document.getElementById("btn-giveup").addEventListener("click", giveUp);
   document.getElementById("btn-new").addEventListener("click", async () => {
     await fetchWord();

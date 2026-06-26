@@ -67,8 +67,9 @@ function newRound() {
   document.getElementById("result-panel").classList.add("d-none");
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) hintBtn.disabled = false;
-  // Auto-show the spoiler-safe meaning clue so the player has somewhere to start
-  if (window.wmShowClue) window.wmShowClue(secretWord);
+  // Clue stays hidden until the player taps the Hint button (no auto-show).
+  const cluePanel = document.getElementById("clue-panel");
+  if (cluePanel) cluePanel.classList.add("d-none");
   document.querySelectorAll(".key[data-key]").forEach(b => b.classList.remove("correct", "absent"));
   // Hide the post-game result ad + Word Learning Card when starting fresh
   const resultAd = document.getElementById("result-ad");
@@ -152,29 +153,13 @@ function giveUp() {
   lose();
 }
 
-// Reveal one random unrevealed letter (no life cost). Repeatable.
-function revealHangmanLetter() {
-  if (gameOver) return;
-  const candidates = [];
-  for (let i = 0; i < secretWord.length; i++) {
-    if (!revealed[i]) candidates.push(i);
-  }
-  if (!candidates.length) return;
-  const pick = candidates[Math.floor(Math.random() * candidates.length)];
-  revealed[pick] = true;
-  const letter = secretWord[pick];
-  const keyBtn = document.querySelector(`.key[data-key="${letter}"]`);
-  if (keyBtn) keyBtn.classList.add("correct");
-  render();
-  showToast(T.hintRevealed);
-  if (revealed.every(r => r)) win();
-}
-
-// Hint button: watch a rewarded ad, then reveal one letter
-function handleAdHint() {
-  if (gameOver) return;
-  if (window.wmWatchAdForReward) window.wmWatchAdForReward(revealHangmanLetter);
-  else revealHangmanLetter();
+// Hint button: reveal the spoiler-safe meaning clue on demand. Hidden until
+// the player asks for it; disabled once shown so it's a one-tap reveal.
+function showHintClue() {
+  if (gameOver || !secretWord) return;
+  if (window.wmShowClue) window.wmShowClue(secretWord);
+  const btn = document.getElementById("btn-hint");
+  if (btn) btn.disabled = true;
 }
 
 function fetchDefinition() {
@@ -204,7 +189,7 @@ function attachEvents() {
   document.addEventListener("keydown", e => {
     if (e.key && /^[a-zA-Z]$/.test(e.key)) guess(e.key);
   });
-  document.getElementById("btn-hint").addEventListener("click", handleAdHint);
+  document.getElementById("btn-hint").addEventListener("click", showHintClue);
   document.getElementById("btn-giveup").addEventListener("click", giveUp);
   document.getElementById("btn-new").addEventListener("click", async () => {
     await fetchWord();
