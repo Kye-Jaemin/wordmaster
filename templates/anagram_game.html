@@ -31,13 +31,23 @@
 <div class="container-xl pt-3 pb-1">
   <div class="text-center px-2">
     <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
-      Daily word games that build your vocabulary.
+      {% if lang == 'ko' %}어휘를 진짜로 쌓아주는 매일의 단어 게임.{% else %}Daily word games that build your vocabulary.{% endif %}
     </h1>
     <p class="text-muted small mb-0" style="max-width:620px;margin:0 auto;">
-      A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.
+      {% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}
     </p>
   </div>
 </div>
+
+<!-- Mode/category picker — collapsed by default so the game is near the top (matches Tile Guess). -->
+<style>.wm-mode-picker>summary{list-style:none}.wm-mode-picker>summary::-webkit-details-marker{display:none}</style>
+<div class="container-xl pt-1 pb-1 text-center">
+  <details class="wm-mode-picker">
+    <summary class="btn btn-outline-primary btn-sm" style="cursor:pointer">
+      <i class="bi bi-sliders me-1"></i>{% if lang == 'ko' %}모드·카테고리{% else %}Mode &amp; category{% endif %}:
+      <strong>{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %} · {% if mode == "category_middle" %}{% if lang == 'ko' %}중학생 수준{% else %}Middle School{% endif %}{% elif mode == "category_high" %}{% if lang == 'ko' %}고등학생 수준{% else %}High School{% endif %}{% elif mode == "category_college" %}{% if lang == 'ko' %}대학생 수준{% else %}College{% endif %}{% elif mode == "category_animals" %}{% if lang == 'ko' %}동물{% else %}Animals{% endif %}{% elif mode == "category_food" %}{% if lang == 'ko' %}음식{% else %}Food{% endif %}{% elif mode == "news" %}{% if lang == 'ko' %}시사 뉴스{% else %}News Words{% endif %}{% elif mode == "custom" %}{% if lang == 'ko' %}내 단어{% else %}My Words{% endif %}{% elif mode == "easy" %}{% if lang == 'ko' %}쉬움 (4글자){% else %}Easy (4){% endif %}{% elif mode == "hard" %}{% if lang == 'ko' %}어려움 (6글자){% else %}Hard (6){% endif %}{% else %}{% if lang == 'ko' %}표준 (5글자){% else %}Standard (5){% endif %}{% endif %}</strong>
+      <span class="ms-1">▾</span>
+    </summary>
 
 <!-- Vocabulary Category Selector (puzzle-format-aware) -->
 <div class="container-xl pb-3 pt-1">
@@ -155,6 +165,8 @@
       </a>
     </div>
   </div>
+</div>
+  </details>
 </div>
 
 <!-- Game container. In News mode, news panel takes the place of the AdSense
