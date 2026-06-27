@@ -278,6 +278,18 @@
             <i class="bi bi-arrow-clockwise me-1"></i>{% if lang == 'ko' %}새 단어{% else %}New word{% endif %}
           </button>
         </div>
+        <!-- Discovery row: keep the session going → more pageviews + engagement -->
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-2">
+          <a href="/" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-grid-3x3-gap me-1"></i>{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}
+          </a>
+          <a href="/hangman" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-shield-check me-1"></i>{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}
+          </a>
+          <a href="/my-words" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-book me-1"></i>{% if lang == 'ko' %}내 단어장{% else %}My Words{% endif %}
+          </a>
+        </div>
       </div>
 
     </div>

@@ -35,6 +35,15 @@
   </a>
 </div>
 
+<!-- Mode/category picker — collapsed by default so the game is near the top.
+     The route's current mode is already loaded and playable without opening this. -->
+<style>.wm-mode-picker>summary{list-style:none}.wm-mode-picker>summary::-webkit-details-marker{display:none}</style>
+<div class="container-xl pt-1 pb-1 text-center">
+  <details class="wm-mode-picker">
+    <summary class="btn btn-outline-primary btn-sm" style="cursor:pointer">
+      <i class="bi bi-sliders me-1"></i>{% if lang == 'ko' %}다른 모드·카테고리 선택{% else %}Choose mode or category{% endif %}
+    </summary>
+
 <!-- Category Selector — learning-first ordering -->
 <div class="container-xl pb-3 pt-1">
   <div class="text-center mb-2">
@@ -153,6 +162,8 @@
     </div>
   </div>
 </div>
+  </details>
+</div>
 
 <div class="container-xl py-3">
   <div class="row justify-content-center g-3">
@@ -251,10 +262,8 @@
           </div>
         </div>
 
+        <!-- Primary next action + share -->
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
-          <button id="btn-share" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-share me-1"></i>{% if lang == 'ko' %}결과 공유{% else %}Share Result{% endif %}
-          </button>
           {% if mode != "daily" %}
           <button id="btn-play-again" class="btn btn-primary btn-sm">
             <i class="bi bi-arrow-clockwise me-1"></i>{% if lang == 'ko' %}다시 하기{% else %}Play Again{% endif %}
@@ -264,6 +273,21 @@
             <i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}더 플레이하기{% else %}Play More{% endif %}
           </a>
           {% endif %}
+          <button id="btn-share" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-share me-1"></i>{% if lang == 'ko' %}결과 공유{% else %}Share Result{% endif %}
+          </button>
+        </div>
+        <!-- Discovery row: keep the session going → more pageviews + engagement -->
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-2">
+          <a href="/anagram" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-shuffle me-1"></i>{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}
+          </a>
+          <a href="/hangman" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-shield-check me-1"></i>{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}
+          </a>
+          <a href="/my-words" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-book me-1"></i>{% if lang == 'ko' %}내 단어장{% else %}My Words{% endif %}
+          </a>
         </div>
       </div>
 
