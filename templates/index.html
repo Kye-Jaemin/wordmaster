@@ -173,24 +173,8 @@
     <!-- Game Area — centered. Ad sidebars removed so the board sits in the
          middle instead of being pushed off to one side by empty ad columns. -->
     <div class="col-12 col-lg-8">
-      <!-- Mode Badge -->
-      <div class="text-center mb-2">
-        {% if mode == "daily" %}
-          <span class="badge bg-warning text-dark fs-6"><i class="bi bi-calendar-day me-1"></i>{% if lang == 'ko' %}데일리 챌린지{% else %}Daily Challenge{% endif %}</span>
-        {% elif mode == "unlimited" %}
-          <span class="badge bg-success fs-6"><i class="bi bi-infinity me-1"></i>{% if lang == 'ko' %}무제한 모드{% else %}Unlimited Mode{% endif %}</span>
-        {% elif mode == "easy" %}
-          <span class="badge bg-info text-dark fs-6"><i class="bi bi-emoji-smile me-1"></i>{% if lang == 'ko' %}쉬움 — 4글자{% else %}Easy Mode — 4 Letters{% endif %}</span>
-        {% elif mode == "hard" %}
-          <span class="badge bg-danger fs-6"><i class="bi bi-fire me-1"></i>{% if lang == 'ko' %}어려움 — 6글자{% else %}Hard Mode — 6 Letters{% endif %}</span>
-        {% elif mode.startswith("category_") %}
-          <span class="badge bg-purple fs-6 text-white" style="background:#6f42c1!important">
-            <i class="bi bi-tag me-1"></i>{{ mode.replace("category_","").title() }} {% if lang == 'ko' %}단어{% else %}Words{% endif %}
-          </span>
-        {% else %}
-          <span class="badge bg-primary fs-6"><i class="bi bi-grid me-1"></i>{% if lang == 'ko' %}클래식 — 5글자{% else %}Classic Mode — 5 Letters{% endif %}</span>
-        {% endif %}
-      </div>
+      <!-- Mode badge removed — the collapsed mode/category picker above already
+           names the current mode, so a second static badge was redundant. -->
 
       <!-- Notification Toast -->
       <div id="toast-area" class="text-center mb-2" style="min-height:36px;"></div>
@@ -204,6 +188,26 @@
             <i class="bi bi-hash me-1"></i>Guess <span id="guess-current">1</span> / {{ max_guesses }}
           {% endif %}
         </span>
+      </div>
+
+      <!-- How-to legend — placed ABOVE the board so first-time players learn the
+           color meanings before they play, instead of finding them below the keyboard.
+           Icons replace the old G/R/X letters, which were green-mnemonics that no
+           longer match the blue/amber palette and meant nothing to Korean players. -->
+      <div class="text-center mb-2">
+        <small class="text-muted">
+          {% if lang == 'ko' %}
+            <span class="fw-semibold">이렇게 풀어요</span> &nbsp;
+            <span class="demo-tile correct-demo"><i class="bi bi-check-lg"></i></span> 정확한 위치 &nbsp;
+            <span class="demo-tile present-demo"><i class="bi bi-arrow-left-right"></i></span> 위치 오류 &nbsp;
+            <span class="demo-tile absent-demo"><i class="bi bi-x-lg"></i></span> 없는 글자
+          {% else %}
+            <span class="fw-semibold">How to play</span> &nbsp;
+            <span class="demo-tile correct-demo"><i class="bi bi-check-lg"></i></span> Correct spot &nbsp;
+            <span class="demo-tile present-demo"><i class="bi bi-arrow-left-right"></i></span> Wrong spot &nbsp;
+            <span class="demo-tile absent-demo"><i class="bi bi-x-lg"></i></span> Not in word
+          {% endif %}
+        </small>
       </div>
 
       <!-- Game Board -->
@@ -330,20 +334,6 @@
         <div id="hint-content"></div>
       </div>
 
-      <!-- Mini how-to -->
-      <div class="text-center mt-3">
-        <small class="text-muted">
-          {% if lang == 'ko' %}
-            <span class="demo-tile correct-demo">G</span> 정확한 위치 &nbsp;
-            <span class="demo-tile present-demo">R</span> 위치 오류 &nbsp;
-            <span class="demo-tile absent-demo">X</span> 없는 글자
-          {% else %}
-            <span class="demo-tile correct-demo">G</span> Correct &nbsp;
-            <span class="demo-tile present-demo">R</span> Wrong position &nbsp;
-            <span class="demo-tile absent-demo">X</span> Not in word
-          {% endif %}
-        </small>
-      </div>
     </div>
 
   </div>

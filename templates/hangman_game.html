@@ -196,10 +196,8 @@
          the left, otherwise the board is centered in the page. -->
     <div class="col-12 col-lg-{% if mode == 'news' %}7{% else %}8{% endif %}">
 
-      <!-- Mode Badge -->
-      <div class="text-center mb-2">
-        <span class="badge bg-primary fs-6"><i class="bi bi-shield-check me-1"></i>Hangman · {{ category_label }}</span>
-      </div>
+      <!-- Mode badge removed — the collapsed mode/category picker above already
+           names the current mode (Hangman · category), so it was redundant. -->
 
       <!-- Notification Toast -->
       <div id="toast-area" class="text-center mb-2" style="min-height:36px;"></div>
@@ -218,6 +216,11 @@
       </div>
       <div id="clue-panel" class="alert alert-warning py-2 px-3 mx-auto d-none text-start" style="max-width:460px;" role="note">
         <div id="clue-content" class="small"></div>
+      </div>
+
+      <!-- How-to — above the board so first-time players know what to do. -->
+      <div class="text-center mb-2">
+        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>{% if lang == 'ko' %}글자를 눌러 숨은 단어를 맞혀보세요. 기회는 6번.{% else %}Tap letters to guess the hidden word. You get 6 lives.{% endif %}</small>
       </div>
 
       <!-- Word Reveal -->
