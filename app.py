@@ -67,6 +67,14 @@ app.secret_key = "wordmaster-lang-2024-xK9#mQ"
 with open("words.json", encoding="utf-8") as f:
     WORDS = json.load(f)
 
+# Programmatic word-definition pages (/word/<word>) read from a prebuilt cache
+# (scripts/build_word_cache.py) so crawler traffic never hits the dictionary API.
+try:
+    with open("data/word_cache.json", encoding="utf-8") as _wf:
+        WORD_CACHE = json.load(_wf)
+except (FileNotFoundError, json.JSONDecodeError):
+    WORD_CACHE = {}
+
 # ─── Language Support ──────────────────────────────────────────
 
 def resolve_lang():
@@ -692,6 +700,47 @@ def blog_post(slug):
         post=post, slug=slug,
         related_posts=related_posts)
 
+# ─── Programmatic word-definition pages (/word/<word>) ───────
+
+@app.route("/word/<slug>")
+def word_page(slug):
+    """SEO landing page for a single word: definition, examples, etymology,
+    synonyms, plus play/learn CTAs. Served entirely from WORD_CACHE — no
+    runtime dictionary API call. Unknown words 404 with a noindex page so we
+    never publish thin/empty pages."""
+    norm = re.sub(r"[^a-z]", "", slug.lower())
+    if not norm:
+        return render_template("word_not_found.html", word=slug), 404
+    if norm != slug:                       # normalize casing/punctuation -> 301
+        return redirect(f"/word/{norm}", code=301)
+    entry = WORD_CACHE.get(norm)
+    if not entry:
+        return render_template("word_not_found.html", word=norm), 404
+
+    # Internal-link hub: synonyms we also have pages for, then fill with a
+    # word-dependent rotation through the cache so each page links out variously.
+    related = [s.lower() for s in entry.get("synonyms", [])
+               if s.lower() in WORD_CACHE and s.lower() != norm][:8]
+    if len(related) < 8:
+        keys = sorted(WORD_CACHE.keys())
+        start = sum(ord(c) for c in norm) % max(1, len(keys))
+        for w in keys[start:] + keys[:start]:
+            if w != norm and w not in related:
+                related.append(w)
+            if len(related) >= 8:
+                break
+
+    word_title = entry["word"].title()
+    first_def = ""
+    if entry.get("meanings") and entry["meanings"][0]["definitions"]:
+        first_def = entry["meanings"][0]["definitions"][0]["definition"]
+    meta = (f"{word_title}: {first_def[:115]}" if first_def
+            else f"{word_title} — meaning, definition, examples, and synonyms.")
+    return render_template("word.html",
+        title=f"{word_title} — Meaning, Definition & Examples | WordMaster",
+        meta_desc=meta,
+        word=entry, word_title=word_title, related=related)
+
 # ─── Helper: Full Dictionary Lookup ──────────────────────────
 
 def fetch_full_word_info(word):
@@ -897,7 +946,10 @@ def sitemap():
     # /word-of-day was retired — do not list (it 301-redirects to /daily and
     # redirect URLs in a sitemap are flagged as low-quality signals by Google).
 
-    urls = static_urls + puzzle_urls + blog_urls
+    # Programmatic word-definition pages (one per cached word).
+    word_urls = [f"/word/{w}" for w in sorted(WORD_CACHE.keys())]
+
+    urls = static_urls + puzzle_urls + blog_urls + word_urls
 
     # Blog posts whose body is still English-only — no Korean variant emitted
     # for these. Everything else has at least bilingual UI chrome plus partial

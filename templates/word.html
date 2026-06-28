@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block head_schema %}
+{% set _d = (word.meanings[0].definitions[0].definition if word.meanings and word.meanings[0].definitions else "") %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"DefinedTerm","name":{{ word.word|tojson }},"description":{{ _d|tojson }},"inDefinedTermSet":{"@type":"DefinedTermSet","name":"WordMaster Vocabulary","url":"https://wordmaster.store/word/"}},
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":{{ ("홈" if lang == 'ko' else "Home")|tojson }},"item":"https://wordmaster.store/"},
+{"@type":"ListItem","position":2,"name":{{ word_title|tojson }},"item":{{ ("https://wordmaster.store/word/" ~ word.word)|tojson }}}
+]}
+]}
+</script>
+{% endblock %}
+{% block content %}
+<div class="container py-4" style="max-width:760px">
+
+  <!-- Breadcrumb -->
+  <nav class="small text-muted mb-3" aria-label="breadcrumb">
+    <a href="/" class="text-decoration-none">{% if lang == 'ko' %}홈{% else %}Home{% endif %}</a>
+    <span class="mx-1">›</span>
+    <span>{{ word_title }}</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-3">
+    <h1 class="fw-bold text-primary mb-1" style="font-size:2.1rem">{{ word_title }}
+      {% if word.phonetic %}<span class="text-muted fw-normal" style="font-size:1.1rem">{{ word.phonetic }}</span>{% endif %}
+    </h1>
+    <p class="text-muted mb-0">
+      {% if lang == 'ko' %}{{ word_title }}의 뜻과 정의, 예문, 유의어 — 그리고 이 단어로 직접 게임하기.{% else %}The meaning and definition of {{ word_title }}, with examples, synonyms, and a word game to make it stick.{% endif %}
+    </p>
+  </div>
+
+  <!-- Definitions -->
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h2 class="h5 fw-bold mb-3"><i class="bi bi-book me-1 text-primary"></i>{% if lang == 'ko' %}뜻{% else %}Definition{% endif %}</h2>
+      {% for m in word.meanings %}
+      <div class="mb-3">
+        {% if m.partOfSpeech %}<span class="badge bg-secondary mb-1">{{ m.partOfSpeech }}</span>{% endif %}
+        <ol class="mb-0 ps-3">
+          {% for d in m.definitions %}
+          <li class="mb-2">
+            {{ d.definition }}
+            {% if d.example %}<div class="text-muted small fst-italic mt-1">“{{ d.example }}”</div>{% endif %}
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Synonyms / Antonyms -->
+  {% if word.synonyms or word.antonyms %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      {% if word.synonyms %}
+      <div class="mb-2">
+        <span class="badge bg-success me-1">{% if lang == 'ko' %}유의어{% else %}Synonyms{% endif %}</span>
+        {% for s in word.synonyms %}{% if s.lower() in related %}<a href="/word/{{ s.lower() }}" class="badge bg-light text-success border text-decoration-none">{{ s }}</a>{% else %}<span class="badge bg-light text-dark border">{{ s }}</span>{% endif %} {% endfor %}
+      </div>
+      {% endif %}
+      {% if word.antonyms %}
+      <div>
+        <span class="badge bg-danger me-1">{% if lang == 'ko' %}반의어{% else %}Antonyms{% endif %}</span>
+        {% for a in word.antonyms %}<span class="badge bg-light text-dark border">{{ a }}</span> {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Etymology -->
+  {% if word.origin %}
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h2 class="h6 fw-bold"><i class="bi bi-clock-history me-1 text-warning"></i>{% if lang == 'ko' %}어원{% else %}Origin{% endif %}</h2>
+      <p class="text-muted small mb-0">{{ word.origin }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Play CTA — the unique value a dictionary site can't offer -->
+  <div class="card border-primary shadow-sm mb-3">
+    <div class="card-body text-center">
+      <p class="fw-bold mb-2">{% if lang == 'ko' %}이 어휘, 게임으로 외워보세요{% else %}Lock this word in with a game{% endif %}</p>
+      <div class="d-flex gap-2 justify-content-center flex-wrap">
+        <a href="/unlimited" class="btn btn-primary btn-sm"><i class="bi bi-grid-3x3-gap me-1"></i>{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</a>
+        <a href="/anagram" class="btn btn-outline-primary btn-sm"><i class="bi bi-shuffle me-1"></i>{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</a>
+        <a href="/hangman" class="btn btn-outline-primary btn-sm"><i class="bi bi-shield-check me-1"></i>{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</a>
+        <a href="/my-words" class="btn btn-outline-secondary btn-sm"><i class="bi bi-bookmark me-1"></i>{% if lang == 'ko' %}내 단어장{% else %}My Words{% endif %}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unique learning blurb (per-word text so the page isn't a bare dictionary clone) -->
+  <div class="text-muted small mb-4">
+    {% if lang == 'ko' %}
+    <p>“{{ word_title }}” 같은 단어는 한 번 보고 끝나면 금방 잊힙니다. WordMaster는 단어를 <strong>맥락 속 게임</strong>으로 만나게 해 더 오래 기억에 남도록 돕습니다. 정의를 읽은 뒤 타일·애너그램·행맨으로 직접 풀어 보고, 만난 단어는 내 단어장에 기록해 복습하세요.</p>
+    {% else %}
+    <p>A word like “{{ word_title }}” rarely sticks from a single glance at a definition. WordMaster turns vocabulary into <strong>a game you play in context</strong> so it stays with you. Read the meaning above, then guess it in the tile, anagram, or hangman format — and every word you meet is logged for review.</p>
+    {% endif %}
+  </div>
+
+  <!-- Related words — internal-link hub -->
+  {% if related %}
+  <div class="mb-2">
+    <h2 class="h6 fw-bold text-muted">{% if lang == 'ko' %}관련 단어{% else %}Related words{% endif %}</h2>
+    <div class="d-flex gap-2 flex-wrap">
+      {% for w in related %}
+      <a href="/word/{{ w }}" class="btn btn-outline-secondary btn-sm text-capitalize">{{ w }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
