@@ -388,7 +388,7 @@ function shareResult() {
       return "⬜";
     }).join("") + "\n";
   }
-  text += "\nhttps://wordmaster-game.com";
+  text += "\nhttps://wordmaster.store";
 
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => showToast(T.copied));
