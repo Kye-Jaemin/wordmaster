@@ -29,11 +29,11 @@
       {% if lang == 'ko' %}
       <p>브라우저의 <strong>localStorage</strong>를 사용해 게임 통계(플레이 횟수, 연속 기록, 추측 분포)를 본인 기기에 저장합니다. 이 데이터는 절대 브라우저를 떠나지 않으며 서버로 전송되지 않습니다.</p>
       <p>언어 설정(영어 또는 한국어)을 기억하기 위해 세션 쿠키를 사용합니다. 이 쿠키에는 개인 데이터가 없으며 브라우저를 닫으면 만료됩니다.</p>
-      <p>사용하는 제3자 서비스(Google Analytics, Google AdSense)는 자체 쿠키를 설정할 수 있습니다. 브라우저 설정이나 <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>에서 이러한 쿠키를 관리하거나 거부할 수 있습니다.</p>
+      <p>사용하는 제3자 분석 서비스(Google Analytics)는 자체 쿠키를 설정할 수 있습니다. 브라우저 설정에서 이러한 쿠키를 관리하거나 거부할 수 있습니다.</p>
       {% else %}
       <p>We use browser <strong>localStorage</strong> to store your game statistics (games played, win streak, guess distribution) locally on your device. This data never leaves your browser and is never sent to our servers.</p>
       <p>We use a session cookie to remember your language preference (English or Korean). This cookie contains no personal data and expires when you close your browser.</p>
-      <p>Third-party services we use (Google Analytics, Google AdSense) may set their own cookies. You can manage or opt out of these cookies via your browser settings or <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a>.</p>
+      <p>The third-party analytics service we use (Google Analytics) may set its own cookies. You can manage or opt out of these cookies via your browser settings.</p>
       {% endif %}
     </div>
   </div>
@@ -42,13 +42,11 @@
     <div class="card-body">
       <h5 class="fw-bold">3. {% if lang == 'ko' %}광고{% else %}Advertising{% endif %}</h5>
       {% if lang == 'ko' %}
-      <p>이 사이트는 광고 표시를 위해 <strong>Google AdSense</strong>를 사용합니다. Google은 여러 웹사이트에서의 사용자 브라우징 기록을 기반으로 맞춤 광고를 표시하기 위해 쿠키와 유사한 기술을 사용할 수 있습니다. WordMaster는 어떤 광고가 표시되는지 통제하지 않습니다.</p>
-      <p><a href="https://adssettings.google.com" target="_blank" rel="noopener">Google 광고 설정</a>이나 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>에서 언제든 맞춤 광고를 거부할 수 있습니다.</p>
-      <p>WordMaster는 Google AdSense 프로그램에 참여합니다. 게시자 ID는 <code>ca-pub-3911396624649383</code>입니다.</p>
+      <p>WordMaster는 현재 제3자 광고를 표시하지 않습니다. 사이트는 무료로 제공되며, 익명 사용 통계 측정을 위해 Google Analytics만 사용합니다(위 2번 참조).</p>
+      <p>향후 광고를 도입하게 되면 본 방침을 갱신하고, 광고 제공자와 맞춤 광고 거부 방법을 함께 안내하겠습니다.</p>
       {% else %}
-      <p>This site uses <strong>Google AdSense</strong> to display advertisements. Google may use cookies and similar technologies to show personalized ads based on your browsing history across websites. WordMaster does not control which ads are displayed.</p>
-      <p>You can opt out of personalized advertising at any time via <a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a> or by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info</a>.</p>
-      <p>WordMaster participates in the Google AdSense program. Our publisher ID is <code>ca-pub-3911396624649383</code>.</p>
+      <p>WordMaster does not currently display third-party advertising. The site is free to use, and we use only Google Analytics for anonymous usage measurement (see section 2 above).</p>
+      <p>If we introduce advertising in the future, we will update this policy and explain the ad provider and how to opt out of personalized ads.</p>
       {% endif %}
     </div>
   </div>
