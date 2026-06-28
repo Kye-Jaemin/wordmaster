@@ -1,4 +1,12 @@
 {% extends "base.html" %}
+{% block head_schema %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"VideoGame","name":"WordMaster","url":"https://wordmaster.store/","image":"https://wordmaster.store/static/img/og-image.png","description":{{ ("매일 5글자 단어 퍼즐 — 타일 추측, 애너그램, 행맨. 만난 단어가 모두 기록되어 어휘로 남습니다." if lang == 'ko' else "A daily 5-letter word puzzle — tile guess, anagram, and hangman. Every word you play is tracked so your vocabulary sticks.")|tojson }},"genre":["Word puzzle","Educational"],"gamePlatform":["Web browser","Android"],"applicationCategory":"GameApplication","operatingSystem":"Any","inLanguage":["en","ko"],"author":{"@type":"Organization","name":"WordMaster"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"SoftwareApplication","name":"WordMaster: Daily Word Puzzle","operatingSystem":"Android","applicationCategory":"GameApplication","installUrl":"https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+]}
+</script>
+{% endblock %}
 {% block content %}
 
 <!-- Hero / Value Proposition -->

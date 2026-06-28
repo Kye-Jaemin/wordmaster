@@ -1,4 +1,17 @@
 {% extends "base.html" %}
+{% block head_schema %}
+{% set howto_steps = [
+  ("키보드 또는 화면 키보드를 탭하여 글자를 입력하세요." if lang == 'ko' else "Type letters using your keyboard or tap the on-screen keyboard."),
+  ("Enter를 눌러 추측을 제출하세요 — 실제 단어여야 합니다." if lang == 'ko' else "Press Enter to submit your guess — it must be a real word."),
+  ("타일이 뒤집히면 색상 피드백을 확인하세요." if lang == 'ko' else "Watch the tiles flip and read the color feedback."),
+  ("알게 된 정보로 더 스마트한 다음 추측을 만드세요." if lang == 'ko' else "Use what you learned to form a smarter next guess."),
+  ("단어를 찾거나 6번을 모두 사용할 때까지 계속 추측하세요." if lang == 'ko' else "Keep guessing until you find the word or use all 6 tries."),
+  ("게임이 끝나면 단어 프로필(정의, 어원, 유의어)이 표시됩니다." if lang == 'ko' else "After the game ends, a full word profile appears — definition, origin, and synonyms.")
+] %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HowTo","name":{{ ("WordMaster 게임 방법" if lang == 'ko' else "How to Play WordMaster")|tojson }},"description":{{ ("타일 색 피드백으로 6번 안에 숨겨진 단어를 맞히는 방법." if lang == 'ko' else "How to guess the hidden word in 6 tries using color-tile feedback.")|tojson }},"totalTime":"PT3M","step":[{% for s in howto_steps %}{"@type":"HowToStep","position":{{ loop.index }},"text":{{ s|tojson }}}{% if not loop.last %},{% endif %}{% endfor %}]}
+</script>
+{% endblock %}
 {% block content %}
 <div class="container py-5" style="max-width:760px">
   <h1 class="fw-bold text-primary mb-1">

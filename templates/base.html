@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ title }}</title>
   <meta name="description" content="{{ meta_desc }}"/>
-  <meta name="google-adsense-account" content="ca-pub-3911396624649383"/>
   <meta name="google-site-verification" content="Hd3_PIpxlmLUfZ-YkbLO2yNOkwRGGlH9KwaZZwVjIKg"/>
 
   <!-- Open Graph -->
@@ -30,10 +29,6 @@
 
   <!-- Site-wide language flag for JS files to localize dynamically-rendered strings -->
   <script>window.WM_LANG = "{{ lang }}";</script>
-
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3911396624649383"
-       crossorigin="anonymous"></script>
 
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9LTQ64C145"></script>
@@ -121,6 +116,10 @@
   }
   </script>
   {% endif %}
+
+  {# Per-page structured data (FAQPage, HowTo, VideoGame, …) injected by child templates #}
+  {% block head_schema %}{% endblock %}
+
   <style>
     .footer-link:hover { color: #fff !important; }
     .lang-btn { font-size: 0.82rem; padding: 2px 8px; border-radius: 20px; }

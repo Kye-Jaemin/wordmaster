@@ -1,4 +1,27 @@
 {% extends "base.html" %}
+{% block head_schema %}
+{% set faq_ld = [
+  {"q": ("WordMaster는 어떻게 플레이하나요?" if lang == 'ko' else "How do I play WordMaster?"),
+   "a": ("글자를 입력하거나 눌러 단어를 만들고 Enter로 제출하세요. 각 추측 후 타일 색이 바뀌어 어떤 글자가 정확한 위치인지, 단어엔 있지만 위치가 틀렸는지, 단어에 없는지 알려줍니다. 6번 안에 정답을 맞히면 됩니다." if lang == 'ko' else "Type or click letters to form a valid word, then press Enter to submit. After each guess the tiles change color to show which letters are in the right spot, which are in the word but misplaced, and which are not in the word. You have 6 tries to find the answer.")},
+  {"q": ("추측 기회가 몇 번인가요?" if lang == 'ko' else "How many guesses do I get?"),
+   "a": ("모든 모드에서 6번의 추측이 주어집니다 — 클래식 단어 게임의 표준입니다." if lang == 'ko' else "All modes give you 6 guesses — the classic word-game standard.")},
+  {"q": ("데일리 모드와 무제한 모드의 차이는 무엇인가요?" if lang == 'ko' else "What is Daily mode vs Unlimited mode?"),
+   "a": ("데일리 모드는 전 세계 모두가 하루에 같은 한 단어를 받고 자정에 초기화됩니다. 무제한 모드는 매 게임 후 새로운 랜덤 단어를 제한 없이 제공합니다." if lang == 'ko' else "Daily mode gives everyone worldwide the same word per day and resets at midnight. Unlimited mode gives a fresh random word after every game with no restrictions.")},
+  {"q": ("힌트 버튼은 무엇을 하나요?" if lang == 'ko' else "What does the Hint button do?"),
+   "a": ("숨겨진 단어의 정의와 품사를 공개합니다. 게임당 힌트를 한 번 사용할 수 있습니다." if lang == 'ko' else "It reveals the hidden word's definition and part of speech. You get one hint per game.")},
+  {"q": ("쉬움 모드와 어려움 모드는 무엇인가요?" if lang == 'ko' else "What are Easy and Hard modes?"),
+   "a": ("쉬움 모드는 4글자 단어, 어려움 모드는 6글자 단어를 사용합니다." if lang == 'ko' else "Easy mode uses 4-letter words; Hard mode uses 6-letter words.")},
+  {"q": ("단어에 중복 글자가 있을 수 있나요?" if lang == 'ko' else "Can a word contain repeated letters?"),
+   "a": ("네. LEVEL, ABBEY 같은 단어가 나올 수 있습니다. 정답에 글자가 두 번 나오지만 추측에 한 번만 있으면 하나의 타일만 색이 변합니다." if lang == 'ko' else "Yes. Words like LEVEL or ABBEY can appear. When a letter appears twice in the answer but only once in your guess, only one tile is colored.")},
+  {"q": ("WordMaster는 무료인가요?" if lang == 'ko' else "Is WordMaster free to play?"),
+   "a": ("네, 100% 무료입니다. 계정이 필요 없고 다운로드 없이 브라우저에서 바로 플레이할 수 있습니다." if lang == 'ko' else "Yes, it is 100% free. No account is required and you can play in the browser with no download.")},
+  {"q": ("모바일에서 작동하나요?" if lang == 'ko' else "Does WordMaster work on mobile?"),
+   "a": ("네. 완전 반응형이라 스마트폰과 태블릿에서 작동하며, 화면 키보드를 탭해 글자를 입력합니다." if lang == 'ko' else "Yes. It is fully responsive and works on phones and tablets — tap the on-screen keyboard to type letters.")}
+] %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{% for f in faq_ld %}{"@type":"Question","name":{{ f.q|tojson }},"acceptedAnswer":{"@type":"Answer","text":{{ f.a|tojson }}}}{% if not loop.last %},{% endif %}{% endfor %}]}
+</script>
+{% endblock %}
 {% block content %}
 <div class="container py-5" style="max-width:760px">
   <h1 class="fw-bold text-primary mb-1">
