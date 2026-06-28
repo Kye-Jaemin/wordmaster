@@ -476,6 +476,9 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "korean-vocab-game-guide", "title": "Learn English Vocabulary With Word Games: A Complete Guide", "title_ko": "영어 단어 게임으로 어휘 외우기 — 게임으로 영단어 마스터", "date": "2026-06-28", "excerpt": "Why games beat flashcards for vocabulary retention, which formats train which skills, and a 5-minute daily routine by level.", "excerpt_ko": "단어카드보다 게임이 어휘 기억에 강한 이유, 어떤 게임이 어떤 능력을 키우는지, 그리고 레벨별 하루 5분 루틴."},
+        {"slug": "suneung-vocab-game", "title": "Memorize Korean SAT (Suneung) English Words With Games", "title_ko": "수능 영단어, 게임으로 외우기 — 고등 필수 어휘", "date": "2026-06-28", "excerpt": "Why exam words don't stick from word lists, and a 3-step game routine to lock in high-school / SAT vocabulary.", "excerpt_ko": "수능 영단어가 단어장으로 안 외워지는 이유와, 고등·SAT급 어휘를 게임으로 굳히는 3단계 루틴."},
+        {"slug": "wordle-korean", "title": "How to Play Wordle (Korean Guide) — Free 5-Letter Word Game", "title_ko": "영어 워들(Wordle) 한국어로 즐기기 — 무료 단어 게임", "date": "2026-06-28", "excerpt": "Wordle rules and starting-word strategy explained, with Korean support and three game formats on WordMaster.", "excerpt_ko": "워들 규칙과 시작 단어 전략을 한국어로. 이중언어 지원과 세 가지 게임으로 무료로 즐기기."},
         {"slug": "anagram-strategy", "title": "Anagram Strategy: Where I Lose Words I Thought I Knew", "title_ko": "애너그램 전략: 내가 안다고 생각한 단어를 놓치는 지점", "date": "2026-05-17", "excerpt": "Anagram is not the easy warm-up I thought it was. Here is what I started doing differently after losing more anagrams than I expected.", "excerpt_ko": "애너그램은 제가 생각했던 쉬운 워밍업이 아니었습니다. 예상보다 더 많은 애너그램을 놓치고 난 뒤 무엇을 다르게 하기 시작했는지."},
         {"slug": "hangman-letter-frequency", "title": "Hangman as Letter-Frequency Practice", "title_ko": "행맨, 글자 빈도 직관을 키우는 도구", "date": "2026-05-17", "excerpt": "Hangman taught me what English actually looks like. The instinct for which letters carry information transfers to every other word puzzle.", "excerpt_ko": "행맨은 영어가 실제로 어떻게 생겼는지 가르쳐 줍니다. 어떤 글자가 정보를 담는지에 대한 직관은 모든 단어 퍼즐에 그대로 이전됩니다."},
         {"slug": "three-puzzle-formats", "title": "Three Puzzle Formats for the Same Word: Tile Guess, Anagram, Hangman", "title_ko": "한 단어, 세 가지 퍼즐: 타일 게임, 애너그램, 행맨", "date": "2026-05-16", "excerpt": "Three puzzle mechanics train three different vocabulary skills — recognition, production, and letter-level intuition. Here is how I use each.", "excerpt_ko": "세 가지 퍼즐 메카닉이 어휘의 세 가지 다른 능력을 훈련합니다 — 인지, 생산, 글자 단위 직관. 각각을 어떻게 활용하는지."},
@@ -513,6 +516,33 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
+        "korean-vocab-game-guide": {
+            "title": "Learn English Vocabulary With Word Games: A Complete Guide",
+            "title_ko": "영어 단어 게임으로 어휘 외우기 — 게임으로 영단어 마스터",
+            "date": "2026-06-28",
+            "content": "korean_vocab_game_guide",
+            "meta_desc": "Why word games beat flashcards for vocabulary retention, which formats train which skills, and a 5-minute daily routine by level (middle school to SAT/GRE).",
+            "meta_desc_ko": "단어카드보다 게임이 어휘 기억에 강한 이유, 타일·애너그램·행맨이 키우는 능력, 그리고 중학부터 수능·토익까지 레벨별 하루 5분 루틴.",
+            "related": ["suneung-vocab-game", "wordle-korean", "vocabulary-habit-building"]
+        },
+        "suneung-vocab-game": {
+            "title": "Memorize Korean SAT (Suneung) English Words With Games",
+            "title_ko": "수능 영단어, 게임으로 외우기 — 고등 필수 어휘",
+            "date": "2026-06-28",
+            "content": "suneung_vocab_game",
+            "meta_desc": "Why suneung / SAT vocabulary doesn't stick from word lists, and a 3-step game routine (meet, understand, review) to lock in high-school English words.",
+            "meta_desc_ko": "수능 영단어가 단어장으로 안 외워지는 이유와, 만나기·이해하기·복습하기 3단계로 고등·SAT급 어휘를 게임으로 굳히는 법.",
+            "related": ["korean-vocab-game-guide", "top-100-sat-words", "wordle-korean"]
+        },
+        "wordle-korean": {
+            "title": "How to Play Wordle (Korean Guide) — Free 5-Letter Word Game",
+            "title_ko": "영어 워들(Wordle) 한국어로 즐기기 — 무료 단어 게임",
+            "date": "2026-06-28",
+            "content": "wordle_korean",
+            "meta_desc": "Wordle rules and starting-word strategy explained simply, with Korean support and three game formats — play free on WordMaster.",
+            "meta_desc_ko": "워들 규칙과 시작 단어 전략을 한국어로 쉽게. 이중언어 지원과 타일·애너그램·행맨 세 가지로 무료로 즐기기.",
+            "related": ["korean-vocab-game-guide", "best-starting-words", "suneung-vocab-game"]
+        },
         "anagram-strategy": {
             "title": "Anagram Strategy: Where I Lose Words I Thought I Knew",
             "title_ko": "애너그램 전략: 내가 안다고 생각한 단어를 놓치는 지점",
@@ -931,6 +961,9 @@ def sitemap():
     # Blog index + individual posts
     blog_urls = [
         "/blog",
+        "/blog/korean-vocab-game-guide",
+        "/blog/suneung-vocab-game",
+        "/blog/wordle-korean",
         "/blog/anagram-strategy",
         "/blog/hangman-letter-frequency",
         "/blog/three-puzzle-formats",
