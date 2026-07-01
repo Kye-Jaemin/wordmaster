@@ -17,6 +17,8 @@ const _KO = {
   voteEasy:      "😊 쉽게 느껴지셨군요!",
   voteHard:      "🔥 잘 버텨내셨어요!",
   submitting:    "제출 중…",
+  dayStreak:     (n) => `🔥 ${n}일 연속`,
+  shareCTA:      "내일 또 만나요 👉",
 };
 const _EN = {
   failedLoad:    "Failed to load word. Please refresh.",
@@ -33,6 +35,8 @@ const _EN = {
   voteEasy:      "😊 Glad it felt easy!",
   voteHard:      "🔥 Nice work pushing through!",
   submitting:    "Submitting…",
+  dayStreak:     (n) => `🔥 ${n}-day streak`,
+  shareCTA:      "Come back tomorrow 👉",
 };
 const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
 
@@ -375,7 +379,17 @@ async function submitVote(vote) {
 
 function shareResult() {
   const statusMap = { correct: "🟦", present: "🟨", absent: "⬜" };
-  let text = `WordMaster ${currentRow + 1}/${MAX_GUESSES}\n\n`;
+  let text = `WordMaster ${currentRow + 1}/${MAX_GUESSES}`;
+
+  // Surface the daily-habit streak (canonical: wm_vocab.streak.current — the
+  // date-aware day streak, NOT wm_stats.streak which is consecutive wins).
+  // A shared "🔥N-day streak" is both a retention nudge and a stronger share hook.
+  try {
+    const v = JSON.parse(localStorage.getItem("wm_vocab") || "{}");
+    const days = v.streak && v.streak.current;
+    if (days && days >= 2) text += "  " + T.dayStreak(days);
+  } catch (e) { /* ignore malformed storage */ }
+  text += "\n\n";
 
   for (let r = 0; r <= Math.min(currentRow, MAX_GUESSES - 1); r++) {
     const row = tiles[r];
@@ -388,7 +402,7 @@ function shareResult() {
       return "⬜";
     }).join("") + "\n";
   }
-  text += "\nhttps://wordmaster.store";
+  text += "\n" + T.shareCTA + " https://wordmaster.store";
 
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => showToast(T.copied));
