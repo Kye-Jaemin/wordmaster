@@ -12,6 +12,9 @@ const _KO = {
   outOfLives:      "생명이 다 떨어졌어요. 다음 기회에.",
   theWordWas:      (w) => `정답은: ${w} 였어요.`,
   hintRevealed:    "힌트: 글자 하나가 공개됐어요.",
+  shareLabel:      "행맨",
+  shareWon:        (n) => `목숨 ${n}개 남기고 성공!`,
+  shareLost:       "이번엔 실패",
 };
 const _EN = {
   needCustom:      "Add custom words at /custom first.",
@@ -23,6 +26,9 @@ const _EN = {
   outOfLives:      "Out of lives. Next time.",
   theWordWas:      (w) => `The word was: ${w}`,
   hintRevealed:    "Hint: revealed one letter.",
+  shareLabel:      "Hangman",
+  shareWon:        (n) => `Guessed with ${n} ${n === 1 ? "life" : "lives"} left`,
+  shareLost:       "Out of lives",
 };
 const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
 
@@ -130,7 +136,15 @@ function win() {
     ? T.solvedClean
     : T.solvedWithWrong(wrongLetters.length);
   document.getElementById("result-word").textContent = T.theWord(secretWord);
+  wireShare(T.shareWon(livesLeft));
   fetchDefinition();
+}
+
+function wireShare(detail) {
+  const share = document.getElementById("btn-share");
+  if (share && window.wmShareResult) {
+    share.onclick = () => window.wmShareResult({ label: T.shareLabel, detail: detail });
+  }
 }
 
 function lose() {
@@ -144,6 +158,7 @@ function lose() {
   document.getElementById("result-emoji").textContent = "😔";
   document.getElementById("result-message").textContent = T.outOfLives;
   document.getElementById("result-word").textContent = T.theWordWas(secretWord);
+  wireShare(T.shareLost);
   fetchDefinition();
 }
 

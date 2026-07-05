@@ -454,7 +454,9 @@ function updateGuessCounter() {
 // ─── Stats ────────────────────────────────────────────────────
 function saveStats(won) {
   const defaults = { played: 0, won: 0, streak: 0, best: 0, dist: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 } };
-  const stats = JSON.parse(localStorage.getItem("wm_stats") || JSON.stringify(defaults));
+  let stats;
+  try { stats = JSON.parse(localStorage.getItem("wm_stats") || JSON.stringify(defaults)); }
+  catch (e) { stats = JSON.parse(JSON.stringify(defaults)); }  // corrupt storage -> reset
 
   if (GAME_MODE === "daily") {
     const today = new Date().toISOString().slice(0, 10);
@@ -491,7 +493,9 @@ function saveLearning(won) {
     daily: {},
     streak: { current: 0, longest: 0, last_daily: null }
   };
-  const v = JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(defaults));
+  let v;
+  try { v = JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(defaults)); }
+  catch (e) { v = JSON.parse(JSON.stringify(defaults)); }  // corrupt storage -> reset
   v.words      = v.words || {};
   v.weak_words = v.weak_words || [];
   v.daily      = v.daily || {};

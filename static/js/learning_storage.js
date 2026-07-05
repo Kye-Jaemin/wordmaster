@@ -122,6 +122,33 @@
     }
   };
 
+  // Shared share-result for the grid-less formats (Anagram, Hangman). The Tile
+  // game keeps its own emoji-grid shareResult in game.js; this builds a spoiler-
+  // free text line + the daily streak + a "come back tomorrow" CTA, so all three
+  // formats can share and feed the same viral loop.
+  window.wmShareResult = function (opts) {
+    // opts: { label: "Anagram"/"애너그램", detail: "Solved in 2 tries" }
+    const ko = (window.WM_LANG === "ko");
+    let text = "WordMaster " + (opts.label || "");
+    try {
+      const v = JSON.parse(localStorage.getItem("wm_vocab") || "{}");
+      const days = v.streak && v.streak.current;
+      if (days && days >= 2) text += "  " + (ko ? ("🔥 " + days + "일 연속") : ("🔥 " + days + "-day streak"));
+    } catch (e) { /* ignore malformed storage */ }
+    if (opts.detail) text += "\n" + opts.detail;
+    text += "\n\n" + (ko ? "내일 또 만나요 👉" : "Come back tomorrow 👉") + " https://wordmaster.store";
+    const done = function () {
+      const ta = document.getElementById("toast-area");
+      if (ta) {
+        ta.innerHTML = '<span class="badge bg-success">' + (ko ? "복사됨!" : "Copied!") + '</span>';
+        setTimeout(function () { ta.innerHTML = ""; }, 2000);
+      }
+    };
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () { window.prompt("Copy:", text); }); }
+    else { window.prompt("Copy your result:", text); }
+    return text;
+  };
+
   window.wmSaveVocab = function (word, won, scoreNumber, gameMode) {
     if (!word) return;
     word = word.toUpperCase();
@@ -133,7 +160,9 @@
       daily: {},
       streak: { current: 0, longest: 0, last_daily: null },
     };
-    const v = JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(defaults));
+    let v;
+    try { v = JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(defaults)); }
+    catch (e) { v = JSON.parse(JSON.stringify(defaults)); }  // corrupt storage -> reset
     v.words = v.words || {};
     v.weak_words = v.weak_words || [];
     v.daily = v.daily || {};

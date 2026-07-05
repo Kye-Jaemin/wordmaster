@@ -12,6 +12,9 @@ const _KO = {
   betterLuck:      "다음 라운드는 더 쉬울 거예요.",
   theWordWas:      (w) => `정답은: ${w} 였어요.`,
   hintPlaced:      "힌트: 글자 하나가 배치됐어요.",
+  shareLabel:      "애너그램",
+  shareWon:        (n) => `${n}번 만에 정답!`,
+  shareLost:       "이번엔 아쉽게 실패",
 };
 const _EN = {
   needCustom:      "Add custom words at /custom first.",
@@ -23,6 +26,9 @@ const _EN = {
   betterLuck:      "Next round will be easier.",
   theWordWas:      (w) => `The word was: ${w}`,
   hintPlaced:      "Hint: a letter was placed.",
+  shareLabel:      "Anagram",
+  shareWon:        (n) => `Solved in ${n} ${n === 1 ? "try" : "tries"}`,
+  shareLost:       "Missed this one",
 };
 const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
 
@@ -158,7 +164,15 @@ function win() {
     ? T.solvedFirst
     : T.solvedInN(attempts);
   document.getElementById("result-word").textContent = T.theWord(secretWord);
+  wireShare(T.shareWon(attempts));
   fetchDefinition();
+}
+
+function wireShare(detail) {
+  const share = document.getElementById("btn-share");
+  if (share && window.wmShareResult) {
+    share.onclick = () => window.wmShareResult({ label: T.shareLabel, detail: detail });
+  }
 }
 
 function giveUp() {
@@ -170,6 +184,7 @@ function giveUp() {
   document.getElementById("result-emoji").textContent = "😔";
   document.getElementById("result-message").textContent = T.betterLuck;
   document.getElementById("result-word").textContent = T.theWordWas(secretWord);
+  wireShare(T.shareLost);
   fetchDefinition();
 }
 
