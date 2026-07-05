@@ -764,11 +764,18 @@ def word_page(slug):
     first_def = ""
     if entry.get("meanings") and entry["meanings"][0]["definitions"]:
         first_def = entry["meanings"][0]["definitions"][0]["definition"]
-    meta = (f"{word_title}: {first_def[:115]}" if first_def
-            else f"{word_title} — meaning, definition, examples, and synonyms.")
+    # Language-aware title/meta so KO search + share previews aren't English-only.
+    # (Definitions themselves stay English — this is an English dictionary.)
+    if resolve_lang() == "ko":
+        title = f"{word_title} 뜻·정의·예문 | WordMaster"
+        meta = (f"{word_title}: {first_def[:110]}" if first_def
+                else f"{word_title} — 뜻, 정의, 예문, 유의어. 단어 게임으로 어휘 학습.")
+    else:
+        title = f"{word_title} — Meaning, Definition & Examples | WordMaster"
+        meta = (f"{word_title}: {first_def[:115]}" if first_def
+                else f"{word_title} — meaning, definition, examples, and synonyms.")
     return render_template("word.html",
-        title=f"{word_title} — Meaning, Definition & Examples | WordMaster",
-        meta_desc=meta,
+        title=title, meta_desc=meta,
         word=entry, word_title=word_title, related=related)
 
 # ─── Helper: Full Dictionary Lookup ──────────────────────────

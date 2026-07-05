@@ -12,11 +12,15 @@
 </script>
 {% endblock %}
 {% block content %}
+{# Preserve the KO language on outbound internal links so a ?lang=ko visitor
+   (no session cookie yet, e.g. arriving from a shared link) doesn't drop to EN
+   when clicking a CTA or related word. #}
+{% set lang_q = '?lang=ko' if lang == 'ko' else '' %}
 <div class="container py-4" style="max-width:760px">
 
   <!-- Breadcrumb -->
   <nav class="small text-muted mb-3" aria-label="breadcrumb">
-    <a href="/" class="text-decoration-none">{% if lang == 'ko' %}홈{% else %}Home{% endif %}</a>
+    <a href="/{{ lang_q }}" class="text-decoration-none">{% if lang == 'ko' %}홈{% else %}Home{% endif %}</a>
     <span class="mx-1">›</span>
     <span>{{ word_title }}</span>
   </nav>
@@ -86,10 +90,10 @@
     <div class="card-body text-center">
       <p class="fw-bold mb-2">{% if lang == 'ko' %}이 어휘, 게임으로 외워보세요{% else %}Lock this word in with a game{% endif %}</p>
       <div class="d-flex gap-2 justify-content-center flex-wrap">
-        <a href="/unlimited" class="btn btn-primary btn-sm"><i class="bi bi-grid-3x3-gap me-1"></i>{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</a>
-        <a href="/anagram" class="btn btn-outline-primary btn-sm"><i class="bi bi-shuffle me-1"></i>{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</a>
-        <a href="/hangman" class="btn btn-outline-primary btn-sm"><i class="bi bi-shield-check me-1"></i>{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</a>
-        <a href="/my-words" class="btn btn-outline-secondary btn-sm"><i class="bi bi-bookmark me-1"></i>{% if lang == 'ko' %}내 단어장{% else %}My Words{% endif %}</a>
+        <a href="/unlimited{{ lang_q }}" class="btn btn-primary btn-sm"><i class="bi bi-grid-3x3-gap me-1"></i>{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</a>
+        <a href="/anagram{{ lang_q }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-shuffle me-1"></i>{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</a>
+        <a href="/hangman{{ lang_q }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-shield-check me-1"></i>{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</a>
+        <a href="/my-words{{ lang_q }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-bookmark me-1"></i>{% if lang == 'ko' %}내 단어장{% else %}My Words{% endif %}</a>
       </div>
     </div>
   </div>
@@ -109,7 +113,7 @@
     <h2 class="h6 fw-bold text-muted">{% if lang == 'ko' %}관련 단어{% else %}Related words{% endif %}</h2>
     <div class="d-flex gap-2 flex-wrap">
       {% for w in related %}
-      <a href="/word/{{ w }}" class="btn btn-outline-secondary btn-sm text-capitalize">{{ w }}</a>
+      <a href="/word/{{ w }}{{ lang_q }}" class="btn btn-outline-secondary btn-sm text-capitalize">{{ w }}</a>
       {% endfor %}
     </div>
   </div>

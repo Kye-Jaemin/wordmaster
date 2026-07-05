@@ -13,10 +13,14 @@
 <div class="container-xl pt-3 pb-1">
   <div class="text-center px-2">
     <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
-      {% if lang == 'ko' %}어휘를 진짜로 쌓아주는 매일의 단어 게임.{% else %}Daily word games that build your vocabulary.{% endif %}
+      {% if mode == 'hard' %}{% if lang == 'ko' %}가장 어려운 6글자 단어 맞히기{% else %}Hardest 6-Letter Words to Guess{% endif %}
+      {% elif mode == 'easy' %}{% if lang == 'ko' %}쉬운 4글자 단어 게임{% else %}Easy 4-Letter Word Game{% endif %}
+      {% else %}{% if lang == 'ko' %}어휘를 진짜로 쌓아주는 매일의 단어 게임.{% else %}Daily word games that build your vocabulary.{% endif %}{% endif %}
     </h1>
     <p class="text-muted small mb-0" style="max-width:620px;margin:0 auto;">
-      {% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}
+      {% if mode == 'hard' %}{% if lang == 'ko' %}ZEPHYR, SPHINX 같은 까다로운 6글자 단어에 도전하세요. 6번 안에 맞히고, 각 단어의 뜻·어원까지 학습.{% else %}Take on tricky 6-letter words like ZEPHYR and SPHINX. Guess in six tries, then learn each word's meaning and origin.{% endif %}
+      {% elif mode == 'easy' %}{% if lang == 'ko' %}짧은 4글자 단어로 가볍게. 초보자와 어린 학습자에게 딱 맞는 워밍업.{% else %}Warm up with short 4-letter words — an easy start for beginners and younger learners.{% endif %}
+      {% else %}{% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}{% endif %}
     </p>
   </div>
 </div>
