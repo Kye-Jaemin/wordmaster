@@ -19,7 +19,7 @@
     {% if lang == 'ko' %}WordMaster 게임 방법{% else %}How to Play WordMaster{% endif %}
   </h1>
   <p class="text-muted mb-4">
-    {% if lang == 'ko' %}완전 가이드 — 규칙, 타일 색상, 전략, 모든 게임 모드 설명.{% else %}A complete guide — rules, tile colors, strategies, and all game modes explained.{% endif %}
+    {% if lang == 'ko' %}완전 가이드 — 세 가지 게임 방식(타일·애너그램·행맨), 규칙, 색상, 전략, 모드.{% else %}A complete guide — all three formats (Tile, Anagram, Hangman), rules, colors, strategies, and modes.{% endif %}
   </p>
 
   <!-- Goal -->
@@ -44,9 +44,9 @@
         <div class="demo-tile correct-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">C</div>
         <div>
           {% if lang == 'ko' %}
-            <strong class="text-success">초록색</strong> — 글자가 올바른 위치에 있습니다.
+            <strong class="text-primary">파란색</strong> — 글자가 올바른 위치에 있습니다.
           {% else %}
-            <strong class="text-success">Green</strong> — The letter is correct and in the right position.
+            <strong class="text-primary">Blue</strong> — The letter is correct and in the right position.
           {% endif %}
         </div>
       </div>
@@ -54,9 +54,9 @@
         <div class="demo-tile present-demo me-3" style="width:52px;height:52px;font-size:22px;border-radius:6px;">R</div>
         <div>
           {% if lang == 'ko' %}
-            <strong class="text-warning">노란색</strong> — 글자는 단어에 있지만 위치가 틀렸습니다. 다른 위치에 배치하세요.
+            <strong class="text-warning">주황색</strong> — 글자는 단어에 있지만 위치가 틀렸습니다. 다른 위치에 배치하세요.
           {% else %}
-            <strong class="text-warning">Yellow</strong> — The letter is in the word but in the wrong position. Move it elsewhere.
+            <strong class="text-warning">Amber</strong> — The letter is in the word but in the wrong position. Move it elsewhere.
           {% endif %}
         </div>
       </div>
@@ -140,7 +140,7 @@
           <span class="demo-tile correct-demo" style="width:40px;height:40px;font-size:16px;border-radius:4px;">T</span>
         </div>
         <p class="small text-muted mt-1 mb-0">
-          {% if lang == 'ko' %}3번 만에 해결! 모두 초록색.{% else %}Solved in 3 guesses! All green.{% endif %}
+          {% if lang == 'ko' %}3번 만에 해결! 모두 파란색.{% else %}Solved in 3 guesses! All blue.{% endif %}
         </p>
       </div>
     </div>
@@ -161,8 +161,8 @@
         </ul>
         <h5 class="fw-semibold">두 번째 추측에서 새로운 글자 커버하기</h5>
         <p class="text-muted">두 번째 추측에서는 이미 회색인 글자를 절대 반복하지 마세요. 아직 시도하지 않은 5개의 완전히 새로운 글자를 테스트하세요. 이렇게 하면 세 번째 추측 전에 최대한 많은 정보를 얻을 수 있습니다.</p>
-        <h5 class="fw-semibold">노란색 타일 주의 깊게 읽기</h5>
-        <p class="text-muted">노란색 타일은 해당 글자가 정답에 있다는 의미입니다 — 단지 그 위치가 아닐 뿐입니다. 위치를 가정하기 전에 다른 모든 슬롯에서 시도해보세요. 흔한 실수: 노란색 타일을 같은 위치에 다시 추측하는 것.</p>
+        <h5 class="fw-semibold">주황색 타일 주의 깊게 읽기</h5>
+        <p class="text-muted">주황색 타일은 해당 글자가 정답에 있다는 의미입니다 — 단지 그 위치가 아닐 뿐입니다. 위치를 가정하기 전에 다른 모든 슬롯에서 시도해보세요. 흔한 실수: 주황색 타일을 같은 위치에 다시 추측하는 것.</p>
         <h5 class="fw-semibold">단어 패턴 생각하기</h5>
         <p class="text-muted mb-0">검색 범위를 좁히는 일반적인 어미: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. 일반적인 어두: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. 패턴에 맞는 확정 글자가 있다면, 무작위로 추측하기보다 패턴을 중심으로 구성해보세요.</p>
       {% else %}
@@ -175,8 +175,8 @@
         </ul>
         <h5 class="fw-semibold">Use your second guess to cover new letters</h5>
         <p class="text-muted">Never repeat a letter in your second guess that was already grey. Use the second guess to test 5 completely new letters you haven't tried yet. This maximizes information before your third guess.</p>
-        <h5 class="fw-semibold">Read yellow tiles carefully</h5>
-        <p class="text-muted">A yellow tile means the letter is definitely in the answer — just not in that position. Try it in every other slot before assuming its position. Common mistake: guessing yellow tiles in the same position again.</p>
+        <h5 class="fw-semibold">Read amber tiles carefully</h5>
+        <p class="text-muted">An amber tile means the letter is definitely in the answer — just not in that position. Try it in every other slot before assuming its position. Common mistake: guessing amber tiles in the same position again.</p>
         <h5 class="fw-semibold">Think about word patterns</h5>
         <p class="text-muted mb-0">Common endings that narrow your search: <strong>-ING, -TION, -ER, -ED, -LY, -AL</strong>. Common starts: <strong>S-, ST-, TR-, CH-, SH-, PL-</strong>. If you have confirmed letters that fit a pattern, try building around the pattern rather than guessing randomly.</p>
       {% endif %}
@@ -203,10 +203,47 @@
     </div>
   </div>
 
+  <!-- Three game formats: Tile / Anagram / Hangman -->
+  <div class="card shadow-sm mb-4 border-success">
+    <div class="card-body">
+      <h2 class="fw-bold h4 mb-3">🎲 {% if lang == 'ko' %}세 가지 게임 방식{% else %}Three Ways to Play{% endif %}</h2>
+      <p class="text-muted">{% if lang == 'ko' %}위 설명은 <strong>타일 게임</strong> 기준입니다. WordMaster는 같은 어휘를 <strong>세 가지 방식</strong>으로 즐길 수 있고, 각 방식이 다른 능력을 키웁니다.{% else %}The rules above cover <strong>Tile Guess</strong>. WordMaster lets you play the same vocabulary in <strong>three formats</strong> — each trains a different skill.{% endif %}</p>
+
+      <!-- Tile -->
+      <div class="mb-3">
+        <h5 class="fw-semibold">🟦 <a href="/unlimited" class="text-decoration-none">{% if lang == 'ko' %}타일 게임{% else %}Tile Guess{% endif %}</a></h5>
+        <p class="text-muted small mb-0">{% if lang == 'ko' %}색상 타일 피드백으로 6번 안에 단어를 맞힙니다(위 설명 참고). 패턴 인지력 훈련.{% else %}Guess the word in 6 tries with color-tile feedback (see above). Trains pattern recognition.{% endif %}</p>
+      </div>
+
+      <!-- Anagram -->
+      <div class="mb-3 pt-2 border-top">
+        <h5 class="fw-semibold">🔀 <a href="/anagram" class="text-decoration-none">{% if lang == 'ko' %}애너그램{% else %}Anagram{% endif %}</a></h5>
+        <p class="text-muted small mb-1">{% if lang == 'ko' %}섞인 글자를 재배열해 숨은 단어를 완성합니다. 철자·생산 어휘 훈련.{% else %}Rearrange the scrambled letters to spell the hidden word. Trains spelling and word production.{% endif %}</p>
+        <ul class="text-muted small ps-3 mb-0">
+          <li>{% if lang == 'ko' %}섞인 <strong>글자 타일을 눌러</strong> 위 슬롯에 순서대로 배치하세요.{% else %}Tap the <strong>scrambled letter tiles</strong> to place them into the slots in order.{% endif %}</li>
+          <li>{% if lang == 'ko' %}<strong>지우기</strong>로 다시 놓고, <strong>섞기</strong>로 글자 배열을 바꿔볼 수 있어요.{% else %}Use <strong>Clear</strong> to reset, or <strong>Shuffle</strong> to rearrange the letters.{% endif %}</li>
+          <li>{% if lang == 'ko' %}슬롯을 올바른 단어로 채우면 정답! 막히면 <strong>힌트</strong>(뜻)를 쓰세요.{% else %}Fill the slots with the correct word to win. Stuck? Use the <strong>Hint</strong> (definition).{% endif %}</li>
+        </ul>
+      </div>
+
+      <!-- Hangman -->
+      <div class="pt-2 border-top">
+        <h5 class="fw-semibold">🎯 <a href="/hangman" class="text-decoration-none">{% if lang == 'ko' %}행맨{% else %}Hangman{% endif %}</a></h5>
+        <p class="text-muted small mb-1">{% if lang == 'ko' %}글자를 하나씩 추측해 목숨이 다하기 전에 단어를 밝혀냅니다. 글자 빈도 직관 훈련.{% else %}Guess one letter at a time and reveal the word before your lives run out. Trains letter-frequency intuition.{% endif %}</p>
+        <ul class="text-muted small ps-3 mb-0">
+          <li>{% if lang == 'ko' %}키보드에서 <strong>글자를 클릭</strong>하세요. 단어에 있으면 해당 자리에 공개됩니다.{% else %}<strong>Click a letter</strong> on the keyboard. If it's in the word, it's revealed in place.{% endif %}</li>
+          <li>{% if lang == 'ko' %}틀린 글자마다 <strong>목숨(❤️)이 하나</strong> 줄어듭니다 — 기회는 총 6번.{% else %}Each wrong letter costs <strong>one life (❤️)</strong> — you get 6 in total.{% endif %}</li>
+          <li>{% if lang == 'ko' %}목숨이 다하기 전에 모든 글자를 맞히면 승리! <strong>힌트</strong>(뜻)도 사용할 수 있어요.{% else %}Reveal every letter before your lives run out to win. A <strong>Hint</strong> (definition) is available too.{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <!-- All modes -->
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h2 class="fw-bold h4 mb-3">🎮 {% if lang == 'ko' %}모든 게임 모드{% else %}All Game Modes{% endif %}</h2>
+      <h2 class="fw-bold h4 mb-3">🎮 {% if lang == 'ko' %}타일 게임 모드{% else %}Tile Guess Modes{% endif %}</h2>
+      <p class="text-muted small mb-3">{% if lang == 'ko' %}아래는 <strong>타일 게임</strong>의 다양한 모드입니다(애너그램·행맨에도 같은 카테고리가 있어요).{% else %}These are the modes for <strong>Tile Guess</strong> (Anagram and Hangman share the same categories).{% endif %}</p>
       <div class="row g-3">
         <div class="col-sm-6">
           <div class="p-3 bg-light rounded h-100">
