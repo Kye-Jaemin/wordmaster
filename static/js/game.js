@@ -80,6 +80,11 @@ function buildBoard() {
 }
 
 async function fetchWord() {
+  // Deep-link: a /word/<w> page CTA can pre-load that exact word (?word=).
+  if (typeof FORCED_WORD !== "undefined" && FORCED_WORD && FORCED_WORD.length === WORD_LENGTH) {
+    secretWord = FORCED_WORD.toUpperCase();
+    return;
+  }
   // Custom mode: read words from user's localStorage list (never hits server)
   if (typeof GAME_MODE !== "undefined" && GAME_MODE === "custom") {
     const customWords = JSON.parse(localStorage.getItem("wm_custom_words") || "[]")
@@ -255,6 +260,8 @@ function showResult(won, message = "") {
   emojis.textContent  = won ? "🎉" : "😔";
   msgEl.textContent   = won ? message : T.betterLuck;
   wordEl.textContent  = T.theWordWas(secretWord);
+
+  if (window.wmRenderStreak) window.wmRenderStreak();
 
   if (shareBtn) shareBtn.onclick = shareResult;
   if (againBtn) againBtn.onclick = resetGame;

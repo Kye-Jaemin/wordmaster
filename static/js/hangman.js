@@ -43,6 +43,11 @@ let livesLeft   = MAX_LIVES;
 let gameOver    = false;
 
 async function fetchWord() {
+  // Deep-link: a /word/<w> page CTA can pre-load that exact word (?word=).
+  if (window.FORCED_WORD && window.FORCED_WORD.length === WORD_LENGTH) {
+    secretWord = window.FORCED_WORD.toUpperCase();
+    return;
+  }
   if (GAME_MODE === "custom") {
     const arr = (JSON.parse(localStorage.getItem("wm_custom_words") || "[]") || [])
       .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
@@ -141,6 +146,7 @@ function win() {
 }
 
 function wireShare(detail) {
+  if (window.wmRenderStreak) window.wmRenderStreak();
   const share = document.getElementById("btn-share");
   if (share && window.wmShareResult) {
     share.onclick = () => window.wmShareResult({ label: T.shareLabel, detail: detail });

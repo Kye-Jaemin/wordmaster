@@ -75,6 +75,13 @@ try:
 except (FileNotFoundError, json.JSONDecodeError):
     WORD_CACHE = {}
 
+# Flat set of every real word, used to validate the ?word= deep-link param so a
+# /word/<w> page can pre-load that exact word into a game (see inject_forced_word).
+_ALL_WORDS_SET = set()
+for _lst in WORDS.values():
+    if isinstance(_lst, list):
+        _ALL_WORDS_SET.update(w.lower() for w in _lst)
+
 # ─── Language Support ──────────────────────────────────────────
 
 def resolve_lang():
@@ -99,6 +106,17 @@ def resolve_lang():
 def inject_lang():
     """Inject the resolved display language into every template."""
     return dict(lang=resolve_lang())
+
+@app.context_processor
+def inject_forced_word():
+    """A ?word= param (from a /word/<w> page's 'play this word' CTA) pre-loads
+    that exact word into the game so the CTA is honest. Validated against the
+    real word lists so the param can't inject arbitrary strings; the JS only
+    uses it when its length matches the board, otherwise it's ignored."""
+    w = (request.args.get("word") or "").strip().lower()
+    if w and w.isalpha() and 3 <= len(w) <= 8 and (w in WORD_CACHE or w in _ALL_WORDS_SET):
+        return {"forced_word": w.upper()}
+    return {"forced_word": ""}
 
 @app.route("/set-lang/<lang>")
 def set_lang(lang):

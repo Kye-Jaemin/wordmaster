@@ -244,6 +244,7 @@
       <!-- Result Panel (matches Tile Guess) -->
       <div id="result-panel" class="text-center d-none mt-3">
         <div id="result-emoji" class="fs-4 mb-2"></div>
+        <div id="streak-display" class="mb-2 d-none"></div>
         <h5 id="result-message" class="fw-bold"></h5>
         <p id="result-word" class="text-muted small"></p>
 
@@ -314,7 +315,7 @@
           <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster&amp;referrer=utm_source%3Dweb%26utm_medium%3Dresult_cta"
              target="_blank" rel="noopener"
              class="btn btn-success btn-sm d-inline-flex align-items-center gap-1">
-            <i class="bi bi-google-play"></i>{% if lang == 'ko' %}내일 단어 놓치지 않기 — 앱에서 매일 알림{% else %}Never miss tomorrow's word — get daily reminders in the app{% endif %}
+            <i class="bi bi-google-play"></i>{% if lang == 'ko' %}매일 알림으로 스트릭 이어가기 — 앱 받기{% else %}Keep your streak alive with daily reminders — get the app{% endif %}
           </a>
         </div>
       </div>
@@ -334,6 +335,7 @@
 <script>
   window.GAME_MODE   = "{{ mode }}";
   window.WORD_LENGTH = {{ word_length }};
+  window.FORCED_WORD = "{{ forced_word }}";
 </script>
 
 {% if mode == 'news' %}

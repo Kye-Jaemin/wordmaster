@@ -139,20 +139,12 @@
         </div>
       </div>
       <div class="loader-msg">
-        {% if lang == 'ko' %}게임 로딩 중…{% else %}Loading your game…{% endif %}
-      </div>
-      <div id="loader-slow-msg" class="loader-slow-msg d-none">
-        <!-- Cold-start message removed — UptimeRobot keeps server warm -->
+        {% if lang == 'ko' %}로딩 중…{% else %}Loading…{% endif %}
       </div>
     </div>
   </div>
   <script>
-    var _loaderSlowTimer = setTimeout(function() {
-      var m = document.getElementById("loader-slow-msg");
-      if (m) m.classList.remove("d-none");
-    }, 5000);
     document.addEventListener("DOMContentLoaded", function() {
-      clearTimeout(_loaderSlowTimer);
       var loader = document.getElementById("page-loader");
       if (loader) {
         loader.classList.add("loader-hidden");

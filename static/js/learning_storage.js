@@ -149,6 +149,25 @@
     return text;
   };
 
+  // Render the player's current daily streak into #streak-display (if present).
+  // Surfacing it at game end is the core retention nudge — "you're on a roll,
+  // come back tomorrow." Shows only at >= 2 days (1 isn't a streak yet).
+  window.wmRenderStreak = function () {
+    const el = document.getElementById("streak-display");
+    if (!el) return;
+    try {
+      const v = JSON.parse(localStorage.getItem("wm_vocab") || "{}");
+      const days = v.streak && v.streak.current;
+      const ko = (window.WM_LANG === "ko");
+      if (days && days >= 2) {
+        el.innerHTML = '<span class="badge bg-warning text-dark fs-6">🔥 ' + days + (ko ? "일 연속!" : "-day streak!") + '</span>';
+        el.classList.remove("d-none");
+      } else {
+        el.classList.add("d-none");
+      }
+    } catch (e) { el.classList.add("d-none"); }
+  };
+
   window.wmSaveVocab = function (word, won, scoreNumber, gameMode) {
     if (!word) return;
     word = word.toUpperCase();
