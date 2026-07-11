@@ -269,9 +269,11 @@
             </ul>
           </li>
 
-          <!-- Get the Android app — cross-promo, always visible in the nav -->
+          <!-- Get the Android app — cross-promo, always visible in the nav.
+               referrer UTM distinguishes header installs from result-CTA /
+               footer installs in the Play Console acquisition report. -->
           <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-            <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster"
+            <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster&amp;referrer=utm_source%3Dweb%26utm_medium%3Dheader_nav"
                target="_blank" rel="noopener"
                class="btn btn-sm btn-success d-inline-flex align-items-center gap-1"
                title="{% if lang == 'ko' %}Google Play에서 다운로드{% else %}Get it on Google Play{% endif %}">
@@ -314,7 +316,7 @@
           <p class="small text-muted mb-1">
             {% if lang == 'ko' %}모바일 앱으로도 플레이하세요{% else %}Play on mobile too{% endif %}
           </p>
-          <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster"
+          <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster&amp;referrer=utm_source%3Dweb%26utm_medium%3Dfooter_badge"
              target="_blank" rel="noopener">
             {% if lang == 'ko' %}
             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
