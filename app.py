@@ -291,11 +291,26 @@ def archive_day(date_str):
     next_d    = d + timedelta(days=1)
     prev_date = prev_d.strftime("%Y-%m-%d") if (today - prev_d).days <= 29 else None
     next_date = next_d.strftime("%Y-%m-%d") if next_d <= today else None
+    disp = d.strftime("%B %d, %Y")
+    wt = word.title()
+    # Surface the answer word in title/meta: this page targets "wordle answer <date>"
+    # intent and /archive is the site's highest-CTR area, so showing the word lifts
+    # the snippet's click appeal. Today's word is withheld to avoid spoiling the live daily.
+    if is_today:
+        title = f"WordMaster Daily Word — {disp}"
+        meta  = f"Play the WordMaster daily challenge for {disp}. Guess today's 5-letter word, then learn its definition and etymology."
+    elif resolve_lang() == "ko":
+        title = f"WordMaster {disp} 정답: {wt} — 지난 단어 다시 풀기"
+        meta  = f"{disp} WordMaster 데일리 정답은 '{wt}'였습니다. 퍼즐을 다시 풀고 뜻·어원·유의어까지 학습하세요."
+    else:
+        title = f"WordMaster Answer for {disp}: {wt} — Replay & Learn It"
+        meta  = f"The WordMaster daily word for {disp} was {wt}. Replay the puzzle and learn its definition, etymology, and synonyms — free."
     return render_template("archive_day.html",
-        title=f"WordMaster Archive: {d.strftime('%B %d, %Y')}",
-        meta_desc=f"See the WordMaster daily word for {d.strftime('%B %d, %Y')} and its definition.",
+        title=title,
+        meta_desc=meta,
         word=word,
-        date_display=d.strftime("%B %d, %Y"),
+        has_word_page=(word.lower() in WORD_CACHE),
+        date_display=disp,
         is_today=is_today,
         prev_date=prev_date,
         next_date=next_date)
@@ -785,13 +800,14 @@ def word_page(slug):
     # Language-aware title/meta so KO search + share previews aren't English-only.
     # (Definitions themselves stay English — this is an English dictionary.)
     if resolve_lang() == "ko":
-        title = f"{word_title} 뜻·정의·예문 | WordMaster"
-        meta = (f"{word_title}: {first_def[:110]}" if first_def
+        title = f"{word_title} 뜻·예문 + 단어 게임 | WordMaster"
+        meta = (f"{word_title}: {first_def[:100]} 단어 게임으로 외워보세요." if first_def
                 else f"{word_title} — 뜻, 정의, 예문, 유의어. 단어 게임으로 어휘 학습.")
     else:
-        title = f"{word_title} — Meaning, Definition & Examples | WordMaster"
-        meta = (f"{word_title}: {first_def[:115]}" if first_def
-                else f"{word_title} — meaning, definition, examples, and synonyms.")
+        # Game signal in the title differentiates from dictionary sites in the SERP.
+        title = f"{word_title} — Meaning, Examples & Word Game | WordMaster"
+        meta = (f"{word_title}: {first_def[:105]} Play it in a word game." if first_def
+                else f"{word_title} — meaning, examples, and a word game to make it stick.")
     return render_template("word.html",
         title=title, meta_desc=meta,
         word=entry, word_title=word_title, related=related)

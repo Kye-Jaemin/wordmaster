@@ -55,6 +55,16 @@
   </div>
   {% endif %}
 
+  <!-- Link to the full word profile — passes authority from this high-CTR archive
+       page down to the /word/<word> page, and gives the visitor a deeper next step. -->
+  {% if has_word_page and not is_today %}
+  <div class="text-center mb-4">
+    <a href="/word/{{ word.lower() }}{% if lang == 'ko' %}?lang=ko{% endif %}" class="btn btn-outline-primary btn-sm">
+      <i class="bi bi-journal-text me-1"></i>{% if lang == 'ko' %}{{ word.title() }} 단어 프로필 (뜻·어원·유의어){% else %}Full {{ word.title() }} word profile — meaning, origin, synonyms{% endif %}
+    </a>
+  </div>
+  {% endif %}
+
   <!-- Navigation between days -->
   <div class="d-flex justify-content-between align-items-center mt-4">
     {% if prev_date %}
@@ -94,8 +104,8 @@
   font-weight: 700;
   text-transform: uppercase;
   color: #fff;
-  background: #6aaa64;
-  border: 2px solid #538d4e;
+  background: #1565C0;          /* match the game palette (blue = correct) */
+  border: 2px solid #104a94;
 }
 </style>
 {% if not is_today %}
