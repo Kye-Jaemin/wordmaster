@@ -7793,6 +7793,24 @@
 ],
 "word": "buying"
 },
+"buyout": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "The acquisition of a controlling interest in a business or corporation by outright purchase or by purchase of a majority of issued shares of stock.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [],
+"word": "buyout"
+},
 "bypass": {
 "antonyms": [],
 "meanings": [
@@ -16486,6 +16504,51 @@
 ],
 "word": "duty"
 },
+"dwarfs": {
+"antonyms": [
+"ettin",
+"giant"
+],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "Any member of a race of beings from (especially Scandinavian and other Germanic) folklore, usually depicted as having some sort of supernatural powers and being skilled in crafting and metalworking, often as short with long beards, and sometimes as clashing with elves.",
+"example": ""
+},
+{
+"definition": "A person of short stature, often one whose limbs are disproportionately small in relation to the body as compared with normal adults, usually as the result of a genetic condition.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To render (much) smaller, turn into a dwarf (version).",
+"example": ""
+},
+{
+"definition": "To make appear (much) smaller, puny, tiny.",
+"example": "The newly-built skyscraper dwarfs all older buildings in the downtown skyline."
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [
+"midget",
+"pygmy (imprecise)",
+"runt",
+"miniaturize",
+"shrink",
+"eclipse"
+],
+"word": "dwarfs"
+},
 "dwell": {
 "antonyms": [],
 "meanings": [
@@ -17881,6 +17944,28 @@
 "lexeme"
 ],
 "word": "entry"
+},
+"enzyme": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A globular protein that catalyses a biological chemical reaction.",
+"example": ""
+},
+{
+"definition": "Leavened bread, as opposed to azyme",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈɛn.zaɪm/",
+"synonyms": [],
+"word": "enzyme"
 },
 "epoch": {
 "antonyms": [],
@@ -21080,6 +21165,24 @@
 "synonyms": [],
 "word": "fjord"
 },
+"fjords": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A long, narrow, deep inlet between cliffs.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [],
+"word": "fjords"
+},
 "flake": {
 "antonyms": [],
 "meanings": [
@@ -23680,6 +23783,24 @@
 "stare"
 ],
 "word": "gaze"
+},
+"gazebo": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A belvedere, either a type of summer-house or a roofed, detached porch-like structure, usually in a yard, park or lawn.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ɡəˈziːbəʊ/",
+"synonyms": [],
+"word": "gazebo"
 },
 "gear": {
 "antonyms": [],
@@ -27599,6 +27720,63 @@
 "synonyms": [],
 "word": "jewel"
 },
+"jinxed": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "To cast a spell on.",
+"example": ""
+},
+{
+"definition": "To bring bad luck to.",
+"example": ""
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [],
+"word": "jinxed"
+},
+"jockey": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "One who rides racehorses competitively.",
+"example": ""
+},
+{
+"definition": "That part of a variable resistor or potentiometer that rides over the resistance wire",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To ride (a horse) in a race.",
+"example": ""
+},
+{
+"definition": "To jostle by riding against.",
+"example": "They were jockeying for position toward the end of the race."
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "/ˈdʒɒki/",
+"synonyms": [],
+"word": "jockey"
+},
 "joint": {
 "antonyms": [],
 "meanings": [
@@ -27760,6 +27938,41 @@
 "synonyms": [],
 "word": "juicy"
 },
+"jumble": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A mixture of unrelated things.",
+"example": ""
+},
+{
+"definition": "Items for a rummage sale.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To mix or confuse.",
+"example": ""
+},
+{
+"definition": "To meet or unite in a confused way.",
+"example": "I tried to study, but in my half-awake state, all of the concepts seemed to jumble together."
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [],
+"word": "jumble"
+},
 "jungle": {
 "antonyms": [],
 "meanings": [
@@ -27860,6 +28073,37 @@
 "phonetic": "/ˈkaɪˌæk/",
 "synonyms": [],
 "word": "kayak"
+},
+"kayaks": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A type of small boat, covered over by a surface deck, powered by the occupant or occupants using a double-bladed paddle in a sitting position, from a hole in the surface deck",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To use a kayak, to travel or race in a kayak.",
+"example": "Kayaking is an Olympic sport."
+},
+{
+"definition": "To traverse (a body of water) by kayak.",
+"example": "On a dare, he kayaked the Harlem River in New York from Hell's Gate to Spyten Duyvil."
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [],
+"word": "kayaks"
 },
 "killer": {
 "antonyms": [],
@@ -31210,6 +31454,24 @@
 ],
 "word": "murder"
 },
+"museum": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A building or institution dedicated to the acquisition, conservation, study, exhibition, and educational interpretation of objects having scientific, historical, cultural or artistic value.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/mjuːˈziːəm/",
+"synonyms": [],
+"word": "museum"
+},
 "music": {
 "antonyms": [],
 "meanings": [
@@ -31908,6 +32170,34 @@
 "naiad"
 ],
 "word": "nymph"
+},
+"nymphs": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "(Greek, Roman) Any female nature spirit associated with water, forests, grotto, wind, etc.",
+"example": ""
+},
+{
+"definition": "A young girl, especially one who is attractive, beautiful or graceful.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [
+"lolita",
+"nymphet",
+"nymphette",
+"instar",
+"naiad"
+],
+"word": "nymphs"
 },
 "object": {
 "antonyms": [],
@@ -32622,6 +32912,32 @@
 "phonetic": "/ˈɒksaɪd/",
 "synonyms": [],
 "word": "oxide"
+},
+"oxygen": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "The chemical element (symbol O) with an atomic number of 8 and relative atomic mass of 15.9994. It is a colorless and odorless gas.",
+"example": ""
+},
+{
+"definition": "Molecular oxygen (O2), a colorless, odorless gas at room temperature, also called dioxygen.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈɒksɪdʒən/",
+"synonyms": [
+"E948",
+"packaging gas",
+"sourstuff"
+],
+"word": "oxygen"
 },
 "ozone": {
 "antonyms": [],
@@ -33908,6 +34224,28 @@
 "synonyms": [],
 "word": "plant"
 },
+"plaque": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "Any flat, thin piece of clay, ivory, metal, etc., used for ornament, or for painting pictures upon, as a dish, plate, slab, etc., hung upon a wall; also, a smaller decoration worn by a person, such as a brooch.",
+"example": ""
+},
+{
+"definition": "A piece of flat metal with writing on it, attached to a building, monument, or other structure to remind people of a person or an event.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/plaːk/",
+"synonyms": [],
+"word": "plaque"
+},
 "plate": {
 "antonyms": [],
 "meanings": [
@@ -35177,6 +35515,24 @@
 ],
 "word": "qualm"
 },
+"quartz": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "The most abundant mineral on the earth's surface, of chemical composition silicon dioxide, SiO2. It occurs in a variety of forms, both crystalline and amorphous. Found in every environment.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/kwɔːts/",
+"synonyms": [],
+"word": "quartz"
+},
 "queen": {
 "antonyms": [],
 "meanings": [
@@ -35570,6 +35926,24 @@
 "utterly"
 ],
 "word": "quite"
+},
+"quokka": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A cat-sized marsupial, Setonix brachyurus, of southwestern Australia.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈkwɒkə/",
+"synonyms": [],
+"word": "quokka"
 },
 "quota": {
 "antonyms": [],
@@ -37032,6 +37406,33 @@
 "revue"
 ],
 "word": "review"
+},
+"rhythm": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "The variation of strong and weak elements (such as duration, accent) of sounds, notably in speech or music, over time; a beat or meter.",
+"example": "Dance to the rhythm of the music."
+},
+{
+"definition": "A specifically defined pattern of such variation.",
+"example": "Most dances have a rhythm as distinctive as the Iambic verse in poetry"
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈɹɪ.ð(ə)m/",
+"synonyms": [
+"meter",
+"metre",
+"prosody",
+"rhythm section"
+],
+"word": "rhythm"
 },
 "rider": {
 "antonyms": [],
@@ -41164,6 +41565,43 @@
 "synonyms": [],
 "word": "spend"
 },
+"sphinx": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A creature with the head of a person and the body of an animal (commonly a lion).",
+"example": ""
+},
+{
+"definition": "A person who keeps his/her thoughts and intentions secret; an enigmatic person.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To decorate with sphinxes",
+"example": "a marble sphinxed chimney-piece"
+},
+{
+"definition": "To adopt the posture of the Sphinx.",
+"example": "A hot lion with a very bloated stomach ... will adopt either a sphinxed or a squatting posture which takes some of the weight off its belly."
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "/sfɪŋks/",
+"synonyms": [
+"enigma"
+],
+"word": "sphinx"
+},
 "spice": {
 "antonyms": [],
 "meanings": [
@@ -41788,6 +42226,41 @@
 "pound sign"
 ],
 "word": "square"
+},
+"squawk": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A shrill noise, especially made by a voice or bird; a yell, scream, or call.",
+"example": ""
+},
+{
+"definition": "A four-digit transponder code used by aircraft for identification or transmission of emergency signals.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To make a squawking noise; to yell, scream, or call out shrilly.",
+"example": ""
+},
+{
+"definition": "To speak out; to protest.",
+"example": ""
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "/skwɔːk/",
+"synonyms": [],
+"word": "squawk"
 },
 "stack": {
 "antonyms": [],
@@ -44405,6 +44878,28 @@
 "structure"
 ],
 "word": "system"
+},
+"syzygy": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "An alignment of three celestial bodies (for example, the Sun, Earth, and Moon) such that one body is directly between the other two, such as occurs at an eclipse.",
+"example": ""
+},
+{
+"definition": "An archetypal pairing of contrasexual opposites, symbolizing the communication of the conscious and unconscious minds.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈsɪz.ɪdʒ.i/",
+"synonyms": [],
+"word": "syzygy"
 },
 "table": {
 "antonyms": [],
@@ -47818,6 +48313,28 @@
 "synonyms": [],
 "word": "volume"
 },
+"vortex": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A whirlwind, whirlpool, or similarly moving matter in the form of a spiral or column.",
+"example": ""
+},
+{
+"definition": "Anything that involves constant violent or chaotic activity around some centre.",
+"example": "2004: the consumer vortex that is East Hampton — The New Yorker, 30 August 2004, p.38"
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈvɔɹtɛks/",
+"synonyms": [],
+"word": "vortex"
+},
 "voter": {
 "antonyms": [],
 "meanings": [
@@ -48355,6 +48872,30 @@
 ],
 "word": "while"
 },
+"whisky": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "An alcoholic liquor distilled from fermented grain and usually aged in oak barrels.",
+"example": ""
+},
+{
+"definition": "A drink of this liquor.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈwɪski/",
+"synonyms": [
+"tim-whiskey"
+],
+"word": "whisky"
+},
 "white": {
 "antonyms": [
 "black",
@@ -48692,6 +49233,57 @@
 "phonetic": "/wɪˈθɪn/",
 "synonyms": [],
 "word": "within"
+},
+"wizard": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "Someone, usually male, who uses (or has skill with) magic, mystic items, and magical and mystical practices.",
+"example": ""
+},
+{
+"definition": "One who is especially skilled or unusually talented in a particular field.",
+"example": "He was a financial wizard, capable of predicting the movements of the stock markets."
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To practice wizardry.",
+"example": ""
+},
+{
+"definition": "To conjure.",
+"example": ""
+}
+],
+"partOfSpeech": "verb"
+},
+{
+"definitions": [
+{
+"definition": "Fine, superb (originally RAF slang).",
+"example": ""
+}
+],
+"partOfSpeech": "adjective"
+}
+],
+"origin": "",
+"phonetic": "/ˈwɪ.zəd/",
+"synonyms": [
+"conjurer",
+"mage",
+"magic user",
+"magician",
+"mystic",
+"sorcerer"
+],
+"word": "wizard"
 },
 "woman": {
 "antonyms": [],
@@ -49482,6 +50074,85 @@
 ],
 "word": "zebra"
 },
+"zephyr": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A light wind from the west.",
+"example": ""
+},
+{
+"definition": "Any light refreshing wind; a gentle breeze.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To blow or move like a zephyr, or light breeze.",
+"example": ""
+},
+{
+"definition": "To blow or blow on gently like a zephyr; to cool or refresh with a gentle breeze.",
+"example": ""
+}
+],
+"partOfSpeech": "verb"
+}
+],
+"origin": "",
+"phonetic": "/zɛfə(ɹ)/",
+"synonyms": [
+"westerly"
+],
+"word": "zephyr"
+},
+"zigzag": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "A line or path that proceeds by sharp turns in alternating directions",
+"example": ""
+},
+{
+"definition": "One of such sharp turns",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+},
+{
+"definitions": [
+{
+"definition": "To move or to twist in a zigzag manner.",
+"example": ""
+}
+],
+"partOfSpeech": "verb"
+},
+{
+"definitions": [
+{
+"definition": "Moving in, or having a zigzag.",
+"example": ""
+}
+],
+"partOfSpeech": "adjective"
+}
+],
+"origin": "",
+"phonetic": "",
+"synonyms": [
+"zig and zag"
+],
+"word": "zigzag"
+},
 "zilch": {
 "antonyms": [],
 "meanings": [
@@ -49523,6 +50194,28 @@
 "shutout"
 ],
 "word": "zilch"
+},
+"zodiac": {
+"antonyms": [],
+"meanings": [
+{
+"definitions": [
+{
+"definition": "The belt-like region of the celestial sphere approximately eight degrees north and south of the ecliptic which include the apparent path of the sun, moon, and visible planets.",
+"example": ""
+},
+{
+"definition": "The twelve equal divisions of the zodiacal region into signs or houses, each named for a prominent constellation in the region.",
+"example": ""
+}
+],
+"partOfSpeech": "noun"
+}
+],
+"origin": "",
+"phonetic": "/ˈzəʊ.dɪ.æk/",
+"synonyms": [],
+"word": "zodiac"
 },
 "zonal": {
 "antonyms": [],
