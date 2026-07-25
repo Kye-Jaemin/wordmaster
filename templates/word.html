@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head_schema %}
+{% if thin %}<meta name="robots" content="noindex,follow"/>{% endif %}
 {% set _d = (word.meanings[0].definitions[0].definition if word.meanings and word.meanings[0].definitions else "") %}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[

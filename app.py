@@ -75,6 +75,21 @@ try:
 except (FileNotFoundError, json.JSONDecodeError):
     WORD_CACHE = {}
 
+def _word_richness_score(entry):
+    """Content-richness score for a cached word. Pages scoring <=1 are 'thin'
+    (1-2 bare definitions, no examples/synonyms/origin) — they stay live for
+    players and internal links but are noindexed and left out of the sitemap,
+    so the indexed surface only contains pages with real substance."""
+    defs = sum(len(m["definitions"]) for m in entry.get("meanings", []))
+    examples = sum(1 for m in entry.get("meanings", [])
+                   for d in m["definitions"] if d.get("example"))
+    syn = len(entry.get("synonyms", []))
+    ant = len(entry.get("antonyms", []))
+    origin = 2 if entry.get("origin") else 0
+    return (defs - 1) + examples * 2 + min(syn, 3) + min(ant, 2) + origin
+
+THIN_WORDS = {w for w, e in WORD_CACHE.items() if _word_richness_score(e) <= 1}
+
 # Flat set of every real word, used to validate the ?word= deep-link param so a
 # /word/<w> page can pre-load that exact word into a game (see inject_forced_word).
 _ALL_WORDS_SET = set()
@@ -810,7 +825,8 @@ def word_page(slug):
                 else f"{word_title} — meaning, examples, and a word game to make it stick.")
     return render_template("word.html",
         title=title, meta_desc=meta,
-        word=entry, word_title=word_title, related=related)
+        word=entry, word_title=word_title, related=related,
+        thin=(norm in THIN_WORDS))
 
 # ─── Helper: Full Dictionary Lookup ──────────────────────────
 
@@ -1020,8 +1036,10 @@ def sitemap():
     # /word-of-day was retired — do not list (it 301-redirects to /daily and
     # redirect URLs in a sitemap are flagged as low-quality signals by Google).
 
-    # Programmatic word-definition pages (one per cached word).
-    word_urls = [f"/word/{w}" for w in sorted(WORD_CACHE.keys())]
+    # Programmatic word-definition pages — thin (noindexed) pages excluded so
+    # the sitemap only advertises the quality surface.
+    word_urls = [f"/word/{w}" for w in sorted(WORD_CACHE.keys())
+                 if w not in THIN_WORDS]
 
     urls = static_urls + puzzle_urls + blog_urls + word_urls
 
