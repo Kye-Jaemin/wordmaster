@@ -524,6 +524,7 @@ def my_progress():
 @app.route("/blog")
 def blog():
     posts = [
+        {"slug": "suneung-vocab-daily-plan", "title": "How Many Suneung (SAT-Level) Vocabulary Words Should You Study Per Day? A 4-Week Plan", "title_ko": "수능 영단어, 하루 몇 개가 적당할까? — 무리 없는 학습량과 4주 플랜", "date": "2026-07-25", "excerpt": "The right daily word count isn't about cramming more — it's about balancing new words with review. A repeatable 4-week suneung vocabulary plan.", "excerpt_ko": "수능 영단어, 무작정 많이 외운다고 좋은 게 아닙니다. 신규 학습과 복습의 균형을 맞추는 4주 반복 플랜."},
         {"slug": "korean-vocab-game-guide", "title": "Learn English Vocabulary With Word Games: A Complete Guide", "title_ko": "영어 단어 게임으로 어휘 외우기 — 게임으로 영단어 마스터", "date": "2026-06-28", "excerpt": "Why games beat flashcards for vocabulary retention, which formats train which skills, and a 5-minute daily routine by level.", "excerpt_ko": "단어카드보다 게임이 어휘 기억에 강한 이유, 어떤 게임이 어떤 능력을 키우는지, 그리고 레벨별 하루 5분 루틴."},
         {"slug": "suneung-vocab-game", "title": "Memorize Korean SAT (Suneung) English Words With Games", "title_ko": "수능 영단어, 게임으로 외우기 — 고등 필수 어휘", "date": "2026-06-28", "excerpt": "Why exam words don't stick from word lists, and a 3-step game routine to lock in high-school / SAT vocabulary.", "excerpt_ko": "수능 영단어가 단어장으로 안 외워지는 이유와, 고등·SAT급 어휘를 게임으로 굳히는 3단계 루틴."},
         {"slug": "wordle-korean", "title": "How to Play Wordle (Korean Guide) — Free 5-Letter Word Game", "title_ko": "워들(Wordle) 한국어 가이드 — 규칙 3분 정리 · 무료 플레이", "date": "2026-06-28", "excerpt": "Wordle rules and starting-word strategy explained, with Korean support and three game formats on WordMaster.", "excerpt_ko": "영어 워들이 처음이라면: 규칙·색깔 힌트·첫 단어 전략을 한국어로 3분 정리. 가입 없이 바로 무료 플레이."},
@@ -564,6 +565,15 @@ def blog():
 @app.route("/blog/<slug>")
 def blog_post(slug):
     posts = {
+        "suneung-vocab-daily-plan": {
+            "title": "How Many Suneung (SAT-Level) Vocabulary Words Should You Study Per Day? A 4-Week Plan",
+            "title_ko": "수능 영단어, 하루 몇 개가 적당할까? — 무리 없는 학습량과 4주 플랜",
+            "date": "2026-07-25",
+            "content": "suneung_vocab_daily_plan",
+            "meta_desc": "How many new SAT/suneung vocabulary words to study each day without burning out — a repeatable 4-week plan that balances new words with spaced review.",
+            "meta_desc_ko": "수능 영단어 하루 몇 개가 적당한지, 신규 학습과 복습의 균형을 맞추는 4주 반복 플랜을 정리했습니다.",
+            "related": ["suneung-vocab-game", "top-100-sat-words", "korean-vocab-game-guide"]
+        },
         "korean-vocab-game-guide": {
             "title": "Learn English Vocabulary With Word Games: A Complete Guide",
             "title_ko": "영어 단어 게임으로 어휘 외우기 — 게임으로 영단어 마스터",
@@ -1018,6 +1028,7 @@ def sitemap():
     # Blog index + individual posts
     blog_urls = [
         "/blog",
+        "/blog/suneung-vocab-daily-plan",
         "/blog/korean-vocab-game-guide",
         "/blog/suneung-vocab-game",
         "/blog/wordle-korean",
