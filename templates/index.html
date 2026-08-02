@@ -22,6 +22,9 @@
       {% elif mode == 'easy' %}{% if lang == 'ko' %}짧은 4글자 단어로 가볍게. 초보자와 어린 학습자에게 딱 맞는 워밍업.{% else %}Warm up with short 4-letter words — an easy start for beginners and younger learners.{% endif %}
       {% else %}{% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}{% endif %}
     </p>
+    <a href="/about" class="small text-muted text-decoration-none d-inline-block mt-1">
+      {% if lang == 'ko' %}🧑‍💻 1인 개발로 만든 무료 프로젝트 — 만든 이야기 보기 →{% else %}🧑‍💻 A free, one-person project — see why I built it →{% endif %}
+    </a>
   </div>
 </div>
 
@@ -238,6 +241,7 @@
         <div id="word-learning-card" class="card border-primary mx-auto d-none text-start mt-3 mb-2" style="max-width:460px;">
           <div class="card-header bg-primary text-white py-2 px-3 d-flex align-items-center justify-content-between">
             <span class="fw-bold"><i class="bi bi-book me-1"></i>{% if lang == 'ko' %}이번 게임의 단어{% else %}Word of the Game{% endif %}</span>
+            <span class="badge bg-success bg-opacity-75" style="font-size:0.68rem"><i class="bi bi-check-lg"></i> {% if lang == 'ko' %}내 단어장에 저장됨{% else %}Saved to My Words{% endif %}</span>
           </div>
           <div class="card-body py-2 px-3">
             <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
@@ -281,6 +285,9 @@
           </div>
         </div>
 
+        {% if mode == "daily" %}
+        <p class="small text-muted mb-2">🗓️ {% if lang == 'ko' %}내일 자정, 새로운 단어가 기다려요{% else %}A new word arrives at midnight tomorrow{% endif %}</p>
+        {% endif %}
         <!-- Primary next action + share -->
         <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
           {% if mode != "daily" %}

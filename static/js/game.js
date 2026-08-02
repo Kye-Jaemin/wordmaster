@@ -18,6 +18,7 @@ const _KO = {
   voteHard:      "🔥 잘 버텨내셨어요!",
   submitting:    "제출 중…",
   dayStreak:     (n) => `🔥 ${n}일 연속`,
+  shareBlurb:    "매일 새 단어 맞히기 – 무료·가입불필요",
   shareCTA:      "내일 또 만나요 👉",
 };
 const _EN = {
@@ -36,6 +37,7 @@ const _EN = {
   voteHard:      "🔥 Nice work pushing through!",
   submitting:    "Submitting…",
   dayStreak:     (n) => `🔥 ${n}-day streak`,
+  shareBlurb:    "Daily word guessing game – free, no signup",
   shareCTA:      "Come back tomorrow 👉",
 };
 const T = (typeof window.WM_LANG !== "undefined" && window.WM_LANG === "ko") ? _KO : _EN;
@@ -410,6 +412,7 @@ function shareResult() {
       return "⬜";
     }).join("") + "\n";
   }
+  text += "\n\n" + T.shareBlurb;
   text += "\n" + T.shareCTA + " https://wordmaster.store";
 
   if (navigator.clipboard) {

@@ -137,7 +137,8 @@
       if (days && days >= 2) text += "  " + (ko ? ("🔥 " + days + "일 연속") : ("🔥 " + days + "-day streak"));
     } catch (e) { /* ignore malformed storage */ }
     if (opts.detail) text += "\n" + opts.detail;
-    text += "\n\n" + (ko ? "내일 또 만나요 👉" : "Come back tomorrow 👉") + " https://wordmaster.store";
+    text += "\n\n" + (ko ? "매일 새 단어 맞히기 – 무료·가입불필요" : "Daily word guessing game – free, no signup");
+    text += "\n" + (ko ? "내일 또 만나요 👉" : "Come back tomorrow 👉") + " https://wordmaster.store";
     const done = function () {
       const ta = document.getElementById("toast-area");
       if (ta) {
