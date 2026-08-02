@@ -128,6 +128,7 @@
   // formats can share and feed the same viral loop.
   window.wmShareResult = function (opts) {
     // opts: { label: "Anagram"/"애너그램", detail: "Solved in 2 tries" }
+    if (typeof gtag === "function") gtag("event", "share_click", { format: (opts.label || "").toLowerCase() });
     const ko = (window.WM_LANG === "ko");
     let text = "WordMaster " + (opts.label || "");
     try {

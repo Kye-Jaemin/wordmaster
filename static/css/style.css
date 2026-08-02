@@ -122,4 +122,9 @@ body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
   .tile { font-size: 22px; }
   .key  { height: 48px; min-width: 30px; font-size: 11px; }
   .key-wide { min-width: 52px; }
+
+  /* Result-screen CTAs (share, play-again, app install, word links) are the
+     highest-intent tap targets in the whole funnel — Bootstrap's .btn-sm
+     renders at ~31px tall, under the ~44px mobile tap-target guideline. */
+  #result-panel .btn, #word-learning-card .btn { min-height: 44px; padding-top: 10px; padding-bottom: 10px; }
 }

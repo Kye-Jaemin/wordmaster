@@ -89,6 +89,8 @@ function newRound() {
   gameOver = false;
   updateAttemptCount();
   document.getElementById("result-panel").classList.add("d-none");
+  const scr = document.getElementById("scrambled");
+  if (scr) scr.classList.remove("d-none");
   document.getElementById("btn-hint").disabled = false;
   // Clue stays hidden until the player taps the Hint button (no auto-show).
   const cluePanel = document.getElementById("clue-panel");
@@ -161,6 +163,7 @@ function checkAnswer() {
 
 function win() {
   gameOver = true;
+  if (typeof gtag === "function") gtag("event", "game_complete", { format: "anagram", mode: GAME_MODE, won: true });
   window.wmSaveVocab(secretWord, true, attempts, "anagram");
   const panel = document.getElementById("result-panel");
   panel.classList.remove("d-none");
@@ -170,7 +173,16 @@ function win() {
     : T.solvedInN(attempts);
   document.getElementById("result-word").textContent = T.theWord(secretWord);
   wireShare(T.shareWon(attempts));
+  hideBoard();
   fetchDefinition();
+}
+
+function hideBoard() {
+  // The scrambled letter tiles have no function once the round is over —
+  // hiding them signals completion clearly and trims scroll to the result/
+  // share/app CTAs (especially on mobile).
+  const scr = document.getElementById("scrambled");
+  if (scr) scr.classList.add("d-none");
 }
 
 function wireShare(detail) {
@@ -184,6 +196,7 @@ function wireShare(detail) {
 function giveUp() {
   if (gameOver) return;
   gameOver = true;
+  if (typeof gtag === "function") gtag("event", "game_complete", { format: "anagram", mode: GAME_MODE, won: false });
   window.wmSaveVocab(secretWord, false, attempts, "anagram");
   const panel = document.getElementById("result-panel");
   panel.classList.remove("d-none");
@@ -191,6 +204,7 @@ function giveUp() {
   document.getElementById("result-message").textContent = T.betterLuck;
   document.getElementById("result-word").textContent = T.theWordWas(secretWord);
   wireShare(T.shareLost);
+  hideBoard();
   fetchDefinition();
 }
 

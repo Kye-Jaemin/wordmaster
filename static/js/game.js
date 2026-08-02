@@ -385,6 +385,7 @@ async function submitVote(vote) {
 }
 
 function shareResult() {
+  if (typeof gtag === "function") gtag("event", "share_click", { format: "tile" });
   const statusMap = { correct: "🟦", present: "🟨", absent: "⬜" };
   let text = `WordMaster ${currentRow + 1}/${MAX_GUESSES}`;
 
@@ -443,9 +444,10 @@ async function resetGame() {
   if (wlCard) wlCard.classList.add("d-none");
   const voteCard = document.getElementById("difficulty-vote");
   if (voteCard) voteCard.classList.add("d-none");
-  // Show action buttons
+  // Show action buttons and keyboard
   const actionBtns = document.getElementById("action-buttons");
   if (actionBtns) actionBtns.classList.remove("d-none");
+  if (keyboard) keyboard.classList.remove("d-none");
   // Reset counter
   updateGuessCounter();
   buildBoard();
@@ -460,6 +462,7 @@ function updateGuessCounter() {
 
 // ─── Stats ────────────────────────────────────────────────────
 function saveStats(won) {
+  if (typeof gtag === "function") gtag("event", "game_complete", { format: "tile", mode: GAME_MODE, won: !!won });
   const defaults = { played: 0, won: 0, streak: 0, best: 0, dist: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 } };
   let stats;
   try { stats = JSON.parse(localStorage.getItem("wm_stats") || JSON.stringify(defaults)); }
@@ -598,6 +601,10 @@ async function handleHint() {
 function hideActionButtons() {
   const el = document.getElementById("action-buttons");
   if (el) el.classList.add("d-none");
+  // The on-screen keyboard has no function once the round is over — hiding it
+  // signals completion clearly and trims the scroll distance to the result/
+  // share/app CTAs (especially on mobile).
+  if (keyboard) keyboard.classList.add("d-none");
 }
 
 // ─── Toast ────────────────────────────────────────────────────

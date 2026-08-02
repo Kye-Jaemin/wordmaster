@@ -76,6 +76,8 @@ function newRound() {
   livesLeft = MAX_LIVES;
   gameOver = false;
   document.getElementById("result-panel").classList.add("d-none");
+  const kb = document.getElementById("keyboard");
+  if (kb) kb.classList.remove("d-none");
   const hintBtn = document.getElementById("btn-hint");
   if (hintBtn) hintBtn.disabled = false;
   // Clue stays hidden until the player taps the Hint button (no auto-show).
@@ -133,6 +135,7 @@ function guess(letter) {
 
 function win() {
   gameOver = true;
+  if (typeof gtag === "function") gtag("event", "game_complete", { format: "hangman", mode: GAME_MODE, won: true });
   window.wmSaveVocab(secretWord, true, MAX_LIVES - livesLeft, "hangman");
   const panel = document.getElementById("result-panel");
   panel.classList.remove("d-none");
@@ -142,7 +145,16 @@ function win() {
     : T.solvedWithWrong(wrongLetters.length);
   document.getElementById("result-word").textContent = T.theWord(secretWord);
   wireShare(T.shareWon(livesLeft));
+  hideBoard();
   fetchDefinition();
+}
+
+function hideBoard() {
+  // The keyboard has no function once the round is over — hiding it signals
+  // completion clearly and trims scroll to the result/share/app CTAs
+  // (especially on mobile).
+  const kb = document.getElementById("keyboard");
+  if (kb) kb.classList.add("d-none");
 }
 
 function wireShare(detail) {
@@ -155,6 +167,7 @@ function wireShare(detail) {
 
 function lose() {
   gameOver = true;
+  if (typeof gtag === "function") gtag("event", "game_complete", { format: "hangman", mode: GAME_MODE, won: false });
   window.wmSaveVocab(secretWord, false, MAX_LIVES, "hangman");
   // reveal all
   revealed = Array(secretWord.length).fill(true);
@@ -165,6 +178,7 @@ function lose() {
   document.getElementById("result-message").textContent = T.outOfLives;
   document.getElementById("result-word").textContent = T.theWordWas(secretWord);
   wireShare(T.shareLost);
+  hideBoard();
   fetchDefinition();
 }
 

@@ -128,31 +128,6 @@
 </head>
 <body>
 
-  <!-- Cold Start Loading Overlay -->
-  <div id="page-loader">
-    <div class="loader-inner">
-      <div class="loader-logo"><i class="bi bi-grid-3x3-gap-fill"></i></div>
-      <div class="loader-title">WordMaster</div>
-      <div class="loader-spinner">
-        <div class="spinner-border text-primary" role="status" style="width:2rem;height:2rem;">
-          <span class="visually-hidden">Loading…</span>
-        </div>
-      </div>
-      <div class="loader-msg">
-        {% if lang == 'ko' %}로딩 중…{% else %}Loading…{% endif %}
-      </div>
-    </div>
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var loader = document.getElementById("page-loader");
-      if (loader) {
-        loader.classList.add("loader-hidden");
-        setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 350);
-      }
-    });
-  </script>
-
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
@@ -276,7 +251,8 @@
             <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster&amp;referrer=utm_source%3Dweb%26utm_medium%3Dheader_nav"
                target="_blank" rel="noopener"
                class="btn btn-sm btn-success d-inline-flex align-items-center gap-1"
-               title="{% if lang == 'ko' %}Google Play에서 다운로드{% else %}Get it on Google Play{% endif %}">
+               title="{% if lang == 'ko' %}Google Play에서 다운로드{% else %}Get it on Google Play{% endif %}"
+               onclick="if(typeof gtag==='function')gtag('event','app_cta_click',{location:'header_nav'});">
               <i class="bi bi-google-play"></i>{% if lang == 'ko' %}앱{% else %}App{% endif %}
             </a>
           </li>
@@ -317,7 +293,8 @@
             {% if lang == 'ko' %}모바일 앱으로도 플레이하세요{% else %}Play on mobile too{% endif %}
           </p>
           <a href="https://play.google.com/store/apps/details?id=com.tileworksstudio.wordmaster&amp;referrer=utm_source%3Dweb%26utm_medium%3Dfooter_badge"
-             target="_blank" rel="noopener">
+             target="_blank" rel="noopener"
+             onclick="if(typeof gtag==='function')gtag('event','app_cta_click',{location:'footer_badge'});">
             {% if lang == 'ko' %}
             <img src="https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
                  alt="Google Play에서 다운로드" height="54">
