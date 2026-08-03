@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% block head_schema %}
+<script type="application/ld+json">
+{% set _past_entries = entries|rejectattr("is_today")|list %}
+{"@context":"https://schema.org","@type":"ItemList","name":{{ ("WordMaster 매일 단어 보관함" if lang == 'ko' else "WordMaster Daily Word Archive")|tojson }},"itemListElement":[{% for entry in _past_entries %}{"@type":"ListItem","position":{{ loop.index }},"name":{{ (entry.date_display ~ ": " ~ entry.word.upper())|tojson }},"url":{{ ("https://wordmaster.store/archive/" ~ entry.date)|tojson }}}{% if not loop.last %},{% endif %}{% endfor %}]}
+</script>
+{% endblock %}
 {% block content %}
 <div class="container py-5" style="max-width:720px">
   <h1 class="fw-bold text-primary mb-1"><i class="bi bi-calendar3 me-2"></i>

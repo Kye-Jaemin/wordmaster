@@ -1,4 +1,23 @@
 {% extends "base.html" %}
+{% block head_schema %}
+{# base.html's auto-BreadcrumbList only covers single-segment paths, so
+   /archive/<date> (two segments) needs its own. Also emit a DefinedTerm for
+   the day's word when we have cached data — the definition card on this
+   page is JS-loaded, so without this, crawlers/answer-engines that don't
+   execute JS see no definition text for the page at all. #}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[
+{"@type":"ListItem","position":1,"name":{{ ("홈" if lang == 'ko' else "Home")|tojson }},"item":"https://wordmaster.store/"},
+{"@type":"ListItem","position":2,"name":{{ ("매일 단어 보관함" if lang == 'ko' else "Daily Word Archive")|tojson }},"item":"https://wordmaster.store/archive"},
+{"@type":"ListItem","position":3,"name":{{ date_display|tojson }},"item":{{ ("https://wordmaster.store/archive/" ~ date_str)|tojson }}}
+]}
+{% if word_entry and not is_today %}
+,{"@type":"DefinedTerm","name":{{ word.title()|tojson }},"description":{{ (word_entry.meanings[0].definitions[0].definition if word_entry.meanings and word_entry.meanings[0].definitions else "")|tojson }},"inDefinedTermSet":{"@type":"DefinedTermSet","name":"WordMaster Vocabulary","url":"https://wordmaster.store/word/"}}
+{% endif %}
+]}
+</script>
+{% endblock %}
 {% block content %}
 <div class="container py-5" style="max-width:600px">
 

@@ -320,12 +320,15 @@ def archive_day(date_str):
     else:
         title = f"WordMaster Answer for {disp}: {wt} — Replay & Learn It"
         meta  = f"The WordMaster daily word for {disp} was {wt}. Replay the puzzle and learn its definition, etymology, and synonyms — free."
+    word_entry = WORD_CACHE.get(word.lower())
     return render_template("archive_day.html",
         title=title,
         meta_desc=meta,
         word=word,
-        has_word_page=(word.lower() in WORD_CACHE),
+        has_word_page=(word_entry is not None),
+        word_entry=word_entry,
         date_display=disp,
+        date_str=date_str,
         is_today=is_today,
         prev_date=prev_date,
         next_date=next_date)
