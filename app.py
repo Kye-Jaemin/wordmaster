@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, Response, redirect, session
 from datetime import date, timedelta
-import json, random, re, xml.etree.ElementTree as ET, urllib.request, urllib.error
+import json, os, random, re, xml.etree.ElementTree as ET, urllib.request, urllib.error
 
 # ── News Cache (refreshed once per day) ───────────────────────
 _news_cache = {"date": None, "articles": [], "word": None}
@@ -62,7 +62,15 @@ def pick_news_word(articles):
     return word, source
 
 app = Flask(__name__)
-app.secret_key = "wordmaster-lang-2024-xK9#mQ"
+# Falls back to a fixed dev key only when SECRET_KEY isn't set (local runs);
+# Render deployment sets the real SECRET_KEY env var so the signing key
+# never lives in source control.
+app.secret_key = os.environ.get("SECRET_KEY", "wordmaster-lang-2024-xK9#mQ")
+# Static assets (css/js/img) have no cache-busting filename hashes, so this is
+# kept short (1 hour) rather than the more typical multi-day value — a CSS/JS
+# fix deployed to Render should reach return visitors the same day, not sit
+# behind a stale cache.
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 3600
 
 with open("words.json", encoding="utf-8") as f:
     WORDS = json.load(f)
@@ -90,12 +98,20 @@ def _word_richness_score(entry):
 
 THIN_WORDS = {w for w, e in WORD_CACHE.items() if _word_richness_score(e) <= 1}
 
+# Precomputed once at startup (was re-sorted on every /word/<slug> request that
+# needed related-word fallback filler — WORD_CACHE has 1500+ entries).
+_SORTED_WORD_CACHE_KEYS = sorted(WORD_CACHE.keys())
+
 # Flat set of every real word, used to validate the ?word= deep-link param so a
 # /word/<w> page can pre-load that exact word into a game (see inject_forced_word).
 _ALL_WORDS_SET = set()
 for _lst in WORDS.values():
     if isinstance(_lst, list):
         _ALL_WORDS_SET.update(w.lower() for w in _lst)
+
+# Uppercase mirror for guess validation (was rebuilt from scratch on every
+# single /api/guess POST — precomputed once here instead).
+_ALL_WORDS_SET_UPPER = {w.upper() for w in _ALL_WORDS_SET}
 
 # ─── Language Support ──────────────────────────────────────────
 
@@ -815,7 +831,7 @@ def word_page(slug):
     related = [s.lower() for s in entry.get("synonyms", [])
                if s.lower() in WORD_CACHE and s.lower() != norm][:8]
     if len(related) < 8:
-        keys = sorted(WORD_CACHE.keys())
+        keys = _SORTED_WORD_CACHE_KEYS
         start = sum(ord(c) for c in norm) % max(1, len(keys))
         for w in keys[start:] + keys[:start]:
             if w != norm and w not in related:
@@ -928,20 +944,17 @@ def api_word():
 
 @app.route("/api/guess", methods=["POST"])
 def api_guess():
-    data = request.get_json()
-    guess = data.get("guess", "").strip().upper()
-    answer = data.get("answer", "").strip().upper()
+    data = request.get_json(silent=True) or {}
+    guess = str(data.get("guess", "")).strip().upper()
+    answer = str(data.get("answer", "")).strip().upper()
+
+    if not guess or not answer:
+        return jsonify({"error": "Missing guess or answer"}), 400
 
     if len(guess) != len(answer):
         return jsonify({"error": "Length mismatch"}), 400
 
-    # Validate word exists in any list
-    all_words = set()
-    for lst in WORDS.values():
-        if isinstance(lst, list):
-            all_words.update(w.upper() for w in lst)
-
-    if guess not in all_words:
+    if guess not in _ALL_WORDS_SET_UPPER:
         return jsonify({"error": "Not a valid word", "valid": False}), 200
 
     result = check_guess(guess, answer)

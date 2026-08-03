@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{# Top-level (not block-scoped) so both head_schema/content and scripts blocks
+   below can see it — the definition card is server-rendered from this when
+   available, and the scripts block skips its JS fetch fallback accordingly. #}
+{% set _def = word_entry.meanings[0].definitions[0] if word_entry and word_entry.meanings and word_entry.meanings[0].definitions else None %}
 {% block head_schema %}
 {# base.html's auto-BreadcrumbList only covers single-segment paths, so
    /archive/<date> (two segments) needs its own. Also emit a DefinedTerm for
-   the day's word when we have cached data — the definition card on this
-   page is JS-loaded, so without this, crawlers/answer-engines that don't
-   execute JS see no definition text for the page at all. #}
+   the day's word when we have cached data, for non-JS crawlers/answer
+   engines and as a redundant signal alongside the server-rendered card. #}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"BreadcrumbList","itemListElement":[
@@ -60,16 +63,28 @@
     </div>
   </div>
 
-  <!-- Definition card (loaded by JS) -->
+  <!-- Definition card: server-rendered straight from the prebuilt WORD_CACHE
+       when we have it, so there's no round-trip to the external dictionary
+       API and no-JS crawlers/answer engines see real text instead of a
+       spinner. Falls back to the old JS /api/hint fetch only for words that
+       aren't in WORD_CACHE. -->
   {% if not is_today %}
   <div class="card shadow-sm mb-4" id="def-card">
     <div class="card-header fw-semibold">
       <i class="bi bi-book me-1 text-primary"></i>Definition
     </div>
     <div class="card-body" id="def-body">
-      <div class="text-center text-muted py-2">
-        <span class="spinner-border spinner-border-sm me-1"></span>Loading definition…
-      </div>
+      {% if _def %}
+        <p class="mb-1"><strong class="text-primary">{{ word_entry.word }}</strong>
+          {% if word_entry.meanings[0].partOfSpeech %}<span class="badge bg-secondary">{{ word_entry.meanings[0].partOfSpeech }}</span>{% endif %}
+        </p>
+        <p class="mb-1">{{ _def.definition }}</p>
+        {% if _def.example %}<p class="text-muted fst-italic small mb-0">"{{ _def.example }}"</p>{% endif %}
+      {% else %}
+        <div class="text-center text-muted py-2">
+          <span class="spinner-border spinner-border-sm me-1"></span>Loading definition…
+        </div>
+      {% endif %}
     </div>
   </div>
   {% endif %}
@@ -127,7 +142,7 @@
   border: 2px solid #104a94;
 }
 </style>
-{% if not is_today %}
+{% if not is_today and not _def %}
 <script>
 (async () => {
   const word = {{ word | tojson }};

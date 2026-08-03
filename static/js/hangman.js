@@ -49,7 +49,10 @@ async function fetchWord() {
     return;
   }
   if (GAME_MODE === "custom") {
-    const arr = (JSON.parse(localStorage.getItem("wm_custom_words") || "[]") || [])
+    let raw;
+    try { raw = JSON.parse(localStorage.getItem("wm_custom_words") || "[]"); }
+    catch (e) { raw = []; }  // corrupt storage -> treat as empty
+    const arr = (raw || [])
       .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
     if (!arr.length) {
       showToast(T.needCustom, 4000);

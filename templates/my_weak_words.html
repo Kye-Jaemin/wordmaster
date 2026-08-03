@@ -41,7 +41,9 @@ const T = {
 };
 
 function getVocab() {
-  return JSON.parse(localStorage.getItem("wm_vocab") || '{"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}}');
+  const fallback = {"words":{},"weak_words":[],"daily":{},"streak":{"current":0,"longest":0,"last_daily":null}};
+  try { return JSON.parse(localStorage.getItem("wm_vocab") || JSON.stringify(fallback)); }
+  catch (e) { return fallback; }  // corrupt storage -> treat as empty
 }
 
 function renderWeakWords() {

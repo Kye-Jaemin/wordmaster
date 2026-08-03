@@ -101,7 +101,8 @@
 const STORAGE_KEY = "wm_custom_words";
 
 function getWords() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+  catch (e) { return []; }  // corrupt storage -> treat as empty
 }
 function saveWords(arr) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));

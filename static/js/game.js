@@ -3,6 +3,7 @@
 
 // ─── i18n ─────────────────────────────────────────────────────
 const _KO = {
+  needCustom:    "먼저 /custom 에서 단어를 추가하세요.",
   failedLoad:    "단어를 불러오지 못했습니다. 새로고침 해주세요.",
   needLetters:   (n) => `${n}글자를 입력하세요!`,
   notValid:      "유효하지 않은 단어입니다!",
@@ -22,6 +23,7 @@ const _KO = {
   shareCTA:      "내일 또 만나요 👉",
 };
 const _EN = {
+  needCustom:    "Add custom words at /custom first.",
   failedLoad:    "Failed to load word. Please refresh.",
   needLetters:   (n) => `Need ${n} letters!`,
   notValid:      "Not a valid word!",
@@ -89,10 +91,13 @@ async function fetchWord() {
   }
   // Custom mode: read words from user's localStorage list (never hits server)
   if (typeof GAME_MODE !== "undefined" && GAME_MODE === "custom") {
-    const customWords = JSON.parse(localStorage.getItem("wm_custom_words") || "[]")
+    let customWords;
+    try { customWords = JSON.parse(localStorage.getItem("wm_custom_words") || "[]"); }
+    catch (e) { customWords = []; }  // corrupt storage -> treat as empty
+    customWords = customWords
       .filter(w => typeof w === "string" && w.length === WORD_LENGTH && /^[A-Za-z]+$/.test(w));
     if (customWords.length === 0) {
-      showToast("Add custom words first!");
+      showToast(T.needCustom, 4000);
       secretWord = "";
       return;
     }
