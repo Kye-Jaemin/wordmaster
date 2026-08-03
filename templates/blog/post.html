@@ -1486,8 +1486,8 @@
     <a href="/archive" class="btn btn-outline-warning text-dark"><i class="bi bi-clock-history me-1"></i>
       {% if lang == 'ko' %}지난 단어{% else %}Past Words{% endif %}
     </a>
-    <a href="/" class="btn btn-primary"><i class="bi bi-play-fill me-1"></i>
-      {% if lang == 'ko' %}지금 플레이{% else %}Play Now{% endif %}
+    <a href="{{ '/high' if post.cta_mode == 'high' else '/' }}" class="btn btn-primary"><i class="bi bi-play-fill me-1"></i>
+      {% if post.cta_mode == 'high' %}{% if lang == 'ko' %}고등 모드로 시작하기{% else %}Start High School Mode{% endif %}{% else %}{% if lang == 'ko' %}지금 플레이{% else %}Play Now{% endif %}{% endif %}
     </a>
   </div>
 </div>

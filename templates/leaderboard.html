@@ -191,11 +191,24 @@
 
 <script>
   // ── Stats from localStorage ───────────────────────────────
-  const stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}}');
+  let stats;
+  try { stats = JSON.parse(localStorage.getItem("wm_stats") || '{"played":0,"won":0,"streak":0,"best":0,"dist":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}}'); }
+  catch (e) { stats = {played:0,won:0,streak:0,best:0,dist:{1:0,2:0,3:0,4:0,5:0,6:0}}; }
   document.getElementById("stat-played").textContent  = stats.played;
   document.getElementById("stat-winpct").textContent  = stats.played ? Math.round(stats.won/stats.played*100)+"%" : "—";
-  document.getElementById("stat-streak").textContent  = stats.streak;
-  document.getElementById("stat-best").textContent    = stats.best;
+  // Day streak: canonical source is wm_vocab.streak.current (date-aware daily
+  // streak) — NOT wm_stats.streak, which counts consecutive wins across any
+  // mode and resets on a single loss. Using wm_stats here previously showed
+  // players a different streak number than the in-game result panel / share
+  // text, which both already read from wm_vocab.
+  let dayStreak = 0, longestDayStreak = 0;
+  try {
+    const v = JSON.parse(localStorage.getItem("wm_vocab") || "{}");
+    dayStreak = (v.streak && v.streak.current) || 0;
+    longestDayStreak = (v.streak && v.streak.longest) || 0;
+  } catch (e) { /* ignore malformed storage */ }
+  document.getElementById("stat-streak").textContent  = dayStreak;
+  document.getElementById("stat-best").textContent    = longestDayStreak;
 
   // ── Guess distribution ────────────────────────────────────
   const dist     = document.getElementById("guess-dist");

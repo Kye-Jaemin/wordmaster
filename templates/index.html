@@ -15,11 +15,13 @@
     <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
       {% if mode == 'hard' %}{% if lang == 'ko' %}가장 어려운 6글자 단어 맞히기{% else %}Hardest 6-Letter Words to Guess{% endif %}
       {% elif mode == 'easy' %}{% if lang == 'ko' %}쉬운 4글자 단어 게임{% else %}Easy 4-Letter Word Game{% endif %}
+      {% elif mode == 'category_high' %}{% if lang == 'ko' %}수능 필수 어휘, 하루 5분 게임으로 굳히기{% else %}High School & SAT Vocabulary — 5 Minutes a Day{% endif %}
       {% else %}{% if lang == 'ko' %}어휘를 진짜로 쌓아주는 매일의 단어 게임.{% else %}Daily word games that build your vocabulary.{% endif %}{% endif %}
     </h1>
     <p class="text-muted small mb-0" style="max-width:620px;margin:0 auto;">
       {% if mode == 'hard' %}{% if lang == 'ko' %}ZEPHYR, SPHINX 같은 까다로운 6글자 단어에 도전하세요. 6번 안에 맞히고, 각 단어의 뜻·어원까지 학습.{% else %}Take on tricky 6-letter words like ZEPHYR and SPHINX. Guess in six tries, then learn each word's meaning and origin.{% endif %}
       {% elif mode == 'easy' %}{% if lang == 'ko' %}짧은 4글자 단어로 가볍게. 초보자와 어린 학습자에게 딱 맞는 워밍업.{% else %}Warm up with short 4-letter words — an easy start for beginners and younger learners.{% endif %}
+      {% elif mode == 'category_high' %}{% if lang == 'ko' %}고등·수능 빈출 단어를 5글자 퍼즐로 매일 만나고, 헷갈린 단어는 내 단어장에 자동으로 쌓입니다.{% else %}Meet SAT-level vocabulary daily as a 5-letter puzzle — tricky words auto-save to your list for review.{% endif %}
       {% else %}{% if lang == 'ko' %}매일 새로운 5글자 퍼즐. 만난 단어는 모두 기록되어, 오늘 본 어휘가 오래 남는 어휘가 됩니다.{% else %}A 5-letter daily puzzle where every word you encounter is tracked — so the vocabulary you meet today is the vocabulary you keep.{% endif %}{% endif %}
     </p>
     <a href="/about" class="small text-muted text-decoration-none d-inline-block mt-1">
@@ -1096,8 +1098,36 @@
       </div>
       {% endif %}
 
+      {% elif mode == "category_high" %}
+      <!-- ══ CATEGORY: HIGH SCHOOL / SAT (수능 재포지셔닝, sprint S3/S27) ══ -->
+      {% if lang == 'ko' %}
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-mortarboard me-2"></i>수능·SAT 대비 고등 어휘 모드</h2>
+        <p class="text-muted">고등학생 수준 모드는 <strong>수능·SAT에 자주 등장하는 5글자 학술 어휘</strong>만 사용합니다. 일상 단어보다 한 단계 위인, 독해 지문과 어법 문제에서 실제로 마주치는 단어들입니다.</p>
+        <p class="text-muted">방법은 간단합니다 — <strong>만나기 → 이해하기 → 복습하기</strong>. 매일 이 모드를 플레이하며 새 단어를 만나고, 게임이 끝나면 뜻·어원·유의어가 자동으로 표시됩니다. 헷갈렸던 단어는 <a href="/my-words" class="text-decoration-none">내 단어장</a>에 자동으로 쌓여 며칠 뒤 다시 복습할 수 있습니다.</p>
+        <p class="text-muted">하루 학습량과 4주 복습 루틴이 궁금하다면 <a href="/blog/suneung-vocab-daily-plan" class="text-decoration-none">수능 영단어 하루 몇 개가 적당할까 — 4주 플랜</a>을 참고하세요.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>데일리 챌린지</a>
+          <a href="/my-words" class="btn btn-sm btn-outline-success"><i class="bi bi-bookmark me-1"></i>내 단어장</a>
+          <a href="/blog/suneung-vocab-daily-plan" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>수능 학습 플랜 보기</a>
+        </div>
+      </div>
       {% else %}
-      <!-- ══ FALLBACK (unknown category — e.g. /middle, /high, /college) ══ -->
+      <div class="mb-5">
+        <h2 class="fw-bold text-primary mb-3"><i class="bi bi-mortarboard me-2"></i>High School & SAT-Prep Vocabulary Mode</h2>
+        <p class="text-muted">High School mode uses only 5-letter academic words that show up often in SAT-level reading and usage questions — a step above everyday vocabulary, drawn from the words you'll actually meet in exam passages.</p>
+        <p class="text-muted">The method is simple: <strong>meet it, learn it, review it</strong>. Play daily to encounter new words; when the round ends, the definition, origin, and synonyms appear automatically. Words you struggled with are saved to <a href="/my-words" class="text-decoration-none">My Words</a> for review a few days later.</p>
+        <p class="text-muted">For a daily study-quantity guide and a 4-week review rhythm, see <a href="/blog/suneung-vocab-daily-plan" class="text-decoration-none">How Many SAT Words Per Day — A 4-Week Plan</a>.</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <a href="/daily" class="btn btn-sm btn-primary"><i class="bi bi-calendar-day me-1"></i>Daily Challenge</a>
+          <a href="/my-words" class="btn btn-sm btn-outline-success"><i class="bi bi-bookmark me-1"></i>My Words</a>
+          <a href="/blog/suneung-vocab-daily-plan" class="btn btn-sm btn-outline-primary"><i class="bi bi-book me-1"></i>Study Plan Guide</a>
+        </div>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <!-- ══ FALLBACK (unknown category — e.g. /middle, /college) ══ -->
       {% if lang == 'ko' %}
       <div class="mb-5">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-controller me-2"></i>이 단어 모드에 대하여</h2>
