@@ -1,22 +1,48 @@
 {% extends "base.html" %}
 {% block head_schema %}
+{# Single source of truth for FAQPage schema: one entry per accordion question
+   below (ids g1-g7 / w1-w5 / t1-t4 / p1-p3), in the same order. If you edit an
+   accordion question or answer, update its matching entry here too — Google
+   and answer engines expect this to reflect the page's real visible content. #}
 {% set faq_ld = [
   {"q": ("WordMaster는 어떻게 플레이하나요?" if lang == 'ko' else "How do I play WordMaster?"),
-   "a": ("글자를 입력하거나 눌러 단어를 만들고 Enter로 제출하세요. 각 추측 후 타일 색이 바뀌어 어떤 글자가 정확한 위치인지, 단어엔 있지만 위치가 틀렸는지, 단어에 없는지 알려줍니다. 6번 안에 정답을 맞히면 됩니다." if lang == 'ko' else "Type or click letters to form a valid word, then press Enter to submit. After each guess the tiles change color to show which letters are in the right spot, which are in the word but misplaced, and which are not in the word. You have 6 tries to find the answer.")},
+   "a": ("글자를 입력하거나 클릭해 단어를 만들고 Enter를 눌러 제출하세요. 각 추측 후 타일 색이 바뀝니다: 파란색은 올바른 위치, 주황색은 잘못된 위치, 회색은 단어에 없는 글자입니다. 6번 안에 정답을 찾아야 합니다." if lang == 'ko' else "Type or click letters to form a word, then press Enter to submit. After each guess, the tiles change color: blue for correct position, amber for wrong position, grey for not in the word. You have 6 attempts to find the answer.")},
   {"q": ("추측 기회가 몇 번인가요?" if lang == 'ko' else "How many guesses do I get?"),
    "a": ("모든 모드에서 6번의 추측이 주어집니다 — 클래식 단어 게임의 표준입니다." if lang == 'ko' else "All modes give you 6 guesses — the classic word-game standard.")},
   {"q": ("데일리 모드와 무제한 모드의 차이는 무엇인가요?" if lang == 'ko' else "What is Daily mode vs Unlimited mode?"),
    "a": ("데일리 모드는 전 세계 모두가 하루에 같은 한 단어를 받고 자정에 초기화됩니다. 무제한 모드는 매 게임 후 새로운 랜덤 단어를 제한 없이 제공합니다." if lang == 'ko' else "Daily mode gives everyone worldwide the same word per day and resets at midnight. Unlimited mode gives a fresh random word after every game with no restrictions.")},
   {"q": ("힌트 버튼은 무엇을 하나요?" if lang == 'ko' else "What does the Hint button do?"),
    "a": ("숨겨진 단어의 정의와 품사를 공개합니다. 게임당 힌트를 한 번 사용할 수 있습니다." if lang == 'ko' else "It reveals the hidden word's definition and part of speech. You get one hint per game.")},
+  {"q": ("통계와 연속 기록은 어디서 볼 수 있나요?" if lang == 'ko' else "Where can I see my statistics and win streak?"),
+   "a": ("통계(플레이 횟수, 승률, 현재 연속 기록, 최고 연속 기록, 추측 분포)는 브라우저에 로컬로 저장되며, 통계 페이지에서 확인할 수 있습니다. 기기별로 저장되어 브라우저를 바꾸거나 데이터를 지우면 이전되지 않습니다." if lang == 'ko' else "Your stats (games played, win rate, current streak, best streak, and guess distribution) are stored locally in your browser and viewable on the Stats page. They are saved per device and won't carry over if you switch browsers or clear your data.")},
   {"q": ("쉬움 모드와 어려움 모드는 무엇인가요?" if lang == 'ko' else "What are Easy and Hard modes?"),
    "a": ("쉬움 모드는 4글자 단어, 어려움 모드는 6글자 단어를 사용합니다." if lang == 'ko' else "Easy mode uses 4-letter words; Hard mode uses 6-letter words.")},
+  {"q": ("과거 데일리 단어들을 볼 수 있나요?" if lang == 'ko' else "Where can I see past Daily words?"),
+   "a": ("데일리 보관함 페이지에서 지난 30일간의 데일리 단어와 각 단어의 정의를 볼 수 있습니다." if lang == 'ko' else "The Daily Archive page lists the past 30 days of daily words, along with each word's definition.")},
+  {"q": ("제 단어가 왜 인정되지 않나요?" if lang == 'ko' else "Why isn't my word being accepted?"),
+   "a": ("WordMaster는 일반 영어 단어 목록을 사용합니다. 고유 명사, 약어, 매우 드물거나 고어적인 단어, 하이픈으로 연결된 단어는 사전에 포함되지 않습니다." if lang == 'ko' else "WordMaster uses a curated list of common English words. Proper nouns, abbreviations, very rare or archaic words, and hyphenated words are not included in the dictionary.")},
+  {"q": ("고유 명사(이름, 장소)가 정답이 될 수 있나요?" if lang == 'ko' else "Are proper nouns (names, places) ever answers?"),
+   "a": ("아니요. 정답은 항상 일반 영어 단어입니다 — 사람 이름, 지명, 브랜드명은 없습니다." if lang == 'ko' else "No. The answer will always be a common English word — no person names, place names, or brand names.")},
+  {"q": ("같은 단어가 두 번 나올 수 있나요?" if lang == 'ko' else "Can the same word appear twice?"),
+   "a": ("데일리 모드에서 단어는 날짜 기반 알고리즘으로 선택되어 오랫동안 반복되지 않습니다. 무제한 모드에서는 무작위로 선택되므로 이론적으로 반복이 가능합니다." if lang == 'ko' else "In Daily mode, words are selected using a date-based algorithm and won't repeat for a very long time. In Unlimited mode, words are chosen randomly, so a repeat is theoretically possible.")},
   {"q": ("단어에 중복 글자가 있을 수 있나요?" if lang == 'ko' else "Can a word contain repeated letters?"),
    "a": ("네. LEVEL, ABBEY 같은 단어가 나올 수 있습니다. 정답에 글자가 두 번 나오지만 추측에 한 번만 있으면 하나의 타일만 색이 변합니다." if lang == 'ko' else "Yes. Words like LEVEL or ABBEY can appear. When a letter appears twice in the answer but only once in your guess, only one tile is colored.")},
+  {"q": ("데일리 단어는 어떻게 선택되나요?" if lang == 'ko' else "How is the daily word chosen?"),
+   "a": ("매일의 단어는 현재 날짜를 시드로 한 결정론적 알고리즘으로 결정되어, 전 세계 모든 플레이어가 같은 날 같은 단어를 받습니다." if lang == 'ko' else "Each day's word is determined by a deterministic algorithm seeded with the current date, so every player worldwide gets the same word on the same day.")},
   {"q": ("WordMaster는 무료인가요?" if lang == 'ko' else "Is WordMaster free to play?"),
    "a": ("네, 100% 무료입니다. 계정이 필요 없고 다운로드 없이 브라우저에서 바로 플레이할 수 있습니다." if lang == 'ko' else "Yes, it is 100% free. No account is required and you can play in the browser with no download.")},
+  {"q": ("계정을 만들어야 하나요?" if lang == 'ko' else "Do I need to create an account?"),
+   "a": ("계정이 필요 없습니다. 게임 통계와 연속 기록은 브라우저의 localStorage에 저장되며, 서버로 전송되지 않습니다." if lang == 'ko' else "No account is needed. Your game stats and streaks are stored in your browser's localStorage and are never sent to our servers.")},
   {"q": ("모바일에서 작동하나요?" if lang == 'ko' else "Does WordMaster work on mobile?"),
-   "a": ("네. 완전 반응형이라 스마트폰과 태블릿에서 작동하며, 화면 키보드를 탭해 글자를 입력합니다." if lang == 'ko' else "Yes. It is fully responsive and works on phones and tablets — tap the on-screen keyboard to type letters.")}
+   "a": ("네. 완전 반응형이라 스마트폰과 태블릿에서 작동하며, 화면 키보드를 탭해 글자를 입력합니다." if lang == 'ko' else "Yes. It is fully responsive and works on phones and tablets — tap the on-screen keyboard to type letters.")},
+  {"q": ("통계가 사라졌습니다 — 왜 그런가요?" if lang == 'ko' else "My stats disappeared — what happened?"),
+   "a": ("통계는 브라우저의 localStorage에 저장되어, 사이트 데이터를 지우거나 시크릿 창을 사용하거나 다른 기기로 전환하면 사라질 수 있습니다. 서버에 저장하지 않으므로 복구할 수 없습니다." if lang == 'ko' else "Stats are stored in your browser's localStorage and can be lost if you clear site data, use a private window, or switch devices. They cannot be recovered since we never store them on our servers.")},
+  {"q": ("WordMaster는 제 개인 정보를 수집하나요?" if lang == 'ko' else "Does WordMaster collect my personal data?"),
+   "a": ("게임 플레이 중 개인 정보를 수집하지 않습니다. Google Analytics 4로 익명 트래픽만 측정하며, 게임 통계는 본인 기기에만 저장됩니다." if lang == 'ko' else "We do not collect personal information during gameplay. We use Google Analytics 4 to measure anonymous traffic only, and your game stats are stored only on your own device.")},
+  {"q": ("WordMaster에 광고가 있나요?" if lang == 'ko' else "Does WordMaster show ads?"),
+   "a": ("아니요. WordMaster는 현재 제3자 광고를 표시하지 않습니다. 사이트는 무료이며 익명 사용 통계를 위해 Google Analytics만 사용합니다." if lang == 'ko' else "No. WordMaster does not currently display third-party ads. The site is free, and we use only Google Analytics for anonymous usage statistics.")},
+  {"q": ("WordMaster는 다른 단어 퍼즐 게임이나 뉴욕타임즈와 관련이 있나요?" if lang == 'ko' else "Is WordMaster affiliated with The New York Times or other word puzzle games?"),
+   "a": ("아니요. WordMaster는 독립 프로젝트이며 뉴욕타임즈나 다른 어떤 단어 퍼즐 플랫폼과도 관련이 없습니다." if lang == 'ko' else "No. WordMaster is an independent project and is not affiliated with, endorsed by, or connected to The New York Times or any other word puzzle platform.")}
 ] %}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{% for f in faq_ld %}{"@type":"Question","name":{{ f.q|tojson }},"acceptedAnswer":{"@type":"Answer","text":{{ f.a|tojson }}}}{% if not loop.last %},{% endif %}{% endfor %}]}
@@ -72,14 +98,14 @@
             <div class="accordion-body">
               {% if lang == 'ko' %}
                 글자를 입력하거나 클릭해 단어를 만들고 <kbd>Enter</kbd>를 눌러 제출하세요. 각 추측 후 타일 색이 바뀝니다:
-                <strong class="text-success">초록색</strong> = 올바른 위치,
-                <strong class="text-warning">노란색</strong> = 잘못된 위치,
+                <strong class="text-primary">파란색</strong> = 올바른 위치,
+                <strong class="text-warning">주황색</strong> = 잘못된 위치,
                 <strong class="text-secondary">회색</strong> = 단어에 없음.
                 6번 안에 정답을 찾아야 합니다. 자세한 내용은 <a href="/how-to-play">전체 가이드</a>를 참조하세요.
               {% else %}
                 Type or click letters to form a word, then press <kbd>Enter</kbd> to submit. After each guess, the tiles change color:
-                <strong class="text-success">Green</strong> = correct position,
-                <strong class="text-warning">Yellow</strong> = wrong position,
+                <strong class="text-primary">Blue</strong> = correct position,
+                <strong class="text-warning">Amber</strong> = wrong position,
                 <strong class="text-secondary">Grey</strong> = not in the word.
                 You have 6 attempts to find the answer. See our <a href="/how-to-play">full guide</a> for more detail.
               {% endif %}
