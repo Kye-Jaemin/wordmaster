@@ -113,6 +113,16 @@ for _lst in WORDS.values():
 # single /api/guess POST — precomputed once here instead).
 _ALL_WORDS_SET_UPPER = {w.upper() for w in _ALL_WORDS_SET}
 
+# One-tap "starter word" chips on the 5-letter game modes. These must be in
+# _ALL_WORDS_SET_UPPER (the game's own curated word lists), NOT just be real
+# English words -- AUDIO and STARE are real words but weren't in words.json,
+# so /api/guess rejected them as invalid every time and the chip appeared to
+# do nothing. Filter candidates against the real set (in preference order,
+# chosen for combined unique-letter coverage) instead of hardcoding the
+# final list, so a future words.json change can't silently break this again.
+_STARTER_WORD_CANDIDATES = ["CRANE", "SLOTH", "BUILD", "SLATE", "HOUSE", "RAISE", "SOUND"]
+STARTER_WORDS = [w for w in _STARTER_WORD_CANDIDATES if w in _ALL_WORDS_SET_UPPER][:3]
+
 # ─── Language Support ──────────────────────────────────────────
 
 def resolve_lang():
@@ -137,6 +147,11 @@ def resolve_lang():
 def inject_lang():
     """Inject the resolved display language into every template."""
     return dict(lang=resolve_lang())
+
+@app.context_processor
+def inject_starter_words():
+    """Guaranteed-valid one-tap starter words for the 5-letter game modes."""
+    return dict(starter_words=STARTER_WORDS)
 
 @app.context_processor
 def inject_forced_word():

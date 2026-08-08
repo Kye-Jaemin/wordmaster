@@ -266,19 +266,23 @@
       </div>
 
       <!-- Starter-word hint — first-time players landing straight on the board
-           had no visible cue for what to type first (the CRANE/AUDIO/STARE
+           had no visible cue for what to type first (the starter-word
            examples only existed buried in SEO copy far below the fold).
            On 5-letter modes these are now one-tap chips: tapping fills the row
            and submits it, so the cost of the very first guess is zero taps of
            thinking. Non-5-letter modes keep the plain text hint — a fixed
-           opener list only makes sense for the 5-letter word set. -->
+           opener list only makes sense for the 5-letter word set.
+           `starter_words` is server-computed (see app.py STARTER_WORDS) and
+           filtered against the game's own accepted-guess word set — do not
+           hardcode word strings here, a "real English word" is not the same
+           as "a word this site's dictionary will accept as a guess". -->
       <div id="starter-hint" class="text-center mb-2">
         {% if word_length == 5 %}
           <div class="text-muted small mb-1">
             {% if lang == 'ko' %}💡 막막하다면 한 번 탭해서 시작해보세요.{% else %}💡 Stuck on where to start? Tap one to begin.{% endif %}
           </div>
           <div class="d-flex flex-wrap gap-2 justify-content-center">
-            {% for w in ["CRANE", "AUDIO", "STARE"] %}
+            {% for w in starter_words %}
               <button type="button" class="wm-start-chip btn btn-sm btn-outline-primary" data-word="{{ w }}"
                       aria-label="{% if lang == 'ko' %}{{ w }}(으)로 시작하기{% else %}Start with {{ w }}{% endif %}">{{ w }}</button>
             {% endfor %}
@@ -480,7 +484,7 @@
           <li>ESL 학생</li>
           <li>매일의 단어 퍼즐로 두뇌를 단련하고 싶은 모든 분</li>
         </ul>
-        <p class="text-muted">가장 좋은 시작 방법은 <strong>CRANE</strong>, <strong>AUDIO</strong>, <strong>STARE</strong>처럼 글자 커버리지가 높은 단어로 첫 추측을 하는 것입니다.</p>
+        <p class="text-muted">가장 좋은 시작 방법은 <strong>{{ starter_words[0] }}</strong>, <strong>{{ starter_words[1] }}</strong>, <strong>{{ starter_words[2] }}</strong>처럼 글자 커버리지가 높은 단어로 첫 추측을 하는 것입니다.</p>
         <p class="text-muted">이 단어들은 영어에서 자주 등장하므로, 첫 추측에서 가장 많은 정보를 얻을 수 있습니다.</p>
       </div>
       <div class="mb-5">
@@ -549,7 +553,7 @@
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-grid-3x3-gap me-2"></i>What Is WordMaster?</h2>
         <p class="text-muted">WordMaster is a free, browser-based word puzzle platform where you guess a hidden English word using color-coded tile feedback. Every guess teaches you something — green tiles confirm correct letters, yellow tiles reveal misplaced letters, and grey tiles eliminate possibilities. No account, no download, no subscription required.</p>
         <p class="text-muted">Unlike a single daily game, WordMaster offers six distinct modes: a shared Daily Challenge, unlimited free play, an Easy mode for beginners, a Hard mode for advanced players, a News Word Challenge based on real BBC headlines, and themed Category modes for focused vocabulary building. Every mode uses the same core mechanic but serves a different learning goal.</p>
-        <p class="text-muted">WordMaster is built for vocabulary learners, SAT and IELTS test-takers, ESL students, and anyone who enjoys keeping their mind sharp with daily word puzzles. The best way to start is with a high-coverage word like <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong> — these letters appear frequently in English and give you the most information in your first guess.</p>
+        <p class="text-muted">WordMaster is built for vocabulary learners, SAT and IELTS test-takers, ESL students, and anyone who enjoys keeping their mind sharp with daily word puzzles. The best way to start is with a high-coverage word like <strong>{{ starter_words[0] }}</strong>, <strong>{{ starter_words[1] }}</strong>, or <strong>{{ starter_words[2] }}</strong> — these letters appear frequently in English and give you the most information in your first guess.</p>
       </div>
       <div class="mb-5">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-grid me-2"></i>Explore All Game Modes</h2>
@@ -637,8 +641,8 @@
         <p class="text-muted mt-4">긴 연속 기록을 유지하는 가장 확실한 전략은 <strong>매일 같은 시간에 플레이</strong>하는 것입니다.</p>
         <p class="text-muted">아침 플레이어가 연속 기록 유지율이 높은 편입니다. 일일 퍼즐이 기존 루틴(커피, 뉴스, WordMaster)의 일부가 되기 때문입니다.</p>
         <p class="text-muted">하루 놓쳤다면 마음속에서 처음부터 다시 시작하지 마세요. 그냥 다시 플레이하고 쌓아가세요. <strong>끊긴 연속 기록도, 그것을 만들 만큼 꾸준히 했다는 증거</strong>입니다.</p>
-        <p class="text-muted mt-4">데일리 챌린지 성능을 극대화하려면 <strong>CRANE</strong>, <strong>AUDIO</strong>, <strong>STARE</strong> 같은 글자 커버리지가 높은 시작 단어를 사용하세요.</p>
-        <p class="text-muted">이 단어들은 영어에서 가장 흔한 글자 13개를 함께 커버해, 두 번째 추측 전에 가장 많은 정보를 줍니다.</p>
+        <p class="text-muted mt-4">데일리 챌린지 성능을 극대화하려면 <strong>{{ starter_words[0] }}</strong>, <strong>{{ starter_words[1] }}</strong>, <strong>{{ starter_words[2] }}</strong> 같은 글자 커버리지가 높은 시작 단어를 사용하세요.</p>
+        <p class="text-muted">이 단어들은 영어에서 가장 흔한 글자들을 폭넓게 커버해, 두 번째 추측 전에 가장 많은 정보를 줍니다.</p>
         <p class="text-muted">그 다음부터는 직관이 아닌 <strong>제거법</strong>을 사용하세요.</p>
       </div>
       <div class="mb-4">
@@ -672,7 +676,7 @@
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-fire me-2"></i>Building and Keeping Your Streak</h2>
         <p class="text-muted">The daily streak counter is one of the most powerful motivational tools in WordMaster. Streak-building works because it harnesses the psychological principle of loss aversion — once you have a 7-day streak, the discomfort of breaking it is a stronger motivator than the satisfaction of extending it. This is a feature, not a flaw. Use it to anchor a daily habit.</p>
         <p class="text-muted">The most reliable strategy for maintaining a long streak is to play at the same time every day. Morning players tend to have higher streak retention because the daily puzzle becomes part of an existing routine — coffee, news, WordMaster. If you miss a day, do not start over mentally. Simply resume and build again. Even a broken streak shows you played consistently enough to build it in the first place.</p>
-        <p class="text-muted">To maximize your daily challenge performance, start with a high-coverage opener like <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong>. These words collectively cover 13 of the most common letters in English, giving you the most information before your second guess. From there, use process of elimination rather than intuition.</p>
+        <p class="text-muted">To maximize your daily challenge performance, start with a high-coverage opener like <strong>{{ starter_words[0] }}</strong>, <strong>{{ starter_words[1] }}</strong>, or <strong>{{ starter_words[2] }}</strong>. These words collectively cover many of the most common letters in English, giving you the most information before your second guess. From there, use process of elimination rather than intuition.</p>
       </div>
       <div class="mb-4">
         <h2 class="fw-bold text-primary mb-3"><i class="bi bi-share me-2"></i>Share Your Result and Compare Scores</h2>
