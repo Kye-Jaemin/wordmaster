@@ -227,6 +227,27 @@
         </small>
       </div>
 
+      <!-- Starter-word hint — first-time players landing straight on the board
+           had no visible cue for what to type first (the CRANE/AUDIO/STARE
+           examples only existed buried in SEO copy far below the fold). -->
+      <div class="text-center mb-2">
+        <small class="text-muted">
+          {% if word_length == 5 %}
+            {% if lang == 'ko' %}
+              💡 막막하다면 <strong>CRANE</strong>, <strong>AUDIO</strong>, <strong>STARE</strong> 중 하나로 시작해보세요.
+            {% else %}
+              💡 Stuck on where to start? Try <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong>.
+            {% endif %}
+          {% else %}
+            {% if lang == 'ko' %}
+              💡 아무 흔한 {{ word_length }}글자 단어로 시작해서 힌트를 얻어보세요.
+            {% else %}
+              💡 Start with any common {{ word_length }}-letter word to get clues.
+            {% endif %}
+          {% endif %}
+        </small>
+      </div>
+
       <!-- Game Board -->
       <div id="board" class="game-board mx-auto mb-3" data-length="{{ word_length }}" data-maxguesses="{{ max_guesses }}">
         <!-- Tiles rendered by JS -->

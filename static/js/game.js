@@ -6,7 +6,7 @@ const _KO = {
   needCustom:    "먼저 /custom 에서 단어를 추가하세요.",
   failedLoad:    "단어를 불러오지 못했습니다. 새로고침 해주세요.",
   needLetters:   (n) => `${n}글자를 입력하세요!`,
-  notValid:      "유효하지 않은 단어입니다!",
+  notValid:      "이 단어는 목록에 없어요. 다른 단어로 시도해보세요!",
   networkError:  "네트워크 오류. 다시 시도하세요.",
   copied:        "클립보드에 복사됨!",
   hintFail:      "힌트를 불러올 수 없습니다.",
@@ -26,7 +26,7 @@ const _EN = {
   needCustom:    "Add custom words at /custom first.",
   failedLoad:    "Failed to load word. Please refresh.",
   needLetters:   (n) => `Need ${n} letters!`,
-  notValid:      "Not a valid word!",
+  notValid:      "That word's not in our list — try another!",
   networkError:  "Network error. Try again.",
   copied:        "Copied to clipboard!",
   hintFail:      "Could not load hint.",
@@ -135,6 +135,7 @@ function onKeydown(e) {
 
 function handleKey(key) {
   if (gameOver) return;
+  if (window.wmTrackOnce) window.wmTrackOnce("game_start", { format: "tile", mode: GAME_MODE });
   if (key === "ENTER") submitGuess();
   else if (key === "BACKSPACE") deleteLetter();
   else if (/^[A-Z]$/.test(key) && currentGuess.length < WORD_LENGTH) typeLetter(key);
@@ -164,6 +165,7 @@ async function submitGuess() {
     shakeRow(currentRow);
     return;
   }
+  if (window.wmTrackOnce) window.wmTrackOnce("guess_submit", { format: "tile", mode: GAME_MODE });
 
   const guess = currentGuess.join("");
 

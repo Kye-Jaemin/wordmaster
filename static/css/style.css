@@ -120,7 +120,7 @@ body { background: #f8f9fa; font-family: 'Arial', sans-serif; }
 @media (max-width: 480px) {
   :root { --tile-size-5: 52px; --tile-size-4: 62px; --tile-size-6: 42px; }
   .tile { font-size: 22px; }
-  .key  { height: 48px; min-width: 30px; font-size: 11px; }
+  .key  { height: 48px; min-width: 38px; font-size: 11px; }
   .key-wide { min-width: 52px; }
 
   /* Result-screen CTAs (share, play-again, app install, word links) are the

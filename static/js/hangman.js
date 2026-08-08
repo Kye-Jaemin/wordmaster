@@ -116,6 +116,11 @@ function guess(letter) {
   if (wrongLetters.includes(letter)) return;
   if (secretWord.includes(letter) && revealed.some((r, i) => r && secretWord[i] === letter)) return;
 
+  if (window.wmTrackOnce) {
+    window.wmTrackOnce("game_start", { format: "hangman", mode: GAME_MODE });
+    window.wmTrackOnce("guess_submit", { format: "hangman", mode: GAME_MODE });
+  }
+
   let hit = false;
   for (let i = 0; i < secretWord.length; i++) {
     if (secretWord[i] === letter) {

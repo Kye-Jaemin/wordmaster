@@ -43,6 +43,21 @@
     });
   </script>
 
+  <!-- Funnel instrumentation: fires a named event at most once per page load,
+       so the game scripts can mark game_start/guess_submit on the first
+       real interaction without worrying about duplicate calls from repeated
+       key presses within the same round. -->
+  <script>
+    window.wmTrackOnce = (function () {
+      const fired = new Set();
+      return function (eventName, params) {
+        if (fired.has(eventName)) return;
+        fired.add(eventName);
+        if (typeof gtag === "function") gtag("event", eventName, params || {});
+      };
+    })();
+  </script>
+
   <link rel="stylesheet" href="/static/css/style.css"/>
   <link rel="icon" href="/static/img/favicon.png" type="image/png"/>
   {# Canonical URL: include the ?lang=ko query string when serving Korean so Google

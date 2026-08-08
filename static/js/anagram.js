@@ -125,6 +125,7 @@ function render() {
 
 function placeLetter(letterIdx) {
   if (gameOver || usedIdx.has(letterIdx)) return;
+  if (window.wmTrackOnce) window.wmTrackOnce("game_start", { format: "anagram", mode: GAME_MODE });
   const slotIdx = slots.findIndex(s => s === "");
   if (slotIdx === -1) return;
   slots[slotIdx] = scrambled[letterIdx];
@@ -148,6 +149,7 @@ function returnFromSlot(slotIdx) {
 }
 
 function checkAnswer() {
+  if (window.wmTrackOnce) window.wmTrackOnce("guess_submit", { format: "anagram", mode: GAME_MODE });
   attempts++;
   updateAttemptCount();
   const guess = slots.join("");
