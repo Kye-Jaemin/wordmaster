@@ -124,6 +124,45 @@ function addEventListeners() {
   const giveupBtn = document.getElementById("btn-giveup");
   if (hintBtn)   hintBtn.addEventListener("click", handleHint);
   if (giveupBtn) giveupBtn.addEventListener("click", handleGiveUp);
+  // One-tap opener chips. Only index.html on 5-letter modes renders these, so
+  // this is a no-op everywhere else.
+  document.querySelectorAll(".wm-start-chip").forEach(btn => {
+    btn.addEventListener("click", () => startWithWord(btn.dataset.word, btn));
+  });
+}
+
+// ─── One-tap openers ──────────────────────────────────────────
+// A first-time player who lands on an empty board has to invent a word before
+// anything can happen. The chips remove that step: one tap fills the row and
+// submits it, so the first guess costs nothing.
+function hideStarterHint() {
+  const hint = document.getElementById("starter-hint");
+  if (hint) hint.classList.add("d-none");
+}
+
+function startWithWord(word, btnEl) {
+  // Blur first. If focus stays on the chip, a later Enter keypress both
+  // re-clicks the button and fires the document keydown handler -> double submit.
+  if (btnEl && typeof btnEl.blur === "function") btnEl.blur();
+
+  if (gameOver) return;
+  if (currentRow !== 0) { hideStarterHint(); return; }  // an opener only helps on guess 1
+  if (!word || word.length !== WORD_LENGTH) return;
+  if (!secretWord) { showToast(T.failedLoad); return; } // word fetch failed / still in flight
+
+  while (currentGuess.length) deleteLetter();
+  const letters = word.toUpperCase().split("");
+  for (let i = 0; i < letters.length; i++) typeLetter(letters[i]);
+
+  if (window.wmTrackOnce) window.wmTrackOnce("game_start", { format: "tile", mode: GAME_MODE });
+  // Not wmTrackOnce: we want the raw count of chip uses, not one per page load.
+  if (typeof gtag === "function") {
+    gtag("event", "starter_chip_click", { word: word.toUpperCase(), mode: GAME_MODE });
+  }
+
+  // Short delay so the row is visibly filled before the reveal animation runs.
+  // Submitting instantly reads as "I tapped and something happened to me".
+  setTimeout(submitGuess, 350);
 }
 
 function onKeydown(e) {
@@ -182,6 +221,10 @@ async function submitGuess() {
       shakeRow(currentRow);
       return;
     }
+
+    // Hide the openers once a guess actually lands (chip- or keyboard-driven).
+    // Kept visible on an invalid word so the player can still tap another one.
+    hideStarterHint();
 
     await revealRow(data.result);
     updateKeyboard(data.result);

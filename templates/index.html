@@ -10,7 +10,7 @@
 {% block content %}
 
 <!-- Hero / Value Proposition -->
-<div class="container-xl pt-3 pb-1">
+<div class="container-xl pt-3 pb-1 wm-home-hero">
   <div class="text-center px-2">
     <h1 class="fw-bold text-primary mb-1" style="font-size:1.45rem;line-height:1.25">
       {% if mode == 'hard' %}{% if lang == 'ko' %}가장 어려운 6글자 단어 맞히기{% else %}Hardest 6-Letter Words to Guess{% endif %}
@@ -30,8 +30,18 @@
   </div>
 </div>
 
+<!-- Above-the-fold stack (mobile ordering only).
+     On a 375x812 phone the board+keyboard were pushed off the first screen by
+     the archive promo card and the mode picker, so the player had to scroll
+     before they could see how to play. Both blocks keep their exact position in
+     the HTML source (crawlers and the internal-link graph see no change) — only
+     the *painted* order changes, and only under 768px via the media query in
+     the <style> block below. On desktop .wm-home-stack is a plain block div, so
+     desktop rendering is byte-for-byte the same as before. -->
+<div class="wm-home-stack">
+
 <!-- Featured: Daily Word Archive (CTR ~33% in Search Console — our #1 traffic page) -->
-<div class="container-xl pt-2 pb-1">
+<div class="container-xl pt-2 pb-1 wm-home-archive">
   <a href="/archive" class="d-block text-decoration-none">
     <div class="card border-warning shadow-sm" style="background: linear-gradient(90deg, #fff7e6 0%, #ffffff 100%);">
       <div class="card-body py-2 px-3 d-flex align-items-center justify-content-between">
@@ -54,8 +64,35 @@
 
 <!-- Mode/category picker — collapsed by default so the game is near the top.
      The route's current mode is already loaded and playable without opening this. -->
-<style>.wm-mode-picker>summary{list-style:none}.wm-mode-picker>summary::-webkit-details-marker{display:none}</style>
-<div class="container-xl pt-1 pb-1 text-center">
+<style>
+.wm-mode-picker>summary{list-style:none}.wm-mode-picker>summary::-webkit-details-marker{display:none}
+/* One-tap opener chips (5-letter modes only). 38px min height matches the
+   on-screen keyboard key height so the chip is a comfortable thumb target. */
+.wm-start-chip{min-height:38px;min-width:78px;font-weight:600;letter-spacing:.04em}
+/* Mobile-only: paint the game first, then the archive card, then the mode
+   picker. DOM order is untouched — this is purely flex `order`. */
+@media (max-width: 767.98px){
+  .wm-home-stack{display:flex;flex-direction:column}
+  .wm-home-stack>.wm-home-game{order:1}
+  .wm-home-stack>.wm-home-archive{order:2}
+  .wm-home-stack>.wm-home-picker{order:3}
+  /* Reclaim vertical space above the board. Spacing only — no element is
+     hidden, removed, or reordered beyond the three rules above. */
+  .wm-home-hero{padding-top:.5rem!important;padding-bottom:.25rem!important}
+  .wm-home-hero h1{font-size:1.2rem!important;margin-bottom:.15rem!important}
+  .wm-home-hero p{font-size:.82rem!important}
+  .wm-home-hero>div>a{font-size:.78rem!important;margin-top:.15rem!important}
+  .wm-home-game{padding-top:.5rem!important}
+  #howto-legend small{line-height:1.35}
+  #keyboard{margin-top:.5rem!important}
+  #toast-area{min-height:28px!important;margin-bottom:.25rem!important}
+  #guess-counter{margin-bottom:.25rem!important}
+  #howto-legend{margin-bottom:.25rem!important}
+  #starter-hint{margin-bottom:.5rem!important}
+  .game-board{margin-bottom:.5rem!important}
+}
+</style>
+<div class="container-xl pt-1 pb-1 text-center wm-home-picker">
   <details class="wm-mode-picker">
     <summary class="btn btn-outline-primary btn-sm" style="cursor:pointer">
       <i class="bi bi-sliders me-1"></i>{% if lang == 'ko' %}모드·카테고리{% else %}Mode &amp; category{% endif %}:
@@ -184,7 +221,7 @@
   </details>
 </div>
 
-<div class="container-xl py-3">
+<div class="container-xl py-3 wm-home-game">
   <div class="row justify-content-center g-3">
 
     <!-- Game Area — centered. Ad sidebars removed so the board sits in the
@@ -210,8 +247,9 @@
       <!-- How-to legend — placed ABOVE the board so first-time players learn the
            color meanings before they play, instead of finding them below the keyboard.
            Icons replace the old G/R/X letters, which were green-mnemonics that no
-           longer match the blue/amber palette and meant nothing to Korean players. -->
-      <div class="text-center mb-2">
+           longer match the blue/amber palette and meant nothing to Korean players.
+           Stays above the board on mobile too — only its margin is tightened. -->
+      <div id="howto-legend" class="text-center mb-2">
         <small class="text-muted">
           {% if lang == 'ko' %}
             <span class="fw-semibold">이렇게 풀어요</span> &nbsp;
@@ -229,23 +267,31 @@
 
       <!-- Starter-word hint — first-time players landing straight on the board
            had no visible cue for what to type first (the CRANE/AUDIO/STARE
-           examples only existed buried in SEO copy far below the fold). -->
-      <div class="text-center mb-2">
-        <small class="text-muted">
-          {% if word_length == 5 %}
-            {% if lang == 'ko' %}
-              💡 막막하다면 <strong>CRANE</strong>, <strong>AUDIO</strong>, <strong>STARE</strong> 중 하나로 시작해보세요.
-            {% else %}
-              💡 Stuck on where to start? Try <strong>CRANE</strong>, <strong>AUDIO</strong>, or <strong>STARE</strong>.
-            {% endif %}
-          {% else %}
+           examples only existed buried in SEO copy far below the fold).
+           On 5-letter modes these are now one-tap chips: tapping fills the row
+           and submits it, so the cost of the very first guess is zero taps of
+           thinking. Non-5-letter modes keep the plain text hint — a fixed
+           opener list only makes sense for the 5-letter word set. -->
+      <div id="starter-hint" class="text-center mb-2">
+        {% if word_length == 5 %}
+          <div class="text-muted small mb-1">
+            {% if lang == 'ko' %}💡 막막하다면 한 번 탭해서 시작해보세요.{% else %}💡 Stuck on where to start? Tap one to begin.{% endif %}
+          </div>
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            {% for w in ["CRANE", "AUDIO", "STARE"] %}
+              <button type="button" class="wm-start-chip btn btn-sm btn-outline-primary" data-word="{{ w }}"
+                      aria-label="{% if lang == 'ko' %}{{ w }}(으)로 시작하기{% else %}Start with {{ w }}{% endif %}">{{ w }}</button>
+            {% endfor %}
+          </div>
+        {% else %}
+          <small class="text-muted">
             {% if lang == 'ko' %}
               💡 아무 흔한 {{ word_length }}글자 단어로 시작해서 힌트를 얻어보세요.
             {% else %}
               💡 Start with any common {{ word_length }}-letter word to get clues.
             {% endif %}
-          {% endif %}
-        </small>
+          </small>
+        {% endif %}
       </div>
 
       <!-- Game Board -->
@@ -392,7 +438,15 @@
 
   </div>
 
-  <!-- Rich content section for SEO & AdSense — unique per mode -->
+</div><!-- /.container-xl.wm-home-game -->
+</div><!-- /.wm-home-stack -->
+
+<!-- Rich content section for SEO & AdSense — unique per mode.
+     Lifted out of the game container (it used to be a second .row inside it) so
+     the mobile reorder can drop the archive card directly under the keyboard
+     instead of below several hundred lines of long-form copy. Content, order in
+     the source, and markup inside this section are unchanged. -->
+<div class="container-xl pb-3">
   <div class="row justify-content-center mt-5 px-3">
     <div class="col-12 col-lg-8">
 
