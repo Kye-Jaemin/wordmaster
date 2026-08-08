@@ -29,6 +29,27 @@ CACHE_PATH = os.path.join(ROOT, "data", "word_cache.json")
 DEFAULT_LISTS = ["daily", "high", "college", "middle", "animals", "food"]
 
 
+def _definition_quality_score(defn, meaning_syn, meaning_ant):
+    """Heuristic score for how likely a definition is the primary modern
+    sense of a word, rather than an archaic/dialectal/narrow one. Kept in
+    sync with app._definition_quality_score -- see that docstring for why
+    this exists (dictionaryapi.dev doesn't rank senses by commonness)."""
+    text = defn.get("definition", "") or ""
+    example = defn.get("example", "") or ""
+    score = 0
+    if len(example) > 20:
+        score += 2
+    elif example:
+        score += 1
+    if len(text) >= 30:
+        score += 1
+    if text.count(";") >= 2 and len(text) < 50:
+        score -= 1
+    if defn.get("synonyms") or defn.get("antonyms") or meaning_syn or meaning_ant:
+        score += 3
+    return score
+
+
 def parse_entry(word, data):
     """Shape the Free Dictionary API response like app.fetch_full_word_info."""
     if not data or not isinstance(data, list):
@@ -40,19 +61,33 @@ def parse_entry(word, data):
             if ph.get("text"):
                 phonetic = ph["text"]
                 break
+    scored_meanings = []
+    for m in entry.get("meanings", []):
+        m_syn = m.get("synonyms", [])
+        m_ant = m.get("antonyms", [])
+        defs_sorted = sorted(
+            m.get("definitions", []),
+            key=lambda d: _definition_quality_score(d, m_syn, m_ant),
+            reverse=True,
+        )
+        if not defs_sorted:
+            continue
+        top_score = _definition_quality_score(defs_sorted[0], m_syn, m_ant)
+        scored_meanings.append((top_score, m.get("partOfSpeech", ""), defs_sorted[:2], m_syn, m_ant))
+    scored_meanings.sort(key=lambda x: x[0], reverse=True)
+
     meanings_out, syn, ant = [], [], []
-    for m in entry.get("meanings", [])[:3]:
+    for _score, pos, defs_sorted, m_syn, m_ant in scored_meanings[:3]:
         defs = []
-        for d in m.get("definitions", [])[:2]:
+        for d in defs_sorted:
             defs.append({"definition": d.get("definition", ""),
                          "example": d.get("example", "")})
             syn += d.get("synonyms", [])
             ant += d.get("antonyms", [])
-        syn += m.get("synonyms", [])
-        ant += m.get("antonyms", [])
+        syn += m_syn
+        ant += m_ant
         if defs:
-            meanings_out.append({"partOfSpeech": m.get("partOfSpeech", ""),
-                                 "definitions": defs})
+            meanings_out.append({"partOfSpeech": pos, "definitions": defs})
     if not meanings_out:
         return None  # no usable definition -> don't cache (avoids thin pages)
     return {
@@ -70,6 +105,16 @@ def fetch(word):
     req = urllib.request.Request(url, headers={"User-Agent": "WordMaster-cache/1.0"})
     with urllib.request.urlopen(req, timeout=4) as resp:
         return json.loads(resp.read())
+
+
+def _atomic_write(path, data):
+    # Write-then-rename so a crash/kill mid-write never leaves the live
+    # cache file (read by the running Flask app) truncated or corrupt --
+    # os.replace is atomic on both POSIX and Windows.
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=0, sort_keys=True)
+    os.replace(tmp, path)
 
 
 def main():
@@ -93,35 +138,45 @@ def main():
     if limit:
         pool = pool[:limit]
 
-    cache = {}
-    if os.path.exists(CACHE_PATH) and os.environ.get("FORCE") != "1":
+    old_cache = {}
+    if os.path.exists(CACHE_PATH):
         with open(CACHE_PATH, encoding="utf-8") as f:
-            cache = json.load(f)
+            old_cache = json.load(f)
+
+    # FORCE=1 refetches every word already in `pool` (e.g. to pick up a
+    # better definition-ranking heuristic) instead of skipping cached ones.
+    # It does NOT start from an empty cache -- `fresh` only holds this run's
+    # results, and every checkpoint below writes old_cache merged with
+    # fresh, so a crash/interruption mid-run never drops entries that
+    # weren't touched yet (or whose refetch failed) below what was already
+    # on disk before the run started.
+    force = os.environ.get("FORCE") == "1"
+    todo = list(pool) if force else [w for w in pool if w not in old_cache]
+    fresh = {}
 
     os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
-    todo = [w for w in pool if w not in cache]
-    print(f"lists={lists}  pool={len(pool)}  cached={len(cache)}  to_fetch={len(todo)}")
+    print(f"lists={lists}  pool={len(pool)}  cached={len(old_cache)}  to_fetch={len(todo)}")
 
     ok = fail = 0
     for i, w in enumerate(todo, 1):
         try:
             entry = parse_entry(w, fetch(w))
             if entry:
-                cache[w] = entry
+                fresh[w] = entry
                 ok += 1
             else:
                 fail += 1
         except Exception:
             fail += 1
         if i % 20 == 0 or i == len(todo):
-            with open(CACHE_PATH, "w", encoding="utf-8") as f:
-                json.dump(cache, f, ensure_ascii=False, indent=0, sort_keys=True)
-            print(f"  {i}/{len(todo)}  ok={ok} fail={fail} total_cached={len(cache)}")
+            merged = {**old_cache, **fresh}
+            _atomic_write(CACHE_PATH, merged)
+            print(f"  {i}/{len(todo)}  ok={ok} fail={fail} total_cached={len(merged)}")
         time.sleep(0.12)  # be polite to the free API
 
-    with open(CACHE_PATH, "w", encoding="utf-8") as f:
-        json.dump(cache, f, ensure_ascii=False, indent=0, sort_keys=True)
-    print(f"DONE  cached={len(cache)}  new_ok={ok}  failed={fail}  -> {CACHE_PATH}")
+    merged = {**old_cache, **fresh}
+    _atomic_write(CACHE_PATH, merged)
+    print(f"DONE  cached={len(merged)}  new_ok={ok}  failed={fail}  -> {CACHE_PATH}")
 
 
 if __name__ == "__main__":

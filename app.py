@@ -861,6 +861,63 @@ def word_page(slug):
 
 # ─── Helper: Full Dictionary Lookup ──────────────────────────
 
+def _definition_quality_score(defn, meaning_syn, meaning_ant):
+    """Heuristic score for how likely a definition is the primary modern
+    sense of a word, rather than an archaic/dialectal/narrow one.
+
+    dictionaryapi.dev (Wiktionary-derived) lists meanings/definitions in
+    whatever order the source entry has them -- NOT ranked by how common
+    the sense is. Blindly taking meanings[0].definitions[0] regularly
+    surfaces things like eager -> "Sharp; sour; acid." (archaic) instead of
+    "Desirous; keen to do or obtain something." Signals that correlate with
+    "well-established sense" in this data: a full-sentence usage example,
+    a longer explanatory definition (vs. a terse semicolon-chain gloss),
+    and populated synonyms/antonyms.
+    """
+    text = defn.get("definition", "") or ""
+    example = defn.get("example", "") or ""
+    score = 0
+    if len(example) > 20:
+        score += 2
+    elif example:
+        score += 1
+    if len(text) >= 30:
+        score += 1
+    # Terse semicolon-chained glosses ("Sharp; sour; acid.") skew archaic.
+    if text.count(";") >= 2 and len(text) < 50:
+        score -= 1
+    # A populated synonym/antonym ring is a stronger "well-established sense"
+    # signal than an example sentence -- Wiktionary curators tend to only
+    # fill these in for mainstream senses, whereas examples get attached
+    # somewhat inconsistently (including to narrow/technical senses).
+    if defn.get("synonyms") or defn.get("antonyms") or meaning_syn or meaning_ant:
+        score += 3
+    return score
+
+
+def _rank_meanings(raw_meanings, defs_per_meaning=2, max_meanings=3):
+    """Reorder API meanings/definitions so the best-scoring (most likely
+    primary/modern) sense ends up at meanings[0].definitions[0] -- every
+    consumer (word.html, archive_day.html DefinedTerm schema, hint API)
+    reads that position directly, so fixing the order here fixes them all.
+    """
+    scored_meanings = []
+    for m in raw_meanings:
+        m_syn = m.get("synonyms", [])
+        m_ant = m.get("antonyms", [])
+        scored_defs = sorted(
+            m.get("definitions", []),
+            key=lambda d: _definition_quality_score(d, m_syn, m_ant),
+            reverse=True,
+        )
+        if not scored_defs:
+            continue
+        top_score = _definition_quality_score(scored_defs[0], m_syn, m_ant)
+        scored_meanings.append((top_score, m.get("partOfSpeech", ""), scored_defs[:defs_per_meaning], m_syn, m_ant))
+    scored_meanings.sort(key=lambda x: x[0], reverse=True)
+    return scored_meanings[:max_meanings]
+
+
 def fetch_full_word_info(word):
     """Fetch comprehensive word data from Free Dictionary API."""
     try:
@@ -880,22 +937,22 @@ def fetch_full_word_info(word):
                     break
         # Origin / etymology
         origin = entry.get("origin", "")
-        # Meanings: collect up to 3 parts of speech, each with up to 2 defs + examples
+        # Meanings: collect up to 3 parts of speech, each with up to 2 defs + examples,
+        # ranked so the most likely primary sense comes first (see _rank_meanings).
         meanings_out = []
         synonyms_all = []
         antonyms_all = []
-        for m in entry.get("meanings", [])[:3]:
-            pos = m.get("partOfSpeech", "")
+        for _score, pos, defs, m_syn, m_ant in _rank_meanings(entry.get("meanings", [])):
             defs_out = []
-            for d in m.get("definitions", [])[:2]:
+            for d in defs:
                 defs_out.append({
                     "definition": d.get("definition", ""),
                     "example": d.get("example", ""),
                 })
                 synonyms_all += d.get("synonyms", [])
                 antonyms_all += d.get("antonyms", [])
-            synonyms_all += m.get("synonyms", [])
-            antonyms_all += m.get("antonyms", [])
+            synonyms_all += m_syn
+            antonyms_all += m_ant
             if defs_out:
                 meanings_out.append({"partOfSpeech": pos, "definitions": defs_out})
         return {
@@ -992,14 +1049,13 @@ def api_hint():
         with urllib.request.urlopen(req, timeout=4) as resp:
             data = json.loads(resp.read())
         if data and isinstance(data, list):
-            meanings = data[0].get("meanings", [])
-            if meanings:
-                m = meanings[0]
-                defs = m.get("definitions", [])
+            ranked = _rank_meanings(data[0].get("meanings", []), defs_per_meaning=1, max_meanings=1)
+            if ranked:
+                _score, pos, defs, _m_syn, _m_ant = ranked[0]
                 if defs:
                     return jsonify({
                         "word": word.upper(),
-                        "partOfSpeech": m.get("partOfSpeech", ""),
+                        "partOfSpeech": pos,
                         "definition": defs[0].get("definition", ""),
                         "example": defs[0].get("example", ""),
                     })
